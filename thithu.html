@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thi thử</title>
+    <link
+rel="stylesheet"
+href="css/style-old.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+<div class="exam-layout">
+
+    <!-- Khung làm bài -->
+    <div class="exam-container">
+
+        <div class="exam-header">
+
+            <h2>THI THỬ OLYMPIC HỌC SINH GIỎI</h2>
+
+            <div class="info-box">
+
+                <div>
+                    <strong>Kỳ thi:</strong>
+                    <span id="tenKyThi"></span>
+                </div>
+
+                <div>
+                    <strong>Thời gian:</strong>
+                    <span id="timer"></span>
+                </div>
+
+            </div>
+
+            <div class="progress-box">
+                Đã hoàn thành:
+                <span id="soCauDaLam">0</span>/<span id="tongSoCau">0</span> câu
+            </div>
+
+        </div>
+
+        <!-- Câu hỏi -->
+        <div id="khuVucCauHoi"></div>
+
+        <!-- Nút nộp bài -->
+        <button
+            type="button"
+            class="submit-btn"
+            onclick="nopBai()">
+
+            NỘP BÀI
+
+        </button>
+
+    </div>
+
+    <!-- Thanh điều hướng -->
+    <div class="question-nav">
+
+        <h3>Câu hỏi</h3>
+
+        <div id="questionNavContainer"></div>
+
+    </div>
+
+</div>
+
+<!-- ========================= -->
+<!-- KẾT QUẢ THI THỬ -->
+<!-- ========================= -->
+
+<div id="ketQuaThiThu"
+     class="ketqua-thithu"
+     style="display:none;">
+
+    <h2>🎉 BẠN ĐÃ HOÀN THÀNH BÀI THI THỬ</h2>
+
+    <p>
+        ✅ Số câu đúng:
+        <strong id="kqDung">0</strong>/<strong id="kqTong">20</strong>
+    </p>
+
+    <p>
+        📊 Tỷ lệ:
+        <strong id="kqTyLe">0%</strong>
+    </p>
+
+    <p>
+        🏆 Xếp loại:
+        <strong id="kqXepLoai">...</strong>
+    </p>
+
+    <hr>
+
+    <p style="color:#666;">
+        Đây là bài luyện tập.<br>
+        Kết quả không được lưu vào hệ thống.
+    </p>
+
+    <div class="result-buttons">
+
+        <button id="btnLuyenLai">
+            🔄 Luyện tập thêm
+        </button>
+
+        <button id="btnTrangChu">
+            🏠 Trang chủ
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+document.getElementById("tenKyThi").textContent =
+    localStorage.getItem("tenKyThi") || "";
+
+const fileDe =
+    localStorage.getItem("fileDe");
+
+if (!fileDe) {
+
+    alert("❌ Không tìm thấy file đề của kỳ thi.");
+
+    window.location.href =
+        "chonkithi.html";
+
+} else {
+
+    console.log(
+        "📚 Đang tải file đề:",
+        fileDe
+    );
+
+    const scriptDe =
+        document.createElement("script");
+
+    // Lấy đúng file đề được lưu theo kỳ thi
+    scriptDe.src = fileDe;
+
+    scriptDe.onload = function () {
+
+        console.log(
+            "✅ Đã tải ngân hàng đề:",
+            fileDe
+        );
+
+        const scriptThi =
+            document.createElement("script");
+
+        scriptThi.src =
+            "js/thithu.js";
+
+        scriptThi.onload = function () {
+
+            console.log(
+                "✅ Đã tải thithu.js"
+            );
+
+        };
+
+        scriptThi.onerror = function () {
+
+            alert(
+                "❌ Không tìm thấy file js/thithu.js"
+            );
+
+        };
+
+        document.body.appendChild(
+            scriptThi
+        );
+
+    };
+
+    scriptDe.onerror = function () {
+
+        alert(
+            "❌ Không tìm thấy file đề:\n" +
+            fileDe
+        );
+
+        console.error(
+            "❌ Lỗi tải file đề:",
+            fileDe
+        );
+
+    };
+
+    document.body.appendChild(
+        scriptDe
+    );
+}
+</script>
+
+</body>
+</html>

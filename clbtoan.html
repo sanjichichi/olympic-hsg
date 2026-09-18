@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link
+rel="stylesheet"
+href="css/style-old.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/clb.css">
+<link rel="stylesheet" href="css/clbtoan.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+<body>
+
+<div class="page-bg">
+
+<!-- Banner -->
+<section class="club-banner">
+    <img src="anhnen/clb-bg.png" alt="Banner Câu lạc bộ năng khiếu">
+</section>
+
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</header>
+<nav class="menu">
+
+    <div class="menu-links">
+
+        <a href="index.html">Trang chủ</a>
+
+        <a href="gioithieu.html">Giới thiệu</a>
+
+        <a href="thongbao.html">Thông báo</a>
+
+        <a href="xephang.html">Bảng xếp hạng</a>
+
+        <a href="thele.html">Thể lệ</a>
+
+        <a href="clb.html">CLB năng khiếu</a>
+
+    </div>
+    <div class="menu-user">
+    <a href="index.html" class="login-btn">
+        ⬅ Quay lại trang chủ
+    </a>
+</div>
+
+</nav>
+<!-- ================== HOẠT ĐỘNG CÂU LẠC BỘ ================== -->
+
+<section class="club-container">
+
+    <div class="section-title">
+        <h2>HOẠT ĐỘNG CÂU LẠC BỘ</h2>
+        <div class="line"></div>
+    </div>
+
+    <p class="club-intro">
+        Các câu lạc bộ năng khiếu của Trường THCS Hoàng Ngân được tổ chức nhằm phát hiện, bồi dưỡng năng khiếu và tạo sân chơi lành mạnh cho học sinh. Hoạt động được duy trì định kỳ hằng tháng với nhiều nội dung thiết thực, góp phần phát triển toàn diện phẩm chất và năng lực của học sinh.
+    </p>
+
+    <!-- LỊCH SINH HOẠT -->
+
+    <div class="club-schedule">
+
+        <div class="schedule-icon">
+            <i class="fa-solid fa-calendar-days"></i>
+        </div>
+
+        <div>
+
+            <h3>Lịch sinh hoạt</h3>
+
+            <p>
+                <b>Chiều thứ Năm của tuần đầu tiên hằng tháng</b>
+            </p>
+
+            <small>
+                Thời gian và địa điểm cụ thể sẽ được giáo viên phụ trách thông báo tới các thành viên.
+            </small>
+
+        </div>
+
+    </div>
+
+    <!-- DANH SÁCH HOẠT ĐỘNG -->
+
+    <div class="section-title" style="margin-top:60px">
+        <h2>NHẬT KÝ HOẠT ĐỘNG</h2>
+        <div class="line"></div>
+    </div>
+
+    <div id="activityList" class="activity-list">
+
+        <!-- JavaScript sẽ tự sinh toàn bộ hoạt động -->
+
+    </div>
+
+</section>
+<footer class="footer">
+
+    <div class="footer-content">
+
+        <h3>🏆 Olympic Học sinh Khá giỏi Online</h3>
+
+        <p>
+            © 2026 Bản quyền thuộc Trường THCS Phú Đình
+        </p>
+
+        <p class="version">
+            Phiên bản <strong>Version 1.1</strong>
+        </p>
+
+    </div>
+
+</footer>
+<script>
+const btn =
+document.getElementById(
+"taiKhoanBtn"
+);
+
+if(btn){
+
+    btn.innerHTML =
+    localStorage.getItem("hoTen")
+    + " ▼";
+
+    btn.addEventListener(
+    "click",
+    function(e){
+
+        e.preventDefault();
+
+        const menu =
+        document.getElementById(
+        "userDropdown"
+        );
+
+        menu.style.display =
+        menu.style.display ===
+        "block"
+        ? "none"
+        : "block";
+
+    });
+
+}
+function dangXuat(){
+
+    if(confirm(
+    "Bạn muốn đăng xuất?"
+    )){
+
+        localStorage.clear();
+
+        window.location.href =
+        "index.html";
+
+    }
+
+}
+const dsHoatDong = [
+
+{
+    ngay:"04/12/2026",
+    tieuDe:"Sinh hoạt Câu lạc bộ tháng 12",
+    moTa:"Đánh giá kết quả hoạt động học kỳ I, tổ chức sinh hoạt theo chủ đề.",
+    thuMuc:"2026-12",
+    soAnh:6
+},
+
+{
+    ngay:"06/11/2026",
+    tieuDe:"Sinh hoạt Câu lạc bộ tháng 11",
+    moTa:"Các câu lạc bộ tiếp tục duy trì các hoạt động trải nghiệm và rèn luyện kỹ năng.",
+    thuMuc:"2026-11",
+    soAnh:5
+},
+
+{
+    ngay:"02/10/2026",
+    tieuDe:"Sinh hoạt Câu lạc bộ tháng 10",
+    moTa:"Các thành viên tham gia sinh hoạt định kỳ theo nội dung của từng câu lạc bộ.",
+    thuMuc:"2026-10",
+    soAnh:6
+},
+
+{
+    ngay:"04/09/2026",
+    tieuDe:"Khai mạc Câu lạc bộ năm học 2026-2027",
+    moTa:"Tổ chức khai mạc, phổ biến kế hoạch hoạt động năm học mới.",
+    thuMuc:"2026-09-khai-mac",
+    soAnh:6
+}
+
+];
+const activityList=document.getElementById("activityList");
+
+activityList.innerHTML="";
+
+dsHoatDong.forEach((item,index)=>{
+
+let gallery="";
+
+for(let i=1;i<=item.soAnh;i++){
+
+gallery+=`
+
+<img src="images/hoatdong/${item.thuMuc}/${i}.jpg">
+
+`;
+
+}
+
+activityList.innerHTML+=`
+
+<div class="activity-item">
+
+<div class="activity-header" onclick="toggleActivity(${index})">
+
+<div>
+
+<div class="activity-date">
+
+📅 ${item.ngay}
+
+</div>
+
+<h3>${item.tieuDe}</h3>
+
+</div>
+
+<span id="icon${index}">▼</span>
+
+</div>
+
+<div class="activity-content" id="content${index}">
+
+<p>${item.moTa}</p>
+
+<div class="gallery">
+
+${gallery}
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+function toggleActivity(i){
+
+const content=document.getElementById("content"+i);
+
+const icon=document.getElementById("icon"+i);
+
+if(content.classList.contains("show")){
+
+content.classList.remove("show");
+
+icon.innerHTML="▼";
+
+}else{
+
+document.querySelectorAll(".activity-content").forEach(e=>{
+
+e.classList.remove("show");
+
+});
+
+document.querySelectorAll("[id^='icon']").forEach(e=>{
+
+e.innerHTML="▼";
+
+});
+
+content.classList.add("show");
+
+icon.innerHTML="▲";
+
+}
+
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Phân tích kết quả - Olympic HSG Online
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            font-family:
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background: #f1f5f9;
+
+            color: #1e293b;
+
+            min-height: 100vh;
+
+        }
+
+
+        .header {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1e3a8a,
+                    #2563eb
+                );
+
+            color: white;
+
+            padding: 18px 35px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            box-shadow:
+                0 4px 15px
+                rgba(0,0,0,.12);
+
+        }
+
+
+        .header-title h1 {
+
+            font-size: 24px;
+
+        }
+
+
+        .header-title p {
+
+            margin-top: 4px;
+
+            font-size: 14px;
+
+            opacity: .85;
+
+        }
+
+
+        .back-btn {
+
+            border: 1px solid
+                rgba(255,255,255,.4);
+
+            background:
+                rgba(255,255,255,.12);
+
+            color: white;
+
+            padding: 10px 16px;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-weight: 600;
+
+        }
+
+
+        .container {
+
+            width: 94%;
+
+            max-width: 1250px;
+
+            margin: 30px auto;
+
+        }
+
+
+        .welcome {
+
+            background: white;
+
+            border-radius: 20px;
+
+            padding: 25px 30px;
+
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 5px 18px
+                rgba(15,23,42,.06);
+
+            border-left:
+                5px solid #2563eb;
+
+        }
+
+
+        .welcome h2 {
+
+            color: #1e3a8a;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .welcome p {
+
+            color: #64748b;
+
+            line-height: 1.6;
+
+        }
+
+
+        .analysis-menu {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+            gap: 22px;
+
+        }
+
+
+        .analysis-card {
+
+            background: white;
+
+            border-radius: 20px;
+
+            padding: 28px;
+
+            box-shadow:
+                0 5px 18px
+                rgba(15,23,42,.06);
+
+            cursor: pointer;
+
+            transition: .25s;
+
+            border: 2px solid transparent;
+
+        }
+
+
+        .analysis-card:hover {
+
+            transform:
+                translateY(-5px);
+
+            border-color:
+                #2563eb;
+
+        }
+
+
+        .icon {
+
+            font-size: 42px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .analysis-card h3 {
+
+            color: #1e3a8a;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .analysis-card p {
+
+            color: #64748b;
+
+            line-height: 1.6;
+
+        }
+
+
+        .arrow {
+
+            display: block;
+
+            margin-top: 18px;
+
+            color: #2563eb;
+
+            font-weight: 700;
+
+        }
+
+
+        @media(max-width:800px) {
+
+            .analysis-menu {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+    
+        .analysis-tab{
+            border:1px solid #dbeafe;
+            background:#f8fafc;
+            color:#1e3a8a;
+            padding:9px 14px;
+            border-radius:10px;
+            cursor:pointer;
+            font-weight:700;
+        }
+        .analysis-tab.active{
+            background:#2563eb;
+            color:white;
+        }
+        .pt-select{
+            width:100%;
+            padding:9px 11px;
+            border:1px solid #dbe2ea;
+            border-radius:9px;
+            background:white;
+            color:#1e293b;
+            font-size:14px;
+        }
+        .pt-card{
+            padding:15px;
+            background:#f8fafc;
+            border-radius:12px;
+        }
+        .pt-card .label{
+            color:#64748b;
+            font-size:13px;
+        }
+        .pt-card .value{
+            display:block;
+            font-size:24px;
+            font-weight:800;
+            color:#1e3a8a;
+            margin-top:5px;
+        }
+        .pt-bar{
+            flex:1;
+            display:flex;
+            flex-direction:column;
+            justify-content:flex-end;
+            align-items:center;
+            min-width:25px;
+            height:100%;
+        }
+        .pt-bar-fill{
+            width:70%;
+            min-height:2px;
+            background:#2563eb;
+            border-radius:7px 7px 0 0;
+        }
+        .pt-bar-label{
+            font-size:11px;
+            color:#64748b;
+            margin-top:5px;
+        }
+        @media(max-width:900px){
+            #analysisWorkspace > div:nth-of-type(2){grid-template-columns:1fr!important;}
+            #ptCards{grid-template-columns:repeat(2,1fr)!important;}
+        }
+
+</style>
+
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+    <div class="header-title">
+
+        <h1>
+            🤖 PHÂN TÍCH KẾT QUẢ
+        </h1>
+
+        <p>
+            Hệ thống hỗ trợ giáo viên
+            phân tích kết quả Olympic HSG Online
+        </p>
+
+    </div>
+
+
+    <button
+        class="back-btn"
+        onclick="quayLai()">
+
+        ← Trang giáo viên
+
+    </button>
+
+</header>
+
+
+<main class="container">
+
+
+    <section class="welcome">
+
+        <h2>
+            📊 Trung tâm phân tích học tập
+        </h2>
+
+        <p>
+            Từ đây giáo viên có thể xem kết quả
+            học sinh, phân tích từng môn,
+            tổng hợp theo lớp và theo khối.
+        </p>
+
+    </section>
+
+
+    <section class="analysis-menu">
+
+
+        <!-- HỌC SINH -->
+
+        <div
+            class="analysis-card"
+            onclick="moPhanTich('hoc-sinh')">
+
+            <div class="icon">
+                👨‍🎓
+            </div>
+
+            <h3>
+                Phân tích học sinh
+            </h3>
+
+            <p>
+                Xem kết quả và quá trình tiến bộ
+                của từng học sinh.
+            </p>
+
+            <span class="arrow">
+                Xem học sinh →
+            </span>
+
+        </div>
+
+
+        <!-- LỚP -->
+
+        <div
+            class="analysis-card"
+            onclick="moPhanTich('lop')">
+
+            <div class="icon">
+                🏫
+            </div>
+
+            <h3>
+                Phân tích lớp
+            </h3>
+
+            <p>
+                Tổng hợp điểm, tỷ lệ đạt,
+                môn mạnh và môn cần cải thiện
+                của từng lớp.
+            </p>
+
+            <span class="arrow">
+                Phân tích lớp →
+            </span>
+
+        </div>
+
+
+        <!-- KHỐI -->
+
+        <div
+            class="analysis-card"
+            onclick="moPhanTich('khoi')">
+
+            <div class="icon">
+                📚
+            </div>
+
+            <h3>
+                Phân tích khối
+            </h3>
+
+            <p>
+                So sánh kết quả các lớp
+                trong cùng một khối.
+            </p>
+
+            <span class="arrow">
+                Phân tích khối →
+            </span>
+
+        </div>
+
+
+    </section>
+
+    <section id="dataPanel"
+         style="
+            margin-top:30px;
+            background:white;
+            padding:25px;
+            border-radius:20px;
+            box-shadow:0 5px 18px rgba(15,23,42,.06);
+         ">
+
+    <h2 style="color:#1e3a8a;margin-bottom:20px;">
+        📊 Dữ liệu kết quả
+    </h2>
+
+    <div id="dataStatus"
+         style="
+            padding:15px;
+            background:#f8fafc;
+            border-radius:12px;
+            color:#64748b;
+         ">
+
+        Đang kiểm tra dữ liệu kết quả...
+
+    </div>
+
+
+</section>
+
+<section id="analysisWorkspace" style="margin-top:30px;background:white;padding:25px;border-radius:20px;box-shadow:0 5px 18px rgba(15,23,42,.06);">
+    <h2 style="color:#1e3a8a;margin-bottom:18px;">📈 Phân tích chi tiết</h2>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;">
+        <button class="analysis-tab active" data-type="hoc-sinh">👨‍🎓 Học sinh</button>
+        <button class="analysis-tab" data-type="lop">🏫 Lớp</button>
+        <button class="analysis-tab" data-type="khoi">📚 Khối</button>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:10px;margin-bottom:18px;">
+        <select id="ptNamHoc" class="pt-select"><option value="ALL">Tất cả năm học</option></select>
+        <select id="ptKhoi" class="pt-select"><option value="ALL">Tất cả khối</option></select>
+        <select id="ptLop" class="pt-select"><option value="ALL">Tất cả lớp</option></select>
+        <select id="ptKyThi" class="pt-select"><option value="ALL">Tất cả kỳ thi</option></select>
+    </div>
+
+    <div id="ptStudentSelectWrap" style="margin-bottom:18px;">
+        <select id="ptHocSinh" class="pt-select">
+            <option value="ALL">Tất cả học sinh</option>
+        </select>
+    </div>
+
+    <div id="ptCards" style="display:grid;grid-template-columns:repeat(5,minmax(130px,1fr));gap:12px;margin-bottom:20px;"></div>
+
+    <div style="display:grid;grid-template-columns:1fr;gap:20px;">
+        <div>
+            <h3 style="color:#1e3a8a;margin-bottom:10px;">📊 Phân bố kết quả</h3>
+            <div id="ptChart" style="display:flex;align-items:flex-end;gap:10px;height:220px;padding:15px;background:#f8fafc;border-radius:14px;"></div>
+        </div>
+
+        <div>
+            <h3 style="color:#1e3a8a;margin-bottom:10px;">📋 Chi tiết</h3>
+            <div style="overflow:auto;">
+                <table style="width:100%;border-collapse:collapse;">
+                    <thead>
+                        <tr style="background:#eff6ff;">
+                            <th style="padding:10px;text-align:left;">STT</th>
+                            <th style="padding:10px;text-align:left;">Mã HS</th>
+                            <th style="padding:10px;text-align:left;">Họ tên</th>
+                            <th style="padding:10px;text-align:left;">Lớp</th>
+                            <th style="padding:10px;text-align:left;">Khối</th>
+                            <th style="padding:10px;text-align:left;">Kỳ thi</th>
+                            <th style="padding:10px;text-align:left;">Điểm</th>
+                            <th style="padding:10px;text-align:left;">Thời gian</th>
+                            <th style="padding:10px;text-align:left;">Rời tab</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ptTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+</main>
+
+<script>
+let TAT_CA_KET_QUA_GV = [];
+let PT_LOAI = "hoc-sinh";
+const KETQUA_CSV_URL =
+    localStorage.getItem("KETQUA_CSV_URL") ||
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vRULO6RaaXqNERaYMuLx9cpHLp3hxqL3i2PHuccrdbSvFaQgpsrPvRk-fhgzlOxamLUYCe1sLQMQvPL/pub?output=csv";
+</script>
+<script src="js/configExam.js"></script>
+<script>
+
+    /* =========================================
+       KIỂM TRA GIÁO VIÊN
+    ========================================= */
+
+    const dangNhapGV =
+        localStorage.getItem(
+            "dangNhapGV"
+        );
+
+    const loaiTaiKhoan =
+        localStorage.getItem(
+            "loaiTaiKhoan"
+        );
+
+
+    if (
+        dangNhapGV !== "true" ||
+        loaiTaiKhoan !== "giaoVien"
+    ) {
+
+        window.location.href =
+            "login-gv.html";
+
+    }
+
+
+    /* =========================================
+       THÔNG TIN GIÁO VIÊN
+    ========================================= */
+
+    const hoTenGV =
+        localStorage.getItem(
+            "hoTenGV"
+        ) ||
+        "Giáo viên";
+
+
+    console.log(
+        "👨‍🏫 Giáo viên:",
+        hoTenGV
+    );
+
+
+    /* =========================================
+       QUAY LẠI
+    ========================================= */
+
+    function quayLai() {
+
+        window.location.href =
+            "trang-gv.html";
+
+    }
+
+
+    /* =========================================
+       MENU PHÂN TÍCH
+    ========================================= */
+
+    function moPhanTich(loai) {
+
+    document.querySelectorAll(".analysis-tab").forEach(btn => {
+        btn.classList.toggle(
+            "active",
+            btn.dataset.type === loai
+        );
+    });
+
+    PT_LOAI = loai;
+
+    const studentWrap =
+        document.getElementById("ptStudentSelectWrap");
+
+    studentWrap.style.display =
+        loai === "hoc-sinh"
+            ? "block"
+            : "none";
+
+    capNhatBoLocPT();
+    renderPhanTich();
+}
+
+    /* =====================================================
+   TẢI KẾT QUẢ CỦA MỘT KỲ THI
+===================================================== */
+
+async function taiKetQuaKyThiGV(kyThi) {
+
+    console.log(
+        "📥 Đang tải kết quả:",
+        kyThi.maKyThi
+    );
+
+
+    /*
+     * Mỗi kỳ thi phải có URL Sheet kết quả riêng.
+     *
+     * URL này lấy trực tiếp từ cấu hình kỳ thi.
+     */
+
+    const urlKetQua =
+        kyThi.urlKetQua ||
+        kyThi.URLKetQua ||
+        "";
+
+
+    if (!urlKetQua) {
+
+        console.warn(
+            "⚠️ Kỳ thi chưa có URL kết quả:",
+            kyThi.maKyThi
+        );
+
+        return [];
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(urlKetQua);
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "HTTP " +
+                response.status
+            );
+
+        }
+
+
+        const csv =
+            await response.text();
+
+
+        const data =
+            csvToArrayGV(csv);
+
+
+        /*
+         * Gắn thông tin kỳ thi
+         * vào từng kết quả.
+         */
+
+        data.forEach(item => {
+
+            item.maKyThi =
+                kyThi.maKyThi;
+
+            item.tenKyThi =
+                kyThi.tenKyThi;
+
+            item.mon =
+                kyThi.mon;
+
+            item.khoi =
+                kyThi.khoi;
+
+            item.maGV =
+                kyThi.maGV;
+
+            item.namHoc =
+                kyThi.namHoc;
+
+            item.dotThi =
+                kyThi.dotThi;
+
+            item.suKien =
+                kyThi.suKien;
+
+        });
+
+
+        console.log(
+            "✅",
+            kyThi.maKyThi,
+            ":",
+            data.length,
+            "kết quả"
+        );
+
+
+        return data;
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "❌ Lỗi tải kết quả:",
+            kyThi.maKyThi,
+            error
+        );
+
+        return [];
+
+    }
+
+}
+/* =====================================================
+   TẢI TOÀN BỘ KẾT QUẢ
+===================================================== */
+
+
+
+function parseCSV(text) {
+    const rows = [];
+    let row = [];
+    let cell = "";
+    let quoted = false;
+
+    for (let i = 0; i < text.length; i++) {
+        const ch = text[i];
+        const next = text[i + 1];
+
+        if (ch === '"') {
+            if (quoted && next === '"') {
+                cell += '"';
+                i++;
+            } else {
+                quoted = !quoted;
+            }
+        } else if (ch === "," && !quoted) {
+            row.push(cell);
+            cell = "";
+        } else if ((ch === "\n" || ch === "\r") && !quoted) {
+            if (ch === "\r" && next === "\n") i++;
+            row.push(cell);
+            cell = "";
+
+            if (row.some(v => String(v).trim() !== "")) {
+                rows.push(row);
+            }
+            row = [];
+        } else {
+            cell += ch;
+        }
+    }
+
+    if (cell !== "" || row.length) {
+        row.push(cell);
+        if (row.some(v => String(v).trim() !== "")) {
+            rows.push(row);
+        }
+    }
+
+    return rows;
+}
+
+async function taiTatCaKetQuaGV() {
+    if (!KETQUA_CSV_URL) {
+        TAT_CA_KET_QUA_GV = [];
+        throw new Error("Chưa cấu hình URL Sheet KETQUA.");
+    }
+
+    const res = await fetch(KETQUA_CSV_URL + "&t=" + Date.now());
+
+    if (!res.ok) {
+        throw new Error("Không tải được Sheet KETQUA: HTTP " + res.status);
+    }
+
+    const text = await res.text();
+    const rows = parseCSV(text);
+
+    if (!rows.length) {
+        TAT_CA_KET_QUA_GV = [];
+        return;
+    }
+
+    const headers = rows[0].map(h => String(h).trim());
+
+    TAT_CA_KET_QUA_GV = rows.slice(1)
+        .filter(row => row.some(v => String(v ?? "").trim() !== ""))
+        .map(row => {
+            const obj = {};
+            headers.forEach((h, i) => {
+                obj[h] = String(row[i] ?? "").trim();
+            });
+            return obj;
+        });
+}
+
+function ptGet(obj, names) {
+    for (const n of names) {
+        if (obj[n] !== undefined && obj[n] !== null && String(obj[n]).trim() !== "") {
+            return String(obj[n]).trim();
+        }
+    }
+    return "";
+}
+
+function ptDiem(x) {
+    const n = Number(
+        String(
+            ptGet(x, ["diem","Điểm","score","Score"])
+        ).replace(",", ".")
+    );
+    return Number.isFinite(n) ? n : 0;
+}
+
+function ptTime(x) {
+    return ptGet(x, ["thoiGian","Thời gian","thoigian","time"]);
+}
+
+function ptRoiTab(x) {
+    const n = Number(
+        ptGet(x, ["roiTab","Rời tab","soLanRoiTab","tabSwitches"])
+    );
+    return Number.isFinite(n) ? n : 0;
+}
+
+function ptKeyStudent(x) {
+    return ptGet(x, ["maHS","Mã HS","maHocSinh","studentId"]);
+}
+
+function ptName(x) {
+    return ptGet(x, ["hoTen","Họ tên","ten","Ten"]);
+}
+
+function ptClass(x) {
+    return ptGet(x, ["lop","Lớp","class"]);
+}
+
+function ptGrade(x) {
+
+    // Nếu KETQUA có sẵn cột Khối thì ưu tiên dùng
+    const khoi = ptGet(x, [
+        "khoi",
+        "Khối",
+        "grade",
+        "Grade"
+    ]);
+
+    if (khoi) {
+        return khoi;
+    }
+
+    // Nếu không có cột Khối thì lấy từ tên lớp
+    const lop = ptClass(x);
+
+    const match = lop.match(/^[6-9]/);
+
+    if (match) {
+        return "Khối " + match[0];
+    }
+
+    return "";
+}
+
+function ptYear(x) {
+    return ptGet(x, ["namHoc","Năm học","namhoc"]);
+}
+
+function ptExamId(x) {
+    return ptGet(x, ["maKyThi","Mã kỳ thi"]);
+}
+
+function ptExamName(x) {
+    return ptGet(x, ["tenKyThi","Kì thi","Kỳ thi","kyThi"]);
+}
+
+function ptNormalize(arr) {
+    return Array.isArray(arr) ? arr.filter(x => ptKeyStudent(x)) : [];
+}
+
+function ptUniqueValues(data, getter) {
+    return [...new Set(data.map(getter).filter(Boolean))]
+        .sort((a,b) => String(a).localeCompare(String(b), "vi"));
+}
+
+function ptFillSelect(id, values, label) {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    const old = el.value;
+    el.innerHTML = `<option value="ALL">${label}</option>`;
+
+    values.forEach(v => {
+        const op = document.createElement("option");
+        op.value = v;
+        op.textContent = v;
+        el.appendChild(op);
+    });
+
+    if ([...el.options].some(o => o.value === old)) {
+        el.value = old;
+    }
+}
+
+function ptBaseFilter() {
+    let data = ptNormalize(TAT_CA_KET_QUA_GV);
+
+    const nam = document.getElementById("ptNamHoc").value;
+    const khoi = document.getElementById("ptKhoi").value;
+    const lop = document.getElementById("ptLop").value;
+    const ky = document.getElementById("ptKyThi").value;
+
+    return data.filter(x =>
+        (nam === "ALL" || ptYear(x) === nam) &&
+        (khoi === "ALL" || ptGrade(x) === khoi) &&
+        (lop === "ALL" || ptClass(x) === lop) &&
+        (ky === "ALL" || ptExamId(x) === ky)
+    );
+}
+
+function capNhatBoLocPT() {
+
+    const all = ptNormalize(TAT_CA_KET_QUA_GV);
+
+    const namOld = document.getElementById("ptNamHoc").value;
+    const khoiOld = document.getElementById("ptKhoi").value;
+    const lopOld = document.getElementById("ptLop").value;
+    const kyOld = document.getElementById("ptKyThi").value;
+
+    ptFillSelect(
+        "ptNamHoc",
+        ptUniqueValues(all, ptYear),
+        "Tất cả năm học"
+    );
+
+    let data = all;
+    const nam = document.getElementById("ptNamHoc").value;
+
+    data = data.filter(x =>
+        nam === "ALL" || ptYear(x) === nam
+    );
+
+    ptFillSelect(
+        "ptKhoi",
+        ptUniqueValues(data, ptGrade),
+        "Tất cả khối"
+    );
+
+    const khoi = document.getElementById("ptKhoi").value;
+
+    data = data.filter(x =>
+        khoi === "ALL" || ptGrade(x) === khoi
+    );
+
+    ptFillSelect(
+        "ptLop",
+        ptUniqueValues(data, ptClass),
+        "Tất cả lớp"
+    );
+
+    const lop = document.getElementById("ptLop").value;
+
+    data = data.filter(x =>
+        lop === "ALL" || ptClass(x) === lop
+    );
+
+    ptFillSelect(
+        "ptKyThi",
+        [...new Map(
+            data
+                .filter(x => ptExamId(x))
+                .map(x => [
+                    ptExamId(x),
+                    ptExamName(x) || ptExamId(x)
+                ])
+        ).entries()].map(([id,name]) => `${id}|||${name}`),
+        "Tất cả kỳ thi"
+    );
+
+    // Replace generated value with maKyThi and label with tenKyThi.
+    const kySelect = document.getElementById("ptKyThi");
+    const kyCurrent = kyOld;
+    kySelect.innerHTML = '<option value="ALL">Tất cả kỳ thi</option>';
+
+    const kyMap = new Map();
+    data.forEach(x => {
+        if (ptExamId(x)) kyMap.set(ptExamId(x), ptExamName(x) || ptExamId(x));
+    });
+
+    [...kyMap.entries()]
+        .sort((a,b) => String(a[1]).localeCompare(String(b[1]), "vi"))
+        .forEach(([id,name]) => {
+            const op = document.createElement("option");
+            op.value = id;
+            op.textContent = name;
+            kySelect.appendChild(op);
+        });
+
+    if ([...kySelect.options].some(o => o.value === kyCurrent)) {
+        kySelect.value = kyCurrent;
+    }
+
+    // Student list follows all current filters.
+    const studentData = ptBaseFilter();
+    const students = [...new Map(
+        studentData.map(x => [
+            ptKeyStudent(x),
+            `${ptName(x)} — ${ptKeyStudent(x)}`
+        ])
+    ).entries()];
+
+    const studentSelect = document.getElementById("ptHocSinh");
+    const studentOld = studentSelect.value;
+    studentSelect.innerHTML = '<option value="ALL">Tất cả học sinh</option>';
+
+    students
+        .sort((a,b) => String(a[1]).localeCompare(String(b[1]), "vi"))
+        .forEach(([id,label]) => {
+            const op = document.createElement("option");
+            op.value = id;
+            op.textContent = label;
+            studentSelect.appendChild(op);
+        });
+
+    if ([...studentSelect.options].some(o => o.value === studentOld)) {
+        studentSelect.value = studentOld;
+    }
+}
+
+function ptCards(data, uniqueStudents) {
+
+    const scores = data.map(ptDiem);
+    const avg = scores.length
+        ? scores.reduce((a,b) => a+b, 0) / scores.length
+        : 0;
+
+    const max = scores.length ? Math.max(...scores) : 0;
+    const min = scores.length ? Math.min(...scores) : 0;
+
+    const đạt = scores.filter(x => x >= 5).length;
+    const tyLe = scores.length ? (đạt / scores.length * 100) : 0;
+
+    const cards = [
+        ["👨‍🎓 Học sinh", uniqueStudents],
+        ["📝 Lượt thi", data.length],
+        ["📊 Điểm TB", avg.toFixed(2)],
+        ["🏆 Cao nhất", max],
+        ["✅ Tỷ lệ đạt", tyLe.toFixed(1) + "%"]
+    ];
+
+    document.getElementById("ptCards").innerHTML =
+        cards.map(c => `
+            <div class="pt-card">
+                <span class="label">${c[0]}</span>
+                <span class="value">${c[1]}</span>
+            </div>
+        `).join("");
+}
+
+function renderPtChart(data) {
+
+    const buckets = [
+        ["0–4.9", x => x < 5],
+        ["5–6.4", x => x >= 5 && x < 6.5],
+        ["6.5–7.9", x => x >= 6.5 && x < 8],
+        ["8–8.9", x => x >= 8 && x < 9],
+        ["9–10", x => x >= 9]
+    ];
+
+    const counts = buckets.map(([label,fn]) =>
+        [label, data.filter(x => fn(ptDiem(x))).length]
+    );
+
+    const max = Math.max(1, ...counts.map(x => x[1]));
+
+    document.getElementById("ptChart").innerHTML =
+        counts.map(([label,count]) => `
+            <div class="pt-bar" title="${count} bài">
+                <div class="pt-bar-fill" style="height:${Math.max(2, count/max*170)}px;"></div>
+                <div style="font-size:12px;font-weight:700;">${count}</div>
+                <div class="pt-bar-label">${label}</div>
+            </div>
+        `).join("");
+}
+
+function renderPtTable(data) {
+
+    const body = document.getElementById("ptTableBody");
+
+    if (!data.length) {
+        body.innerHTML = `
+            <tr><td colspan="9" style="padding:20px;text-align:center;color:#64748b;">
+                Không có dữ liệu phù hợp.
+            </td></tr>
+        `;
+        return;
+    }
+
+    const sorted = [...data].sort((a,b) => ptDiem(b) - ptDiem(a));
+
+    body.innerHTML = sorted.slice(0, 200).map((x,i) => `
+        <tr style="border-bottom:1px solid #e5e7eb;">
+            <td style="padding:9px;">${i+1}</td>
+            <td style="padding:9px;">${ptKeyStudent(x)}</td>
+            <td style="padding:9px;">${ptName(x)}</td>
+            <td style="padding:9px;">${ptClass(x)}</td>
+            <td style="padding:9px;">${ptGrade(x)}</td>
+            <td style="padding:9px;">${ptExamName(x)}</td>
+            <td style="padding:9px;font-weight:700;">${ptDiem(x)}</td>
+            <td style="padding:9px;">${ptTime(x)}</td>
+            <td style="padding:9px;">${ptRoiTab(x)}</td>
+        </tr>
+    `).join("");
+}
+
+function renderPhanTich() {
+
+    let data = ptBaseFilter();
+
+    if (PT_LOAI === "hoc-sinh") {
+        const maHS = document.getElementById("ptHocSinh").value;
+        if (maHS !== "ALL") {
+            data = data.filter(x => ptKeyStudent(x) === maHS);
+        }
+    }
+
+    const uniqueStudents =
+        new Set(data.map(ptKeyStudent)).size;
+
+    ptCards(data, uniqueStudents);
+    renderPtChart(data);
+    renderPtTable(data);
+}
+
+/* Các bộ lọc liên động */
+["ptNamHoc","ptKhoi","ptLop","ptKyThi","ptHocSinh"].forEach(id => {
+    document.getElementById(id).addEventListener("change", () => {
+        capNhatBoLocPT();
+        renderPhanTich();
+    });
+});
+
+document.querySelectorAll(".analysis-tab").forEach(btn => {
+    btn.addEventListener("click", () => {
+        moPhanTich(btn.dataset.type);
+    });
+});
+
+async function KhoiDongPhanTichGV() {
+    try {
+        await taiTatCaKetQuaGV();
+        capNhatBoLocPT();
+        renderPhanTich();
+        console.log("✅ Đã tải KETQUA chung:", TAT_CA_KET_QUA_GV.length, "kết quả");
+    } catch (err) {
+        console.error("❌ Không tải được KETQUA chung:", err);
+        const body = document.getElementById("ptTableBody");
+        if (body) {
+            body.innerHTML = `
+                <tr>
+                    <td colspan="9" style="padding:20px;text-align:center;color:#dc2626;">
+                        Không tải được dữ liệu KETQUA. Kiểm tra URL CSV và quyền xuất bản Sheet.
+                    </td>
+                </tr>
+            `;
+        }
+    }
+}
+
+document.addEventListener("DOMContentLoaded", KhoiDongPhanTichGV);
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Quản lý kỳ thi - Admin</title>
+
+<style>
+:root{
+    --primary:#173b8f;
+    --blue:#2563eb;
+    --green:#16a34a;
+    --red:#dc2626;
+    --orange:#ea580c;
+    --bg:#f4f7fb;
+    --card:#fff;
+    --text:#1f2937;
+    --muted:#64748b;
+    --border:#e5e7eb;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+.header{
+    background:linear-gradient(
+        135deg,
+        #102d70,
+        #2563eb
+    );
+    color:white;
+    padding:22px 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
+}
+
+.header h1{
+    margin:0;
+    font-size:24px;
+}
+
+.header p{
+    margin:6px 0 0;
+    opacity:.85;
+}
+
+.header-actions{
+    display:flex;
+    gap:10px;
+}
+
+.btn{
+    border:0;
+    border-radius:9px;
+    padding:10px 14px;
+    font-weight:700;
+    cursor:pointer;
+    text-decoration:none;
+    display:inline-block;
+}
+
+.btn-light{
+    background:white;
+    color:var(--primary);
+}
+
+.btn-blue{
+    background:var(--blue);
+    color:white;
+}
+
+.container{
+    width:95%;
+    max-width:1500px;
+    margin:25px auto;
+}
+
+.card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:22px;
+    box-shadow:0 4px 16px rgba(15,23,42,.05);
+}
+
+.section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-bottom:18px;
+}
+
+.section-head h2{
+    margin:0;
+    color:var(--primary);
+}
+
+.filters{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:18px;
+}
+
+.filters input,
+.filters select{
+    padding:11px 13px;
+    border:1px solid #cbd5e1;
+    border-radius:9px;
+    outline:none;
+    background:white;
+}
+
+.filters input{
+    min-width:280px;
+}
+
+.table-wrap{
+    width:100%;
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    min-width:1250px;
+    border-collapse:collapse;
+}
+
+th,
+td{
+    padding:11px 10px;
+    border-bottom:1px solid var(--border);
+    text-align:left;
+    white-space:nowrap;
+}
+
+th{
+    background:#eff6ff;
+    color:var(--primary);
+}
+
+tr:hover td{
+    background:#f8fafc;
+}
+
+.status{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:700;
+}
+
+.status-0{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.status-1a{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
+.status-1b{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.actions{
+    display:flex;
+    gap:6px;
+}
+
+.action{
+    border:0;
+    border-radius:7px;
+    padding:7px 9px;
+    cursor:pointer;
+    font-size:12px;
+    font-weight:700;
+}
+
+.action-1a{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
+.action-1b{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.action-0{
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.loading,
+.empty{
+    padding:35px;
+    text-align:center;
+    color:var(--muted);
+}
+
+.message{
+    display:none;
+    padding:12px 15px;
+    margin-bottom:15px;
+    border-radius:9px;
+    font-weight:600;
+}
+
+.message.success{
+    display:block;
+    background:#dcfce7;
+    color:#166534;
+}
+
+.message.error{
+    display:block;
+    background:#fee2e2;
+    color:#991b1b;
+}
+
+.info{
+    margin-bottom:18px;
+    padding:14px;
+    background:#eff6ff;
+    color:#1e40af;
+    border-radius:10px;
+    line-height:1.5;
+}
+
+footer{
+    margin-top:40px;
+    background:#173b8f;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+@media(max-width:700px){
+
+    .header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .filters input{
+        width:100%;
+        min-width:0;
+    }
+
+}
+</style>
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+<header class="header">
+
+    <div>
+        <h1>📝 Quản lý kỳ thi</h1>
+        <p>Quản trị trạng thái và hoạt động của các kỳ thi</p>
+    </div>
+
+    <div class="header-actions">
+
+        <button
+            class="btn btn-light"
+            onclick="taiKyThi()">
+            🔄 Làm mới
+        </button>
+
+        <a
+            class="btn btn-light"
+            href="admin.html">
+            ← Về Admin
+        </a>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+<section class="card">
+
+    <div class="section-head">
+
+        <h2>📋 Danh sách kỳ thi</h2>
+
+        <strong id="tongKyThi">
+            0 kỳ thi
+        </strong>
+
+    </div>
+
+
+    <div class="info">
+
+        🔐 <b>Quyền Admin:</b>
+        Chỉ Admin mới được mở hoặc đóng kỳ thi.
+
+        <br>
+
+        🟦 <b>1A:</b> Luyện tập, có thể thi nhiều lần.
+
+        &nbsp;&nbsp;
+
+        🟩 <b>1B:</b> Thi thật.
+
+        &nbsp;&nbsp;
+
+        🔴 <b>0:</b> Đóng kỳ thi.
+
+    </div>
+
+
+    <div
+        id="message"
+        class="message">
+    </div>
+
+
+    <div class="filters">
+
+        <input
+            id="timKiem"
+            type="text"
+            placeholder="🔎 Tìm mã hoặc tên kỳ thi..."
+            oninput="locKyThi()">
+
+
+        <select
+            id="locTrangThai"
+            onchange="locKyThi()">
+
+            <option value="">
+                Tất cả trạng thái
+            </option>
+
+            <option value="0">
+                🔴 Đóng
+            </option>
+
+            <option value="1A">
+                🔵 Luyện tập
+            </option>
+
+            <option value="1B">
+                🟢 Thi thật
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <div
+        id="bangKyThi"
+        class="table-wrap">
+
+        <div class="loading">
+            ⏳ Đang tải danh sách kỳ thi...
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<footer>
+    Olympic HSG Online © 2026
+</footer>
+
+
+<script src="js/quan-ly-ky-thi-admin.js"></script>
+
+
+</body>
+</html>

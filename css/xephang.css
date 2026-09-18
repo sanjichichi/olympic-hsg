@@ -1,0 +1,191 @@
+/* =================================================
+   BỘ LỌC XẾP HẠNG
+   ================================================= */
+
+.topbar{
+
+    width:95%;
+    max-width:1350px;
+
+    margin:20px auto 25px;
+
+    padding:14px 22px;
+
+    background:rgba(255,255,255,0.88);
+
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+
+    border-radius:16px;
+
+    box-shadow:
+        0 6px 20px rgba(0,0,0,.15);
+
+    box-sizing:border-box;
+
+}
+
+
+/* ================================================
+   3 BỘ LỌC TRÊN CÙNG 1 HÀNG
+   ================================================ */
+
+.filter-group{
+
+    display:grid;
+
+    grid-template-columns:
+        auto minmax(150px,1fr)
+        auto minmax(150px,1fr)
+        auto minmax(220px,1.4fr);
+
+    align-items:center;
+
+    gap:8px 10px;
+
+}
+
+
+/* ================================================
+   NHÃN
+   ================================================ */
+
+.filter-group label{
+
+    font-weight:700;
+
+    color:#0755a5;
+
+    font-size:15px;
+
+    white-space:nowrap;
+
+}
+
+
+/* ================================================
+   Ô SELECT
+   ================================================ */
+
+.filter-group select{
+
+    width:100%;
+
+    height:40px;
+
+    padding:0 12px;
+
+    background:#fff;
+
+    border:1px solid #c7d8ea;
+
+    border-radius:9px;
+
+    color:#222;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    outline:none;
+
+    cursor:pointer;
+
+    box-sizing:border-box;
+
+    transition:.2s;
+
+}
+
+
+/* Khi rê chuột */
+
+.filter-group select:hover{
+
+    border-color:#1976d2;
+
+}
+
+
+/* Khi chọn */
+
+.filter-group select:focus{
+
+    border-color:#1976d2;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(25,118,210,.12);
+
+}
+
+
+/* =================================================
+   MÀN HÌNH NHỎ
+   ================================================= */
+
+@media(max-width:900px){
+
+    .filter-group{
+
+        grid-template-columns:
+            auto 1fr;
+
+    }
+
+}
+
+
+@media(max-width:600px){
+
+    .topbar{
+
+        width:92%;
+
+        padding:14px;
+
+    }
+
+    .filter-group{
+
+        display:grid;
+
+        grid-template-columns:1fr;
+
+        gap:5px;
+
+    }
+
+    .filter-group label{
+
+        margin-top:6px;
+
+    }
+
+    .filter-group select{
+
+        height:40px;
+
+    }
+
+}
+h1 {
+    font-family: "Segoe UI", Arial, sans-serif;
+
+    font-size: 40px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    color: #ffffff;
+
+    -webkit-text-stroke: 2px #0755a5;
+
+    text-shadow:
+        10 5px 8px rgba(0,0,0,.35);
+
+    text-align: center;
+
+    margin: 0;
+}

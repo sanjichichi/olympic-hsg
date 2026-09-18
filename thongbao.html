@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olympic Học sinh Giỏi</title>
+
+  <link
+rel="stylesheet"
+href="css/style-old.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stysheet" href="css/thele.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+<header class="hero">
+
+    <img src="anhnen/banner-clb.png"
+         alt="Banner Câu lạc bộ Học sinh Khá Giỏi"
+         class="hero-banner">
+
+</header>
+<div class="page-bg">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</header>
+<nav class="menu">
+
+    <div class="menu-links">
+
+        <a href="index.html">Trang chủ</a>
+
+        <a href="gioithieu.html">Giới thiệu</a>
+
+        <a href="thongbao.html">Thông báo</a>
+
+        <a href="xephang.html">Bảng xếp hạng</a>
+
+        <a href="thele.html">Thể lệ</a>
+
+         <a href="clb.html">CLB năng khiếu</a>
+
+    </div>
+    <div class="menu-user">
+    <a href="index.html" class="login-btn">
+        ⬅ Quay lại trang chủ
+    </a>
+</div>
+
+</nav>
+<section class="rule-section">
+
+    <div class="rule-box">
+
+        <h1>📢 THÔNG BÁO</h1>
+
+        <p class="sub-title">
+            Trường THCS Phú Đình - CLB Học sinh khá giỏi
+        </p>
+        <div class="warning-box">
+
+    
+    
+        <ul>
+
+            <li>Nhằm tạo sân chơi học tập bổ ích, giúp học sinh củng cố kiến thức, rèn luyện kỹ năng làm bài và chuẩn bị tốt cho các kỳ thi học sinh giỏi, Trường THCS Hoàng Ngân phát động phong trào ôn luyện và tham gia Kỳ thi Olympic Học sinh Giỏi Online.</li>
+
+            <li>Kính đề nghị các em học sinh tích cực tự học, tự ôn luyện và thường xuyên tham gia các bài thi thử trên hệ thống để củng cố kiến thức, làm quen với cấu trúc đề thi, rèn luyện kỹ năng quản lý thời gian và nâng cao kết quả học tập.</li>
+
+            <li>📅 Kỳ thi chính thức của từng môn sẽ được tổ chức định kỳ 01 lần/tháng trên hệ thống, gồm các môn:</li>
+
+            <ul>
+
+                <li>📐 Olympic Toán</li>
+
+                <li>📚 Olympic Ngữ văn</li>
+
+                <li>🇬🇧 Olympic Tiếng Anh</li>
+
+                <li>🏆 Olympic Tổng hợp (Toán, Ngữ văn, Tiếng Anh)</li>
+            </ul>
+            <li>Sau mỗi kỳ thi, Ban tổ chức sẽ:</li>
+            <li>📊 Công bố kết quả và xếp hạng học sinh tham gia kỳ thi.</li>
+            <li>📊 Tổng kết, đánh giá chất lượng bài làm. </li>
+            <li>🏅 Trao chứng nhận và phần thưởng cho học sinh đạt giải.</li >
+            <li>📢 Thông báo các kỳ thi tiếp theo.</li>
+        </ul>
+        <ul>
+
+            <li>Thông qua hệ thống Olympic Học sinh Giỏi Online, nhà trường mong muốn tạo môi trường học tập tích cực, khuyến khích tinh thần tự học, tự rèn luyện và phát huy năng lực của mỗi học sinh.</li>
+
+            <li>💐 Chúc các em học tập tốt, ôn luyện hiệu quả và đạt nhiều thành tích cao trong các kỳ thi sắp tới!</li>
+
+        </ul>
+
+        <h2>"Mỗi lần luyện tập là một bước tiến tới thành công. Hãy kiên trì ôn luyện hôm nay để tự tin chinh phục những thành tích cao trong các kỳ thi Olympic Học sinh Giỏi Online!" 🌟</h2>
+
+       
+</div>
+            <strong>
+                BAN TỔ CHỨC CÂU LẠC BỘ HỌC SINH KHÁ GIỎI<br>
+                TRƯỜNG THCS PHÚ ĐÌNH
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+<footer class="footer">
+
+    <div class="footer-content">
+
+        <h3>🏆 Olympic Học sinh Khá giỏi Online</h3>
+
+        <p>
+            © 2026 Bản quyền thuộc Trường THCS Phú Đình
+        </p>
+
+        <p class="version">
+            Phiên bản <strong>Version 1.1</strong>
+        </p>
+
+    </div>
+
+</footer>
+<script>
+const btn =
+document.getElementById(
+"taiKhoanBtn"
+);
+
+if(btn){
+
+    btn.innerHTML =
+    localStorage.getItem("hoTen")
+    + " ▼";
+
+    btn.addEventListener(
+    "click",
+    function(e){
+
+        e.preventDefault();
+
+        const menu =
+        document.getElementById(
+        "userDropdown"
+        );
+
+        menu.style.display =
+        menu.style.display ===
+        "block"
+        ? "none"
+        : "block";
+
+    });
+
+}
+function dangXuat(){
+
+    if(confirm(
+    "Bạn muốn đăng xuất?"
+    )){
+
+        localStorage.clear();
+
+        window.location.href =
+        "index.html";
+
+    }
+
+}
+</script>
+</body>
+</html>

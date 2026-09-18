@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Kết quả bài thi</title>
+
+<link
+rel="stylesheet"
+href="css/style-old.css">
+
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+<div class="login-page">
+
+<div class="login-container">
+
+<h1>🏆 KẾT QUẢ BÀI THI</h1>
+
+<p>
+<strong>Họ tên:</strong>
+<span id="hoTen"></span>
+</p>
+
+<p>
+<strong>Lớp:</strong>
+<span id="lop"></span>
+</p>
+
+<p>
+<strong>Ngày sinh:</strong>
+<span id="ngaySinh"></span>
+</p>
+
+<p>
+<strong>Kỳ thi:</strong>
+<span id="kyThi"></span>
+</p>
+
+<hr>
+
+<p>
+<strong>Số câu đúng:</strong>
+<span id="soDung"></span>
+</p>
+
+<p>
+<strong>Số câu sai:</strong>
+<span id="soSai"></span>
+</p>
+
+<p>
+<strong>Điểm:</strong>
+<span id="diem"></span>
+</p>
+
+<p>
+<strong>Tỷ lệ đúng:</strong>
+<span id="tyLe"></span>
+</p>
+<p>
+<strong>Xếp loại:</strong>
+<span id="xepLoai"></span>
+</p>
+<div class="badge-box">
+
+    <div id="huyHieu"></div>
+
+</div>
+<button onclick="veTrangChu()">
+
+🏠 VỀ TRANG CHỦ
+
+</button>
+
+</div>
+
+</div>
+
+<script src="js/ketqua.js"></script>
+<script>
+console.log("Ketqua.html đã chạy");
+console.log("Kỳ thi:", localStorage.getItem("tenKyThi"));
+document.getElementById("hoTen").innerHTML =localStorage.getItem("tenThiSinh");
+document.getElementById("lop").innerHTML =localStorage.getItem("lopThiSinh");
+document.getElementById("ngaySinh").innerHTML =localStorage.getItem("ngaySinh");
+document.getElementById("kyThi").innerHTML =localStorage.getItem("tenKyThi");
+
+let diem =Number(localStorage.getItem("diemThi"));
+let tong = Number(localStorage.getItem("tongSoCau"));
+let sai =Number(localStorage.getItem("soCauSai"));
+let tyLe =Math.round(diem / tong * 100);
+let xepLoai = "";
+
+if(tyLe >= 90){
+
+    xepLoai = "🏆 Xuất sắc";
+
+}
+else if(tyLe >= 80){
+
+    xepLoai = "🥇 Giỏi";
+
+}
+else if(tyLe >= 65){
+
+    xepLoai = "🥈 Khá";
+
+}
+else if(tyLe >= 50){
+
+    xepLoai = "🥉 Đạt";
+
+}
+else{
+
+    xepLoai = "📚 Cần cố gắng";
+
+}
+
+document.getElementById("soDung").innerHTML = diem;
+document.getElementById("soSai").innerHTML = sai;
+document.getElementById("diem").innerHTML = diem + "/" + tong;
+document.getElementById("tyLe").innerHTML = tyLe + "%";
+document.getElementById("xepLoai").innerHTML = xepLoai;
+let huyHieu = document.getElementById(
+"huyHieu"
+);
+
+if(tyLe >= 90){
+
+    huyHieu.innerHTML =
+    "🏆 HUY HIỆU VÀNG";
+
+    huyHieu.style.background =
+    "#ffd700";
+
+}
+else if(tyLe >= 80){
+
+    huyHieu.innerHTML =
+    "🥇 HUY HIỆU BẠC";
+
+    huyHieu.style.background =
+    "#c0c0c0";
+
+}
+else if(tyLe >= 65){
+
+    huyHieu.innerHTML =
+    "🥉 HUY HIỆU ĐỒNG";
+
+    huyHieu.style.background =
+    "#cd7f32";
+
+}
+else{
+
+    huyHieu.innerHTML =
+    "📚 TIẾP TỤC CỐ GẮNG";
+
+    huyHieu.style.background =
+    "#e0e0e0";
+
+}
+console.log("===== guiKetQua() BAT DAU =====");
+guiKetQua();
+async function guiKetQua(){
+
+    // =========================================================
+    // GỬI KẾT QUẢ VỀ 1 SHEET KETQUA QUA GOOGLE APPS SCRIPT
+    // =========================================================
+
+    const API_URL =
+        "https://script.google.com/macros/s/AKfycbyuaZJs8kA110eyJ0Q0ADi5nlfpwOoHJ7VFGcemxnpjOlBBB7VSRFwXbK4gybK-tqnV/exec";
+
+    const maThiSinh =
+        localStorage.getItem("maThiSinh") || "";
+
+    const kyThi =
+        localStorage.getItem("tenKyThi") || "";
+
+    // Ưu tiên mã kỳ thi. Nếu hệ thống cũ chưa lưu maKyThi,
+    // tạm dùng tên kỳ thi để không làm hỏng kết quả hiện tại.
+    const maKyThi =
+        localStorage.getItem("maKyThi") || kyThi;
+
+    const submitKey =
+        `submitted_${maThiSinh}_${maKyThi}`;
+
+    console.log("===== GUI KET QUA KETQUA CHUNG =====");
+    console.log("API:", API_URL);
+    console.log("maKyThi:", maKyThi);
+    console.log("maHS:", maThiSinh);
+
+    // Chống gửi trùng ở trình duyệt
+    if (localStorage.getItem(submitKey) === "true") {
+        console.log("Kết quả đã được gửi trước đó.");
+        return;
+    }
+
+    const payload = new URLSearchParams();
+
+    payload.append("maKyThi", maKyThi);
+    payload.append("maHS", maThiSinh);
+    payload.append(
+        "hoTen",
+        localStorage.getItem("tenThiSinh") ||
+        localStorage.getItem("hoTen") || ""
+    );
+    payload.append(
+        "gioiTinh",
+        localStorage.getItem("gioiTinh") || ""
+    );
+    payload.append(
+        "lop",
+        localStorage.getItem("lopThiSinh") ||
+        localStorage.getItem("lop") || ""
+    );
+    payload.append("tenKyThi", kyThi);
+
+    payload.append(
+        "khoi",
+        localStorage.getItem("khoi") ||
+        localStorage.getItem("khoiThiSinh") || ""
+    );
+
+    payload.append(
+        "mon",
+        localStorage.getItem("mon") ||
+        localStorage.getItem("monThi") || ""
+    );
+
+    payload.append("soDung", diem);
+    payload.append("soSai", sai);
+    payload.append("tongSoCau", tong);
+
+    payload.append(
+        "diem",
+        diem
+    );
+
+    payload.append(
+        "thoiGian",
+        localStorage.getItem("thoiGianHoanThanh") || ""
+    );
+
+    payload.append(
+        "roiTab",
+        localStorage.getItem("soLanRoiTab") || "0"
+    );
+
+    payload.append(
+        "ngayThi",
+        new Date().toISOString().split("T")[0]
+    );
+
+    payload.append("tyLe", tyLe);
+    payload.append("xepLoai", xepLoai);
+
+    payload.append(
+        "dotThi",
+        localStorage.getItem("dotThi") || ""
+    );
+
+    payload.append(
+        "namHoc",
+        localStorage.getItem("namHoc") || ""
+    );
+
+    console.log("========== DỮ LIỆU GỬI ==========");
+
+    for (const [key, value] of payload.entries()) {
+        console.log(key, "=", value);
+    }
+
+    try {
+
+        await fetch(API_URL, {
+            method: "POST",
+            mode: "no-cors",
+            body: payload
+        });
+
+        /*
+         * Với mode no-cors, trình duyệt không cho đọc response
+         * của Apps Script. Vì vậy sau khi POST thành công ở mức
+         * request, đánh dấu local để tránh gửi lại.
+         */
+        localStorage.setItem(submitKey, "true");
+
+        console.log(
+            "Đã gửi kết quả về Sheet KETQUA."
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Lỗi khi gửi kết quả:",
+            error
+        );
+
+    }
+}
+
+function veTrangChu(){
+
+    [
+        "tenKyThi",
+        "diemThi",
+        "tongSoCau",
+        "soCauSai",
+        "thoiGianHoanThanh",
+        "thoiGianConLai",
+        "soLanRoiTab"
+    ].forEach(key => localStorage.removeItem(key));
+
+    window.location.href = "index.html";
+
+}
+
+</script>
+
+</body>
+
+</html>

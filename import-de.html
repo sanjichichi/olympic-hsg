@@ -1,0 +1,2439 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Import đề Excel - Olympic HSG Online</title>
+
+    <!-- SheetJS: đọc file Excel -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            font-family:
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background: #f1f5f9;
+
+            color: #1e293b;
+
+            min-height: 100vh;
+
+        }
+
+
+        /* =================================================
+           HEADER
+        ================================================= */
+
+        .header {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1e3a8a,
+                    #2563eb
+                );
+
+            color: white;
+
+            padding:
+                18px 35px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            box-shadow:
+                0 4px 15px
+                rgba(0,0,0,.12);
+
+        }
+
+
+        .header-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+        }
+
+
+        .header-icon {
+
+            font-size: 40px;
+
+        }
+
+
+        .header-title h1 {
+
+            font-size: 23px;
+
+            margin-bottom: 3px;
+
+        }
+
+
+        .header-title p {
+
+            font-size: 14px;
+
+            opacity: .85;
+
+        }
+
+
+        .back-btn {
+
+            color: white;
+
+            text-decoration: none;
+
+            border:
+                1px solid
+                rgba(255,255,255,.4);
+
+            padding:
+                9px 15px;
+
+            border-radius: 10px;
+
+            font-weight: 600;
+
+        }
+
+
+        .back-btn:hover {
+
+            background:
+                rgba(255,255,255,.15);
+
+        }
+
+
+        /* =================================================
+           CONTAINER
+        ================================================= */
+
+        .container {
+
+            width: 94%;
+
+            max-width: 1200px;
+
+            margin: 30px auto;
+
+        }
+
+
+        /* =================================================
+           TITLE
+        ================================================= */
+
+        .page-title {
+
+            background: white;
+
+            border-radius: 20px;
+
+            padding: 25px 30px;
+
+            margin-bottom: 22px;
+
+            border-left:
+                5px solid #16a34a;
+
+            box-shadow:
+                0 5px 18px
+                rgba(15,23,42,.06);
+
+        }
+
+
+        .page-title h2 {
+
+            color: #1e3a8a;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .page-title p {
+
+            color: #64748b;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* =================================================
+           FORM
+        ================================================= */
+
+        .form-card {
+
+            background: white;
+
+            border-radius: 20px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 5px 18px
+                rgba(15,23,42,.06);
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .section-title {
+
+            color: #1e3a8a;
+
+            font-size: 20px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 20px;
+
+        }
+
+
+        .form-group {
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        .form-group.full {
+
+            grid-column:
+                1 / -1;
+
+        }
+
+
+        .form-group label {
+
+            font-weight: 700;
+
+            color: #334155;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .form-control {
+
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border:
+                2px solid #e2e8f0;
+
+            border-radius: 12px;
+
+            font-size: 15px;
+
+            outline: none;
+
+            background: white;
+
+        }
+
+
+        .form-control:focus {
+
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 4px
+                rgba(37,99,235,.08);
+
+        }
+
+
+        /* =================================================
+           FILE DROP
+        ================================================= */
+
+        .upload-area {
+
+            border:
+                2px dashed #94a3b8;
+
+            border-radius: 18px;
+
+            padding: 35px 20px;
+
+            text-align: center;
+
+            background: #f8fafc;
+
+            cursor: pointer;
+
+            transition: .2s;
+
+        }
+
+
+        .upload-area:hover,
+
+        .upload-area.dragover {
+
+            border-color: #2563eb;
+
+            background: #eff6ff;
+
+        }
+
+
+        .upload-icon {
+
+            font-size: 55px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .upload-area h3 {
+
+            color: #334155;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .upload-area p {
+
+            color: #64748b;
+
+            font-size: 14px;
+
+        }
+
+
+        .upload-area input {
+
+            display: none;
+
+        }
+
+
+        .file-name {
+
+            display: none;
+
+            margin-top: 15px;
+
+            padding: 12px;
+
+            border-radius: 10px;
+
+            background: #dcfce7;
+
+            color: #166534;
+
+            font-weight: 600;
+
+        }
+
+
+        /* =================================================
+           FORMAT
+        ================================================= */
+
+        .format-note {
+
+            margin-top: 15px;
+
+            padding: 15px;
+
+            background: #eff6ff;
+
+            border:
+                1px solid #bfdbfe;
+
+            border-radius: 12px;
+
+            color: #1e40af;
+
+            line-height: 1.6;
+
+            font-size: 14px;
+
+        }
+
+
+        .format-note code {
+
+            background: #dbeafe;
+
+            padding:
+                2px 6px;
+
+            border-radius: 5px;
+
+        }
+
+
+        /* =================================================
+           BUTTON
+        ================================================= */
+
+        .actions {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 12px;
+
+            margin-top: 25px;
+
+        }
+
+
+        .btn {
+
+            border: none;
+
+            border-radius: 12px;
+
+            padding:
+                13px 22px;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+        }
+
+
+        .btn-back {
+
+            background: #e2e8f0;
+
+            color: #334155;
+
+        }
+
+
+        .btn-preview {
+
+            background: #2563eb;
+
+            color: white;
+
+        }
+
+
+        .btn-save {
+
+            background: #16a34a;
+
+            color: white;
+
+        }
+
+
+        .btn:disabled {
+
+            opacity: .5;
+
+            cursor: not-allowed;
+
+        }
+
+
+        /* =================================================
+           THỐNG KÊ
+        ================================================= */
+
+        .stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .stat {
+
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 18px;
+
+            text-align: center;
+
+            box-shadow:
+                0 4px 15px
+                rgba(15,23,42,.05);
+
+        }
+
+
+        .stat strong {
+
+            display: block;
+
+            font-size: 28px;
+
+            color: #1e3a8a;
+
+            margin-bottom: 4px;
+
+        }
+
+
+        .stat span {
+
+            color: #64748b;
+
+            font-size: 14px;
+
+        }
+
+
+        .stat.error strong {
+
+            color: #dc2626;
+
+        }
+
+
+        /* =================================================
+           PREVIEW
+        ================================================= */
+
+        .preview-section {
+
+            display: none;
+
+            background: white;
+
+            border-radius: 20px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 5px 18px
+                rgba(15,23,42,.06);
+
+        }
+
+
+        .preview-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .preview-header h2 {
+
+            color: #1e3a8a;
+
+            font-size: 20px;
+
+        }
+
+
+        .question-card {
+
+            border:
+                1px solid #e2e8f0;
+
+            border-radius: 15px;
+
+            padding: 20px;
+
+            margin-bottom: 15px;
+
+            background: #ffffff;
+
+        }
+
+
+        .question-card.invalid {
+
+            border-color: #fca5a5;
+
+            background: #fff7f7;
+
+        }
+
+
+        .question-number {
+
+            color: #2563eb;
+
+            font-weight: 800;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .question-text {
+
+            font-weight: 600;
+
+            line-height: 1.6;
+
+            margin-bottom: 13px;
+
+        }
+
+
+        .answers {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 8px;
+
+        }
+
+
+        .answer {
+
+            padding: 9px 12px;
+
+            background: #f8fafc;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+        }
+
+
+        .answer.correct {
+
+            background: #dcfce7;
+
+            color: #166534;
+
+            font-weight: 700;
+
+        }
+
+
+        .question-error {
+
+            color: #dc2626;
+
+            margin-top: 12px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+        }
+
+
+        /* =================================================
+           THÔNG BÁO
+        ================================================= */
+
+        #thongBao {
+
+            display: none;
+
+            padding: 14px 16px;
+
+            border-radius: 12px;
+
+            margin-bottom: 20px;
+
+            line-height: 1.5;
+
+        }
+
+
+        #thongBao.success {
+
+            display: block;
+
+            background: #dcfce7;
+
+            color: #166534;
+
+        }
+
+
+        #thongBao.error {
+
+            display: block;
+
+            background: #fee2e2;
+
+            color: #991b1b;
+
+        }
+
+
+        #thongBao.warning {
+
+            display: block;
+
+            background: #fef3c7;
+
+            color: #92400e;
+
+        }
+
+
+        /* =================================================
+           FOOTER
+        ================================================= */
+
+        footer {
+
+            margin-top: 40px;
+
+            padding: 25px;
+
+            background: #0f172a;
+
+            color: #cbd5e1;
+
+            text-align: center;
+
+            font-size: 14px;
+
+        }
+
+
+        /* =================================================
+           MOBILE
+        ================================================= */
+
+        @media (max-width: 750px) {
+
+            .form-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .form-group.full {
+
+                grid-column: auto;
+
+            }
+
+            .stats {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .answers {
+
+                grid-template-columns: 1fr;
+
+            }
+
+            .actions {
+
+                flex-direction: column;
+
+            }
+
+            .btn {
+
+                width: 100%;
+
+            }
+
+            .header {
+
+                padding:
+                    15px 18px;
+
+            }
+
+            .header-title h1 {
+
+                font-size: 18px;
+
+            }
+
+        }
+
+    </style>
+
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+    <div class="header-left">
+
+        <div class="header-icon">
+            📥
+        </div>
+
+        <div class="header-title">
+
+            <h1>
+                IMPORT ĐỀ EXCEL
+            </h1>
+
+            <p>
+                Olympic HSG Online - Khu vực giáo viên
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <a
+        href="trang-gv.html"
+        class="back-btn">
+
+        ← Trang giáo viên
+
+    </a>
+
+</header>
+
+
+
+<main class="container">
+
+
+    <!-- =================================================
+         TIÊU ĐỀ
+    ================================================= -->
+
+    <section class="page-title">
+
+        <h2>
+            📚 Tạo bộ đề từ Excel
+        </h2>
+
+        <p>
+            Giáo viên nhập thông tin bộ đề,
+            chọn file Excel và hệ thống sẽ đọc,
+            kiểm tra và hiển thị câu hỏi để
+            xem trước trước khi lưu.
+        </p>
+
+    </section>
+
+
+
+    <!-- =================================================
+         THÔNG BÁO
+    ================================================= -->
+
+    <div id="thongBao"></div>
+
+
+
+    <!-- =================================================
+         THÔNG TIN ĐỀ
+    ================================================= -->
+
+    <section class="form-card">
+
+        <h2 class="section-title">
+            1️⃣ Thông tin bộ đề
+        </h2>
+
+
+        <div class="form-grid">
+
+
+            <div class="form-group full">
+
+                <label for="tenDe">
+                    Tên bộ đề *
+                </label>
+
+                <input
+                    type="text"
+                    id="tenDe"
+                    class="form-control"
+                    placeholder="Ví dụ: Olympic Toán 6 - Vòng 1"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="mon">
+                    Môn *
+                </label>
+
+                <select
+                    id="mon"
+                    class="form-control">
+
+                    <option value="">
+                        -- Chọn môn --
+                    </option>
+
+                    <option value="Toán">
+                        Toán
+                    </option>
+
+                    <option value="Ngữ văn">
+                        Ngữ văn
+                    </option>
+
+                    <option value="Tiếng Anh">
+                        Tiếng Anh
+                    </option>
+
+                    <option value="KHTN">
+                        KHTN
+                    </option>
+
+                    <option value="Lịch sử và Địa lí">
+                        Lịch sử và Địa lí
+                    </option>
+
+                    <option value="Tin học">
+                        Tin học
+                    </option>
+
+                    <option value="Khác">
+                        Khác
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="khoi">
+                    Khối *
+                </label>
+
+                <select
+                    id="khoi"
+                    class="form-control">
+
+                    <option value="">
+                        -- Chọn khối --
+                    </option>
+
+                    <option value="6">
+                        Lớp 6
+                    </option>
+
+                    <option value="7">
+                        Lớp 7
+                    </option>
+
+                    <option value="8">
+                        Lớp 8
+                    </option>
+
+                    <option value="9">
+                        Lớp 9
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="thoiGian">
+                    Thời gian làm bài (phút)
+                </label>
+
+                <input
+                    type="number"
+                    id="thoiGian"
+                    class="form-control"
+                    value="30"
+                    min="1"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="loaiDe">
+                    Loại đề
+                </label>
+
+                <select
+                    id="loaiDe"
+                    class="form-control">
+
+                    <option value="thi-thu">
+                        Thi thử
+                    </option>
+
+                    <option value="thi-that">
+                        Thi thật
+                    </option>
+
+                    <option value="luyen-tap">
+                        Luyện tập
+                    </option>
+
+                </select>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         UPLOAD EXCEL
+    ================================================= -->
+
+    <section class="form-card">
+
+        <h2 class="section-title">
+            2️⃣ Chọn file Excel
+        </h2>
+
+
+        <label
+            for="fileExcel"
+            class="upload-area"
+            id="uploadArea">
+
+            <div class="upload-icon">
+                📊
+            </div>
+
+            <h3>
+                Nhấn để chọn file Excel
+            </h3>
+
+            <p>
+                Hỗ trợ định dạng .xlsx và .xls
+            </p>
+
+            <input
+                type="file"
+                id="fileExcel"
+                accept=".xlsx,.xls"
+            >
+
+            <div
+                id="fileName"
+                class="file-name">
+            </div>
+
+        </label>
+
+
+        <div class="format-note">
+
+            <strong>📌 Cấu trúc Excel:</strong>
+
+            Hàng đầu tiên phải là tiêu đề cột:
+
+            <br><br>
+
+            <code>STT</code> ·
+            <code>Câu hỏi</code> ·
+            <code>A</code> ·
+            <code>B</code> ·
+            <code>C</code> ·
+            <code>D</code> ·
+            <code>Đáp án</code> ·
+            <code>Điểm</code> ·
+            <code>Giải thích</code>
+
+            <br><br>
+
+            Ví dụ:
+
+            <br>
+
+            <strong>
+                1 | Thủ đô Việt Nam là? |
+                Hà Nội | Huế | Đà Nẵng |
+                TP.HCM | A | 1 | ...
+            </strong>
+
+        </div>
+
+
+        <div class="actions">
+
+            <button
+                type="button"
+                class="btn btn-back"
+                onclick="window.location.href='trang-gv.html'">
+
+                ← Quay lại
+
+            </button>
+
+
+            <button
+                type="button"
+                id="btnDocExcel"
+                class="btn btn-preview"
+                disabled>
+
+                📖 Đọc & kiểm tra Excel
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         THỐNG KÊ
+    ================================================= -->
+
+    <section
+        id="statsSection"
+        class="stats"
+        style="display:none;">
+
+        <div class="stat">
+
+            <strong id="tongCau">
+                0
+            </strong>
+
+            <span>
+                Tổng số câu
+            </span>
+
+        </div>
+
+
+        <div class="stat">
+
+            <strong id="cauHopLe">
+                0
+            </strong>
+
+            <span>
+                Câu hợp lệ
+            </span>
+
+        </div>
+
+
+        <div class="stat error">
+
+            <strong id="cauLoi">
+                0
+            </strong>
+
+            <span>
+                Câu lỗi
+            </span>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         XEM TRƯỚC
+    ================================================= -->
+
+    <section
+        id="previewSection"
+        class="preview-section">
+
+        <div class="preview-header">
+
+            <h2>
+                👁️ Xem trước câu hỏi
+            </h2>
+
+        </div>
+
+
+        <div id="previewList"></div>
+
+
+        <div class="actions">
+
+            <button
+                type="button"
+                class="btn btn-back"
+                onclick="lamLai()">
+
+                🔄 Chọn lại file
+
+            </button>
+
+
+            <button
+                type="button"
+                id="btnLuuDe"
+                class="btn btn-save"
+                disabled>
+
+                💾 Lưu bộ đề
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <p>
+        🏆 Olympic HSG Online
+    </p>
+
+    <p style="margin-top:6px;">
+        Khu vực quản lý giáo viên
+    </p>
+
+    <p style="margin-top:8px;">
+        © 2026 Trường THCS Phú Đình
+    </p>
+
+</footer>
+
+
+
+<script>
+
+/* =====================================================
+   KIỂM TRA ĐĂNG NHẬP GIÁO VIÊN
+===================================================== */
+
+const dangNhapGV =
+    localStorage.getItem(
+        "dangNhapGV"
+    );
+
+
+const loaiTaiKhoan =
+    localStorage.getItem(
+        "loaiTaiKhoan"
+    );
+
+
+if (
+    dangNhapGV !== "true"
+    ||
+    loaiTaiKhoan !== "giaoVien"
+) {
+
+    window.location.href =
+        "login-gv.html";
+
+}
+
+
+/* =====================================================
+   BIẾN DỮ LIỆU
+===================================================== */
+
+let danhSachCauHoi = [];
+
+let fileExcelDaChon = null;
+
+
+/* =====================================================
+   THÔNG BÁO
+===================================================== */
+
+function thongBao(
+    noiDung,
+    loai = "warning"
+) {
+
+    const box =
+        document.getElementById(
+            "thongBao"
+        );
+
+    box.innerHTML =
+        noiDung;
+
+    box.className =
+        loai;
+
+    box.style.display =
+        "block";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+/* =====================================================
+   KIỂM TRA FILE
+===================================================== */
+
+document
+.getElementById("fileExcel")
+.addEventListener(
+    "change",
+    function(event) {
+
+        const file =
+            event.target.files[0];
+
+
+        if (!file) {
+
+            return;
+
+        }
+
+
+        const tenFile =
+            file.name.toLowerCase();
+
+
+        if (
+            !tenFile.endsWith(".xlsx")
+            &&
+            !tenFile.endsWith(".xls")
+        ) {
+
+            thongBao(
+                "❌ Vui lòng chọn file Excel (.xlsx hoặc .xls).",
+                "error"
+            );
+
+            this.value = "";
+
+            return;
+
+        }
+
+
+        fileExcelDaChon =
+            file;
+
+
+        const fileName =
+            document.getElementById(
+                "fileName"
+            );
+
+
+        fileName.innerHTML =
+            "📄 " +
+            file.name +
+            " (" +
+            formatFileSize(file.size) +
+            ")";
+
+
+        fileName.style.display =
+            "block";
+
+
+        document
+            .getElementById(
+                "btnDocExcel"
+            )
+            .disabled =
+            false;
+
+
+        thongBao(
+            "✅ Đã chọn file. Hãy bấm <strong>Đọc & kiểm tra Excel</strong>.",
+            "success"
+        );
+
+    }
+);
+
+
+/* =====================================================
+   FORMAT DUNG LƯỢNG
+===================================================== */
+
+function formatFileSize(
+    bytes
+) {
+
+    if (bytes < 1024) {
+
+        return bytes + " B";
+
+    }
+
+
+    if (bytes < 1024 * 1024) {
+
+        return (
+            bytes / 1024
+        ).toFixed(1) + " KB";
+
+    }
+
+
+    return (
+        bytes /
+        (1024 * 1024)
+    ).toFixed(1) + " MB";
+
+}
+
+
+/* =====================================================
+   ĐỌC EXCEL
+===================================================== */
+
+document
+.getElementById(
+    "btnDocExcel"
+)
+.addEventListener(
+    "click",
+    function() {
+
+        const tenDe =
+            document
+            .getElementById(
+                "tenDe"
+            )
+            .value
+            .trim();
+
+
+        const mon =
+            document
+            .getElementById(
+                "mon"
+            )
+            .value;
+
+
+        const khoi =
+            document
+            .getElementById(
+                "khoi"
+            )
+            .value;
+
+
+        if (!tenDe) {
+
+            thongBao(
+                "⚠️ Vui lòng nhập tên bộ đề.",
+                "warning"
+            );
+
+            return;
+
+        }
+
+
+        if (!mon) {
+
+            thongBao(
+                "⚠️ Vui lòng chọn môn.",
+                "warning"
+            );
+
+            return;
+
+        }
+
+
+        if (!khoi) {
+
+            thongBao(
+                "⚠️ Vui lòng chọn khối.",
+                "warning"
+            );
+
+            return;
+
+        }
+
+
+        if (!fileExcelDaChon) {
+
+            thongBao(
+                "⚠️ Vui lòng chọn file Excel.",
+                "warning"
+            );
+
+            return;
+
+        }
+
+
+        thongBao(
+            "⏳ Đang đọc file Excel...",
+            "warning"
+        );
+
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            function(event) {
+
+                try {
+
+                    const data =
+                        new Uint8Array(
+                            event.target.result
+                        );
+
+
+                    const workbook =
+                        XLSX.read(
+                            data,
+                            {
+                                type: "array"
+                            }
+                        );
+
+
+                    const sheetName =
+                        workbook
+                        .SheetNames[0];
+
+
+                    const worksheet =
+                        workbook
+                        .Sheets[sheetName];
+
+
+                    const rows =
+                        XLSX.utils
+                        .sheet_to_json(
+                            worksheet,
+                            {
+                                defval: ""
+                            }
+                        );
+
+
+                    if (
+                        rows.length === 0
+                    ) {
+
+                        thongBao(
+                            "❌ File Excel không có dữ liệu.",
+                            "error"
+                        );
+
+                        return;
+
+                    }
+
+
+                    danhSachCauHoi =
+                        kiemTraDuLieu(
+                            rows
+                        );
+
+
+                    hienThiThongKe();
+
+
+                    hienThiXemTruoc();
+
+
+                }
+                catch(error) {
+
+                    console.error(
+                        error
+                    );
+
+
+                    thongBao(
+                        "❌ Không thể đọc file Excel. Hãy kiểm tra lại file.",
+                        "error"
+                    );
+
+                }
+
+            };
+
+
+        reader.onerror =
+            function() {
+
+                thongBao(
+                    "❌ Không thể mở file Excel.",
+                    "error"
+                );
+
+            };
+
+
+        reader.readAsArrayBuffer(
+            fileExcelDaChon
+        );
+
+    }
+);
+
+
+/* =====================================================
+   CHUẨN HÓA TÊN CỘT
+===================================================== */
+
+function chuanHoaTenCot(
+    ten
+) {
+
+    return String(ten)
+        .trim()
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(
+            /[\u0300-\u036f]/g,
+            ""
+        )
+        .replace(
+            /đ/g,
+            "d"
+        )
+        .replace(
+            /\s+/g,
+            " "
+        );
+
+}
+
+
+/* =====================================================
+   TÌM GIÁ TRỊ THEO NHIỀU TÊN CỘT
+===================================================== */
+
+function layGiaTri(
+    row,
+    danhSachCot
+) {
+
+    const keys =
+        Object.keys(row);
+
+
+    for (
+        const key of keys
+    ) {
+
+        const keyChuan =
+            chuanHoaTenCot(
+                key
+            );
+
+
+        for (
+            const tenCot
+            of danhSachCot
+        ) {
+
+            if (
+                keyChuan ===
+                chuanHoaTenCot(
+                    tenCot
+                )
+            ) {
+
+                return row[key];
+
+            }
+
+        }
+
+    }
+
+
+    return "";
+
+}
+
+
+/* =====================================================
+   KIỂM TRA DỮ LIỆU
+===================================================== */
+
+function kiemTraDuLieu(
+    rows
+) {
+
+    return rows.map(
+        function(row, index) {
+
+            const stt =
+                layGiaTri(
+                    row,
+                    [
+                        "STT",
+                        "stt",
+                        "Số câu"
+                    ]
+                );
+
+
+            const cauHoi =
+                layGiaTri(
+                    row,
+                    [
+                        "Câu hỏi",
+                        "Cau hoi",
+                        "Noi dung",
+                        "Nội dung"
+                    ]
+                );
+
+
+            const A =
+                layGiaTri(
+                    row,
+                    ["A"]
+                );
+
+
+            const B =
+                layGiaTri(
+                    row,
+                    ["B"]
+                );
+
+
+            const C =
+                layGiaTri(
+                    row,
+                    ["C"]
+                );
+
+
+            const D =
+                layGiaTri(
+                    row,
+                    ["D"]
+                );
+
+
+            const dapAn =
+                String(
+                    layGiaTri(
+                        row,
+                        [
+                            "Đáp án",
+                            "Dap an",
+                            "Đáp án đúng",
+                            "Dap an dung"
+                        ]
+                    )
+                )
+                .trim()
+                .toUpperCase();
+
+
+            const diemRaw =
+                layGiaTri(
+                    row,
+                    [
+                        "Điểm",
+                        "Diem"
+                    ]
+                );
+
+
+            const giaiThich =
+                layGiaTri(
+                    row,
+                    [
+                        "Giải thích",
+                        "Giai thich"
+                    ]
+                );
+
+
+            const loi = [];
+
+
+            if (
+                !cauHoi ||
+                String(cauHoi).trim() === ""
+            ) {
+
+                loi.push(
+                    "Thiếu câu hỏi"
+                );
+
+            }
+
+
+            if (
+                !A &&
+                !B &&
+                !C &&
+                !D
+            ) {
+
+                loi.push(
+                    "Thiếu đáp án"
+                );
+
+            }
+
+
+            if (
+                !["A","B","C","D"]
+                .includes(dapAn)
+            ) {
+
+                loi.push(
+                    "Đáp án đúng phải là A, B, C hoặc D"
+                );
+
+            }
+
+
+            let diem =
+                Number(
+                    diemRaw
+                );
+
+
+            if (
+                !diem ||
+                diem <= 0
+            ) {
+
+                diem = 1;
+
+            }
+
+
+            return {
+
+                stt:
+                    stt ||
+                    index + 1,
+
+                cauHoi:
+                    String(cauHoi)
+                    .trim(),
+
+                A:
+                    String(A)
+                    .trim(),
+
+                B:
+                    String(B)
+                    .trim(),
+
+                C:
+                    String(C)
+                    .trim(),
+
+                D:
+                    String(D)
+                    .trim(),
+
+                dapAn:
+
+                    dapAn,
+
+                diem:
+
+                    diem,
+
+                giaiThich:
+
+                    String(
+                        giaiThich
+                    ).trim(),
+
+                hopLe:
+
+                    loi.length === 0,
+
+                loi:
+
+                    loi
+
+            };
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   THỐNG KÊ
+===================================================== */
+
+function hienThiThongKe() {
+
+    const tong =
+        danhSachCauHoi.length;
+
+
+    const hopLe =
+        danhSachCauHoi
+        .filter(
+            x => x.hopLe
+        )
+        .length;
+
+
+    const loi =
+        tong -
+        hopLe;
+
+
+    document.getElementById(
+        "tongCau"
+    ).innerText =
+        tong;
+
+
+    document.getElementById(
+        "cauHopLe"
+    ).innerText =
+        hopLe;
+
+
+    document.getElementById(
+        "cauLoi"
+    ).innerText =
+        loi;
+
+
+    document.getElementById(
+        "statsSection"
+    ).style.display =
+        "grid";
+
+}
+
+
+/* =====================================================
+   XEM TRƯỚC
+===================================================== */
+
+function hienThiXemTruoc() {
+
+    const preview =
+        document.getElementById(
+            "previewList"
+        );
+
+
+    preview.innerHTML =
+        "";
+
+
+    danhSachCauHoi
+    .forEach(
+        function(cau, index) {
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "question-card";
+
+
+            if (!cau.hopLe) {
+
+                card.classList.add(
+                    "invalid"
+                );
+
+            }
+
+
+            const dapAnHTML = `
+
+                <div class="answers">
+
+                    <div class="answer ${
+                        cau.dapAn === "A"
+                        ? "correct"
+                        : ""
+                    }">
+                        <strong>A.</strong>
+                        ${escapeHTML(cau.A)}
+                    </div>
+
+                    <div class="answer ${
+                        cau.dapAn === "B"
+                        ? "correct"
+                        : ""
+                    }">
+                        <strong>B.</strong>
+                        ${escapeHTML(cau.B)}
+                    </div>
+
+                    <div class="answer ${
+                        cau.dapAn === "C"
+                        ? "correct"
+                        : ""
+                    }">
+                        <strong>C.</strong>
+                        ${escapeHTML(cau.C)}
+                    </div>
+
+                    <div class="answer ${
+                        cau.dapAn === "D"
+                        ? "correct"
+                        : ""
+                    }">
+                        <strong>D.</strong>
+                        ${escapeHTML(cau.D)}
+                    </div>
+
+                </div>
+
+            `;
+
+
+            let loiHTML = "";
+
+
+            if (
+                !cau.hopLe
+            ) {
+
+                loiHTML = `
+
+                    <div class="question-error">
+
+                        ❌ ${escapeHTML(
+                            cau.loi.join("; ")
+                        )}
+
+                    </div>
+
+                `;
+
+            }
+
+
+            card.innerHTML = `
+
+                <div class="question-number">
+
+                    Câu ${
+                        escapeHTML(
+                            cau.stt
+                        )
+                    }
+
+                </div>
+
+
+                <div class="question-text">
+
+                    ${escapeHTML(
+                        cau.cauHoi
+                    )}
+
+                </div>
+
+
+                ${dapAnHTML}
+
+
+                <div style="
+                    margin-top:12px;
+                    font-size:13px;
+                    color:#64748b;
+                ">
+
+                    Điểm:
+                    <strong>
+                        ${cau.diem}
+                    </strong>
+
+                    ${
+                        cau.giaiThich
+                        ? " | Giải thích: " +
+                          escapeHTML(
+                              cau.giaiThich
+                          )
+                        : ""
+                    }
+
+                </div>
+
+
+                ${loiHTML}
+
+            `;
+
+
+            preview.appendChild(
+                card
+            );
+
+        }
+    );
+
+
+    document.getElementById(
+        "previewSection"
+    ).style.display =
+        "block";
+
+
+    const hopLe =
+        danhSachCauHoi
+        .filter(
+            x => x.hopLe
+        )
+        .length;
+
+
+    document.getElementById(
+        "btnLuuDe"
+    ).disabled =
+        (
+            hopLe === 0
+        );
+
+
+    window.scrollTo({
+
+        top:
+            document.getElementById(
+                "previewSection"
+            ).offsetTop - 20,
+
+        behavior:
+            "smooth"
+
+    });
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(
+    value
+) {
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* =====================================================
+   LÀM LẠI
+===================================================== */
+
+function lamLai() {
+
+    danhSachCauHoi = [];
+
+    fileExcelDaChon = null;
+
+
+    document.getElementById(
+        "fileExcel"
+    ).value = "";
+
+
+    document.getElementById(
+        "fileName"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "btnDocExcel"
+    ).disabled =
+        true;
+
+
+    document.getElementById(
+        "statsSection"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "previewSection"
+    ).style.display =
+        "none";
+
+
+    document.getElementById(
+        "thongBao"
+    ).style.display =
+        "none";
+
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+    });
+
+}
+
+
+/* =====================================================
+   LƯU BỘ ĐỀ
+===================================================== */
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbwbqQWJFRF0MNkeh5bfnUzvMk0021A04U17ijvW6fCCO_biDoeBOSJ4qNqp7Tbmjp2n/exec";
+
+
+document
+.getElementById("btnLuuDe")
+.addEventListener(
+    "click",
+    function () {
+
+        luuBoDeLenGoogle();
+
+    }
+);
+async function luuBoDeLenGoogle() {
+
+    const hopLe =
+        danhSachCauHoi.filter(
+            x => x.hopLe
+        );
+
+    if (hopLe.length === 0) {
+
+        thongBao(
+            "❌ Không có câu hỏi hợp lệ để lưu.",
+            "error"
+        );
+
+        return;
+    }
+
+    const boDe = {
+
+        tenDe:
+            document.getElementById("tenDe").value.trim(),
+
+        mon:
+            document.getElementById("mon").value,
+
+        khoi:
+            document.getElementById("khoi").value,
+
+        thoiGian:
+            Number(
+                document.getElementById("thoiGian").value
+            ),
+
+        loaiDe:
+            document.getElementById("loaiDe").value,
+
+        maGV:
+            localStorage.getItem("maGV") || "",
+
+        hoTenGV:
+            localStorage.getItem("hoTenGV") || "",
+
+        fileExcel: "",
+
+        cauHoi: hopLe
+
+    };
+
+    try {
+
+        const response =
+            await fetch(API_URL, {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "text/plain;charset=utf-8"
+                },
+
+                body:
+                    JSON.stringify({
+
+                        action: "saveBoDe",
+
+                        boDe: boDe
+
+                    })
+
+            });
+
+        const result =
+            await response.json();
+
+        if (result.success) {
+
+            thongBao(
+                "✅ Đã lưu thành công. Mã đề: " +
+                result.maDe,
+                "success"
+            );
+
+        } else {
+
+            thongBao(
+                result.message,
+                "error"
+            );
+
+        }
+
+    } catch(error) {
+
+        console.error(error);
+
+        thongBao(
+            "❌ Lỗi kết nối Apps Script",
+            "error"
+        );
+
+    }
+
+}
+
+</script>
+
+
+</body>
+
+</html>

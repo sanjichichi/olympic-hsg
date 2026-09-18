@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Google Drive | Olympic HSG Online</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:"Segoe UI",Arial,sans-serif;
+    background:#f4f7fb;
+    color:#1f2937;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+    background:linear-gradient(135deg,#174ea6,#2563eb);
+    color:white;
+    padding:18px 30px;
+    box-shadow:0 4px 15px rgba(0,0,0,.12);
+}
+
+.header-content{
+    max-width:1400px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.logo-area{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.logo{
+    width:52px;
+    height:52px;
+    border-radius:14px;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:28px;
+}
+
+.title h1{
+    font-size:24px;
+    font-weight:700;
+}
+
+.title p{
+    font-size:14px;
+    opacity:.9;
+    margin-top:3px;
+}
+
+.back-btn{
+    border:none;
+    background:rgba(255,255,255,.16);
+    color:white;
+    padding:11px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:14px;
+    transition:.2s;
+}
+
+.back-btn:hover{
+    background:rgba(255,255,255,.28);
+}
+
+/* ================= CONTAINER ================= */
+
+.container{
+    max-width:1400px;
+    margin:30px auto;
+    padding:0 20px;
+}
+
+/* ================= INTRO ================= */
+
+.intro{
+    background:white;
+    border-radius:18px;
+    padding:25px;
+    margin-bottom:25px;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
+}
+
+.intro h2{
+    color:#174ea6;
+    margin-bottom:8px;
+}
+
+.intro p{
+    color:#64748b;
+    line-height:1.6;
+}
+
+/* ================= QUICK ACTION ================= */
+
+.actions{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin-bottom:25px;
+}
+
+.action-card{
+    background:white;
+    border-radius:16px;
+    padding:20px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    box-shadow:0 5px 18px rgba(0,0,0,.06);
+    cursor:pointer;
+    transition:.25s;
+}
+
+.action-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 25px rgba(0,0,0,.1);
+}
+
+.action-icon{
+    width:52px;
+    height:52px;
+    border-radius:13px;
+    background:#e8f0fe;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:27px;
+}
+
+.action-card h3{
+    font-size:16px;
+    margin-bottom:4px;
+}
+
+.action-card p{
+    font-size:13px;
+    color:#64748b;
+}
+
+/* ================= TOOLBAR ================= */
+
+.toolbar{
+    background:white;
+    border-radius:16px;
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow:0 5px 18px rgba(0,0,0,.06);
+}
+
+.search{
+    position:relative;
+    margin-bottom:15px;
+}
+
+.search input{
+    width:100%;
+    padding:14px 18px 14px 45px;
+    border:1px solid #dbe3ef;
+    border-radius:11px;
+    outline:none;
+    font-size:15px;
+}
+
+.search input:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 0 3px rgba(37,99,235,.1);
+}
+
+.search span{
+    position:absolute;
+    left:16px;
+    top:12px;
+    font-size:20px;
+}
+
+.filters{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.filters select{
+    padding:12px;
+    border:1px solid #dbe3ef;
+    border-radius:10px;
+    background:white;
+    outline:none;
+    font-size:14px;
+}
+
+/* ================= TITLE ================= */
+
+.section-title{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:25px 0 15px;
+}
+
+.section-title h2{
+    font-size:20px;
+}
+
+.count{
+    color:#64748b;
+    font-size:14px;
+}
+
+/* ================= DOCUMENT GRID ================= */
+
+.documents{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.document-card{
+    background:white;
+    border-radius:16px;
+    padding:20px;
+    box-shadow:0 5px 18px rgba(0,0,0,.06);
+    transition:.25s;
+}
+
+.document-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 28px rgba(0,0,0,.1);
+}
+
+.doc-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:15px;
+}
+
+.file-icon{
+    width:50px;
+    height:50px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:26px;
+    background:#eef4ff;
+}
+
+.file-type{
+    font-size:12px;
+    background:#e8f0fe;
+    color:#174ea6;
+    padding:5px 9px;
+    border-radius:20px;
+}
+
+.document-card h3{
+    font-size:16px;
+    line-height:1.4;
+    margin-bottom:8px;
+}
+
+.description{
+    font-size:13px;
+    color:#64748b;
+    line-height:1.5;
+    min-height:40px;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin:15px 0;
+}
+
+.tag{
+    background:#f1f5f9;
+    padding:5px 8px;
+    border-radius:7px;
+    font-size:11px;
+    color:#475569;
+}
+
+.doc-footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-top:1px solid #edf0f5;
+    padding-top:15px;
+}
+
+.date{
+    font-size:12px;
+    color:#94a3b8;
+}
+
+.view-btn{
+    border:none;
+    background:#2563eb;
+    color:white;
+    padding:8px 13px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:13px;
+}
+
+.view-btn:hover{
+    background:#174ea6;
+}
+
+/* ================= EMPTY ================= */
+
+.empty{
+    display:none;
+    background:white;
+    border-radius:16px;
+    padding:50px 20px;
+    text-align:center;
+    color:#64748b;
+}
+
+.empty-icon{
+    font-size:45px;
+    margin-bottom:10px;
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+    text-align:center;
+    padding:30px 20px;
+    color:#94a3b8;
+    font-size:13px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1000px){
+
+    .documents{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .actions{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:650px){
+
+    .header{
+        padding:15px;
+    }
+
+    .header-content{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .filters{
+        grid-template-columns:1fr;
+    }
+
+    .documents{
+        grid-template-columns:1fr;
+    }
+
+    .container{
+        padding:0 12px;
+    }
+}
+
+
+/* ================= FOLDER MANAGEMENT ================= */
+.folder-panel{
+    display:none;
+    margin-bottom:25px;
+    background:white;
+    border-radius:18px;
+    padding:22px;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
+}
+.folder-panel.show{display:block;}
+.folder-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:16px;
+}
+.folder-head h2{font-size:20px;color:#174ea6;}
+.folder-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.small-btn{
+    border:0;border-radius:9px;padding:9px 12px;cursor:pointer;
+    font-size:13px;font-weight:600;
+}
+.primary-btn{background:#2563eb;color:white;}
+.light-btn{background:#eef4ff;color:#174ea6;}
+.folder-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+}
+.folder-card{
+    border:1px solid #e2e8f0;
+    border-radius:13px;
+    padding:15px;
+    cursor:pointer;
+    transition:.2s;
+}
+.folder-card:hover{border-color:#93c5fd;background:#f8fbff;transform:translateY(-2px);}
+.folder-card .folder-icon{font-size:30px;margin-bottom:8px;}
+.folder-card h3{font-size:14px;margin-bottom:4px;}
+.folder-card p{font-size:12px;color:#64748b;line-height:1.4;}
+.folder-link{
+    margin-top:10px;
+    display:inline-block;
+    color:#2563eb;
+    font-size:12px;
+    font-weight:600;
+}
+.folder-empty{
+    padding:30px;text-align:center;color:#64748b;
+    border:1px dashed #cbd5e1;border-radius:12px;
+}
+.config-note{
+    margin-top:14px;padding:12px 14px;border-radius:10px;
+    background:#fff7ed;color:#9a3412;font-size:12px;line-height:1.5;
+}
+@media(max-width:1000px){.folder-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:650px){.folder-grid{grid-template-columns:1fr;}}
+
+/* ================= UPLOAD MODAL ================= */
+.upload-modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(15,23,42,.55);
+    z-index:9999;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+.upload-modal.show{display:flex;}
+.upload-box{
+    width:min(620px,100%);
+    background:#fff;
+    border-radius:20px;
+    padding:26px;
+    box-shadow:0 20px 60px rgba(0,0,0,.2);
+}
+.upload-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:15px;
+    margin-bottom:18px;
+}
+.upload-head h2{font-size:21px;color:#174ea6;}
+.close-upload{
+    border:0;background:#f1f5f9;color:#475569;
+    width:36px;height:36px;border-radius:50%;
+    cursor:pointer;font-size:20px;
+}
+.upload-form label{
+    display:block;font-size:13px;font-weight:600;
+    margin:13px 0 7px;color:#334155;
+}
+.upload-form input,.upload-form select,.upload-form textarea{
+    width:100%;padding:12px 13px;border:1px solid #dbe3ef;
+    border-radius:10px;outline:none;font:inherit;
+}
+.upload-form input:focus,.upload-form select:focus,.upload-form textarea:focus{
+    border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.1);
+}
+.upload-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.upload-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px;}
+.upload-actions button{
+    border:0;padding:11px 17px;border-radius:10px;cursor:pointer;font-weight:600;
+}
+.btn-cancel{background:#f1f5f9;color:#334155;}
+.btn-upload{background:#2563eb;color:#fff;}
+.btn-upload:disabled{opacity:.6;cursor:not-allowed;}
+.upload-progress{display:none;margin-top:15px;}
+.upload-progress.show{display:block;}
+.progress-track{height:8px;background:#e2e8f0;border-radius:10px;overflow:hidden;}
+.progress-bar{height:100%;width:0;background:#2563eb;transition:width .2s;}
+.upload-status{margin-top:8px;font-size:13px;color:#64748b;}
+.toast{
+    position:fixed;right:22px;bottom:22px;z-index:10000;
+    background:#0f172a;color:#fff;padding:13px 17px;border-radius:11px;
+    box-shadow:0 10px 30px rgba(0,0,0,.18);display:none;
+}
+.toast.show{display:block;}
+@media(max-width:650px){
+    .upload-row{grid-template-columns:1fr;}
+    .upload-box{padding:20px;}
+}
+
+</style>
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div class="header-content">
+
+        <div class="logo-area">
+
+            <div class="logo">
+                ☁️
+            </div>
+
+            <div class="title">
+                <h1>Google Drive</h1>
+                <p>Kho tài liệu giáo viên – Olympic HSG Online</p>
+            </div>
+
+        </div>
+
+        <button class="back-btn" onclick="goBack()">
+            ← Trang giáo viên
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- ================= UPLOAD MODAL ================= -->
+<div class="upload-modal" id="uploadModal" onclick="closeUploadOnBackdrop(event)">
+    <div class="upload-box">
+        <div class="upload-head">
+            <h2>📤 Thêm tài liệu vào kho</h2>
+            <button class="close-upload" onclick="closeUploadModal()">×</button>
+        </div>
+
+        <form class="upload-form" id="uploadForm">
+            <label for="uploadFile">Chọn tài liệu *</label>
+            <input type="file" id="uploadFile" required>
+
+            <div class="upload-row">
+                <div>
+                    <label for="uploadSubject">Môn học *</label>
+                    <select id="uploadSubject" required>
+                        <option value="">Chọn môn</option>
+                        <option>Toán</option>
+                        <option>Ngữ văn</option>
+                        <option>Tiếng Anh</option>
+                        <option>Olympic tổng hợp</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="uploadGrade">Khối</label>
+                    <select id="uploadGrade">
+                        <option value="">Không xác định</option>
+                        <option value="6">Khối 6</option>
+                        <option value="7">Khối 7</option>
+                        <option value="8">Khối 8</option>
+                        <option value="9">Khối 9</option>
+                    </select>
+                </div>
+            </div>
+
+            <label for="uploadType">Loại tài liệu *</label>
+            <select id="uploadType" required>
+                <option value="">Chọn loại</option>
+                <option>Đề thi</option>
+                <option>Đáp án</option>
+                <option>Tài liệu ôn tập</option>
+                <option>Quản trị</option>
+                <option>Biểu mẫu</option>
+                <option>Hình ảnh</option>
+                <option>Tài liệu khác</option>
+            </select>
+
+            <label for="uploadDescription">Mô tả</label>
+            <textarea id="uploadDescription" rows="3" placeholder="Nhập mô tả ngắn..."></textarea>
+
+            <div class="upload-progress" id="uploadProgress">
+                <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+                <div class="upload-status" id="uploadStatus">Đang chuẩn bị...</div>
+            </div>
+
+            <div class="upload-actions">
+                <button type="button" class="btn-cancel" onclick="closeUploadModal()">Hủy</button>
+                <button type="submit" class="btn-upload" id="uploadButton">📤 Tải lên Drive</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="toast" id="toast"></div>
+
+
+<div class="upload-modal" id="folderCreateModal" onclick="closeFolderCreateOnBackdrop(event)">
+  <div class="upload-box">
+    <div class="upload-head"><h2>📁 Tạo thư mục Drive</h2><button class="close-upload" onclick="closeFolderCreateModal()">×</button></div>
+    <form class="upload-form" id="folderCreateForm">
+      <label>Tên thư mục *</label><input id="folderName" required placeholder="Ví dụ: Đề thi Toán 8">
+      <div class="upload-row">
+        <div><label>Môn</label><select id="folderSubject"><option value="">Không xác định</option><option>Toán</option><option>Ngữ văn</option><option>Tiếng Anh</option><option>Olympic tổng hợp</option><option>Kết quả</option><option>Giấy chứng nhận</option><option>Biểu mẫu – báo cáo</option><option>Hình ảnh hoạt động</option></select></div>
+        <div><label>Khối</label><select id="folderGrade"><option value="">Không xác định</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option></select></div>
+      </div>
+      <label>Mô tả</label><textarea id="folderDescription" rows="3" placeholder="Mô tả thư mục..."></textarea>
+      <div class="upload-actions"><button type="button" class="btn-cancel" onclick="closeFolderCreateModal()">Hủy</button><button type="submit" class="btn-upload">📁 Tạo thư mục</button></div>
+    </form>
+  </div>
+</div>
+
+<!-- ================= MAIN ================= -->
+
+<main class="container">
+
+    <section class="intro">
+
+        <h2>📚 Kho tài liệu giáo viên</h2>
+
+        <p>
+            Nơi lưu trữ và quản lý các tài liệu phục vụ tổ chức
+            Olympic HSG Online: đề thi, đáp án, tài liệu ôn tập,
+            kết quả, chứng nhận và các tài liệu quản trị.
+        </p>
+
+    </section>
+
+
+    <!-- ================= QUICK ACTION ================= -->
+
+    <section class="actions">
+
+        <div class="action-card" onclick="openDrive()">
+
+            <div class="action-icon">
+                📂
+            </div>
+
+            <div>
+                <h3>Mở Google Drive</h3>
+                <p>Truy cập kho tài liệu chính</p>
+            </div>
+
+        </div>
+
+
+        <div class="action-card" onclick="openUploadModal()">
+
+            <div class="action-icon">
+                📤
+            </div>
+
+            <div>
+                <h3>Tải tài liệu</h3>
+                <p>Thêm tài liệu vào kho</p>
+            </div>
+
+        </div>
+
+
+        <div class="action-card" onclick="toggleFolderPanel()">
+
+            <div class="action-icon">
+                📁
+            </div>
+
+            <div>
+                <h3>Quản lý thư mục</h3>
+                <p>Phân loại tài liệu theo môn và khối</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    
+<!-- ================= FOLDER MANAGEMENT ================= -->
+<section class="folder-panel" id="folderPanel">
+    <div class="folder-head">
+        <div>
+            <h2>📁 Quản lý thư mục Drive</h2>
+            <p style="color:#64748b;font-size:13px;margin-top:4px">
+                Quản lý các thư mục tài liệu và mở nhanh thư mục trên Google Drive.
+            </p>
+        </div>
+        <div class="folder-actions">
+            <button class="small-btn light-btn" onclick="refreshFolders()">🔄 Làm mới</button>
+            <button class="small-btn primary-btn" onclick="openFolderCreateModal()">➕ Tạo thư mục</button>
+            <button class="small-btn primary-btn" onclick="openDrive()">📂 Mở Drive</button>
+        </div>
+    </div>
+    <div class="folder-grid" id="folderGrid"></div>
+    <div class="config-note">
+        💡 Các thư mục được tạo tự động khi giáo viên tải tài liệu lên:
+        <b>Môn học → Loại tài liệu → Khối</b>.
+        Muốn tạo thư mục thủ công hoặc đồng bộ danh sách thư mục từ Drive,
+        hãy dùng API Google Apps Script ở bước cấu hình.
+    </div>
+</section>
+
+<!-- ================= SEARCH ================= -->
+
+    <section class="toolbar">
+
+        <div class="search">
+
+            <span>🔎</span>
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Tìm kiếm tài liệu..."
+                oninput="filterDocuments()"
+            >
+
+        </div>
+
+
+        <div class="filters">
+
+            <select id="subjectFilter" onchange="filterDocuments()">
+
+                <option value="">Tất cả môn</option>
+
+                <option value="Toán">Toán</option>
+
+                <option value="Ngữ văn">Ngữ văn</option>
+
+                <option value="Tiếng Anh">Tiếng Anh</option>
+
+                <option value="Olympic tổng hợp">Olympic tổng hợp</option>
+
+            </select>
+
+
+            <select id="gradeFilter" onchange="filterDocuments()">
+
+                <option value="">Tất cả khối</option>
+
+                <option value="6">Khối 6</option>
+
+                <option value="7">Khối 7</option>
+
+                <option value="8">Khối 8</option>
+
+                <option value="9">Khối 9</option>
+
+            </select>
+
+
+            <select id="typeFilter" onchange="filterDocuments()">
+
+                <option value="">Tất cả loại</option>
+
+                <option value="Đề thi">Đề thi</option>
+
+                <option value="Đáp án">Đáp án</option>
+
+                <option value="Tài liệu ôn tập">Tài liệu ôn tập</option>
+
+                <option value="Quản trị">Quản trị</option>
+
+            </select>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= DOCUMENTS ================= -->
+
+    <div class="section-title">
+
+        <h2>📄 Tài liệu</h2>
+
+        <span class="count" id="documentCount">
+            0 tài liệu
+        </span>
+
+    </div>
+
+
+    <section class="documents" id="documents"></section>
+
+
+    <section class="empty" id="empty">
+
+        <div class="empty-icon">📭</div>
+
+        <h3>Không tìm thấy tài liệu</h3>
+
+        <p>Hãy thử thay đổi từ khóa hoặc bộ lọc.</p>
+
+    </section>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    Olympic HSG Online © 2026  
+    <br>
+    Trường THCS Hoàng Ngân – xã Phú Đình – tỉnh Thái Nguyên
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   CẤU HÌNH GOOGLE DRIVE
+   ===================================================== */
+
+const GOOGLE_DRIVE_URL = "https://drive.google.com/drive/folders/1Jq5gfzgrO7eUZINlwRZ632UBblQcwGdo?usp=drive_link";
+
+/* Dán URL Web App Google Apps Script vào đây sau khi triển khai */
+const GOOGLE_UPLOAD_API = "https://script.google.com/macros/s/AKfycbwbqQWJFRF0MNkeh5bfnUzvMk0021A04U17ijvW6fCCO_biDoeBOSJ4qNqp7Tbmjp2n/exec";
+/* API đọc danh mục/tài liệu từ Google Sheets - có thể cấu hình sau */
+const GOOGLE_SHEET_API = "https://script.google.com/macros/s/AKfycbwbqQWJFRF0MNkeh5bfnUzvMk0021A04U17ijvW6fCCO_biDoeBOSJ4qNqp7Tbmjp2n/exec";
+
+
+/* =====================================================
+   DỮ LIỆU TÀI LIỆU MẪU
+   Sau này có thể thay bằng dữ liệu từ Google Sheets
+   ===================================================== */
+
+const documents = [
+
+    {
+        name:"Đề thi Olympic Toán 8 – Vòng 1",
+        description:"Đề thi Olympic Toán lớp 8 vòng 1.",
+        subject:"Toán",
+        grade:"8",
+        type:"Đề thi",
+        icon:"📐",
+        date:"25/08/2026",
+        url:"https://drive.google.com/drive/folders/1Jq5gfzgrO7eUZINlwRZ632UBblQcwGdo?usp=drive_link"
+    },
+
+    {
+        name:"Đáp án Olympic Toán 8 – Vòng 1",
+        description:"Đáp án và hướng dẫn chấm đề thi vòng 1.",
+        subject:"Toán",
+        grade:"8",
+        type:"Đáp án",
+        icon:"✅",
+        date:"25/08/2026",
+        url:"https://drive.google.com/drive/folders/1Jq5gfzgrO7eUZINlwRZ632UBblQcwGdo?usp=drive_link"
+    },
+
+    {
+        name:"Chuyên đề Hình học lớp 8",
+        description:"Tài liệu ôn tập và bồi dưỡng học sinh giỏi.",
+        subject:"Toán",
+        grade:"8",
+        type:"Tài liệu ôn tập",
+        icon:"📘",
+        date:"24/08/2026",
+        url:"https://drive.google.com/drive/folders/1Jq5gfzgrO7eUZINlwRZ632UBblQcwGdo?usp=drive_link"
+    },
+
+    {
+        name:"Đề thi Olympic Ngữ văn 8",
+        description:"Bộ đề luyện thi Olympic Ngữ văn lớp 8.",
+        subject:"Ngữ văn",
+        grade:"8",
+        type:"Đề thi",
+        icon:"📖",
+        date:"23/08/2026",
+        url:"https://drive.google.com/drive/folders/1Jq5gfzgrO7eUZINlwRZ632UBblQcwGdo?usp=drive_link"
+    },
+
+    {
+        name:"Tài liệu ôn tập Ngữ văn 8",
+        description:"Tài liệu đọc hiểu và viết dành cho học sinh.",
+        subject:"Ngữ văn",
+        grade:"8",
+        type:"Tài liệu ôn tập",
+        icon:"📚",
+        date:"22/08/2026",
+        url:"https://drive.google.com/drive/folders/1Jq5gfzgrO7eUZINlwRZ632UBblQcwGdo?usp=drive_link"
+    },
+
+    {
+        name:"Olympic Tiếng Anh 8 – Vòng 1",
+        description:"Đề luyện tập Olympic Tiếng Anh lớp 8.",
+        subject:"Tiếng Anh",
+        grade:"8",
+        type:"Đề thi",
+        icon:"🇬🇧",
+        date:"21/08/2026",
+        url:"https://drive.google.com/drive/folders/1Jq5gfzgrO7eUZINlwRZ632UBblQcwGdo?usp=drive_link"
+    },
+
+    {
+        name:"Đề Olympic tổng hợp",
+        description:"Đề thi Olympic tổng hợp các môn.",
+        subject:"Olympic tổng hợp",
+        grade:"8",
+        type:"Đề thi",
+        icon:"🏆",
+        date:"20/08/2026",
+        url:"https://drive.google.com/drive/folders/1Jq5gfzgrO7eUZINlwRZ632UBblQcwGdo?usp=drive_link"
+    },
+
+    {
+        name:"Hướng dẫn tổ chức kỳ thi",
+        description:"Tài liệu hướng dẫn giáo viên quản lý kỳ thi.",
+        subject:"Olympic tổng hợp",
+        grade:"",
+        type:"Quản trị",
+        icon:"⚙️",
+        date:"20/08/2026",
+        url:"https://drive.google.com/drive/folders/1Jq5gfzgrO7eUZINlwRZ632UBblQcwGdo?usp=drive_link"
+    }
+
+];
+
+
+
+/* =====================================================
+   CẤU HÌNH THƯ MỤC
+   Có thể thay URL bằng link thư mục con thực tế.
+   API Apps Script có thể trả danh sách động sau này.
+   ===================================================== */
+const defaultFolders = [
+    {name:"Toán", icon:"📐", description:"Đề thi, đáp án và tài liệu Toán.", subject:"Toán"},
+    {name:"Ngữ văn", icon:"📖", description:"Đề thi, đáp án và tài liệu Ngữ văn.", subject:"Ngữ văn"},
+    {name:"Tiếng Anh", icon:"🇬🇧", description:"Đề thi, đáp án và tài liệu Tiếng Anh.", subject:"Tiếng Anh"},
+    {name:"Olympic tổng hợp", icon:"🏆", description:"Tài liệu dùng chung cho Olympic.", subject:"Olympic tổng hợp"},
+    {name:"Kết quả", icon:"📊", description:"Kết quả và bảng xếp hạng các kỳ thi.", subject:"Kết quả"},
+    {name:"Giấy chứng nhận", icon:"📜", description:"Giấy chứng nhận và danh sách cấp.", subject:"Giấy chứng nhận"},
+    {name:"Biểu mẫu – báo cáo", icon:"📄", description:"Các biểu mẫu, báo cáo và hồ sơ.", subject:"Biểu mẫu – báo cáo"},
+    {name:"Hình ảnh hoạt động", icon:"🖼️", description:"Ảnh hoạt động của CLB và các kỳ thi.", subject:"Hình ảnh hoạt động"}
+];
+
+/* =====================================================
+   HIỂN THỊ TÀI LIỆU
+   ===================================================== */
+
+function renderDocuments(list){
+
+    const container =
+        document.getElementById("documents");
+
+    const empty =
+        document.getElementById("empty");
+
+    const count =
+        document.getElementById("documentCount");
+
+
+    container.innerHTML = "";
+
+    count.textContent =
+        list.length + " tài liệu";
+
+
+    if(list.length === 0){
+
+        empty.style.display = "block";
+
+        return;
+
+    }
+
+    empty.style.display = "none";
+
+
+    list.forEach(doc => {
+
+        const card =
+            document.createElement("div");
+
+        card.className = "document-card";
+
+        card.innerHTML = `
+
+            <div class="doc-top">
+
+                <div class="file-icon">
+                    ${doc.icon}
+                </div>
+
+                <span class="file-type">
+                    ${doc.type}
+                </span>
+
+            </div>
+
+
+            <h3>
+                ${doc.name}
+            </h3>
+
+
+            <div class="description">
+                ${doc.description}
+            </div>
+
+
+            <div class="tags">
+
+                <span class="tag">
+                    ${doc.subject}
+                </span>
+
+                ${
+                    doc.grade
+                    ?
+                    `<span class="tag">
+                        Khối ${doc.grade}
+                    </span>`
+                    :
+                    ""
+                }
+
+            </div>
+
+
+            <div class="doc-footer">
+
+                <span class="date">
+                    📅 ${doc.date}
+                </span>
+
+                <button
+                    class="view-btn"
+                    onclick="openDocument('${doc.url}')"
+                >
+                    Xem tài liệu
+                </button>
+
+            </div>
+
+        `;
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+/* =====================================================
+   TÌM KIẾM + BỘ LỌC
+   ===================================================== */
+
+function filterDocuments(){
+
+    const keyword =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    const subject =
+        document
+        .getElementById("subjectFilter")
+        .value;
+
+
+    const grade =
+        document
+        .getElementById("gradeFilter")
+        .value;
+
+
+    const type =
+        document
+        .getElementById("typeFilter")
+        .value;
+
+
+    const result =
+        documents.filter(doc => {
+
+            const matchKeyword =
+                !keyword ||
+                doc.name.toLowerCase().includes(keyword) ||
+                doc.description.toLowerCase().includes(keyword);
+
+
+            const matchSubject =
+                !subject ||
+                doc.subject === subject;
+
+
+            const matchGrade =
+                !grade ||
+                doc.grade === grade;
+
+
+            const matchType =
+                !type ||
+                doc.type === type;
+
+
+            return (
+                matchKeyword &&
+                matchSubject &&
+                matchGrade &&
+                matchType
+            );
+
+        });
+
+
+    renderDocuments(result);
+
+}
+
+
+
+
+function loadDriveData(){
+    if(!GOOGLE_SHEET_API) return;
+    fetch(GOOGLE_SHEET_API + "?action=getAll")
+      .then(r=>r.json()).then(data=>{
+        if(Array.isArray(data.documents)){ documents.length=0; documents.push(...data.documents); filterDocuments(); }
+        if(Array.isArray(data.folders)){ renderFolders(data.folders); }
+      }).catch(err=>console.warn("Không tải được dữ liệu Drive:",err));
+}
+
+function openFolderCreateModal(){ document.getElementById("folderCreateModal").classList.add("show"); }
+function closeFolderCreateModal(){ document.getElementById("folderCreateModal").classList.remove("show"); document.getElementById("folderCreateForm").reset(); }
+function closeFolderCreateOnBackdrop(e){ if(e.target.id==="folderCreateModal") closeFolderCreateModal(); }
+
+document.getElementById("folderCreateForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+    if(!GOOGLE_SHEET_API){ alert("Chưa cấu hình GOOGLE_SHEET_API."); return; }
+    const payload={ action:"createFolder", name:document.getElementById("folderName").value.trim(), subject:document.getElementById("folderSubject").value, grade:document.getElementById("folderGrade").value, description:document.getElementById("folderDescription").value.trim() };
+    try{
+      const r=await fetch(GOOGLE_SHEET_API,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(payload)});
+      const d=await r.json();
+      if(!d.success) throw new Error(d.message||"Không tạo được thư mục");
+      closeFolderCreateModal(); refreshFolders(); showToast("✅ Đã tạo thư mục trên Google Drive.");
+    }catch(err){ alert("❌ "+err.message); }
+});
+
+/* =====================================================
+   QUẢN LÝ THƯ MỤC
+   ===================================================== */
+function toggleFolderPanel(){
+    const panel = document.getElementById("folderPanel");
+    panel.classList.toggle("show");
+    if(panel.classList.contains("show")) renderFolders(defaultFolders);
+}
+
+function renderFolders(folders){
+    const grid = document.getElementById("folderGrid");
+    if(!grid) return;
+
+    if(!folders || !folders.length){
+        grid.innerHTML = '<div class="folder-empty">📭 Chưa có thư mục nào.</div>';
+        return;
+    }
+
+    grid.innerHTML = folders.map(folder => {
+        const url = folder.url || GOOGLE_DRIVE_URL;
+        return `
+            <div class="folder-card" onclick="openFolder('${encodeURIComponent(url)}')">
+                <div class="folder-icon">${folder.icon || "📁"}</div>
+                <h3>${escapeHtml(folder.name)}</h3>
+                <p>${escapeHtml(folder.description || "Thư mục tài liệu giáo viên.")}</p>
+                <span class="folder-link">Mở thư mục →</span>
+            </div>
+        `;
+    }).join("");
+}
+
+function refreshFolders(){
+    if(GOOGLE_SHEET_API){
+        fetch(GOOGLE_SHEET_API)
+            .then(r => r.json())
+            .then(data => {
+                if(data.folders) renderFolders(data.folders);
+                else renderFolders(defaultFolders);
+            })
+            .catch(() => {
+                renderFolders(defaultFolders);
+                alert("⚠️ Không đọc được API. Đang hiển thị danh sách thư mục mặc định.");
+            });
+    }else{
+        renderFolders(defaultFolders);
+        showToast("ℹ️ Chưa cấu hình API thư mục, đang dùng danh sách mặc định.");
+    }
+}
+
+function openFolder(encodedUrl){
+    const url = decodeURIComponent(encodedUrl);
+    window.open(url, "_blank");
+}
+
+function escapeHtml(value){
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+/* =====================================================
+   MỞ GOOGLE DRIVE
+   ===================================================== */
+
+function openDrive(){
+
+    window.open(
+        GOOGLE_DRIVE_URL,
+        "_blank"
+    );
+
+}
+
+
+/* =====================================================
+   MỞ TÀI LIỆU
+   ===================================================== */
+
+function openDocument(url){
+
+    window.open(
+        url,
+        "_blank"
+    );
+
+}
+
+
+/* =====================================================
+   CHỨC NĂNG CHƯA KẾT NỐI
+   ===================================================== */
+
+function showComingSoon(){
+    openUploadModal();
+}
+
+function openUploadModal(){
+    document.getElementById("uploadModal").classList.add("show");
+    document.getElementById("uploadFile").focus();
+}
+
+function closeUploadModal(){
+    document.getElementById("uploadModal").classList.remove("show");
+    const form = document.getElementById("uploadForm");
+    if(form) form.reset();
+    document.getElementById("uploadProgress").classList.remove("show");
+    document.getElementById("progressBar").style.width = "0%";
+    document.getElementById("uploadButton").disabled = false;
+}
+
+function closeUploadOnBackdrop(event){
+    if(event.target.id === "uploadModal") closeUploadModal();
+}
+
+function showToast(message){
+    const toast = document.getElementById("toast");
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(()=>toast.classList.remove("show"), 3500);
+}
+
+function setUploadProgress(percent, status){
+    document.getElementById("uploadProgress").classList.add("show");
+    document.getElementById("progressBar").style.width = percent + "%";
+    document.getElementById("uploadStatus").textContent = status;
+}
+
+document.getElementById("uploadForm").addEventListener("submit", async function(e){
+    e.preventDefault();
+
+    if(!GOOGLE_UPLOAD_API){
+        alert(
+            "⚠️ Chưa cấu hình máy chủ tải lên.\n\n" +
+            "Anh cần triển khai file Google Apps Script đi kèm thành Web App, " +
+            "sau đó dán URL Web App vào biến GOOGLE_UPLOAD_API trong file này."
+        );
+        return;
+    }
+
+    const file = document.getElementById("uploadFile").files[0];
+    const subject = document.getElementById("uploadSubject").value;
+    const grade = document.getElementById("uploadGrade").value;
+    const type = document.getElementById("uploadType").value;
+    const description = document.getElementById("uploadDescription").value.trim();
+
+    if(!file || !subject || !type){
+        alert("Vui lòng chọn file, môn học và loại tài liệu.");
+        return;
+    }
+
+    const button = document.getElementById("uploadButton");
+    button.disabled = true;
+    setUploadProgress(15, "Đang đọc tài liệu...");
+
+    try{
+        const reader = new FileReader();
+
+        reader.onload = async function(){
+            try{
+                setUploadProgress(45, "Đang tải tài liệu lên Google Drive...");
+
+                const payload = {
+                    fileName: file.name,
+                    mimeType: file.type || "application/octet-stream",
+                    base64: reader.result.split(",")[1],
+                    subject: subject,
+                    grade: grade,
+                    type: type,
+                    description: description
+                };
+
+                const response = await fetch(GOOGLE_UPLOAD_API, {
+                    method: "POST",
+                    headers: {"Content-Type":"text/plain;charset=utf-8"},
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+
+                if(!result.success){
+                    throw new Error(result.message || "Không tải được tài liệu.");
+                }
+
+                setUploadProgress(100, "Tải lên thành công!");
+                showToast("✅ Đã thêm tài liệu vào Google Drive.");
+
+                setTimeout(()=>{
+                    closeUploadModal();
+                    /* Thêm tài liệu vừa tải vào danh sách hiển thị */
+                    documents.unshift({
+                        name: file.name,
+                        description: description || "Tài liệu vừa được giáo viên tải lên.",
+                        subject: subject,
+                        grade: grade,
+                        type: type,
+                        icon: getFileIcon(file.name),
+                        date: new Date().toLocaleDateString("vi-VN"),
+                        url: result.fileUrl || GOOGLE_DRIVE_URL
+                    });
+                    filterDocuments();
+                }, 700);
+
+            }catch(error){
+                console.error(error);
+                setUploadProgress(100, "Tải lên thất bại.");
+                alert("❌ Không thể tải tài liệu lên Drive.\n\n" + error.message);
+                button.disabled = false;
+            }
+        };
+
+        reader.onerror = function(){
+            alert("Không thể đọc file.");
+            button.disabled = false;
+        };
+
+        reader.readAsDataURL(file);
+
+    }catch(error){
+        alert("❌ Có lỗi xảy ra: " + error.message);
+        button.disabled = false;
+    }
+});
+
+function getFileIcon(fileName){
+    const ext = fileName.split(".").pop().toLowerCase();
+    if(["doc","docx"].includes(ext)) return "📝";
+    if(["xls","xlsx","csv"].includes(ext)) return "📊";
+    if(["ppt","pptx"].includes(ext)) return "📽️";
+    if(ext === "pdf") return "📕";
+    if(["jpg","jpeg","png","gif","webp"].includes(ext)) return "🖼️";
+    if(["zip","rar","7z"].includes(ext)) return "📦";
+    return "📄";
+}
+
+
+/* =====================================================
+   QUAY LẠI TRANG GIÁO VIÊN
+   ===================================================== */
+
+function goBack(){
+
+    history.back();
+
+}
+
+
+/* =====================================================
+   KHỞI ĐỘNG
+   ===================================================== */
+
+renderDocuments(documents);
+renderFolders(defaultFolders);
+loadDriveData();
+
+</script>
+
+</body>
+</html>

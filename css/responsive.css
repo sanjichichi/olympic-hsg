@@ -1,0 +1,163 @@
+/*
+ * OLIMPIC HSG - Responsive layer
+ * Consolidated mobile/tablet safeguards.
+ * This file is intentionally non-destructive: it complements existing styles.
+ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+img, video, iframe, canvas, svg {
+  max-width: 100%;
+}
+
+img, video {
+  height: auto;
+}
+
+table {
+  max-width: 100%;
+}
+
+input, select, textarea, button {
+  max-width: 100%;
+  font: inherit;
+}
+
+.container,
+.wrapper,
+.content,
+.main-content,
+.page-container {
+  width: min(100% - 32px, 1200px);
+  margin-inline: auto;
+}
+
+@media (max-width: 768px) {
+  .container,
+  .wrapper,
+  .content,
+  .main-content,
+  .page-container {
+    width: min(100% - 24px, 100%);
+  }
+
+  .hero,
+  .banner,
+  .hero-section {
+    min-height: auto;
+  }
+
+  .hero h1,
+  .banner h1,
+  .hero-section h1 {
+    font-size: clamp(1.5rem, 6vw, 2.2rem);
+    line-height: 1.15;
+  }
+
+  .grid,
+  .cards,
+  .card-grid,
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .two-column,
+  .two-col,
+  .columns {
+    grid-template-columns: 1fr !important;
+  }
+
+  .table-responsive,
+  .responsive-table,
+  .table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    min-width: 600px;
+  }
+
+  .modal,
+  .dialog,
+  .popup {
+    width: min(94vw, 560px);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+  }
+
+  button,
+  .btn,
+  .button {
+    min-height: 42px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container,
+  .wrapper,
+  .content,
+  .main-content,
+  .page-container {
+    width: calc(100% - 20px);
+  }
+
+  .card,
+  .panel,
+  .box {
+    padding: 14px !important;
+  }
+
+  .hero h1,
+  .banner h1,
+  .hero-section h1 {
+    font-size: clamp(1.35rem, 7vw, 1.9rem);
+  }
+
+  .actions,
+  .button-group,
+  .btn-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .actions > *,
+  .button-group > *,
+  .btn-group > * {
+    width: 100%;
+  }
+
+  .navbar,
+  .nav,
+  nav {
+    max-width: 100%;
+  }
+
+  .navbar-menu,
+  .nav-menu {
+    max-width: 100%;
+  }
+}

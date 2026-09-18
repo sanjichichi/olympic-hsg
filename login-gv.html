@@ -1,0 +1,1335 @@
+```html
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Đăng nhập Giáo viên - Olympic HSG Online</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(15, 23, 42, .90),
+                    rgba(30, 64, 175, .82)
+                ),
+                url("anhnen/banner-clb.png")
+                center / cover no-repeat;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+        }
+
+
+        /* =========================================
+           KHUNG ĐĂNG NHẬP
+        ========================================= */
+
+        .login-container {
+
+            width: 100%;
+
+            max-width: 480px;
+
+            background: rgba(
+                255,
+                255,
+                255,
+                .97
+            );
+
+            border-radius: 28px;
+
+            padding: 40px;
+
+            box-shadow:
+                0 25px 70px
+                rgba(0, 0, 0, .30);
+
+            animation:
+                loginShow .35s ease;
+
+        }
+
+
+        @keyframes loginShow {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(25px)
+                    scale(.97);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0)
+                    scale(1);
+
+            }
+
+        }
+
+
+        /* =========================================
+           LOGO
+        ========================================= */
+
+        .logo {
+
+            text-align: center;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .logo-icon {
+
+            font-size: 65px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .login-container h1 {
+
+            text-align: center;
+
+            color: #1e293b;
+
+            font-size: 28px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .subtitle {
+
+            text-align: center;
+
+            color: #64748b;
+
+            font-size: 15px;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        /* =========================================
+           NHÃN
+        ========================================= */
+
+        .form-group {
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .form-group label {
+
+            display: block;
+
+            font-weight: 700;
+
+            color: #334155;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        /* =========================================
+           INPUT
+        ========================================= */
+
+        .input-wrapper {
+
+            position: relative;
+
+        }
+
+
+        .input-icon {
+
+            position: absolute;
+
+            left: 15px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            font-size: 20px;
+
+        }
+
+
+        .form-control {
+
+            width: 100%;
+
+            padding:
+                14px
+                45px
+                14px
+                45px;
+
+            border:
+                2px solid #e2e8f0;
+
+            border-radius: 14px;
+
+            outline: none;
+
+            font-size: 16px;
+
+            transition: .2s;
+
+        }
+
+
+        .form-control:focus {
+
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 4px
+                rgba(
+                    37,
+                    99,
+                    235,
+                    .10
+                );
+
+        }
+
+
+        /* =========================================
+           NÚT HIỆN MẬT KHẨU
+        ========================================= */
+
+        .toggle-password {
+
+            position: absolute;
+
+            right: 14px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            border: none;
+
+            background: transparent;
+
+            cursor: pointer;
+
+            font-size: 18px;
+
+        }
+
+
+        /* =========================================
+           GHI NHỚ
+        ========================================= */
+
+        .remember {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin:
+                5px 0
+                22px;
+
+            color: #475569;
+
+            font-size: 14px;
+
+        }
+
+
+        .remember input {
+
+            width: 17px;
+
+            height: 17px;
+
+        }
+
+
+        /* =========================================
+           NÚT ĐĂNG NHẬP
+        ========================================= */
+
+        .login-btn-gv {
+
+            width: 100%;
+
+            border: none;
+
+            border-radius: 14px;
+
+            padding: 15px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #1d4ed8
+                );
+
+            color: white;
+
+            font-size: 17px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: .25s;
+
+        }
+
+
+        .login-btn-gv:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 10px 25px
+                rgba(
+                    37,
+                    99,
+                    235,
+                    .30
+                );
+
+        }
+
+
+        /* =========================================
+           THÔNG BÁO
+        ========================================= */
+
+        #thongBao {
+
+            display: none;
+
+            margin-top: 18px;
+
+            padding: 12px 15px;
+
+            border-radius: 12px;
+
+            font-size: 14px;
+
+            text-align: center;
+
+        }
+
+
+        #thongBao.error {
+
+            display: block;
+
+            background: #fee2e2;
+
+            color: #b91c1c;
+
+        }
+
+
+        #thongBao.success {
+
+            display: block;
+
+            background: #dcfce7;
+
+            color: #15803d;
+
+        }
+
+
+        /* =========================================
+           QUAY LẠI
+        ========================================= */
+
+        .back-home {
+
+            display: block;
+
+            text-align: center;
+
+            margin-top: 25px;
+
+            color: #2563eb;
+
+            text-decoration: none;
+
+            font-weight: 600;
+
+            font-size: 14px;
+
+        }
+
+
+        .back-home:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 600px) {
+
+            .login-container {
+
+                padding: 30px 22px;
+
+                border-radius: 22px;
+
+            }
+
+            .login-container h1 {
+
+                font-size: 24px;
+
+            }
+
+            .logo-icon {
+
+                font-size: 55px;
+
+            }
+
+        }
+
+    </style>
+
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+
+<body>
+
+
+<div class="login-container">
+
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            👨‍🏫
+        </div>
+
+        <h1>
+            ĐĂNG NHẬP GIÁO VIÊN
+        </h1>
+
+        <p class="subtitle">
+            Olympic HSG Online
+        </p>
+
+    </div>
+
+
+    <!-- =====================================
+         FORM ĐĂNG NHẬP
+    ====================================== -->
+
+    <form id="formDangNhapGV">
+
+
+        <!-- TÀI KHOẢN -->
+
+        <div class="form-group">
+
+            <label for="taiKhoan">
+                Tài khoản giáo viên
+            </label>
+
+            <div class="input-wrapper">
+
+                <span class="input-icon">
+                    👤
+                </span>
+
+                <input
+                    type="text"
+                    id="taiKhoan"
+                    class="form-control"
+                    placeholder="Nhập tài khoản"
+                    autocomplete="username"
+                    required
+                >
+
+            </div>
+
+        </div>
+
+
+        <!-- MẬT KHẨU -->
+
+        <div class="form-group">
+
+            <label for="matKhau">
+                Mật khẩu
+            </label>
+
+            <div class="input-wrapper">
+
+                <span class="input-icon">
+                    🔑
+                </span>
+
+                <input
+                    type="password"
+                    id="matKhau"
+                    class="form-control"
+                    placeholder="Nhập mật khẩu"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <button
+                    type="button"
+                    class="toggle-password"
+                    onclick="hienMatKhau()"
+                    title="Hiện/ẩn mật khẩu">
+
+                    👁️
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- GHI NHỚ -->
+
+        <label class="remember">
+
+            <input
+                type="checkbox"
+                id="ghiNho"
+            >
+
+            Ghi nhớ tài khoản
+
+        </label>
+
+
+        <!-- NÚT ĐĂNG NHẬP -->
+
+        <button
+            type="submit"
+            class="login-btn-gv">
+
+            🔐 ĐĂNG NHẬP
+
+        </button>
+
+
+        <!-- THÔNG BÁO -->
+
+        <div id="thongBao"></div>
+
+
+    </form>
+
+
+    <a
+        href="index.html"
+        class="back-home">
+
+        ← Quay lại trang chủ
+
+    </a>
+
+
+</div>
+
+
+
+<script>
+
+/* =========================================================
+   ĐĂNG NHẬP GIÁO VIÊN - OLYMPIC HSG ONLINE
+   Dữ liệu tài khoản lấy từ Google Sheets
+   ========================================================= */
+
+
+/* =========================================================
+   GOOGLE SHEETS - TÀI KHOẢN GIÁO VIÊN
+   ========================================================= */
+
+const CSV_URL_GV =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vSO8CZ8kCEroo6qvVWwU7m0Z7v5DyjaP1_eOn-XFLRvkcDJ6FUSO0sDf-dlPqaLIHGbA5bVbAOVcG_H/pub?output=csv";
+
+
+let danhSachGV = [];
+
+let daTaiDuLieuGV = false;
+
+
+/* =========================================================
+   HIỆN / ẨN MẬT KHẨU
+   ========================================================= */
+
+function hienMatKhau() {
+
+    const input =
+        document.getElementById("matKhau");
+
+    if (!input) return;
+
+    if (input.type === "password") {
+
+        input.type = "text";
+
+    } else {
+
+        input.type = "password";
+
+    }
+
+}
+
+
+/* =========================================================
+   HIỂN THỊ THÔNG BÁO
+   ========================================================= */
+
+function hienThongBao(noiDung, loai) {
+
+    const box =
+        document.getElementById("thongBao");
+
+    if (!box) return;
+
+    box.innerText = noiDung;
+
+    box.className = loai;
+
+}
+
+
+/* =========================================================
+   ĐỌC CSV
+   ========================================================= */
+
+function tachCSV(line) {
+
+    /*
+       Hàm đọc CSV đơn giản nhưng có hỗ trợ
+       trường dữ liệu nằm trong dấu ngoặc kép.
+    */
+
+    const ketQua = [];
+
+    let giaTri = "";
+
+    let trongNgoac = false;
+
+
+    for (let i = 0; i < line.length; i++) {
+
+        const kyTu = line[i];
+
+        if (kyTu === '"') {
+
+            /*
+               Nếu gặp "" trong trường có ngoặc kép
+               thì đó là dấu "
+            */
+
+            if (
+                trongNgoac &&
+                line[i + 1] === '"'
+            ) {
+
+                giaTri += '"';
+
+                i++;
+
+            } else {
+
+                trongNgoac = !trongNgoac;
+
+            }
+
+        }
+
+        else if (
+            kyTu === "," &&
+            !trongNgoac
+        ) {
+
+            ketQua.push(giaTri.trim());
+
+            giaTri = "";
+
+        }
+
+        else {
+
+            giaTri += kyTu;
+
+        }
+
+    }
+
+
+    ketQua.push(giaTri.trim());
+
+
+    return ketQua;
+
+}
+
+
+/* =========================================================
+   TẢI DANH SÁCH GIÁO VIÊN
+   ========================================================= */
+
+async function taiDanhSachGV() {
+
+    try {
+
+        console.log(
+            "⏳ Đang tải tài khoản giáo viên..."
+        );
+
+
+        const response =
+            await fetch(CSV_URL_GV);
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "HTTP " + response.status
+            );
+
+        }
+
+
+        const csv =
+            await response.text();
+
+
+        const dong =
+            csv
+                .trim()
+                .split(/\r?\n/);
+
+
+        if (dong.length < 2) {
+
+            throw new Error(
+                "Google Sheet chưa có dữ liệu."
+            );
+
+        }
+
+
+        /* -------------------------------------------------
+           Đọc tiêu đề
+           ------------------------------------------------- */
+
+        const tieuDe =
+            tachCSV(dong[0])
+                .map(x =>
+                    x
+                        .replace(/^\uFEFF/, "")
+                        .trim()
+                );
+
+
+        console.log(
+            "📋 Cột Google Sheet:",
+            tieuDe
+        );
+
+
+        /* -------------------------------------------------
+           Đọc dữ liệu
+           ------------------------------------------------- */
+
+        danhSachGV = [];
+
+
+        for (
+            let i = 1;
+            i < dong.length;
+            i++
+        ) {
+
+            if (
+                dong[i].trim() === ""
+            ) {
+
+                continue;
+
+            }
+
+
+            const cot =
+                tachCSV(dong[i]);
+
+
+            const gv = {
+
+                maGV:
+                    cot[0] || "",
+
+                taiKhoan:
+                    cot[1] || "",
+
+                matKhau:
+                    cot[2] || "",
+
+                hoTen:
+                    cot[3] || "",
+
+                mon:
+                    cot[4] || "",
+
+                clb:
+                    cot[5] || "",
+
+                quyen:
+                    cot[6] || "",
+
+                trangThai:
+                    cot[7] || ""
+
+            };
+
+
+            danhSachGV.push(gv);
+
+        }
+
+
+        daTaiDuLieuGV = true;
+
+
+        console.log(
+            "✅ Đã tải",
+            danhSachGV.length,
+            "tài khoản giáo viên."
+        );
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "❌ Không tải được danh sách giáo viên:",
+            error
+        );
+
+
+        daTaiDuLieuGV = false;
+
+
+        hienThongBao(
+            "⚠️ Không thể kết nối dữ liệu tài khoản giáo viên.",
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   KIỂM TRA TRẠNG THÁI TÀI KHOẢN
+   ========================================================= */
+
+function taiKhoanDangHoatDong(gv) {
+
+    const trangThai =
+        String(gv.trangThai || "")
+            .trim()
+            .toLowerCase();
+
+
+    /*
+       Cho phép:
+
+       1
+       true
+       hoạt động
+       hoatdong
+
+       Nếu ô trạng thái để trống,
+       mặc định tài khoản được hoạt động.
+    */
+
+    if (trangThai === "") {
+
+        return true;
+
+    }
+
+
+    if (
+        trangThai === "1" ||
+        trangThai === "true" ||
+        trangThai === "hoạt động" ||
+        trangThai === "hoatdong"
+    ) {
+
+        return true;
+
+    }
+
+
+    return false;
+
+}
+
+
+/* =========================================================
+   ĐĂNG NHẬP GIÁO VIÊN
+   ========================================================= */
+
+document
+    .getElementById("formDangNhapGV")
+    .addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const taiKhoan =
+                document
+                    .getElementById("taiKhoan")
+                    .value
+                    .trim();
+
+
+            const matKhau =
+                document
+                    .getElementById("matKhau")
+                    .value;
+
+
+            const ghiNho =
+                document
+                    .getElementById("ghiNho")
+                    .checked;
+
+
+            /* ---------------------------------------------
+               Kiểm tra nhập đủ
+               --------------------------------------------- */
+
+            if (
+                taiKhoan === "" ||
+                matKhau === ""
+            ) {
+
+                hienThongBao(
+                    "⚠️ Vui lòng nhập tài khoản và mật khẩu.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /* ---------------------------------------------
+               Kiểm tra dữ liệu
+               --------------------------------------------- */
+
+            if (!daTaiDuLieuGV) {
+
+                hienThongBao(
+                    "⏳ Dữ liệu giáo viên chưa tải xong. Vui lòng thử lại.",
+                    "error"
+                );
+
+                await taiDanhSachGV();
+
+
+                if (!daTaiDuLieuGV) {
+
+                    return;
+
+                }
+
+            }
+
+
+            /* ---------------------------------------------
+               Tìm tài khoản
+               --------------------------------------------- */
+
+            const gv =
+                danhSachGV.find(function(item) {
+
+                    return (
+
+                        String(item.taiKhoan)
+                            .trim()
+                            .toLowerCase()
+                        ===
+                        taiKhoan
+                            .trim()
+                            .toLowerCase()
+
+                        &&
+
+                        String(item.matKhau)
+                            .trim()
+                        ===
+                        String(matKhau)
+                            .trim()
+
+                    );
+
+                });
+
+
+            /* ---------------------------------------------
+               Không tìm thấy
+               --------------------------------------------- */
+
+            if (!gv) {
+
+                hienThongBao(
+                    "❌ Tài khoản hoặc mật khẩu không đúng.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /* ---------------------------------------------
+               Tài khoản bị khóa
+               --------------------------------------------- */
+
+            if (
+                !taiKhoanDangHoatDong(gv)
+            ) {
+
+                hienThongBao(
+                    "🔒 Tài khoản giáo viên đã bị khóa.",
+                    "error"
+                );
+
+                return;
+
+            }
+
+
+            /* =================================================
+               XÓA PHIÊN HỌC SINH
+               ================================================= */
+
+            localStorage.removeItem(
+                "dangNhap"
+            );
+
+            localStorage.removeItem(
+                "maThiSinh"
+            );
+
+            localStorage.removeItem(
+                "tenThiSinh"
+            );
+
+            localStorage.removeItem(
+                "hoTen"
+            );
+
+            localStorage.removeItem(
+                "ngaySinh"
+            );
+
+            localStorage.removeItem(
+                "gioiTinh"
+            );
+
+            localStorage.removeItem(
+                "lopThiSinh"
+            );
+
+            localStorage.removeItem(
+                "truong"
+            );
+
+            localStorage.removeItem(
+                "hocSinh"
+            );
+
+
+            /* =================================================
+               LƯU PHIÊN GIÁO VIÊN
+               ================================================= */
+
+            localStorage.setItem(
+                "dangNhapGV",
+                "true"
+            );
+
+
+            localStorage.setItem(
+                "loaiTaiKhoan",
+                "giaoVien"
+            );
+
+
+            localStorage.setItem(
+                "maGV",
+                gv.maGV
+            );
+
+
+            localStorage.setItem(
+                "hoTenGV",
+                gv.hoTen
+            );
+
+
+            localStorage.setItem(
+                "clbGV",
+                gv.clb
+            );
+
+
+            localStorage.setItem(
+                "monGV",
+                gv.mon
+            );
+
+
+            localStorage.setItem(
+                "quyenGV",
+                gv.quyen
+            );
+
+
+            /* -------------------------------------------------
+               Lưu object giáo viên
+               ------------------------------------------------- */
+
+            localStorage.setItem(
+                "giaoVien",
+                JSON.stringify({
+
+                    maGV: gv.maGV,
+
+                    taiKhoan: gv.taiKhoan,
+
+                    hoTen: gv.hoTen,
+
+                    mon: gv.mon,
+
+                    clb: gv.clb,
+
+                    quyen: gv.quyen
+
+                })
+            );
+
+
+            /* =================================================
+               GHI NHỚ TÀI KHOẢN
+               ================================================= */
+
+            if (ghiNho) {
+
+                localStorage.setItem(
+                    "taiKhoanGV",
+                    taiKhoan
+                );
+
+            } else {
+
+                localStorage.removeItem(
+                    "taiKhoanGV"
+                );
+
+            }
+
+
+            /* =================================================
+               THÔNG BÁO
+               ================================================= */
+
+            hienThongBao(
+                "✅ Đăng nhập thành công! Đang vào khu vực giáo viên...",
+                "success"
+            );
+
+
+            console.log(
+                "================================="
+            );
+
+            console.log(
+                "✅ GIÁO VIÊN ĐĂNG NHẬP"
+            );
+
+            console.log(
+                "Mã GV:",
+                gv.maGV
+            );
+
+            console.log(
+                "Họ tên:",
+                gv.hoTen
+            );
+
+            console.log(
+                "Môn:",
+                gv.mon
+            );
+
+            console.log(
+                "CLB:",
+                gv.clb
+            );
+
+            console.log(
+                "Quyền:",
+                gv.quyen
+            );
+
+            console.log(
+                "================================="
+            );
+
+
+            /* =================================================
+               CHUYỂN TRANG GIÁO VIÊN
+               ================================================= */
+
+            setTimeout(
+                function() {
+
+                    window.location.href =
+                        "trang-gv.html";
+
+                },
+                500
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   TỰ ĐIỀN TÀI KHOẢN ĐÃ GHI NHỚ
+   ========================================================= */
+
+const taiKhoanDaNho =
+    localStorage.getItem(
+        "taiKhoanGV"
+    );
+
+
+if (taiKhoanDaNho) {
+
+    const oTaiKhoan =
+        document.getElementById(
+            "taiKhoan"
+        );
+
+    const oGhiNho =
+        document.getElementById(
+            "ghiNho"
+        );
+
+
+    if (oTaiKhoan) {
+
+        oTaiKhoan.value =
+            taiKhoanDaNho;
+
+    }
+
+
+    if (oGhiNho) {
+
+        oGhiNho.checked =
+            true;
+
+    }
+
+}
+
+
+/* =========================================================
+   KHỞI ĐỘNG
+   ========================================================= */
+
+taiDanhSachGV();
+
+</script>
+
+
+</body>
+
+</html>

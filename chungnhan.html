@@ -1,0 +1,657 @@
+<head>
+
+<link
+rel="stylesheet"
+href="css/style-old.css">
+
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<div class="certificate">
+
+    <img
+    src="anhnen/chungnhan-bg.png"
+    class="bg">
+
+    <img
+    src="anhnen/logo.jpg"
+    class="logo">
+
+    <div class="truong">
+        TRƯỜNG THCS PHÚ ĐÌNH
+    </div>
+
+    <div class="tieude">
+        GIẤY CHỨNG NHẬN
+    </div>
+
+    <div class="chungNhan">
+        Chứng nhận em:
+    </div>
+
+    <div
+    id="cnHoTen"
+    class="hoTen">
+    </div>
+
+    <div class="thanhTich">
+        Đạt thành tích xuất sắc trong kỳ thi:
+    </div>
+    
+    <div
+    id="cnKyThi"
+    class="kyThi">
+    </div>
+
+    <img
+    id="huyHieu"
+    class="huyHieu">
+
+    <div class="cotTrai">
+
+        <p>
+        Lớp:
+        <span id="cnLop"></span>
+        </p>
+
+        <p>
+        Điểm:
+        <span id="cnDiem"></span>
+        </p>
+        <p>
+        Xếp loại:
+        <span id="cnXepLoai"></span>
+        </p>
+        <p>
+        Xếp hạng:
+        <span id="cnXepHang"></span>
+        </p>
+
+    </div>
+
+    <div class="cotPhai">
+
+        <p>
+        Kỳ thi:
+        <span id="cnKyThi2"></span>
+        </p>
+
+        <p>
+        Ngày thi:
+        <span id="cnNgayThi"></span>
+        </p>
+
+        <p>
+        Mã CN:
+        <span id="cnMaCN"></span>
+        </p>
+
+    <div class="banToChuc">
+
+    <div class="chucDanh">
+
+        TM. BAN TỔ CHỨC
+
+        <br>
+
+        CHỦ NHIỆM CLB
+
+    </div>
+    <div class="qrBox">
+
+    <img
+    id="qrCode"
+    class="qrCode">
+
+    <div class="qrText">
+
+        Quét để xác thực
+
+    </div>
+
+    </div>
+    <img
+    src="anhnen/chuki.png"
+    class="chuKy">
+
+    <div class="nguoiKy">
+
+        Bàng Tiến Hào
+
+    </div>
+
+</div>
+</div>
+<div class="action-buttons">
+
+    <button onclick="window.print()">
+        🖨️ In giấy chứng nhận
+    </button>
+
+    <button onclick="taiPDF()">
+        📥 Tải về
+    </button>
+
+    <button onclick="window.location.href='index.html'">
+        🏠 Trang chủ
+    </button>
+
+</div>
+<script>
+
+/*
+ * ==========================================================
+ * CHỨNG NHẬN - DÙNG 1 SHEET KETQUA CHUNG
+ * ==========================================================
+ *
+ * ketquathi.html / xephang.html lưu maKyThi khi mở chứng nhận.
+ * Trang này dùng maKyThi + maHS để lấy đúng kết quả.
+ */
+
+const KETQUA_CSV_URL =
+    localStorage.getItem("KETQUA_CSV_URL") ||
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vRULO6RaaXqNERaYMuLx9cpHLp3hxqL3i2PHuccrdbSvFaQgpsrPvRk-fhgzlOxamLUYCe1sLQMQvPL/pub?output=csv";
+
+const hoTen =
+    localStorage.getItem("cnHoTen") || "";
+
+const lop =
+    localStorage.getItem("cnLop") || "";
+
+const kyThi =
+    localStorage.getItem("cnKyThi") || "";
+
+const diem =
+    Number(
+        localStorage.getItem("cnDiem")
+    ) || 0;
+
+const xepHang =
+    localStorage.getItem("cnXepHang") || "";
+
+const maHS =
+    localStorage.getItem("maThiSinh") || "";
+
+const maKyThi =
+    localStorage.getItem("cnMaKyThi") ||
+    localStorage.getItem("maKyThi") ||
+    "";
+
+
+/*
+ * CSV parser.
+ */
+function parseCSV(text) {
+
+    const rows = [];
+
+    let row = [];
+    let cell = "";
+    let inQuotes = false;
+
+    for (let i = 0; i < text.length; i++) {
+
+        const char = text[i];
+        const next = text[i + 1];
+
+        if (
+            char === '"' &&
+            inQuotes &&
+            next === '"'
+        ) {
+
+            cell += '"';
+            i++;
+            continue;
+
+        }
+
+        if (char === '"') {
+
+            inQuotes = !inQuotes;
+            continue;
+
+        }
+
+        if (char === "," && !inQuotes) {
+
+            row.push(cell);
+            cell = "";
+            continue;
+
+        }
+
+        if (
+            (char === "\n" || char === "\r") &&
+            !inQuotes
+        ) {
+
+            if (
+                char === "\r" &&
+                next === "\n"
+            ) {
+                i++;
+            }
+
+            row.push(cell);
+            cell = "";
+
+            if (
+                row.length > 1 ||
+                row[0] !== ""
+            ) {
+                rows.push(row);
+            }
+
+            row = [];
+            continue;
+
+        }
+
+        cell += char;
+
+    }
+
+    row.push(cell);
+
+    if (
+        row.length > 1 ||
+        row[0] !== ""
+    ) {
+        rows.push(row);
+    }
+
+    return rows;
+
+}
+
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+
+/*
+ * Tính xếp loại theo điểm.
+ *
+ * Giữ logic hiện tại của file:
+ * >=18 Xuất sắc
+ * >=15 Giỏi
+ * còn lại Khá
+ *
+ * Tuy nhiên nếu Sheet đã có xepLoai thì ưu tiên
+ * giá trị trong Sheet.
+ */
+function tinhXepLoai(diem, xepLoaiSheet) {
+
+    if (xepLoaiSheet) {
+        return xepLoaiSheet;
+    }
+
+    if (diem >= 18) {
+        return "Xuất sắc";
+    }
+
+    if (diem >= 15) {
+        return "Giỏi";
+    }
+
+    return "Khá";
+
+}
+
+
+/*
+ * Lấy kết quả chính xác theo:
+ * maHS + maKyThi
+ */
+async function taiKetQuaChinhXac() {
+
+    if (
+        !KETQUA_CSV_URL ||
+        KETQUA_CSV_URL ===
+        "https://docs.google.com/spreadsheets/d/e/2PACX-1vRULO6RaaXqNERaYMuLx9cpHLp3hxqL3i2PHuccrdbSvFaQgpsrPvRk-fhgzlOxamLUYCe1sLQMQvPL/pub?output=csv"
+    ) {
+
+        hienThiChungNhan(
+            hoTen,
+            lop,
+            kyThi,
+            diem,
+            xepHang,
+            "",
+            ""
+        );
+
+        return;
+
+    }
+
+    try {
+
+        const response =
+            await fetch(KETQUA_CSV_URL);
+
+        if (!response.ok) {
+            throw new Error(
+                "HTTP " + response.status
+            );
+        }
+
+        const text =
+            await response.text();
+
+        const rows =
+            parseCSV(text);
+
+        if (rows.length <= 1) {
+
+            hienThiChungNhan(
+                hoTen,
+                lop,
+                kyThi,
+                diem,
+                xepHang,
+                "",
+                ""
+            );
+
+            return;
+
+        }
+
+        const header =
+            rows[0].map(h =>
+                String(h || "")
+                    .trim()
+                    .replace(/^\uFEFF/, "")
+            );
+
+        const index = {};
+
+        header.forEach((name, i) => {
+            index[name] = i;
+        });
+
+        const get = (row, name) => {
+
+            const i = index[name];
+
+            return i === undefined
+                ? ""
+                : String(row[i] ?? "").trim();
+
+        };
+
+        /*
+         * Tìm đúng dòng.
+         *
+         * Ưu tiên maHS + maKyThi.
+         * Không dùng riêng maHS vì một học sinh có thể
+         * tham gia nhiều kỳ thi.
+         */
+        let result = rows
+            .slice(1)
+            .map(row => ({
+
+                maKyThi:
+                    get(row, "maKyThi"),
+
+                maHS:
+                    get(row, "maHS"),
+
+                hoTen:
+                    get(row, "hoTen"),
+
+                lop:
+                    get(row, "lop"),
+
+                tenKyThi:
+                    get(row, "tenKyThi"),
+
+                khoi:
+                    get(row, "khoi"),
+
+                mon:
+                    get(row, "mon"),
+
+                diem:
+                    Number(
+                        get(row, "diem") || 0
+                    ),
+
+                xepLoai:
+                    get(row, "xepLoai"),
+
+                ngayThi:
+                    get(row, "ngayThi"),
+
+                dotThi:
+                    get(row, "dotThi"),
+
+                namHoc:
+                    get(row, "namHoc")
+
+            }))
+            .find(item =>
+                item.maHS === maHS &&
+                item.maKyThi === maKyThi
+            );
+
+        /*
+         * Nếu không tìm được bằng maKyThi,
+         * KHÔNG tự ý lấy một kỳ thi khác.
+         *
+         * Đây là điểm quan trọng để tránh cấp nhầm
+         * chứng nhận.
+         */
+        if (!result) {
+
+            console.warn(
+                "Không tìm thấy kết quả với maHS + maKyThi:",
+                maHS,
+                maKyThi
+            );
+
+            hienThiChungNhan(
+                hoTen,
+                lop,
+                kyThi,
+                diem,
+                xepHang,
+                "",
+                ""
+            );
+
+            return;
+
+        }
+
+        const tenKyThiDung =
+            result.tenKyThi ||
+            kyThi;
+
+        const diemDung =
+            result.diem;
+
+        const xepLoaiDung =
+            tinhXepLoai(
+                diemDung,
+                result.xepLoai
+            );
+
+        hienThiChungNhan(
+            result.hoTen || hoTen,
+            result.lop || lop,
+            tenKyThiDung,
+            diemDung,
+            xepHang,
+            xepLoaiDung,
+            result.ngayThi
+        );
+
+    }
+    catch (error) {
+
+        console.error(
+            "Lỗi tải kết quả chứng nhận:",
+            error
+        );
+
+        /*
+         * Khi CSV tạm thời không tải được,
+         * vẫn hiển thị dữ liệu đã lưu từ trang trước.
+         */
+        hienThiChungNhan(
+            hoTen,
+            lop,
+            kyThi,
+            diem,
+            xepHang,
+            "",
+            ""
+        );
+
+    }
+
+}
+
+
+/*
+ * Hiển thị chứng nhận.
+ */
+function hienThiChungNhan(
+    ten,
+    lopHoc,
+    tenKyThi,
+    diemThi,
+    hang,
+    xepLoaiSheet,
+    ngayThiSheet
+) {
+
+    document.getElementById("cnHoTen")
+        .innerHTML =
+        escapeHTML(ten);
+
+    document.getElementById("cnLop")
+        .innerHTML =
+        escapeHTML(lopHoc);
+
+    document.getElementById("cnKyThi")
+        .innerHTML =
+        escapeHTML(tenKyThi);
+
+    document.getElementById("cnKyThi2")
+        .innerHTML =
+        escapeHTML(tenKyThi);
+
+    document.getElementById("cnDiem")
+        .innerHTML =
+        diemThi;
+
+    const xepLoai =
+        tinhXepLoai(
+            diemThi,
+            xepLoaiSheet
+        );
+
+    document.getElementById("cnXepLoai")
+        .innerHTML =
+        escapeHTML(xepLoai);
+
+    document.getElementById("cnXepHang")
+        .innerHTML =
+        escapeHTML(hang);
+
+    document.getElementById("cnNgayThi")
+        .innerHTML =
+        ngayThiSheet ||
+        new Date().toLocaleDateString(
+            "vi-VN"
+        );
+
+    /*
+     * Mã chứng nhận gắn với cả kỳ thi,
+     * tránh trường hợp cùng một học sinh có
+     * nhiều chứng nhận nhưng cùng một mã.
+     */
+    const maCN =
+        "OLY-2026-" +
+        (maKyThi || "KITHI") +
+        "-" +
+        maHS;
+
+    document.getElementById("cnMaCN")
+        .innerHTML =
+        escapeHTML(maCN);
+
+    /*
+     * QR xác thực:
+     * truyền cả maHS và maKyThi.
+     */
+    const linkXacThuc =
+        "https://TEN-WEB-CUA-THAY.github.io/" +
+        "tracuu.html?maHS=" +
+        encodeURIComponent(maHS) +
+        "&maKyThi=" +
+        encodeURIComponent(maKyThi);
+
+    document.getElementById("qrCode")
+        .src =
+        "https://api.qrserver.com/v1/create-qr-code/" +
+        "?size=200x200&data=" +
+        encodeURIComponent(linkXacThuc);
+
+    /*
+     * Huy hiệu giữ nguyên logic hiện tại.
+     */
+    if (diemThi >= 18) {
+
+        document.getElementById("huyHieu")
+            .src =
+            "anhnen/gold.png";
+
+    }
+    else if (diemThi >= 15) {
+
+        document.getElementById("huyHieu")
+            .src =
+            "anhnen/silver.png";
+
+    }
+    else {
+
+        document.getElementById("huyHieu")
+            .src =
+            "anhnen/bronze.png";
+
+    }
+
+}
+
+
+/*
+ * Tải PDF / in.
+ */
+function taiPDF() {
+
+    window.print();
+
+}
+
+
+/*
+ * Bắt đầu.
+ */
+taiKetQuaChinhXac();
+
+</script>
+</body>
+</html>

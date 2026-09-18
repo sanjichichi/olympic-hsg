@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Đăng nhập quản trị - Olympic HSG Online</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(135deg,#0f2f6f,#2563eb 55%,#60a5fa);
+  padding:20px;
+}
+.card{
+  width:100%;max-width:440px;background:#fff;border-radius:22px;
+  padding:34px;box-shadow:0 20px 60px rgba(0,0,0,.22)
+}
+.logo{font-size:52px;text-align:center}
+h1{text-align:center;margin:10px 0 5px;color:#173b8f;font-size:27px}
+.sub{text-align:center;color:#64748b;margin:0 0 28px}
+label{display:block;font-weight:700;margin:16px 0 7px}
+input{
+  width:100%;padding:13px 14px;border:1px solid #cbd5e1;border-radius:11px;
+  font-size:16px;outline:none
+}
+input:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.pass{position:relative}
+.pass button{
+  position:absolute;right:8px;top:7px;border:0;background:transparent;
+  padding:8px;cursor:pointer;font-size:18px
+}
+.remember{display:flex;align-items:center;gap:8px;margin:16px 0}
+.remember input{width:auto}
+.login{
+  width:100%;border:0;border-radius:11px;padding:14px;
+  background:#173b8f;color:#fff;font-weight:800;font-size:16px;cursor:pointer
+}
+.login:hover{background:#2563eb}
+.message{display:none;margin:15px 0;padding:12px;border-radius:10px;font-weight:600}
+.error{display:block;background:#fee2e2;color:#991b1b}
+.success{display:block;background:#dcfce7;color:#166534}
+.back{
+  display:block;text-align:center;margin-top:18px;color:#2563eb;
+  text-decoration:none;font-weight:700
+}
+.note{
+  margin-top:22px;padding:12px;border-radius:10px;background:#f8fafc;
+  color:#64748b;font-size:13px;line-height:1.5
+}
+</style>
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<div class="card">
+  <div class="logo">🛡️</div>
+  <h1>QUẢN TRỊ HỆ THỐNG</h1>
+  <p class="sub">Olympic HSG Online</p>
+
+  <div id="thongBao" class="message"></div>
+
+  <form id="formAdmin">
+    <label for="taiKhoan">Tài khoản Admin</label>
+    <input id="taiKhoan" type="text" autocomplete="username"
+           placeholder="Nhập tài khoản Admin">
+
+    <label for="matKhau">Mật khẩu</label>
+    <div class="pass">
+      <input id="matKhau" type="password" autocomplete="current-password"
+             placeholder="Nhập mật khẩu">
+      <button type="button" id="btnHienMK" aria-label="Hiện mật khẩu">👁️</button>
+    </div>
+
+    <label class="remember">
+      <input id="ghiNho" type="checkbox">
+      Ghi nhớ tài khoản
+    </label>
+
+    <button class="login" type="submit">🔐 Đăng nhập quản trị</button>
+  </form>
+
+  <a class="back" href="index.html">← Quay lại trang chủ</a>
+
+  <div class="note">
+    Khu vực này dành riêng cho tài khoản quản trị. Tài khoản giáo viên
+    thông thường không thể sử dụng cổng đăng nhập này.
+  </div>
+</div>
+
+<script>
+const CSV_URL_ADMIN =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vRYHtp2K_icGvnWMXT9WBKXr77uVYgtiZvhBHE-M47HPqvyy8aYpztjL9w27xPJUGxlGax_QpmMSaxV/pub?output=csv";
+
+let danhSachAdmin = [];
+let daTaiDuLieu = false;
+
+function tachCSV(line){
+  const out=[]; let s="", q=false;
+  for(let i=0;i<line.length;i++){
+    const c=line[i];
+    if(c==='"'){
+      if(q && line[i+1]==='"'){s+='"';i++;}
+      else q=!q;
+    }else if(c===',' && !q){
+      out.push(s.trim()); s="";
+    }else{
+      s+=c;
+    }
+  }
+  out.push(s.trim());
+  return out;
+}
+
+function thongBao(text,type){
+  const el=document.getElementById("thongBao");
+  el.textContent=text;
+  el.className="message "+type;
+}
+
+function trangThaiHoatDong(v){
+  v=String(v||"").trim().toLowerCase();
+  return v==="" || v==="1" || v==="true" ||
+         v==="hoạt động" || v==="hoatdong";
+}
+
+async function taiDanhSachAdmin(){
+  try{
+    const res=await fetch(CSV_URL_ADMIN,{cache:"no-store"});
+    if(!res.ok) throw new Error("HTTP "+res.status);
+    const csv=await res.text();
+    const rows=csv.trim().split(/\r?\n/);
+
+    if(rows.length<2) throw new Error("Sheet chưa có dữ liệu.");
+
+    danhSachAdmin=[];
+
+    for(let i=1;i<rows.length;i++){
+      if(!rows[i].trim()) continue;
+      const c=tachCSV(rows[i]);
+
+      danhSachAdmin.push({
+        maAdmin:c[0]||"",
+        taiKhoan:c[1]||"",
+        matKhau:c[2]||"",
+        hoTen:c[3]||"",
+        quyen:c[4]||"",
+        trangThai:c[5]||""
+      });
+    }
+
+    daTaiDuLieu=true;
+    console.log("Đã tải tài khoản Admin:",danhSachAdmin.length);
+
+  }catch(err){
+    console.error("Lỗi tải TK_ADMIN:",err);
+    daTaiDuLieu=false;
+  }
+}
+
+document.getElementById("btnHienMK").onclick=function(){
+  const input=document.getElementById("matKhau");
+  input.type=input.type==="password" ? "text" : "password";
+};
+
+const tkNho=localStorage.getItem("taiKhoanAdmin");
+if(tkNho){
+  document.getElementById("taiKhoan").value=tkNho;
+  document.getElementById("ghiNho").checked=true;
+}
+
+document.getElementById("formAdmin").addEventListener("submit",async function(e){
+  e.preventDefault();
+
+  const taiKhoan=document.getElementById("taiKhoan").value.trim();
+  const matKhau=document.getElementById("matKhau").value.trim();
+  const ghiNho=document.getElementById("ghiNho").checked;
+
+  if(!taiKhoan || !matKhau){
+    thongBao("⚠️ Vui lòng nhập đầy đủ tài khoản và mật khẩu.","error");
+    return;
+  }
+
+  if(!daTaiDuLieu){
+    thongBao("⏳ Đang tải dữ liệu quản trị...","error");
+    await taiDanhSachAdmin();
+    if(!daTaiDuLieu){
+      thongBao("❌ Không thể kết nối TK_ADMIN. Kiểm tra Sheet đã Publish dạng CSV chưa.","error");
+      return;
+    }
+  }
+
+  const admin=danhSachAdmin.find(x =>
+    x.taiKhoan.trim().toLowerCase()===taiKhoan.toLowerCase() &&
+    x.matKhau.trim()===matKhau
+  );
+
+  if(!admin){
+    thongBao("❌ Tài khoản hoặc mật khẩu Admin không đúng.","error");
+    return;
+  }
+
+  if(String(admin.quyen).trim().toLowerCase()!=="admin"){
+    thongBao("⛔ Tài khoản này không có quyền quản trị.","error");
+    return;
+  }
+
+  if(!trangThaiHoatDong(admin.trangThai)){
+    thongBao("🔒 Tài khoản Admin đã bị khóa.","error");
+    return;
+  }
+
+  // Xóa phiên HS/GV trước khi tạo phiên Admin
+  [
+    "dangNhap","maThiSinh","tenThiSinh","hoTen","ngaySinh",
+    "gioiTinh","lopThiSinh","truong","hocSinh",
+    "dangNhapGV","maGV","hoTenGV","clbGV","monGV",
+    "quyenGV","giaoVien"
+  ].forEach(k=>localStorage.removeItem(k));
+
+  localStorage.setItem("dangNhapAdmin","true");
+  localStorage.setItem("loaiTaiKhoan","admin");
+  localStorage.setItem("maAdmin",admin.maAdmin);
+  localStorage.setItem("hoTenAdmin",admin.hoTen);
+  localStorage.setItem("quyenAdmin","admin");
+
+  localStorage.setItem("admin",JSON.stringify({
+    maAdmin:admin.maAdmin,
+    taiKhoan:admin.taiKhoan,
+    hoTen:admin.hoTen,
+    quyen:"admin"
+  }));
+
+  if(ghiNho) localStorage.setItem("taiKhoanAdmin",taiKhoan);
+  else localStorage.removeItem("taiKhoanAdmin");
+
+  thongBao("✅ Đăng nhập quản trị thành công. Đang mở Admin...","success");
+
+  setTimeout(()=>location.href="admin.html",500);
+});
+
+taiDanhSachAdmin();
+</script>
+</body>
+</html>

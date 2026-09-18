@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thi chính thức</title>
+    <link
+rel="stylesheet"
+href="css/style-old.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+<div class="exam-layout">
+
+    <div class="exam-container">
+
+    <div class="exam-header">
+
+        <h2>OLYMPIC HỌC SINH GIỎI</h2>
+
+        <div class="info-box">
+            <div>
+    <strong>Thí sinh:</strong>
+    <span id="tenThiSinh"></span>
+    -
+    <strong>Ngày sinh:</strong>
+    <span id="ngaySinh"></span>
+</div>
+
+    <div>
+    <strong>Lớp:</strong>
+    <span id="lopThiSinh"></span>
+        </div>
+            <div>
+                <strong>Thời gian:</strong>
+                <span id="timer"></span>
+            </div>
+        </div>
+        <div class="progress-box">
+            Đã hoàn thành:
+             <span id="soCauDaLam">0</span>/<span id="tongSoCau">0</span> câu
+        </div>
+
+    </div>
+
+    <div id="khuVucCauHoi">
+    </div>
+    <button
+    class="submit-btn"
+    onclick="nopBai()">
+
+    NỘP BÀI
+
+    </button>
+    </div>
+
+<div class="question-nav">
+
+    <h3>Câu hỏi</h3>
+
+    <div id="questionNavContainer">
+    </div>
+
+</div>
+
+
+<script>
+const fileDe = localStorage.getItem("fileDe");
+console.log("fileDe =", localStorage.getItem("fileDe"));
+console.log("tenKyThi =", localStorage.getItem("tenKyThi"));
+const scriptDe = document.createElement("script");
+scriptDe.src = fileDe;
+
+scriptDe.onload = function () {
+
+    const scriptThi = document.createElement("script");
+    scriptThi.src = "js/thi.js";
+
+    document.body.appendChild(scriptThi);
+
+};
+
+document.body.appendChild(scriptDe);
+</script>
+
+</body>
+</html>

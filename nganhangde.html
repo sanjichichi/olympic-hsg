@@ -1,0 +1,3320 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Ngân hàng câu hỏi - Olympic HSG Online</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:"Segoe UI",Arial,sans-serif;
+    background:#f4f7fb;
+    color:#1f2937;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+    background:linear-gradient(135deg,#2563eb,#4f46e5);
+    color:white;
+    padding:20px 30px;
+    box-shadow:0 4px 15px rgba(0,0,0,.12);
+}
+
+.header-inner{
+    max-width:1500px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.header h1{
+    margin:0;
+    font-size:25px;
+}
+
+.header p{
+    margin:5px 0 0;
+    opacity:.9;
+}
+
+/* ================= CONTAINER ================= */
+
+.container{
+    width:95%;
+    max-width:1500px;
+    margin:25px auto;
+}
+
+/* ================= TOOLBAR ================= */
+
+.toolbar{
+    background:white;
+    border-radius:16px;
+    padding:18px;
+    box-shadow:0 4px 18px rgba(0,0,0,.07);
+    margin-bottom:20px;
+}
+
+.toolbar-row{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    align-items:center;
+}
+
+select,
+input,
+textarea{
+    border:1px solid #d1d5db;
+    border-radius:9px;
+    padding:10px 12px;
+    font-size:14px;
+    outline:none;
+    background:white;
+}
+
+select:focus,
+input:focus,
+textarea:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 0 3px rgba(37,99,235,.1);
+}
+
+.search{
+    flex:1;
+    min-width:220px;
+}
+
+button{
+    border:none;
+    border-radius:9px;
+    padding:10px 15px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+    transition:.2s;
+}
+
+button:hover{
+    transform:translateY(-1px);
+}
+
+.btn-primary{
+    background:#2563eb;
+    color:white;
+}
+
+.btn-success{
+    background:#16a34a;
+    color:white;
+}
+
+.btn-warning{
+    background:#f59e0b;
+    color:white;
+}
+
+.btn-danger{
+    background:#dc2626;
+    color:white;
+}
+
+.btn-gray{
+    background:#e5e7eb;
+    color:#374151;
+}
+
+/* ================= STATS ================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    border-radius:15px;
+    padding:18px;
+    box-shadow:0 4px 15px rgba(0,0,0,.06);
+}
+
+.stat-title{
+    color:#6b7280;
+    font-size:13px;
+}
+
+.stat-value{
+    font-size:27px;
+    font-weight:700;
+    margin-top:5px;
+}
+
+/* ================= TABLE ================= */
+
+.table-wrap{
+    background:white;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 4px 18px rgba(0,0,0,.07);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+thead{
+    background:#f8fafc;
+}
+
+th,
+td{
+    padding:13px 12px;
+    border-bottom:1px solid #e5e7eb;
+    text-align:left;
+    font-size:14px;
+}
+
+th{
+    color:#475569;
+    font-size:13px;
+}
+
+tbody tr:hover{
+    background:#f8fbff;
+}
+
+.badge{
+    display:inline-block;
+    padding:4px 8px;
+    border-radius:20px;
+    background:#eef2ff;
+    color:#4338ca;
+    font-size:12px;
+    font-weight:600;
+}
+
+.badge-green{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.badge-orange{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+/* ================= EMPTY ================= */
+
+.empty{
+    text-align:center;
+    padding:60px 20px;
+    color:#6b7280;
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(15,23,42,.55);
+    z-index:1000;
+    padding:20px;
+    overflow:auto;
+}
+
+.modal.show{
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+}
+
+.modal-box{
+    background:white;
+    width:100%;
+    max-width:850px;
+    margin:30px auto;
+    border-radius:18px;
+    box-shadow:0 20px 50px rgba(0,0,0,.2);
+    overflow:hidden;
+}
+
+.modal-header{
+    padding:18px 22px;
+    background:#f8fafc;
+    border-bottom:1px solid #e5e7eb;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.modal-header h2{
+    margin:0;
+    font-size:20px;
+}
+
+.modal-body{
+    padding:22px;
+}
+
+.modal-footer{
+    padding:15px 22px;
+    border-top:1px solid #e5e7eb;
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+}
+
+/* ================= FORM ================= */
+
+.form-group{
+    margin-bottom:16px;
+}
+
+.form-group label{
+    display:block;
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:7px;
+}
+
+textarea{
+    width:100%;
+    min-height:100px;
+    resize:vertical;
+}
+
+.option-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.option-item{
+    display:flex;
+    gap:8px;
+    align-items:center;
+}
+
+.option-item span{
+    width:30px;
+    height:30px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:50%;
+    background:#eef2ff;
+    color:#4338ca;
+    font-weight:700;
+}
+
+.option-item input{
+    flex:1;
+}
+
+.preview-box{
+    background:#f8fafc;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    padding:20px;
+    line-height:1.7;
+}
+
+.preview-option{
+    border:1px solid #e5e7eb;
+    border-radius:9px;
+    padding:10px;
+    margin-top:8px;
+}
+
+.preview-answer{
+    margin-top:15px;
+    background:#ecfdf5;
+    color:#166534;
+    padding:10px;
+    border-radius:8px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:900px){
+
+    .stats{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .option-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:600px){
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .header-inner{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    th:nth-child(4),
+    td:nth-child(4),
+    th:nth-child(5),
+    td:nth-child(5){
+        display:none;
+    }
+
+}
+
+</style>
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="header-inner">
+
+        <div>
+            <h1>📚 Ngân hàng câu hỏi</h1>
+            <p>Olympic HSG Online</p>
+        </div>
+
+        <button
+            class="btn-success"
+            onclick="openCreateModal()">
+            ＋ Tạo câu hỏi
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+    <!-- ================= TOOLBAR ================= -->
+
+    <section class="toolbar">
+
+        <div class="toolbar-row">
+
+            <select id="selectMon"
+                    onchange="changeSubject()">
+
+                <option value="">-- Chọn môn --</option>
+
+                <option value="toan">Toán</option>
+                <option value="van">Ngữ văn</option>
+                <option value="tienganh">Tiếng Anh</option>
+                <option value="lichsu">Lịch sử</option>
+                <option value="dialy">Địa lí</option>
+                <option value="khtn">Khoa học tự nhiên</option>
+
+            </select>
+
+
+            <select id="selectKhoi"
+                    onchange="changeGrade()">
+
+                <option value="">-- Khối --</option>
+
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+
+            </select>
+
+
+            <input
+                id="searchInput"
+                class="search"
+                placeholder="🔍 Tìm kiếm câu hỏi..."
+                oninput="renderQuestions()"
+            >
+
+
+            <select
+                id="filterType"
+                onchange="renderQuestions()">
+
+                <option value="">Tất cả loại</option>
+
+                <option value="MCQ">
+                    Trắc nghiệm
+                </option>
+
+                <option value="MULTI">
+                    Nhiều đáp án
+                </option>
+
+                <option value="TRUEFALSE">
+                    Đúng / Sai
+                </option>
+
+                <option value="FILL">
+                    Điền từ
+                </option>
+
+                <option value="MATCH">
+                    Ghép nối
+                </option>
+
+                <option value="SORT">
+                    Sắp xếp
+                </option>
+
+            </select>
+
+
+            <button
+                class="btn-primary"
+                onclick="importExcel()">
+
+                📥 Import Excel
+
+            </button>
+
+
+            <button
+                class="btn-warning"
+                onclick="exportJS()">
+
+                💾 Xuất JS
+
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= STATS ================= -->
+
+    <section class="stats">
+
+        <div class="stat">
+
+            <div class="stat-title">
+                Tổng câu hỏi
+            </div>
+
+            <div
+                class="stat-value"
+                id="totalCount">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-title">
+                Trắc nghiệm
+            </div>
+
+            <div
+                class="stat-value"
+                id="mcqCount">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-title">
+                Câu nâng cao
+            </div>
+
+            <div
+                class="stat-value"
+                id="specialCount">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="stat">
+
+            <div class="stat-title">
+                Đang chọn
+            </div>
+
+            <div
+                class="stat-value"
+                id="selectedCount">
+                0
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= TABLE ================= -->
+
+    <section class="table-wrap">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th width="40">
+                        <input
+                            type="checkbox"
+                            id="checkAll"
+                            onchange="toggleAll(this.checked)">
+                    </th>
+
+                    <th>Mã câu</th>
+
+                    <th>Câu hỏi</th>
+
+                    <th>Loại</th>
+
+                    <th>Chủ đề</th>
+
+                    <th>Điểm</th>
+
+                    <th width="180">
+                        Thao tác
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="questionTable">
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+</main>
+
+
+<!-- =================================================
+     MODAL TẠO CÂU
+================================================= -->
+
+<div
+    class="modal"
+    id="createModal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2 id="modalTitle">
+                Tạo câu hỏi
+            </h2>
+
+            <button
+                class="btn-gray"
+                onclick="closeModal()">
+                ✕
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <div class="form-group">
+
+                <label>
+                    Loại câu hỏi
+                </label>
+
+                <select
+                    id="questionType"
+                    onchange="changeQuestionType()">
+
+                    <option value="MCQ">
+                        Trắc nghiệm 1 đáp án
+                    </option>
+
+                    <option value="MULTI">
+                        Nhiều đáp án
+                    </option>
+
+                    <option value="TRUEFALSE">
+                        Đúng / Sai
+                    </option>
+
+                    <option value="FILL">
+                        Điền từ
+                    </option>
+
+                    <option value="SHORT">
+                        Trả lời ngắn
+
+                    </option>
+                    <option value="MATCH">
+                        Ghép nối
+                    </option>
+                    <option value="SORT">
+                        Sắp xếp
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Câu hỏi
+                </label>
+
+                <textarea
+                    id="questionText"
+                    placeholder="Nhập nội dung câu hỏi...">
+                </textarea>
+
+            </div>
+
+
+            <div
+                id="optionArea">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Điểm
+                </label>
+
+                <input
+                    id="questionScore"
+                    type="number"
+                    value="1"
+                    min="0"
+                    step="0.25">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Chủ đề
+                </label>
+
+                <input
+                    id="questionTopic"
+                    placeholder="Ví dụ: Đại số, Hình học...">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Độ khó
+                </label>
+
+                <select id="questionDifficulty">
+
+                    <option value="Nhận biết">
+                        Nhận biết
+                    </option>
+
+                    <option value="Thông hiểu">
+                        Thông hiểu
+                    </option>
+
+                    <option value="Vận dụng">
+                        Vận dụng
+                    </option>
+
+                    <option value="Vận dụng cao">
+                        Vận dụng cao
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                class="btn-gray"
+                onclick="closeModal()">
+
+                Hủy
+
+            </button>
+
+
+            <button
+                class="btn-primary"
+                onclick="saveQuestion()">
+
+                💾 Lưu câu hỏi
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =================================================
+     MODAL XEM TRƯỚC
+================================================= -->
+
+<div
+    class="modal"
+    id="previewModal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <h2>
+                👁 Xem trước câu hỏi
+            </h2>
+
+            <button
+                class="btn-gray"
+                onclick="closePreview()">
+                ✕
+            </button>
+
+        </div>
+
+
+        <div
+            class="modal-body"
+            id="previewContent">
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                class="btn-gray"
+                onclick="closePreview()">
+
+                Đóng
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =================================================
+     FILE EXCEL
+================================================= -->
+
+<input
+    type="file"
+    id="excelInput"
+    accept=".csv,.xlsx,.xls"
+    style="display:none">
+
+
+<script>
+
+/* =====================================================
+   BIẾN HỆ THỐNG
+===================================================== */
+
+let nganHang = {
+
+    thongTin: {
+        mon: "",
+        khoi: "",
+        ten: "",
+        phienBan: "1.0"
+    },
+
+    cauHoi: []
+
+};
+
+
+let selectedIds = new Set();
+
+let editingIndex = -1;
+
+
+/* =====================================================
+   CHỌN MÔN
+===================================================== */
+
+function changeSubject(){
+
+    loadQuestionBank();
+
+}
+
+
+/* =====================================================
+   CHỌN KHỐI
+===================================================== */
+
+function changeGrade(){
+
+    loadQuestionBank();
+
+}
+
+
+/* =====================================================
+   ĐƯỜNG DẪN FILE
+===================================================== */
+
+function getBankPath(){
+
+    const mon =
+        document.getElementById("selectMon").value;
+
+    const khoi =
+        document.getElementById("selectKhoi").value;
+
+
+    if(!mon || !khoi){
+
+        return null;
+
+    }
+
+
+    return `nganhang/${mon}/${khoi}/${mon}-${khoi}.js`;
+
+}
+
+
+/* =====================================================
+   ĐỌC FILE JS
+===================================================== */
+
+async function loadQuestionBank(){
+
+    const path = getBankPath();
+
+
+    if(!path){
+
+        nganHang.cauHoi = [];
+
+        renderQuestions();
+
+        return;
+
+    }
+
+
+    try{
+
+        const oldScript =
+            document.getElementById("dynamicBankScript");
+
+        if(oldScript){
+
+            oldScript.remove();
+
+        }
+
+
+        /*
+         * Vì JS import trực tiếp không thể lấy biến
+         * từ script theo cách an toàn trong mọi trình duyệt,
+         * ta dùng fetch đọc file rồi đánh giá trong scope riêng.
+         */
+
+        const response =
+            await fetch(
+                path + "?v=" + Date.now()
+            );
+
+
+        if(!response.ok){
+
+            throw new Error(
+                "Không tìm thấy file ngân hàng."
+            );
+
+        }
+
+
+        const code =
+            await response.text();
+
+
+        const fn = new Function(
+            code +
+            `
+            return typeof nganHangDe !== "undefined"
+                ? nganHangDe
+                : {
+                    thongTin: {},
+                    cauHoi:
+                        typeof cauHoi !== "undefined"
+                        ? cauHoi
+                        : []
+                };
+            `
+        );
+
+
+        const data = fn();
+
+
+        nganHang = {
+
+            thongTin:
+                data.thongTin || {},
+
+            cauHoi:
+                Array.isArray(data.cauHoi)
+                ? data.cauHoi
+                : []
+
+        };
+
+
+        selectedIds.clear();
+
+        renderQuestions();
+
+
+    }catch(error){
+
+        console.error(error);
+
+        nganHang = {
+
+            thongTin: {},
+
+            cauHoi: []
+
+        };
+
+
+        renderQuestions();
+
+
+        alert(
+            "Chưa tìm thấy ngân hàng câu hỏi:\n\n" +
+            path +
+            "\n\n" +
+            "Nếu file chưa tồn tại, thầy có thể tạo ngân hàng mới bằng cách tạo câu hỏi rồi Xuất JS."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   HIỂN THỊ CÂU HỎI
+===================================================== */
+
+function renderQuestions(){
+
+    const tbody =
+        document.getElementById(
+            "questionTable"
+        );
+
+
+    const search =
+        document.getElementById(
+            "searchInput"
+        ).value
+        .toLowerCase()
+        .trim();
+
+
+    const filter =
+        document.getElementById(
+            "filterType"
+        ).value;
+
+
+    let list =
+        nganHang.cauHoi.filter(
+            (q,index)=>{
+
+                const text =
+                    JSON.stringify(q)
+                    .toLowerCase();
+
+
+                const matchSearch =
+                    !search ||
+                    text.includes(search);
+
+
+                const matchType =
+                    !filter ||
+                    (q.loai || "MCQ") === filter;
+
+
+                return (
+                    matchSearch &&
+                    matchType
+                );
+
+            }
+        );
+
+
+    if(!list.length){
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td colspan="7">
+
+                    <div class="empty">
+
+                        📭 Chưa có câu hỏi
+
+                        <br><br>
+
+                        Chọn môn + khối hoặc tạo câu hỏi mới.
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+        updateStats();
+
+        return;
+
+    }
+
+
+    tbody.innerHTML = "";
+
+
+    list.forEach(q=>{
+
+        const index =
+            nganHang.cauHoi.indexOf(q);
+
+
+        const type =
+            q.loai || "MCQ";
+
+
+        const typeName =
+            getTypeName(type);
+
+
+        const checked =
+            selectedIds.has(
+                q.maCau
+            )
+            ? "checked"
+            : "";
+
+
+        const row =
+            document.createElement("tr");
+
+
+        row.innerHTML = `
+
+            <td>
+
+                <input
+                    type="checkbox"
+                    ${checked}
+                    onchange="
+                        toggleSelect(
+                            '${escapeAttr(
+                                q.maCau
+                            )}',
+                            this.checked
+                        )
+                    ">
+
+            </td>
+
+
+            <td>
+
+                <strong>
+                    ${escapeHtml(
+                        q.maCau ||
+                        ("CÂU-" + (index+1))
+                    )}
+                </strong>
+
+            </td>
+
+
+            <td>
+
+                ${escapeHtml(
+                    getQuestionTitle(q)
+                )}
+
+            </td>
+
+
+            <td>
+
+                <span class="badge">
+
+                    ${typeName}
+
+                </span>
+
+            </td>
+
+
+            <td>
+
+                ${escapeHtml(
+                    q.chuDe || "—"
+                )}
+
+            </td>
+
+
+            <td>
+
+                ${q.diem ?? 1}
+
+            </td>
+
+
+            <td>
+
+                <button
+                    class="btn-primary"
+                    onclick="
+                        previewQuestion(${index})
+                    ">
+
+                    👁
+
+                </button>
+
+
+                <button
+                    class="btn-warning"
+                    onclick="
+                        editQuestion(${index})
+                    ">
+
+                    ✏
+
+                </button>
+
+
+                <button
+                    class="btn-danger"
+                    onclick="
+                        deleteQuestion(${index})
+                    ">
+
+                    🗑
+
+                </button>
+
+            </td>
+
+        `;
+
+
+        tbody.appendChild(row);
+
+    });
+
+
+    updateStats();
+
+}
+
+
+/* =====================================================
+   TÊN LOẠI
+===================================================== */
+
+function getTypeName(type){
+
+    const map = {
+
+        MCQ:
+            "Trắc nghiệm",
+
+        MULTI:
+            "Nhiều đáp án",
+
+        TRUEFALSE:
+            "Đúng / Sai",
+
+        FILL:
+            "Điền từ",
+
+        SHORT:
+            "Trả lời ngắn",
+
+        MATCH:
+            "Ghép nối",
+
+        SORT:
+            "Sắp xếp",
+
+        READING:
+            "Đọc hiểu",
+
+        READING_GROUP:
+            "Nhóm đọc hiểu",
+
+        IMAGE:
+            "Hình ảnh",
+
+        AUDIO:
+            "Âm thanh"
+
+    };
+
+
+    return map[type] || type;
+
+}
+
+
+/* =====================================================
+   TIÊU ĐỀ CÂU
+===================================================== */
+
+function getQuestionTitle(q){
+
+    if(q.cauHoi){
+
+        return q.cauHoi;
+
+    }
+
+
+    if(q.vanBan){
+
+        return q.vanBan.substring(
+            0,
+            120
+        );
+
+    }
+
+
+    return "Câu hỏi";
+
+}
+
+
+/* =====================================================
+   THỐNG KÊ
+===================================================== */
+
+function updateStats(){
+
+    const list =
+        nganHang.cauHoi;
+
+
+    document.getElementById(
+        "totalCount"
+    ).textContent =
+        list.length;
+
+
+    document.getElementById(
+        "mcqCount"
+    ).textContent =
+        list.filter(
+            q =>
+                (q.loai || "MCQ")
+                === "MCQ"
+        ).length;
+
+
+    document.getElementById(
+        "specialCount"
+    ).textContent =
+        list.filter(
+            q =>
+                ![
+                    "MCQ",
+                    "MULTI",
+                    "TRUEFALSE",
+                    "FILL"
+                ].includes(
+                    q.loai || "MCQ"
+                )
+        ).length;
+
+
+    document.getElementById(
+        "selectedCount"
+    ).textContent =
+        selectedIds.size;
+
+}
+
+
+/* =====================================================
+   CHỌN CÂU
+===================================================== */
+
+function toggleSelect(
+    maCau,
+    checked
+){
+
+    if(checked){
+
+        selectedIds.add(
+            maCau
+        );
+
+    }else{
+
+        selectedIds.delete(
+            maCau
+        );
+
+    }
+
+
+    updateStats();
+
+}
+
+
+/* =====================================================
+   CHỌN TẤT CẢ
+===================================================== */
+
+function toggleAll(
+    checked
+){
+
+    nganHang.cauHoi.forEach(
+        q=>{
+
+            const id =
+                q.maCau;
+
+
+            if(checked){
+
+                selectedIds.add(id);
+
+            }else{
+
+                selectedIds.delete(id);
+
+            }
+
+        }
+    );
+
+
+    renderQuestions();
+
+}
+
+
+/* =====================================================
+   TẠO CÂU
+===================================================== */
+
+function openCreateModal(){
+
+    editingIndex = -1;
+
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent =
+        "Tạo câu hỏi";
+
+
+    clearForm();
+
+
+    document.getElementById(
+        "createModal"
+    ).classList.add("show");
+
+
+    changeQuestionType();
+
+}
+
+
+/* =====================================================
+   ĐÓNG MODAL
+===================================================== */
+
+function closeModal(){
+
+    document.getElementById(
+        "createModal"
+    ).classList.remove("show");
+
+}
+
+
+/* =====================================================
+   FORM
+===================================================== */
+
+function clearForm(){
+
+    document.getElementById(
+        "questionType"
+    ).value = "MCQ";
+
+
+    document.getElementById(
+        "questionText"
+    ).value = "";
+
+
+    document.getElementById(
+        "questionScore"
+    ).value = 1;
+
+
+    document.getElementById(
+        "questionTopic"
+    ).value = "";
+
+
+    document.getElementById(
+        "questionDifficulty"
+    ).value =
+        "Nhận biết";
+
+}
+
+
+/* =====================================================
+   THAY ĐỔI LOẠI
+===================================================== */
+
+function changeQuestionType(){
+
+    const type =
+        document.getElementById(
+            "questionType"
+        ).value;
+
+
+    const area =
+        document.getElementById(
+            "optionArea"
+        );
+
+
+    if(type === "MCQ"){
+
+        area.innerHTML = `
+
+            <div class="form-group">
+
+                <label>
+                    Đáp án
+                </label>
+
+                <div class="option-grid">
+
+                    ${createOption(
+                        "A"
+                    )}
+
+                    ${createOption(
+                        "B"
+                    )}
+
+                    ${createOption(
+                        "C"
+                    )}
+
+                    ${createOption(
+                        "D"
+                    )}
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Đáp án đúng
+                </label>
+
+                <select id="correctAnswer">
+
+                    <option value="A">
+                        A
+                    </option>
+
+                    <option value="B">
+                        B
+                    </option>
+
+                    <option value="C">
+                        C
+                    </option>
+
+                    <option value="D">
+                        D
+                    </option>
+
+                </select>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    if(type === "MULTI"){
+
+        area.innerHTML = `
+
+            <div class="form-group">
+
+                <label>
+                    Các phương án
+                </label>
+
+                <div class="option-grid">
+
+                    ${createOption(
+                        "A"
+                    )}
+
+                    ${createOption(
+                        "B"
+                    )}
+
+                    ${createOption(
+                        "C"
+                    )}
+
+                    ${createOption(
+                        "D"
+                    )}
+
+                </div>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    Đáp án đúng
+                </label>
+
+                <div>
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            value="A"
+                            class="multiAnswer">
+                        A
+                    </label>
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            value="B"
+                            class="multiAnswer">
+                        B
+                    </label>
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            value="C"
+                            class="multiAnswer">
+                        C
+                    </label>
+
+                    <label>
+                        <input
+                            type="checkbox"
+                            value="D"
+                            class="multiAnswer">
+                        D
+                    </label>
+
+                </div>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    if(type === "TRUEFALSE"){
+
+        area.innerHTML = `
+
+            <div class="form-group">
+
+                <label>
+                    Đáp án
+                </label>
+
+                <select id="trueFalseAnswer">
+
+                    <option value="A">
+                        Đúng
+                    </option>
+
+                    <option value="B">
+                        Sai
+                    </option>
+
+                </select>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    if(type === "FILL"){
+
+        area.innerHTML = `
+
+            <div class="form-group">
+
+                <label>
+                    Đáp án chấp nhận
+                </label>
+
+                <input
+                    id="fillAnswer"
+                    style="width:100%"
+                    placeholder="
+                        Có thể nhập nhiều đáp án,
+                        cách nhau bằng dấu |
+                    ">
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+    if(type === "MATCH"){
+
+    area.innerHTML = `
+
+        <div class="form-group">
+
+            <label>
+                Các cặp ghép nối
+            </label>
+
+            <p style="font-size:13px;color:#666;">
+                Mỗi dòng nhập một cặp.
+                Hai vế cách nhau bằng dấu |
+            </p>
+
+            <textarea
+                id="matchPairs"
+                rows="7"
+                placeholder="Hà Nội | Thủ đô Việt Nam
+Huế | Cố đô Việt Nam
+Điện Biên | Chiến thắng Điện Biên Phủ"></textarea>
+
+        </div>
+
+    `;
+
+    return;
+}
+
+
+/* ================= SORT ================= */
+
+if(type === "SORT"){
+
+    area.innerHTML = `
+
+        <div class="form-group">
+
+            <label>
+                Các phương án theo thứ tự đúng
+            </label>
+
+            <p style="font-size:13px;color:#666;">
+                Nhập mỗi phương án một dòng.
+                Thứ tự nhập chính là thứ tự đúng.
+            </p>
+
+            <textarea
+                id="sortItems"
+                rows="7"
+                placeholder="Sự kiện thứ nhất
+Sự kiện thứ hai
+Sự kiện thứ ba
+Sự kiện thứ tư"></textarea>
+
+        </div>
+
+    `;
+
+    return;
+}
+
+}
+
+
+/* =====================================================
+   OPTION
+===================================================== */
+
+function createOption(letter){
+
+    return `
+
+        <div class="option-item">
+
+            <span>
+                ${letter}
+            </span>
+
+            <input
+                id="option${letter}"
+                placeholder="
+                    Phương án ${letter}
+                ">
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   LƯU CÂU
+===================================================== */
+
+function saveQuestion(){
+
+    const mon =
+        document.getElementById(
+            "selectMon"
+        ).value;
+
+
+    const khoi =
+        document.getElementById(
+            "selectKhoi"
+        ).value;
+
+
+    if(!mon || !khoi){
+
+        alert(
+            "Vui lòng chọn môn và khối trước."
+        );
+
+        return;
+
+    }
+
+
+    const type =
+        document.getElementById(
+            "questionType"
+        ).value;
+
+
+    const text =
+        document.getElementById(
+            "questionText"
+        ).value.trim();
+
+
+    if(!text){
+
+        alert(
+            "Vui lòng nhập câu hỏi."
+        );
+
+        return;
+
+    }
+
+
+    const q = {
+
+        maCau:
+            editingIndex >= 0
+            ? nganHang.cauHoi[
+                editingIndex
+            ].maCau
+            : generateQuestionId(
+                mon,
+                khoi
+            ),
+
+        loai:
+            type,
+
+        cauHoi:
+            text,
+
+        diem:
+            Number(
+                document.getElementById(
+                    "questionScore"
+                ).value
+            ) || 1,
+
+        chuDe:
+            document.getElementById(
+                "questionTopic"
+            ).value.trim(),
+
+        doKho:
+            document.getElementById(
+                "questionDifficulty"
+            ).value
+
+    };
+
+
+    /* ================= MCQ ================= */
+
+    if(type === "MCQ"){
+
+        q.A =
+            getValue("optionA");
+
+        q.B =
+            getValue("optionB");
+
+        q.C =
+            getValue("optionC");
+
+        q.D =
+            getValue("optionD");
+
+
+        q.dapAn =
+            document.getElementById(
+                "correctAnswer"
+            ).value;
+
+    }
+
+
+    /* ================= MULTI ================= */
+
+    if(type === "MULTI"){
+
+        q.A =
+            getValue("optionA");
+
+        q.B =
+            getValue("optionB");
+
+        q.C =
+            getValue("optionC");
+
+        q.D =
+            getValue("optionD");
+
+
+        q.dapAn =
+            Array.from(
+                document.querySelectorAll(
+                    ".multiAnswer:checked"
+                )
+            ).map(
+                x => x.value
+            );
+
+
+        if(!q.dapAn.length){
+
+            alert(
+                "Hãy chọn ít nhất một đáp án đúng."
+            );
+
+            return;
+
+        }
+
+    }
+
+
+    /* ================= TRUE FALSE ================= */
+
+    if(type === "TRUEFALSE"){
+
+        q.dapAn =
+            document.getElementById(
+                "trueFalseAnswer"
+            ).value;
+
+    }
+
+
+    /* ================= FILL ================= */
+
+    if(type === "FILL"){
+
+        const answer =
+            getValue(
+                "fillAnswer"
+            );
+
+
+        q.dapAn =
+            answer
+                .split("|")
+                .map(
+                    x => x.trim()
+                )
+                .filter(Boolean);
+
+
+        if(!q.dapAn.length){
+
+            alert(
+                "Nhập ít nhất một đáp án."
+            );
+
+            return;
+
+        }
+
+    }
+    /* ================= MATCH ================= */
+
+if(type === "MATCH"){
+
+    const text =
+        getValue("matchPairs");
+
+    const lines =
+        text
+        .split(/\r?\n/)
+        .map(x => x.trim())
+        .filter(Boolean);
+
+    const pairs = [];
+
+    lines.forEach(line => {
+
+        const parts = line.split("|");
+
+        if(parts.length >= 2){
+
+            pairs.push({
+
+                left: parts[0].trim(),
+
+                right:
+                    parts.slice(1)
+                    .join("|")
+                    .trim()
+
+            });
+
+        }
+
+    });
+
+    if(pairs.length < 2){
+
+        alert(
+            "Cần ít nhất 2 cặp ghép nối."
+        );
+
+        return;
+
+    }
+
+    q.pairs = pairs;
+
+    q.dapAn =
+        pairs.map(
+            (_, index) => index
+        );
+}
+
+
+/* ================= SORT ================= */
+
+if(type === "SORT"){
+
+    const text =
+        getValue("sortItems");
+
+    const items =
+        text
+        .split(/\r?\n/)
+        .map(x => x.trim())
+        .filter(Boolean);
+
+    if(items.length < 2){
+
+        alert(
+            "Cần ít nhất 2 phương án để sắp xếp."
+        );
+
+        return;
+
+    }
+
+    q.items = items;
+
+    q.dapAn =
+        items.map(
+            (_, index) => index
+        );
+}
+
+    /* ================= LƯU ================= */
+
+    if(editingIndex >= 0){
+
+        nganHang.cauHoi[
+            editingIndex
+        ] = q;
+
+    }else{
+
+        nganHang.cauHoi.push(q);
+
+    }
+
+
+    renderQuestions();
+
+    closeModal();
+
+    editingIndex = -1;
+
+    alert(
+        "Đã lưu câu hỏi vào ngân hàng trên trình duyệt.\n\n" +
+        "Để tạo file ngân hàng mới, hãy bấm 'Xuất JS'."
+    );
+
+}
+
+
+/* =====================================================
+   LẤY GIÁ TRỊ
+===================================================== */
+
+function getValue(id){
+
+    const el =
+        document.getElementById(id);
+
+
+    return el
+        ? el.value.trim()
+        : "";
+
+}
+
+
+/* =====================================================
+   SINH MÃ CÂU
+===================================================== */
+
+function generateQuestionId(
+    mon,
+    khoi
+){
+
+    const prefix =
+        mon.toUpperCase() +
+        khoi;
+
+
+    let max = 0;
+
+
+    nganHang.cauHoi.forEach(
+        q=>{
+
+            const id =
+                q.maCau || "";
+
+
+            const match =
+                id.match(
+                    /(\d+)$/
+                );
+
+
+            if(match){
+
+                max =
+                    Math.max(
+                        max,
+                        Number(
+                            match[1]
+                        )
+                    );
+
+            }
+
+        }
+    );
+
+
+    return (
+        prefix +
+        "-" +
+        String(
+            max + 1
+        ).padStart(
+            4,
+            "0"
+        )
+    );
+
+}
+
+
+/* =====================================================
+   SỬA
+===================================================== */
+
+function editQuestion(index){
+
+    const q =
+        nganHang.cauHoi[
+            index
+        ];
+
+
+    editingIndex =
+        index;
+
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent =
+        "Sửa câu hỏi";
+
+
+    document.getElementById(
+        "questionType"
+    ).value =
+        q.loai || "MCQ";
+
+
+    document.getElementById(
+        "questionText"
+    ).value =
+        q.cauHoi || "";
+
+
+    document.getElementById(
+        "questionScore"
+    ).value =
+        q.diem ?? 1;
+
+
+    document.getElementById(
+        "questionTopic"
+    ).value =
+        q.chuDe || "";
+
+
+    document.getElementById(
+        "questionDifficulty"
+    ).value =
+        q.doKho ||
+        "Nhận biết";
+
+
+    changeQuestionType();
+
+
+    if(
+        q.loai === "MCQ" ||
+        !q.loai
+    ){
+
+        setValue(
+            "optionA",
+            q.A
+        );
+
+        setValue(
+            "optionB",
+            q.B
+        );
+
+        setValue(
+            "optionC",
+            q.C
+        );
+
+        setValue(
+            "optionD",
+            q.D
+        );
+
+
+        const answer =
+            document.getElementById(
+                "correctAnswer"
+            );
+
+
+        if(answer){
+
+            answer.value =
+                q.dapAn || "A";
+
+        }
+
+    }
+
+
+    if(q.loai === "MULTI"){
+
+        setValue(
+            "optionA",
+            q.A
+        );
+
+        setValue(
+            "optionB",
+            q.B
+        );
+
+        setValue(
+            "optionC",
+            q.C
+        );
+
+        setValue(
+            "optionD",
+            q.D
+        );
+
+
+        const answers =
+            Array.isArray(
+                q.dapAn
+            )
+            ? q.dapAn
+            : [];
+
+
+        document
+            .querySelectorAll(
+                ".multiAnswer"
+            )
+            .forEach(
+                checkbox => {
+
+                    checkbox.checked =
+                        answers.includes(
+                            checkbox.value
+                        );
+
+                }
+            );
+
+    }
+
+
+    if(q.loai === "TRUEFALSE"){
+
+        const el =
+            document.getElementById(
+                "trueFalseAnswer"
+            );
+
+
+        if(el){
+
+            el.value =
+                q.dapAn || "A";
+
+        }
+
+    }
+
+
+    if(q.loai === "FILL"){
+
+        setValue(
+            "fillAnswer",
+            Array.isArray(
+                q.dapAn
+            )
+            ? q.dapAn.join("|")
+            : q.dapAn || ""
+        );
+
+    }
+
+
+    document.getElementById(
+        "createModal"
+    ).classList.add("show");
+
+}
+
+
+/* =====================================================
+   XÓA
+===================================================== */
+
+function deleteQuestion(index){
+
+    const q =
+        nganHang.cauHoi[
+            index
+        ];
+
+
+    if(
+        !confirm(
+            "Xóa câu " +
+            (q.maCau || "") +
+            "?"
+        )
+    ){
+
+        return;
+
+    }
+
+
+    nganHang.cauHoi.splice(
+        index,
+        1
+    );
+
+
+    selectedIds.delete(
+        q.maCau
+    );
+
+
+    renderQuestions();
+
+}
+
+
+/* =====================================================
+   XEM TRƯỚC
+===================================================== */
+
+function previewQuestion(index){
+
+    const q =
+        nganHang.cauHoi[
+            index
+        ];
+
+
+    const box =
+        document.getElementById(
+            "previewContent"
+        );
+
+
+    let html = `
+
+        <div class="preview-box">
+
+            <div>
+                <strong>
+                    ${escapeHtml(
+                        q.maCau || ""
+                    )}
+                </strong>
+
+                <span class="badge">
+                    ${getTypeName(
+                        q.loai || "MCQ"
+                    )}
+                </span>
+
+            </div>
+
+            <hr>
+
+            <h3>
+                ${escapeHtml(
+                    q.cauHoi || ""
+                )}
+            </h3>
+
+    `;
+
+
+    if(
+        q.loai === "MCQ" ||
+        !q.loai
+    ){
+
+        ["A","B","C","D"]
+            .forEach(
+                letter=>{
+
+                    html += `
+
+                        <div class="preview-option">
+
+                            <strong>
+                                ${letter}.
+                            </strong>
+
+                            ${escapeHtml(
+                                q[letter] || ""
+                            )}
+
+                        </div>
+
+                    `;
+
+                }
+            );
+
+    }
+
+
+    if(q.loai === "MULTI"){
+
+        ["A","B","C","D"]
+            .forEach(
+                letter=>{
+
+                    html += `
+
+                        <div class="preview-option">
+
+                            ☐
+                            <strong>
+                                ${letter}.
+                            </strong>
+
+                            ${escapeHtml(
+                                q[letter] || ""
+                            )}
+
+                        </div>
+
+                    `;
+
+                }
+            );
+
+    }
+
+
+    if(q.loai === "TRUEFALSE"){
+
+        html += `
+
+            <div class="preview-option">
+                ○ Đúng
+            </div>
+
+            <div class="preview-option">
+                ○ Sai
+            </div>
+
+        `;
+
+    }
+
+
+    if(q.loai === "FILL"){
+
+        html += `
+
+            <div class="preview-option">
+
+                ✎ Nhập câu trả lời:
+
+                <input
+                    style="
+                        width:100%;
+                        margin-top:10px;
+                    ">
+
+            </div>
+
+        `;
+
+    }
+
+
+    html += `
+
+            <div class="preview-answer">
+
+                <strong>
+                    Đáp án:
+                </strong>
+
+                ${escapeHtml(
+                    Array.isArray(
+                        q.dapAn
+                    )
+                    ? q.dapAn.join(", ")
+                    : q.dapAn || ""
+                )}
+
+            </div>
+
+
+            <div style="margin-top:10px">
+
+                <strong>
+                    Điểm:
+                </strong>
+
+                ${q.diem ?? 1}
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    Chủ đề:
+                </strong>
+
+                ${escapeHtml(
+                    q.chuDe || "—"
+                )}
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    box.innerHTML =
+        html;
+
+
+    document.getElementById(
+        "previewModal"
+    ).classList.add("show");
+
+}
+
+
+/* =====================================================
+   ĐÓNG PREVIEW
+===================================================== */
+
+function closePreview(){
+
+    document.getElementById(
+        "previewModal"
+    ).classList.remove("show");
+
+}
+
+
+/* =====================================================
+   IMPORT EXCEL
+===================================================== */
+
+function importExcel(){
+
+    document.getElementById(
+        "excelInput"
+    ).click();
+
+}
+
+
+/*
+ * Hiện tại dùng CSV để không cần thư viện ngoài.
+ *
+ * Sau khi nền tảng chạy ổn, ta sẽ thêm SheetJS
+ * để đọc trực tiếp .xlsx.
+ */
+
+document.getElementById(
+    "excelInput"
+).addEventListener(
+    "change",
+    function(){
+
+        const file =
+            this.files[0];
+
+
+        if(!file){
+
+            return;
+
+        }
+
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            function(e){
+
+                const text =
+                    e.target.result;
+
+
+                const rows =
+                    parseCSV(text);
+
+
+                if(rows.length < 2){
+
+                    alert(
+                        "File Excel/CSV không có dữ liệu."
+                    );
+
+                    return;
+
+                }
+
+
+                const headers =
+                    rows[0]
+                    .map(
+                        x =>
+                            x
+                            .trim()
+                            .toLowerCase()
+                    );
+
+
+                let count = 0;
+
+
+                for(
+                    let i=1;
+                    i<rows.length;
+                    i++
+                ){
+
+                    const row =
+                        rows[i];
+
+
+                    if(
+                        !row ||
+                        !row.length
+                    ){
+
+                        continue;
+
+                    }
+
+
+                    const get =
+                        name => {
+
+                            const index =
+                                headers.indexOf(
+                                    name
+                                );
+
+
+                            return index >= 0
+                                ? (
+                                    row[index] || ""
+                                ).trim()
+                                : "";
+
+                        };
+
+
+                    const cau =
+                        get("cauhoi") ||
+                        get("câu hỏi");
+
+
+                    if(!cau){
+
+                        continue;
+
+                    }
+
+
+                    const mon =
+                        document.getElementById(
+                            "selectMon"
+                        ).value;
+
+
+                    const khoi =
+                        document.getElementById(
+                            "selectKhoi"
+                        ).value;
+
+
+                    const q = {
+
+                        maCau:
+                            generateQuestionId(
+                                mon,
+                                khoi
+                            ),
+
+                        loai:
+                            get("loai") ||
+                            "MCQ",
+
+                        cauHoi:
+                            cau,
+
+                        A:
+                            get("a"),
+
+                        B:
+                            get("b"),
+
+                        C:
+                            get("c"),
+
+                        D:
+                            get("d"),
+
+                        dapAn:
+                            get("dapan") ||
+                            get("đáp án"),
+
+                        diem:
+                            Number(
+                                get("diem")
+                            ) || 1,
+
+                        chuDe:
+                            get("chude") ||
+                            get("chủ đề"),
+
+                        doKho:
+                            get("dokho") ||
+                            get("độ khó") ||
+                            "Nhận biết"
+
+                    };
+
+
+                    if(
+                        q.loai === "MULTI"
+                    ){
+
+                        q.dapAn =
+                            q.dapAn
+                                .split(
+                                    /[,;|]+/
+                                )
+                                .map(
+                                    x =>
+                                        x.trim()
+                                )
+                                .filter(
+                                    Boolean
+                                );
+
+                    }
+
+
+                    nganHang.cauHoi.push(q);
+
+                    count++;
+
+                }
+
+
+                renderQuestions();
+
+
+                alert(
+                    "Đã import " +
+                    count +
+                    " câu hỏi."
+                );
+
+
+                this.value = "";
+
+            };
+
+
+        reader.readAsText(
+            file,
+            "UTF-8"
+        );
+
+    }
+);
+
+
+/* =====================================================
+   PARSE CSV
+===================================================== */
+
+function parseCSV(text){
+
+    const rows = [];
+
+    let row = [];
+
+    let value = "";
+
+    let insideQuotes = false;
+
+
+    for(
+        let i=0;
+        i<text.length;
+        i++
+    ){
+
+        const char =
+            text[i];
+
+
+        const next =
+            text[i+1];
+
+
+        if(
+            char === '"' &&
+            insideQuotes &&
+            next === '"'
+        ){
+
+            value += '"';
+
+            i++;
+
+            continue;
+
+        }
+
+
+        if(
+            char === '"'
+        ){
+
+            insideQuotes =
+                !insideQuotes;
+
+            continue;
+
+        }
+
+
+        if(
+            char === ',' &&
+            !insideQuotes
+        ){
+
+            row.push(
+                value
+            );
+
+            value = "";
+
+            continue;
+
+        }
+
+
+        if(
+            (
+                char === "\n" ||
+                char === "\r"
+            ) &&
+            !insideQuotes
+        ){
+
+            if(
+                char === "\r" &&
+                next === "\n"
+            ){
+
+                i++;
+
+            }
+
+
+            row.push(
+                value
+            );
+
+            value = "";
+
+
+            if(row.length){
+
+                rows.push(row);
+
+            }
+
+
+            row = [];
+
+            continue;
+
+        }
+
+
+        value += char;
+
+    }
+
+
+    if(value || row.length){
+
+        row.push(value);
+
+        rows.push(row);
+
+    }
+
+
+    return rows;
+
+}
+
+
+/* =====================================================
+   XUẤT FILE JS
+===================================================== */
+
+function exportJS(){
+
+    const mon =
+        document.getElementById(
+            "selectMon"
+        ).value;
+
+
+    const khoi =
+        document.getElementById(
+            "selectKhoi"
+        ).value;
+
+
+    if(!mon || !khoi){
+
+        alert(
+            "Vui lòng chọn môn và khối."
+        );
+
+        return;
+
+    }
+
+
+    const tenMon =
+        getSubjectName(mon);
+
+
+    const data = {
+
+        thongTin: {
+
+            mon:
+                tenMon,
+
+            khoi:
+                khoi,
+
+            ten:
+                `Ngân hàng câu hỏi ${tenMon} ${khoi}`,
+
+            phienBan:
+                "1.0"
+
+        },
+
+        cauHoi:
+            nganHang.cauHoi
+
+    };
+
+
+    const js =
+`/*
+========================================================
+ NGÂN HÀNG CÂU HỎI
+ ${tenMon.toUpperCase()} ${khoi}
+ Olympic HSG Online
+========================================================
+*/
+
+const nganHangDe = ${JSON.stringify(
+        data,
+        null,
+        4
+    )};
+
+/*
+ * Tương thích thi.js cũ
+ */
+
+const cauHoi =
+    nganHangDe.cauHoi;
+`;
+
+
+    const blob =
+        new Blob(
+            [js],
+            {
+                type:
+                    "application/javascript"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const a =
+        document.createElement("a");
+
+
+    a.href =
+        url;
+
+
+    a.download =
+        `${mon}-${khoi}.js`;
+
+
+    a.click();
+
+
+    URL.revokeObjectURL(
+        url
+    );
+
+
+    alert(
+    "Đã xuất thành công!\n\n" +
+    "File: " +
+    `${mon}-${khoi}.js` +
+    "\n" +
+    "Tổng số câu: " +
+    nganHang.cauHoi.length
+);
+
+}
+
+
+/* =====================================================
+   TÊN MÔN
+===================================================== */
+
+function getSubjectName(mon){
+
+    const map = {
+
+        toan:
+            "Toán",
+
+        van:
+            "Ngữ văn",
+
+        tienganh:
+            "Tiếng Anh",
+
+        lichsu:
+            "Lịch sử",
+
+        dialy:
+            "Địa lí",
+
+        khtn:
+            "Khoa học tự nhiên"
+
+    };
+
+
+    return map[mon] || mon;
+
+}
+
+
+/* =====================================================
+   SET VALUE
+===================================================== */
+
+function setValue(
+    id,
+    value
+){
+
+    const el =
+        document.getElementById(id);
+
+
+    if(el){
+
+        el.value =
+            value || "";
+
+    }
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHtml(value){
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+    .replace(
+        /</g,
+        "&lt;"
+    )
+    .replace(
+        />/g,
+        "&gt;"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+/* =====================================================
+   ESCAPE ATTRIBUTE
+===================================================== */
+
+function escapeAttr(value){
+
+    return String(
+        value ?? ""
+    )
+    .replace(
+        /'/g,
+        "\\'"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    );
+
+}
+
+
+/* =====================================================
+   KHỞI ĐỘNG
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        renderQuestions();
+
+    }
+);
+
+</script>
+<script src="nganhang/toan/8/toan-8.js"></script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang thông tin cá nhân</title>
+
+    <link rel="stylesheet" href="css/style-old.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/chonkithi.css">
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+<header class="hero">
+
+    <img src="anhnen/banner-clb.png"
+         alt="Banner Câu lạc bộ Học sinh Khá Giỏi"
+         class="hero-banner">
+
+</header>
+<div class="page-bg">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</header>
+
+<!-- ================= MENU ================= -->
+<nav class="menu">
+
+    <div class="menu-links">
+
+        <a href="index.html">Trang chủ</a>
+
+        <a href="gioithieu.html">Giới thiệu</a>
+
+        <a href="thongbao.html">Thông báo</a>
+
+        <a href="xephang.html">Bảng xếp hạng</a>
+
+        <a href="thele.html">Thể lệ</a>
+
+         <a href="clb.html">CLB năng khiếu</a>
+
+    </div>
+
+    <div class="menu-user">
+
+        <a href="#"
+           class="login-btn"
+           id="taiKhoanBtn">
+
+            👤 Trang cá nhân
+
+        </a>
+        <div
+id="userDropdown"
+class="user-dropdown">
+
+<a href="trangcanhan.html">
+Hồ sơ cá nhân
+</a>
+
+<a href="Trangchu.html">
+🏆 Kỳ thi của tôi
+</a>
+
+<a href="ketqua.html">
+📊 Kết quả thi
+</a>
+
+<a href="xephang.html">
+🏆 Bảng xếp hạng</a>
+<a href="#"
+onclick="dangXuat()">
+
+🚪 Đăng xuất
+
+</a>
+
+</div>
+
+</div>
+
+</nav>
+<section class="exam-section">
+
+    <h1>CHỌN KỲ THI OLYMPIC</h1>
+
+    <p>
+        Vui lòng lựa chọn kỳ thi trước khi bắt đầu.
+    </p>
+  <div class="filter-bar">
+
+    <label>Năm học:</label>
+
+    <select id="locNamHoc">
+        <option value="ALL">Tất cả</option>
+    </select>
+
+    <label>Đợt thi:</label>
+
+    <select id="locDotThi">
+        <option value="ALL">Tất cả</option>
+    </select>
+
+</div>  
+    
+    <div class="exam-grid" id="examGrid">
+
+</div>
+
+   <div class="action-buttons">
+
+    <button id="btnThiThu">
+        📝 THI THỬ
+    </button>
+
+    <button id="btnThi">
+        🚀 THI CHÍNH THỨC
+    </button>
+
+</div>
+
+</section>
+<footer class="footer">
+
+    <div class="footer-content">
+
+        <h3>🏆 Olympic Học sinh Khá giỏi Online</h3>
+
+        <p>
+            © 2026 Bản quyền thuộc Trường THCS Phú Đình
+        </p>
+
+        <p class="version">
+            Phiên bản <strong>Version 1.1</strong>
+        </p>
+
+    </div>
+
+</footer>
+<script src="js/chonkithi.js"></script>
+
+</body>
+</html>
