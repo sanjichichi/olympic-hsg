@@ -843,3 +843,487 @@ table th{
         height:auto !important;
     }
 }
+/* =========================================================
+   HỌC SINH TIÊU BIỂU & GIÁO VIÊN PHỤ TRÁCH
+   CAROUSEL QUAY VÒNG
+   ========================================================= */
+
+.people-section {
+    width: 100%;
+    padding: 35px 0 40px;
+    margin: 20px 0;
+    background: transparent;
+    overflow: hidden;
+}
+
+.people-section > h2 {
+    text-align: center;
+    margin: 0 0 25px;
+    font-size: 28px;
+    font-weight: 800;
+    color: #1e3a8a;
+}
+
+
+/* =========================================================
+   KHUNG CAROUSEL
+   ========================================================= */
+
+.people-carousel {
+    position: relative;
+    width: 100%;
+    max-width: 1250px;
+    height: 520px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   DẢI NGƯỜI
+   ========================================================= */
+
+.people-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* =========================================================
+   CARD
+   ========================================================= */
+
+.person-card {
+    position: absolute;
+
+    width: 300px;
+
+    background: #ffffff;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    text-align: center;
+
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+
+    transition:
+        transform 0.55s ease,
+        opacity 0.55s ease,
+        filter 0.55s ease,
+        z-index 0s;
+
+    opacity: 0;
+
+    transform:
+        translateX(0)
+        scale(0.65);
+
+    filter: blur(1px);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   ẢNH
+   ========================================================= */
+
+.person-card img {
+    display: block;
+
+    width: 100%;
+    height: 300px;
+
+    object-fit: cover;
+
+    background: #f3f4f6;
+}
+
+
+/* =========================================================
+   KHUNG THÔNG TIN TRẮNG
+   ========================================================= */
+
+.person-card .people-info {
+    background: #ffffff;
+
+    padding: 15px 16px 18px;
+
+    min-height: 145px;
+
+    box-sizing: border-box;
+}
+
+
+.person-card .people-info h3 {
+    margin: 0 0 7px;
+
+    font-size: 21px;
+    font-weight: 800;
+
+    color: #1e293b;
+}
+
+
+.person-card .people-info p {
+    margin: 5px 0;
+
+    font-size: 15px;
+    line-height: 1.5;
+
+    color: #475569;
+}
+
+
+/* =========================================================
+   CARD Ở GIỮA
+   ========================================================= */
+
+.person-card.active {
+    opacity: 1;
+
+    transform:
+        translateX(0)
+        scale(1);
+
+    filter: blur(0);
+
+    z-index: 10;
+
+    pointer-events: auto;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.22);
+}
+
+
+/* =========================================================
+   CARD BÊN TRÁI
+   ========================================================= */
+
+.person-card.left {
+    opacity: 0.65;
+
+    transform:
+        translateX(-330px)
+        scale(0.78);
+
+    filter: blur(0.3px);
+
+    z-index: 5;
+
+    pointer-events: auto;
+}
+
+
+/* =========================================================
+   CARD BÊN PHẢI
+   ========================================================= */
+
+.person-card.right {
+    opacity: 0.65;
+
+    transform:
+        translateX(330px)
+        scale(0.78);
+
+    filter: blur(0.3px);
+
+    z-index: 5;
+
+    pointer-events: auto;
+}
+
+
+/* =========================================================
+   CARD PHÍA SAU TRÁI
+   ========================================================= */
+
+.person-card.far-left {
+    opacity: 0;
+
+    transform:
+        translateX(-600px)
+        scale(0.55);
+
+    z-index: 1;
+}
+
+
+/* =========================================================
+   CARD PHÍA SAU PHẢI
+   ========================================================= */
+
+.person-card.far-right {
+    opacity: 0;
+
+    transform:
+        translateX(600px)
+        scale(0.55);
+
+    z-index: 1;
+}
+
+
+/* =========================================================
+   MŨI TÊN
+   ========================================================= */
+
+.carousel-btn {
+    position: absolute;
+
+    top: 50%;
+
+    width: 50px;
+    height: 50px;
+
+    transform: translateY(-50%);
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #ffffff;
+
+    color: #1e3a8a;
+
+    font-size: 25px;
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    z-index: 30;
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,0.18);
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease;
+}
+
+
+.carousel-btn:hover {
+    transform:
+        translateY(-50%)
+        scale(1.1);
+
+    background: #1e3a8a;
+
+    color: #ffffff;
+}
+
+
+.carousel-btn.prev {
+    left: 20px;
+}
+
+
+.carousel-btn.next {
+    right: 20px;
+}
+
+
+/* =========================================================
+   DẤU CHẤM
+   ========================================================= */
+
+.carousel-dots {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 8px;
+
+    margin-top: 10px;
+}
+
+
+.carousel-dots span {
+    display: block;
+
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+
+    background: #cbd5e1;
+
+    cursor: pointer;
+
+    transition:
+        width 0.3s ease,
+        background 0.3s ease;
+}
+
+
+.carousel-dots span.active {
+    width: 25px;
+
+    border-radius: 10px;
+
+    background: #2563eb;
+}
+
+
+/* =========================================================
+   HIỆU ỨNG HOVER ẢNH GIỮA
+   ========================================================= */
+
+.person-card.active:hover {
+    transform:
+        translateX(0)
+        scale(1.02);
+}
+
+
+/* =========================================================
+   ĐIỆN THOẠI
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .people-section {
+        padding: 25px 0 30px;
+    }
+
+
+    .people-section > h2 {
+        font-size: 21px;
+
+        padding: 0 15px;
+
+        line-height: 1.35;
+
+        margin-bottom: 15px;
+    }
+
+
+    .people-carousel {
+        height: 440px;
+
+        max-width: 100%;
+
+        padding: 0;
+
+        overflow: hidden;
+    }
+
+
+    .person-card {
+        width: 235px;
+
+        border-radius: 16px;
+    }
+
+
+    .person-card img {
+        height: 235px;
+    }
+
+
+    .person-card .people-info {
+        min-height: 125px;
+
+        padding: 12px 10px 15px;
+    }
+
+
+    .person-card .people-info h3 {
+        font-size: 18px;
+    }
+
+
+    .person-card .people-info p {
+        font-size: 13px;
+
+        line-height: 1.4;
+    }
+
+
+    /* Card giữa */
+
+    .person-card.active {
+        transform:
+            translateX(0)
+            scale(1);
+    }
+
+
+    /* Card trái */
+
+    .person-card.left {
+        transform:
+            translateX(-205px)
+            scale(0.72);
+
+        opacity: 0.5;
+    }
+
+
+    /* Card phải */
+
+    .person-card.right {
+        transform:
+            translateX(205px)
+            scale(0.72);
+
+        opacity: 0.5;
+    }
+
+
+    /* Ẩn các card phía sau */
+
+    .person-card.far-left {
+        transform:
+            translateX(-400px)
+            scale(0.5);
+
+        opacity: 0;
+    }
+
+
+    .person-card.far-right {
+        transform:
+            translateX(400px)
+            scale(0.5);
+
+        opacity: 0;
+    }
+
+
+    /* Mũi tên */
+
+    .carousel-btn {
+        width: 38px;
+        height: 38px;
+
+        font-size: 19px;
+    }
+
+
+    .carousel-btn.prev {
+        left: 7px;
+    }
+
+
+    .carousel-btn.next {
+        right: 7px;
+    }
+
+}
