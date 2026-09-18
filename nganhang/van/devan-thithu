@@ -1,0 +1,722 @@
+const cauHoi = [
+    {
+        "cauHoi": "Từ nào dưới đây là từ ghép?",
+        "A": "Lấp lánh",
+        "B": "Xe đạp",
+        "C": "Xanh xao",
+        "D": "Lom khom",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Từ nào là từ láy?",
+        "A": "Học sinh",
+        "B": "Nhà cửa",
+        "C": "Lung linh",
+        "D": "Cây bút",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "Từ 'quả cảm' có nghĩa là gì?",
+        "A": "Hay sợ hãi",
+        "B": "Dũng cảm, không sợ nguy hiểm",
+        "C": "Thông minh",
+        "D": "Nhanh nhẹn",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Từ nào đồng nghĩa với từ 'chăm chỉ'?",
+        "A": "Lười biếng",
+        "B": "Siêng năng",
+        "C": "Yếu đuối",
+        "D": "Mạnh mẽ",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Từ trái nghĩa với 'cao' là",
+        "A": "Lớn",
+        "B": "Dài",
+        "C": "Thấp",
+        "D": "To",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "'Có công mài sắt, có ngày nên kim' khuyên con người điều gì?",
+        "A": "Biết tiết kiệm",
+        "B": "Kiên trì sẽ thành công",
+        "C": "Sống đoàn kết",
+        "D": "Biết yêu thương",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "'Mặt trời của bắp thì nằm trên đồi, mặt trời của mẹ em nằm trên lưng.' sử dụng biện pháp tu từ nào?",
+        "A": "Điệp ngữ",
+        "B": "Hoán dụ",
+        "C": "Ẩn dụ",
+        "D": "So sánh",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "'Trẻ em như búp trên cành.' sử dụng biện pháp tu từ nào?",
+        "A": "So sánh",
+        "B": "Nhân hóa",
+        "C": "Ẩn dụ",
+        "D": "Điệp ngữ",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "'Cây tre dang tay ôm lấy làng.' sử dụng biện pháp tu từ nào?",
+        "A": "Ẩn dụ",
+        "B": "Nhân hóa",
+        "C": "Hoán dụ",
+        "D": "Điệp ngữ",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Biện pháp tu từ nào làm tăng sức gợi hình, gợi cảm cho câu văn?",
+        "A": "Liệt kê",
+        "B": "So sánh",
+        "C": "Nhân hóa",
+        "D": "Cả A, B và C",
+        "dapAn": "D"
+    },
+    {
+        "cauHoi": "Phương thức biểu đạt chính của truyện là gì?",
+        "A": "Miêu tả",
+        "B": "Tự sự",
+        "C": "Biểu cảm",
+        "D": "Nghị luận",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Đơn xin nghỉ học thuộc kiểu văn bản nào?",
+        "A": "Nghệ thuật",
+        "B": "Hành chính",
+        "C": "Báo chí",
+        "D": "Khoa học",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Phép liên kết dùng từ 'đó', 'này', 'kia' là",
+        "A": "Phép lặp",
+        "B": "Phép nối",
+        "C": "Phép thế",
+        "D": "Phép đồng nghĩa",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "Câu nào dưới đây là câu nghi vấn?",
+        "A": "Em đi học.",
+        "B": "Em đi học nhé.",
+        "C": "Em đi học à?",
+        "D": "Em đi học đi.",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "Câu khiến dùng để",
+        "A": "Kể",
+        "B": "Hỏi",
+        "C": "Yêu cầu hoặc đề nghị",
+        "D": "Bộc lộ cảm xúc",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "Nhan đề văn bản thường giúp người đọc biết điều gì?",
+        "A": "Tên tác giả",
+        "B": "Chủ đề văn bản",
+        "C": "Nhà xuất bản",
+        "D": "Năm sáng tác",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Ý chính của đoạn văn thường được thể hiện ở",
+        "A": "Chi tiết phụ",
+        "B": "Câu chủ đề",
+        "C": "Dấu câu",
+        "D": "Ví dụ",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Để xác định nội dung chính của văn bản, người đọc cần",
+        "A": "Đọc tiêu đề và các ý chính",
+        "B": "Chỉ đọc câu đầu",
+        "C": "Chỉ đọc câu cuối",
+        "D": "Đọc tên tác giả",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Thơ lục bát gồm",
+        "A": "6 và 8 tiếng",
+        "B": "5 và 7 tiếng",
+        "C": "4 và 6 tiếng",
+        "D": "8 và 8 tiếng",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Thể thơ thất ngôn tứ tuyệt có",
+        "A": "4 câu, mỗi câu 7 tiếng",
+        "B": "8 câu",
+        "C": "6 câu",
+        "D": "2 câu",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Nhân vật chính là",
+        "A": "Nhân vật xuất hiện đầu tiên",
+        "B": "Nhân vật giữ vai trò trung tâm",
+        "C": "Nhân vật nhiều tuổi nhất",
+        "D": "Nhân vật có tên dài nhất",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Người kể chuyện xưng 'tôi' là",
+        "A": "Ngôi thứ nhất",
+        "B": "Ngôi thứ hai",
+        "C": "Ngôi thứ ba",
+        "D": "Ngôi hỗn hợp",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Luận điểm là",
+        "A": "Dẫn chứng",
+        "B": "Ý kiến chính cần làm sáng tỏ",
+        "C": "Ví dụ",
+        "D": "Tên bài",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Dẫn chứng có vai trò",
+        "A": "Làm bài dài hơn",
+        "B": "Làm sáng tỏ luận điểm",
+        "C": "Trang trí bài viết",
+        "D": "Thay thế luận điểm",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Từ nào viết đúng chính tả?",
+        "A": "Chuyền thống",
+        "B": "Truyền thống",
+        "C": "Truyền thốn",
+        "D": "Chuyền thốn",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Dấu hai chấm thường dùng để",
+        "A": "Kết thúc câu",
+        "B": "Báo hiệu lời dẫn hoặc giải thích",
+        "C": "Ngăn cách trạng ngữ",
+        "D": "Ngắt nhịp thơ",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Một đoạn văn thường tập trung làm rõ",
+        "A": "Một ý chính",
+        "B": "Nhiều ý không liên quan",
+        "C": "Một bài thơ",
+        "D": "Một cuốn sách",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Văn bản thông tin nhằm mục đích chủ yếu là",
+        "A": "Cung cấp thông tin",
+        "B": "Kể chuyện",
+        "C": "Làm thơ",
+        "D": "Biểu diễn",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Khi đọc văn bản, việc đối chiếu thông tin giúp người đọc",
+        "A": "Đọc nhanh hơn",
+        "B": "Đánh giá độ tin cậy",
+        "C": "Học thuộc nhanh",
+        "D": "Viết đẹp hơn",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Muốn hiểu sâu một văn bản, người đọc cần",
+        "A": "Đọc tiêu đề",
+        "B": "Đọc lướt",
+        "C": "Đọc, suy luận và liên hệ",
+        "D": "Chỉ đọc kết luận",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "Câu tục ngữ nào nói về tinh thần đoàn kết?",
+        "A": "Có chí thì nên",
+        "B": "Một cây làm chẳng nên non, ba cây chụm lại nên hòn núi cao",
+        "C": "Ăn quả nhớ kẻ trồng cây",
+        "D": "Đi một ngày đàng học một sàng khôn",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Ca dao thường dùng để",
+        "A": "Phản ánh tình cảm, đời sống nhân dân",
+        "B": "Ghi chép lịch sử",
+        "C": "Giải thích hiện tượng tự nhiên",
+        "D": "Thông báo sự kiện",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "'Tre giữ làng, giữ nước, giữ mái nhà tranh...' sử dụng biện pháp tu từ nào?",
+        "A": "Điệp ngữ",
+        "B": "Ẩn dụ",
+        "C": "So sánh",
+        "D": "Nhân hóa",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Hoán dụ là gọi tên sự vật bằng",
+        "A": "Tên của sự vật khác có nét tương đồng",
+        "B": "Tên của sự vật có quan hệ gần gũi",
+        "C": "Tên của địa phương",
+        "D": "Tên của tác giả",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Từ nào dưới đây là từ Hán Việt?",
+        "A": "Cha mẹ",
+        "B": "Quốc gia",
+        "C": "Nhà cửa",
+        "D": "Bàn ghế",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Từ 'chân' trong 'chân núi' được dùng theo nghĩa",
+        "A": "Nghĩa gốc",
+        "B": "Nghĩa chuyển",
+        "C": "Nghĩa đồng âm",
+        "D": "Nghĩa trái",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Đặc điểm của từ đồng âm là",
+        "A": "Giống âm nhưng khác nghĩa",
+        "B": "Khác âm cùng nghĩa",
+        "C": "Khác âm khác nghĩa",
+        "D": "Giống nghĩa khác âm",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Câu cảm thán dùng để",
+        "A": "Kể",
+        "B": "Hỏi",
+        "C": "Bộc lộ cảm xúc",
+        "D": "Ra lệnh",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "Câu 'Ôi, cảnh đẹp quá!' là",
+        "A": "Câu kể",
+        "B": "Câu hỏi",
+        "C": "Câu cảm thán",
+        "D": "Câu khiến",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "Phép lặp là",
+        "A": "Lặp lại từ ngữ đã dùng",
+        "B": "Thay bằng từ đồng nghĩa",
+        "C": "Dùng quan hệ từ",
+        "D": "Dùng đại từ",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Chi tiết tiêu biểu có tác dụng",
+        "A": "Làm rõ nội dung",
+        "B": "Làm văn bản dài hơn",
+        "C": "Trang trí bài viết",
+        "D": "Không có tác dụng",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Lời nói của nhân vật giúp người đọc hiểu",
+        "A": "Ngoại hình",
+        "B": "Tính cách",
+        "C": "Tên tác giả",
+        "D": "Thời gian sáng tác",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Cốt truyện là",
+        "A": "Chuỗi sự việc chính",
+        "B": "Tên nhân vật",
+        "C": "Lời bình",
+        "D": "Tiêu đề",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Vần trong thơ có tác dụng",
+        "A": "Tăng nhạc điệu",
+        "B": "Làm câu dài hơn",
+        "C": "Giảm cảm xúc",
+        "D": "Không có tác dụng",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Hình ảnh thơ giúp",
+        "A": "Gợi cảm xúc và liên tưởng",
+        "B": "Kéo dài bài thơ",
+        "C": "Giảm tính nghệ thuật",
+        "D": "Thay dấu câu",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Luận cứ dùng để",
+        "A": "Làm sáng tỏ luận điểm",
+        "B": "Trang trí bài",
+        "C": "Kể chuyện",
+        "D": "Miêu tả",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Bài nghị luận muốn thuyết phục cần có",
+        "A": "Luận điểm rõ ràng",
+        "B": "Luận cứ xác thực",
+        "C": "Lập luận chặt chẽ",
+        "D": "Cả A, B và C",
+        "dapAn": "D"
+    },
+    {
+        "cauHoi": "Văn bản thông tin thường sử dụng",
+        "A": "Số liệu và dẫn chứng",
+        "B": "Yếu tố thần kì",
+        "C": "Nhân vật hư cấu",
+        "D": "Đối thoại",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Mở đoạn văn thường có nhiệm vụ",
+        "A": "Giới thiệu ý chính",
+        "B": "Kết luận",
+        "C": "Đưa dẫn chứng",
+        "D": "Nêu cảm nghĩ cuối bài",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Kết đoạn văn thường dùng để",
+        "A": "Khẳng định lại ý chính",
+        "B": "Đặt câu hỏi",
+        "C": "Kể chuyện",
+        "D": "Miêu tả",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Từ nào viết đúng?",
+        "A": "Giành giật",
+        "B": "Dành giật",
+        "C": "Rành giật",
+        "D": "Giành dật",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Dấu ngoặc kép dùng để",
+        "A": "Đánh dấu lời dẫn trực tiếp",
+        "B": "Kết thúc câu",
+        "C": "Ngăn cách trạng ngữ",
+        "D": "Liệt kê",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Thông điệp của văn bản là",
+        "A": "Điều tác giả muốn gửi gắm",
+        "B": "Tên bài",
+        "C": "Tên nhân vật",
+        "D": "Thời gian sáng tác",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Đọc văn bản nhiều lần giúp",
+        "A": "Hiểu sâu nội dung",
+        "B": "Mất thời gian",
+        "C": "Không có ích",
+        "D": "Chỉ nhớ tên bài",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Tên tác giả thường được ghi ở",
+        "A": "Đầu hoặc cuối văn bản",
+        "B": "Giữa văn bản",
+        "C": "Không bao giờ ghi",
+        "D": "Trong chú thích",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Tiêu đề văn bản có vai trò",
+        "A": "Khái quát nội dung",
+        "B": "Trang trí",
+        "C": "Không có ý nghĩa",
+        "D": "Thay kết luận",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Điệp ngữ có tác dụng",
+        "A": "Nhấn mạnh ý",
+        "B": "Giảm cảm xúc",
+        "C": "Làm câu ngắn",
+        "D": "Thay dấu câu",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Liệt kê có tác dụng",
+        "A": "Diễn tả đầy đủ hơn",
+        "B": "Làm câu ngắn",
+        "C": "Giảm sức biểu cảm",
+        "D": "Thay thế nhân hóa",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Khi đánh giá ý kiến trong văn bản cần",
+        "A": "Có căn cứ",
+        "B": "Đoán theo cảm tính",
+        "C": "Chỉ dựa vào tiêu đề",
+        "D": "Không cần đọc",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Đọc tích cực là",
+        "A": "Đọc kết hợp suy nghĩ và phản hồi",
+        "B": "Đọc thật nhanh",
+        "C": "Đọc thuộc lòng",
+        "D": "Đọc không cần hiểu",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Truyện Thánh Gióng thuộc thể loại nào?",
+        "A": "Truyền thuyết",
+        "B": "Cổ tích",
+        "C": "Ngụ ngôn",
+        "D": "Truyện cười",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Truyện 'Ếch ngồi đáy giếng' thuộc thể loại nào?",
+        "A": "Truyền thuyết",
+        "B": "Ngụ ngôn",
+        "C": "Cổ tích",
+        "D": "Truyện thơ",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Ý nghĩa của truyện 'Ếch ngồi đáy giếng' là",
+        "A": "Khuyên chăm học",
+        "B": "Phê phán sự kiêu ngạo, hiểu biết hạn hẹp",
+        "C": "Ca ngợi lòng hiếu thảo",
+        "D": "Ca ngợi lao động",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Truyện 'Thầy bói xem voi' phê phán điều gì?",
+        "A": "Lười biếng",
+        "B": "Nhìn nhận phiến diện",
+        "C": "Thiếu trung thực",
+        "D": "Ích kỉ",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Nhân vật Tấm thuộc truyện",
+        "A": "Sọ Dừa",
+        "B": "Cây tre trăm đốt",
+        "C": "Tấm Cám",
+        "D": "Thạch Sanh",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "Thạch Sanh dùng vũ khí gì để diệt chằn tinh?",
+        "A": "Kiếm thần",
+        "B": "Cung tên",
+        "C": "Búa",
+        "D": "Giáo",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Đặc điểm nổi bật của truyện cổ tích là",
+        "A": "Có yếu tố kì ảo",
+        "B": "Chỉ kể về lịch sử",
+        "C": "Không có nhân vật",
+        "D": "Không có xung đột",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Ca dao là",
+        "A": "Lời thơ dân gian",
+        "B": "Bài báo",
+        "C": "Truyện dài",
+        "D": "Tiểu thuyết",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Tục ngữ thường có đặc điểm",
+        "A": "Ngắn gọn, hàm súc",
+        "B": "Rất dài",
+        "C": "Viết theo văn xuôi hiện đại",
+        "D": "Không có ý nghĩa",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "'Đầu xanh có tội tình gì' sử dụng cách gọi nào?",
+        "A": "Hoán dụ",
+        "B": "So sánh",
+        "C": "Điệp ngữ",
+        "D": "Nhân hóa",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "So sánh giúp",
+        "A": "Tăng sức gợi hình",
+        "B": "Giảm cảm xúc",
+        "C": "Làm câu ngắn",
+        "D": "Giảm ý nghĩa",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Từ 'đẹp' là",
+        "A": "Danh từ",
+        "B": "Động từ",
+        "C": "Tính từ",
+        "D": "Đại từ",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "Từ 'chạy' là",
+        "A": "Danh từ",
+        "B": "Động từ",
+        "C": "Tính từ",
+        "D": "Số từ",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Danh từ dùng để",
+        "A": "Chỉ hoạt động",
+        "B": "Chỉ đặc điểm",
+        "C": "Chỉ sự vật",
+        "D": "Chỉ số lượng",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "Trong câu 'Lan học bài.', chủ ngữ là",
+        "A": "Lan",
+        "B": "Học",
+        "C": "Bài",
+        "D": "Học bài",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Trong câu 'Lan học bài.', vị ngữ là",
+        "A": "Lan",
+        "B": "Học bài",
+        "C": "Bài",
+        "D": "Học",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Quan hệ từ dùng để",
+        "A": "Nối các từ hoặc các vế câu",
+        "B": "Chỉ người",
+        "C": "Chỉ màu sắc",
+        "D": "Chỉ âm thanh",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Chi tiết nào giúp làm nổi bật nhân vật?",
+        "A": "Ngoại hình, hành động, lời nói",
+        "B": "Tên tác giả",
+        "C": "Số trang",
+        "D": "Nhà xuất bản",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Đề tài của văn bản là",
+        "A": "Lĩnh vực phản ánh",
+        "B": "Tên nhân vật",
+        "C": "Số câu",
+        "D": "Kiểu chữ",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Muốn xác định chủ đề văn bản cần",
+        "A": "Đọc toàn văn bản",
+        "B": "Chỉ đọc nhan đề",
+        "C": "Chỉ đọc đoạn đầu",
+        "D": "Chỉ đọc đoạn cuối",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Thơ tự do không bị ràng buộc chặt chẽ về",
+        "A": "Số tiếng và số câu",
+        "B": "Nội dung",
+        "C": "Tình cảm",
+        "D": "Hình ảnh",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Nhịp thơ có tác dụng",
+        "A": "Tạo âm điệu",
+        "B": "Làm thơ dài hơn",
+        "C": "Giảm cảm xúc",
+        "D": "Không có tác dụng",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Luận điểm cần",
+        "A": "Rõ ràng",
+        "B": "Mơ hồ",
+        "C": "Dài dòng",
+        "D": "Khó hiểu",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Dẫn chứng thuyết phục nhất là",
+        "A": "Có thật, tiêu biểu",
+        "B": "Bịa ra",
+        "C": "Không rõ nguồn",
+        "D": "Không liên quan",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Bảng biểu trong văn bản thông tin giúp",
+        "A": "Trình bày dữ liệu rõ ràng",
+        "B": "Trang trí",
+        "C": "Làm văn bản dài",
+        "D": "Thay tiêu đề",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Đoạn văn diễn dịch có câu chủ đề ở",
+        "A": "Đầu đoạn",
+        "B": "Cuối đoạn",
+        "C": "Giữa đoạn",
+        "D": "Không có",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Đoạn văn quy nạp có câu chủ đề ở",
+        "A": "Đầu đoạn",
+        "B": "Cuối đoạn",
+        "C": "Giữa đoạn",
+        "D": "Không có",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Từ nào viết đúng?",
+        "A": "Rộn ràng",
+        "B": "Dộn dàng",
+        "C": "Rộn dàng",
+        "D": "Dộn ràng",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Dấu chấm phẩy dùng để",
+        "A": "Ngăn cách các bộ phận trong phép liệt kê phức tạp",
+        "B": "Kết thúc câu hỏi",
+        "C": "Đánh dấu lời dẫn",
+        "D": "Đặt cuối câu cảm",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Khi đọc văn bản, cần kết hợp đọc, suy nghĩ và",
+        "A": "Liên hệ thực tế",
+        "B": "Học thuộc ngay",
+        "C": "Chỉ ghi chép",
+        "D": "Đọc thật nhanh",
+        "dapAn": "A"
+    }
+];
