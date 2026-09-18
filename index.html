@@ -335,106 +335,95 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
 </section>
 </div>
 
-<section class="students-section">
+<section class="people-section">
 
-    <h2>🏆 GƯƠNG HỌC SINH TIÊU BIỂU</h2>
+    <h2>🏆 HỌC SINH TIÊU BIỂU VÀ GIÁO VIÊN PHỤ TRÁCH</h2>
 
-    <div class="students-grid">
+    <div class="people-carousel">
 
-        <div class="student-card">
+        <button class="carousel-btn prev" onclick="movePeople(-1)">
+            ❮
+        </button>
 
-            <img src="anhnen/hs1.png" alt="Học sinh">
+        <div class="people-track" id="peopleTrack">
 
-            <h3>Đoàn Thanh Loan</h3>
+            <!-- HỌC SINH -->
+            <div class="person-card">
+                <img src="anhnen/hs1.png" alt="Đoàn Thanh Loan">
+                <div class="people-info">
+                    <h3>Đoàn Thanh Loan</h3>
+                    <p>Học sinh lớp 9B</p>
+                    <p>
+                        Học sinh giỏi<br>
+                        Giải ba môn Địa lí cấp tỉnh<br>
+                        Trúng tuyển trường PT DTNT THPT số 1 Thái Nguyên
+                    </p>
+                </div>
+            </div>
 
-            <p>Lớp 9B</p>
+            <div class="person-card">
+                <img src="anhnen/hs2.png" alt="Đào Thị Kim Oanh">
+                <div class="people-info">
+                    <h3>Đào Thị Kim Oanh</h3>
+                    <p>Học sinh lớp 9A</p>
+                    <p>
+                        Học sinh xuất sắc<br>
+                        Giải ba NCKH cấp tỉnh<br>
+                        Trúng tuyển trường THPT Bình Yên
+                    </p>
+                </div>
+            </div>
 
-            <p>
-                Danh hiệu học sinh giỏi;
-                Giải ba môn Địa lí cấp tỉnh;
-                Trúng tuyển trường PT DTNT THPT số 1 Thái Nguyên
-            </p>
+            <div class="person-card">
+                <img src="anhnen/hs3.png" alt="Nguyễn Thị Chúc">
+                <div class="people-info">
+                    <h3>Nguyễn Thị Chúc</h3>
+                    <p>Học sinh lớp 9B</p>
+                    <p>
+                        Học sinh giỏi<br>
+                        Giải Ba NCKH cấp tỉnh<br>
+                        Trúng tuyển trường THPT Bình Yên
+                    </p>
+                </div>
+            </div>
+
+            <!-- GIÁO VIÊN -->
+            <div class="person-card">
+                <img src="anhnen/gv1.jpg" alt="Thầy Nguyễn Văn A">
+                <div class="people-info">
+                    <h3>Thầy Nguyễn Văn A</h3>
+                    <p>Giáo viên phụ trách</p>
+                    <p>Chủ nhiệm CLB HSG<br>Môn Toán</p>
+                </div>
+            </div>
+
+            <div class="person-card">
+                <img src="anhnen/gv2.jpg" alt="Cô Trần Thị B">
+                <div class="people-info">
+                    <h3>Cô Trần Thị B</h3>
+                    <p>Giáo viên phụ trách</p>
+                    <p>Phụ trách Olympic Tiếng Anh<br>Môn Tiếng Anh</p>
+                </div>
+            </div>
+
+            <div class="person-card">
+                <img src="anhnen/gv3.jpg" alt="Thầy Lê Văn C">
+                <div class="people-info">
+                    <h3>Thầy Lê Văn C</h3>
+                    <p>Giáo viên phụ trách</p>
+                    <p>Phụ trách Olympic KHTN<br>Môn KHTN</p>
+                </div>
+            </div>
 
         </div>
 
-        <div class="student-card">
-
-            <img src="anhnen/hs2.png" alt="Học sinh">
-
-            <h3>Đào Thị Kim Oanh</h3>
-
-            <p>Lớp 9A</p>
-
-            <p>
-                Danh hiệu học sinh xuất sắc;
-                Giải ba NCKH cấp tỉnh;
-                Trúng tuyển trường THPT Bình Yên
-            </p>
-
-        </div>
-
-        <div class="student-card">
-
-            <img src="anhnen/hs3.png" alt="Học sinh">
-
-            <h3>Nguyễn Thị Chúc</h3>
-
-            <p>Lớp 9B</p>
-
-            <p>
-                Danh hiệu học sinh giỏi;
-                Giải Ba NCKH cấp tỉnh;
-                Trúng tuyển trường THPT Bình Yên
-            </p>
-
-        </div>
+        <button class="carousel-btn next" onclick="movePeople(1)">
+            ❯
+        </button>
 
     </div>
 
-</section>
-<section class="teachers-section">
-
-    <h2>👨‍🏫 ĐỘI NGŨ GIÁO VIÊN PHỤ TRÁCH</h2>
-
-    <div class="teachers-grid">
-
-        <div class="teacher-card">
-
-            <img src="anhnen/gv1.jpg" alt="Giáo viên">
-
-            <h3>Thầy Nguyễn Văn A</h3>
-
-            <p>Chủ nhiệm CLB HSG</p>
-
-            <p>Môn Toán</p>
-
-        </div>
-
-        <div class="teacher-card">
-
-            <img src="anhnen/gv2.jpg" alt="Giáo viên">
-
-            <h3>Cô Trần Thị B</h3>
-
-            <p>Phụ trách Olympic Tiếng Anh</p>
-
-            <p>Môn Tiếng Anh</p>
-
-        </div>
-
-        <div class="teacher-card">
-
-            <img src="anhnen/gv3.jpg" alt="Giáo viên">
-
-            <h3>Thầy Lê Văn C</h3>
-
-            <p>Phụ trách Olympic KHTN</p>
-
-            <p>Môn KHTN</p>
-
-        </div>
-
-    </div>
+    <div class="carousel-dots" id="peopleDots"></div>
 
 </section>
 <footer class="footer">
