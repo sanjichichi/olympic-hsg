@@ -1116,5 +1116,327 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 </script>
 </div>
+<script>
+/* =========================================================
+   CAROUSEL:
+   HỌC SINH TIÊU BIỂU + GIÁO VIÊN PHỤ TRÁCH
+   ========================================================= */
+
+let peopleIndex = 0;
+let peopleTimer = null;
+
+function updatePeopleCarousel() {
+
+    const cards = document.querySelectorAll(
+        "#peopleTrack .person-card"
+    );
+
+    const dots = document.getElementById("peopleDots");
+
+    if (!cards.length) return;
+
+    const total = cards.length;
+
+    cards.forEach((card, index) => {
+
+        card.classList.remove(
+            "active",
+            "left",
+            "right",
+            "far-left",
+            "far-right"
+        );
+
+        /*
+         * Khoảng cách từ card hiện tại
+         */
+        let diff = index - peopleIndex;
+
+        /*
+         * Xử lý quay vòng
+         */
+        if (diff > total / 2) {
+            diff -= total;
+        }
+
+        if (diff < -total / 2) {
+            diff += total;
+        }
+
+
+        /* Ảnh chính giữa */
+
+        if (diff === 0) {
+
+            card.classList.add("active");
+
+        }
+
+
+        /* Ảnh bên trái */
+
+        else if (diff === -1) {
+
+            card.classList.add("left");
+
+        }
+
+
+        /* Ảnh bên phải */
+
+        else if (diff === 1) {
+
+            card.classList.add("right");
+
+        }
+
+
+        /* Phía sau bên trái */
+
+        else if (diff === -2) {
+
+            card.classList.add("far-left");
+
+        }
+
+
+        /* Phía sau bên phải */
+
+        else if (diff === 2) {
+
+            card.classList.add("far-right");
+
+        }
+
+    });
+
+
+    /* =====================================================
+       TẠO DẤU CHẤM
+       ===================================================== */
+
+    if (dots) {
+
+        dots.innerHTML = "";
+
+        cards.forEach((card, index) => {
+
+            const dot = document.createElement("span");
+
+            if (index === peopleIndex) {
+                dot.classList.add("active");
+            }
+
+            dot.addEventListener("click", function () {
+
+                peopleIndex = index;
+
+                updatePeopleCarousel();
+
+                restartPeopleAuto();
+
+            });
+
+            dots.appendChild(dot);
+
+        });
+
+    }
+
+}
+
+
+/* =========================================================
+   CHUYỂN TRƯỚC / SAU
+   ========================================================= */
+
+function movePeople(direction) {
+
+    const cards = document.querySelectorAll(
+        "#peopleTrack .person-card"
+    );
+
+    if (!cards.length) return;
+
+    peopleIndex += direction;
+
+
+    /* Quay vòng */
+
+    if (peopleIndex < 0) {
+
+        peopleIndex = cards.length - 1;
+
+    }
+
+
+    if (peopleIndex >= cards.length) {
+
+        peopleIndex = 0;
+
+    }
+
+
+    updatePeopleCarousel();
+
+    restartPeopleAuto();
+
+}
+
+
+/* =========================================================
+   TỰ ĐỘNG QUAY
+   ========================================================= */
+
+function startPeopleAuto() {
+
+    stopPeopleAuto();
+
+    peopleTimer = setInterval(function () {
+
+        const cards = document.querySelectorAll(
+            "#peopleTrack .person-card"
+        );
+
+        if (!cards.length) return;
+
+        peopleIndex++;
+
+        if (peopleIndex >= cards.length) {
+            peopleIndex = 0;
+        }
+
+        updatePeopleCarousel();
+
+    }, 4500);
+
+}
+
+
+function stopPeopleAuto() {
+
+    if (peopleTimer) {
+
+        clearInterval(peopleTimer);
+
+        peopleTimer = null;
+
+    }
+
+}
+
+
+function restartPeopleAuto() {
+
+    startPeopleAuto();
+
+}
+
+
+/* =========================================================
+   CLICK VÀO ẢNH BÊN TRÁI / PHẢI
+   ========================================================= */
+
+function setupPeopleClick() {
+
+    const cards = document.querySelectorAll(
+        "#peopleTrack .person-card"
+    );
+
+    cards.forEach((card, index) => {
+
+        card.addEventListener("click", function () {
+
+            peopleIndex = index;
+
+            updatePeopleCarousel();
+
+            restartPeopleAuto();
+
+        });
+
+    });
+
+}
+
+
+/* =========================================================
+   VUỐT TRÊN ĐIỆN THOẠI
+   ========================================================= */
+
+function setupPeopleSwipe() {
+
+    const track = document.getElementById("peopleTrack");
+
+    if (!track) return;
+
+    let startX = 0;
+    let endX = 0;
+
+
+    track.addEventListener(
+        "touchstart",
+        function (e) {
+
+            startX = e.touches[0].clientX;
+
+        },
+        { passive: true }
+    );
+
+
+    track.addEventListener(
+        "touchend",
+        function (e) {
+
+            endX = e.changedTouches[0].clientX;
+
+            const distance = endX - startX;
+
+
+            /* Vuốt sang trái */
+
+            if (distance < -50) {
+
+                movePeople(1);
+
+            }
+
+
+            /* Vuốt sang phải */
+
+            else if (distance > 50) {
+
+                movePeople(-1);
+
+            }
+
+        },
+        { passive: true }
+    );
+
+}
+
+
+/* =========================================================
+   KHỞI ĐỘNG
+   ========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        updatePeopleCarousel();
+
+        setupPeopleClick();
+
+        setupPeopleSwipe();
+
+        startPeopleAuto();
+
+    }
+);
+
+</script>
 </body>
 </html>
