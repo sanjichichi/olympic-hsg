@@ -98,7 +98,14 @@ body{
 .btn-refresh:hover{
     background:#eaf0ff;
 }
+.btn-logout{
+    background:#fee2e2;
+    color:#b91c1c;
+}
 
+.btn-logout:hover{
+    background:#fecaca;
+}
 /* =========================
    CONTAINER
 ========================= */
@@ -409,6 +416,14 @@ footer{
             🔄 Làm mới
 
         </button>
+
+        <button
+    class="btn btn-logout"
+    onclick="dangXuatAdmin()">
+
+    🚪 Đăng xuất
+
+</button>
 
     </div>
 
@@ -3173,6 +3188,39 @@ function escapeHTML(
         "&#039;"
     );
 
+}
+/* =========================================================
+   ĐĂNG XUẤT ADMIN
+========================================================= */
+
+function dangXuatAdmin() {
+
+    const xacNhan = confirm(
+        "Bạn có chắc chắn muốn đăng xuất khỏi trang quản trị không?"
+    );
+
+    if (!xacNhan) {
+        return;
+    }
+
+    /*
+     * Xóa các dữ liệu phiên admin nếu có.
+     * Không xóa dữ liệu kỳ thi, học sinh, giáo viên...
+     */
+    localStorage.removeItem("adminLoggedIn");
+    localStorage.removeItem("adminName");
+    localStorage.removeItem("adminTaiKhoan");
+    localStorage.removeItem("adminUser");
+
+    sessionStorage.removeItem("adminLoggedIn");
+    sessionStorage.removeItem("adminName");
+    sessionStorage.removeItem("adminTaiKhoan");
+    sessionStorage.removeItem("adminUser");
+
+    /*
+     * Quay về trang đăng nhập admin
+     */
+    window.location.href = "index.html";
 }
 </script>
 
