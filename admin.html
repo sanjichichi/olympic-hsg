@@ -569,6 +569,10 @@ footer{
             📊 Kết quả
         </button>
 
+        <button onclick="moTab('phanhoa',this)">
+            🎯 Phân hóa học sinh
+        </button>
+
           <!-- NHẬT KÝ HỆ THỐNG -->
         <button
         onclick="moTab('nhatky',this)">
@@ -845,6 +849,25 @@ footer{
 
         </div>
 
+    </section>
+
+
+    <!-- =================================================
+         PHÂN HÓA HỌC SINH
+    ================================================== -->
+    <section id="phanhoa" class="section">
+        <div class="section-header">
+            <div>
+                <h2>🎯 Phân hóa & cá nhân hóa học sinh</h2>
+                <p>Phân loại học sinh dựa trên kết quả thi và lưu kết quả phân hóa vào cùng trang tính KETQUA, sheet PHAN_HOA.</p>
+            </div>
+            <a class="btn btn-primary" href="phan-hoa-hoc-sinh.html">
+                🚀 Mở trang phân hóa
+            </a>
+        </div>
+        <div style="padding:18px;background:#f8fafc;border-radius:12px;">
+            <b>Luồng:</b> KETQUA → PHAN_HOA → Phòng học cá nhân hóa → Đánh giá lại.
+        </div>
     </section>
 
 
@@ -3222,6 +3245,43 @@ function dangXuatAdmin() {
      */
     window.location.href = "index.html";
 }
+
+/* =========================================================
+   ĐĂNG XUẤT ADMIN
+   Hỗ trợ nhiều khóa đăng nhập thường dùng trong hệ thống.
+========================================================= */
+function dangXuatAdmin(){
+    if(!confirm("Bạn có chắc muốn đăng xuất tài khoản quản trị?")) return;
+
+    const keys = [
+        "adminLoggedIn",
+        "adminLogin",
+        "adminUser",
+        "adminName",
+        "adminAccount",
+        "adminSession",
+        "isAdmin",
+        "admin",
+        "taiKhoanAdmin"
+    ];
+
+    keys.forEach(k => {
+        try { localStorage.removeItem(k); } catch(e){}
+        try { sessionStorage.removeItem(k); } catch(e){}
+    });
+
+    // Nếu hệ thống có cờ phiên khác, xóa các khóa có tên admin.
+    try{
+        Object.keys(localStorage).forEach(k=>{
+            if(/^(admin|quantri|quan_tri)/i.test(k)){
+                localStorage.removeItem(k);
+            }
+        });
+    }catch(e){}
+
+    window.location.href = "login-admin.html";
+}
+
 </script>
 
 </body>
