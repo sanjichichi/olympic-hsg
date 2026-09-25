@@ -1195,7 +1195,50 @@ table th{
 /* =========================================================
    ĐIỆN THOẠI
    ========================================================= */
+/* =====================================================
+   TÀI KHOẢN HỌC SINH - HIỂN THỊ TỐT TRÊN ĐIỆN THOẠI
+   ===================================================== */
+@media (max-width:750px){
 
+    .menu-user{
+        width:100%;
+        display:flex !important;
+        justify-content:center !important;
+        align-items:center !important;
+        position:relative;
+        z-index:10000;
+    }
+
+    #userMenu{
+        display:inline-block !important;
+        position:relative;
+        z-index:10001;
+    }
+
+    #userButton{
+        display:flex !important;
+        align-items:center !important;
+        justify-content:center !important;
+        white-space:nowrap;
+        min-height:44px;
+        padding:10px 16px !important;
+        cursor:pointer;
+    }
+
+    #dropdown{
+        position:absolute !important;
+        top:calc(100% + 6px) !important;
+        right:0 !important;
+        left:auto !important;
+        width:220px !important;
+        max-width:calc(100vw - 20px);
+        z-index:10002 !important;
+    }
+
+    #dropdown.show{
+        display:block !important;
+    }
+}
 @media (max-width: 768px) {
 
     .people-section {
