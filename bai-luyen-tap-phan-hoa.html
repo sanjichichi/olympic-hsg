@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Bài luyện tập phân hóa - Olympic HSG Online</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#1f2937}
+.hero{background:linear-gradient(135deg,#173b8f,#2563eb);color:#fff;padding:25px 5%}
+.hero h1{margin:0 0 8px}.hero p{margin:4px 0;opacity:.94}
+.wrap{max-width:1050px;margin:25px auto;padding:0 16px}
+.card{background:#fff;border-radius:16px;padding:22px;margin-bottom:18px;box-shadow:0 5px 20px #0000000d}
+.meta{display:flex;gap:10px;flex-wrap:wrap}
+.badge{padding:7px 12px;border-radius:999px;background:#eef4ff;color:#173b8f;font-weight:bold}
+.question{border:1px solid #e5e7eb;border-radius:14px;padding:20px;margin:16px 0}
+.question h3{margin-top:0}
+.option{display:block;padding:12px;border:1px solid #dbe2ea;border-radius:10px;margin:8px 0;cursor:pointer}
+.option:hover{background:#f8fbff}.option input{margin-right:8px}
+.btn{border:0;border-radius:9px;padding:11px 17px;cursor:pointer;font-weight:bold}
+.primary{background:#2563eb;color:#fff}.gray{background:#e5e7eb}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.result{font-size:18px;font-weight:bold}
+.muted{color:#64748b}
+.progress{height:10px;background:#e5e7eb;border-radius:99px;overflow:hidden;margin:8px 0}
+.progress span{display:block;height:100%;background:#2563eb;border-radius:99px}
+.level-box{background:#f8fbff;border:1px solid #dbeafe;border-radius:14px;padding:15px;margin-top:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.stat{background:#f8fafc;border-radius:12px;padding:12px}
+.stat b{display:block;font-size:20px;margin-top:4px}
+.note{padding:12px;border-radius:10px;background:#fffbeb;border:1px solid #fde68a;color:#92400e}
+.error{padding:14px;border-radius:10px;background:#fef2f2;border:1px solid #fecaca;color:#991b1b}
+</style>
+</head>
+<body>
+<header class="hero">
+<h1>📚 Bài luyện tập cá nhân hóa</h1>
+<p id="student">Đang xác định học sinh...</p>
+<p id="adaptiveStatus" style="margin:8px 0 0;font-weight:bold">Đang phân tích mức luyện tập...</p>
+</header>
+
+<div class="wrap">
+<section class="card" id="info">Đang tải phòng học...</section>
+<section class="card" id="app"><div class="muted">Đang tải câu hỏi...</div></section>
+</div>
+
+<script>
+"use strict";
+
+const CSV_URL_PHAN_HOA =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vRULO6RaaXqNERaYMuLx9cpHLp3hxqL3i2PHuccrdbSvFaQgpsrPvRk-fhgzlOxamLUYCe1sLQMQvPL/pub?gid=2125905868&single=true&output=csv";
+
+const BANK_ROOT = "nganhang";
+
+let student = "";
+let record = null;
+let context = null;
+let questions = [];
+let answers = {};
+let startTime = Date.now();
+
+function clean(v){
+  return String(v ?? "").trim();
+}
+
+function val(o,keys){
+  if(!o) return "";
+  for(const k of keys){
+    if(o[k] != null && clean(o[k])) return clean(o[k]);
+  }
+  return "";
+}
+
+function esc(v){
+  return String(v ?? "").replace(/[&<>"']/g,m=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  }[m]));
+}
+
+function readJSON(key){
+  try{
+    const raw=localStorage.getItem(key);
+    if(!raw) return null;
+    return JSON.parse(raw);
+  }catch(e){ return null; }
+}
+
+function firstStoredValue(keys){
+  for(const k of keys){
+    const v=localStorage.getItem(k);
+    if(v != null && clean(v)) return clean(v);
+  }
+  return "";
+}
+
+function extractStudentFromObject(o){
+  return val(o,[
+    "maHS","MaHS","Mã học sinh","studentCode","maHocSinh",
+    "studentId","StudentId","idHocSinh"
+  ]);
+}
+
+function getUser(){
+  const direct=firstStoredValue([
+    "maHS","MaHS","studentCode","maHocSinh",
+    "studentId","StudentId"
+  ]);
+  if(direct) return direct;
+
+  for(const k of [
+    "user","currentUser","taiKhoanHS","hocSinh",
+    "taiKhoan","currentStudent","student"
+  ]){
+    const o=readJSON(k);
+    const v=extractStudentFromObject(o);
+    if(v) return v;
+  }
+
+  const current=readJSON("phongHocCurrent");
+  const v1=extractStudentFromObject(current);
+  if(v1) return v1;
+
+  const ctx=readJSON("phongHocContext");
+  const v2=extractStudentFromObject(ctx);
+  if(v2) return v2;
+
+  return "";
+}
+
+function csvLine(s){
+  let a=[],v="",q=false;
+  for(let i=0;i<s.length;i++){
+    const c=s[i];
+    if(c=='"'){
+      if(q && s[i+1]=='"'){v+='"';i++}
+      else q=!q;
+    }else if(c==","&&!q){
+      a.push(v.trim());v="";
+    }else v+=c;
+  }
+  a.push(v.trim());
+  return a;
+}
+
+function parseCSV(t){
+  const lines=t.replace(/^\uFEFF/,"").split(/\r?\n/).filter(x=>x.trim());
+  if(!lines.length) return [];
+  const h=csvLine(lines[0]);
+  return lines.slice(1).map(line=>{
+    const v=csvLine(line),o={};
+    h.forEach((x,i)=>o[x]=v[i]??"");
+    return o;
+  });
+}
+
+function getRoom(x){
+  return val(x,[
+    "phongHoc","phong","PhongHoc","Phòng học","room","Room"
+  ]) || "P01 - Củng cố";
+}
+
+function getLevel(room){
+  const r=clean(room).toUpperCase();
+  if(r.includes("P04")) return "P04";
+  if(r.includes("P03")) return "P03";
+  if(r.includes("P02")) return "P02";
+  return "P01";
+}
+
+function getMon(x){
+  let mon=val(x,[
+    "mon","Mon","Môn","monThi","MonThi","Môn thi",
+    "tenMon","TenMon","Tên môn","subject","Subject"
+  ]);
+  if(mon) return mon;
+
+  const ctx=readJSON("phongHocContext");
+  return val(ctx,[
+    "mon","Mon","Môn","monThi","MonThi","Môn thi",
+    "tenMon","TenMon","Tên môn","subject","Subject"
+  ]);
+}
+
+function getKhoi(x){
+  let khoi=val(x,[
+    "khoi","Khoi","Khối","khoiLop","KhoiLop","Khối lớp",
+    "lopKhoi","grade","Grade"
+  ]);
+
+  if(khoi){
+    const m=khoi.match(/\d+/);
+    if(m) return m[0];
+  }
+
+  const lop=val(x,["lop","Lop","Lớp","tenLop","TenLop","Tên lớp","class","Class"]);
+  let m=lop.match(/\d+/);
+  if(m) return m[0] || "";
+
+  const ctx=readJSON("phongHocContext");
+  khoi=val(ctx,["khoi","Khoi","Khối","khoiLop","KhoiLop","Khối lớp","grade","Grade"]);
+  m=khoi.match(/\d+/);
+  if(m) return m[0];
+
+  const lop2=val(ctx,["lop","Lop","Lớp"]);
+  m=lop2.match(/\d+/);
+  return m ? m[0] : "";
+}
+
+function getMaKyThi(x){
+  return val(x,["maKyThi","MaKyThi","Mã kỳ thi","kyThiId","examId"]);
+}
+
+function getTenKyThi(x){
+  return val(x,["tenKyThi","TenKyThi","Tên kỳ thi","kyThi","examName"]);
+}
+
+function normalizeSubject(mon){
+  const s=clean(mon).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+  if(s==="ngu van" || s==="van" || s==="ngu van  ") return "van";
+  if(s.includes("ngu van")) return "van";
+  if(s==="toan" || s.includes("toan")) return "toan";
+  if(s.includes("tieng anh") || s==="anh" || s==="english") return "anh";
+  return s.replace(/\s+/g,"_");
+}
+
+function getBankMon(){
+  return normalizeSubject(getMon(record));
+}
+
+function buildBankPath(){
+  const mon=getBankMon();
+  const khoi=getKhoi(record);
+
+  if(!mon) throw new Error("Chưa xác định được môn học.");
+  if(!khoi) throw new Error("Chưa xác định được khối lớp.");
+
+  return `${BANK_ROOT}/${mon}/${khoi}/${mon}-${khoi}.js`;
+}
+
+function normalizeQuestionBank(data){
+  if(Array.isArray(data)) return data;
+  if(data && Array.isArray(data.cauHoi)) return data.cauHoi;
+  if(data && Array.isArray(data.questions)) return data.questions;
+  if(data && Array.isArray(data.nganHang)) return data.nganHang;
+  return [];
+}
+
+async function loadRecord(){
+  student=getUser();
+  document.getElementById("student").textContent=
+    "Mã học sinh: "+(student||"chưa xác định");
+
+  if(!student){
+    throw new Error(
+      "Không xác định được mã học sinh. Hãy quay lại trang đăng nhập/phòng học."
+    );
+  }
+
+  // Context do phong-hoc.html truyền sang.
+  context=readJSON("phongHocContext");
+  const saved=readJSON("phongHocCurrent");
+
+  if(saved && extractStudentFromObject(saved)===student){
+    record=saved;
+    console.log("✅ Record từ phòng học:",record);
+    return;
+  }
+
+  // Dự phòng: đọc PHAN_HOA.
+  const res=await fetch(CSV_URL_PHAN_HOA+"&t="+Date.now(),{cache:"no-store"});
+  if(!res.ok) throw new Error("Không tải được dữ liệu phân hóa.");
+
+  const rows=parseCSV(await res.text());
+  const found=rows.filter(r=>extractStudentFromObject(r)===student);
+
+  if(!found.length){
+    throw new Error("Không tìm thấy mã học sinh "+student+" trong dữ liệu PHAN_HOA.");
+  }
+
+  found.sort((a,b)=>
+    String(b.thoiGianPhanHoa||"").localeCompare(String(a.thoiGianPhanHoa||""))
+  );
+
+  record=found[0];
+  console.log("⚠️ Record dự phòng từ PHAN_HOA:",record);
+}
+
+function normalizeLevel(){
+  const saved=firstStoredValue(["phongHocLevel"]);
+  if(/^P0[1-4]$/i.test(saved)) return saved.toUpperCase();
+  return getLevel(getRoom(record));
+}
+
+function levelNumber(level){
+  return Math.max(1,Math.min(4,parseInt(String(level||"P01").replace("P",""))||1));
+}
+
+function levelLabel(level){
+  return ({
+    P01:"Cơ bản",
+    P02:"Thông hiểu",
+    P03:"Khá / Vận dụng",
+    P04:"Nâng cao / HSG"
+  })[level] || "Cơ bản";
+}
+
+function adaptiveKey(){
+  const ky=getMaKyThi(record)||getMaKyThi(context)||"noExam";
+  const mon=getBankMon()||"noSubject";
+  const khoi=getKhoi(record)||"noGrade";
+  return ["phanHoaTienTrinh",student,ky,mon,khoi].join("_");
+}
+
+function readAdaptiveState(){
+  const initial=normalizeLevel();
+  try{
+    const saved=JSON.parse(localStorage.getItem(adaptiveKey())||"null");
+    if(saved && saved.mucDo) return saved;
+  }catch(e){}
+
+  return {
+    mucDo:initial,
+    mucDoTruoc:initial,
+    soBai:0,
+    soCau:0,
+    soDung:0,
+    tyLeGanNhat:0,
+    lichSu:[],
+    lyDo:"Mức ban đầu theo kết quả phân hóa."
+  };
+}
+
+function decideNextLevel(percent,current){
+  const n=levelNumber(current);
+
+  if(percent>=85 && n<4){
+    return {
+      level:"P0"+(n+1),
+      reason:"Đạt từ 85% trở lên → tăng độ khó ở bài tiếp theo."
+    };
+  }
+
+  if(percent<60 && n>1){
+    return {
+      level:"P0"+(n-1),
+      reason:"Dưới 60% → củng cố ở mức thấp hơn trước khi tăng độ khó."
+    };
+  }
+
+  return {
+    level:current,
+    reason:"Kết quả đang ở vùng ổn định → tiếp tục luyện ở mức hiện tại."
+  };
+}
+
+function saveAdaptiveResult(percent,correct,seconds,current,next){
+  const state=readAdaptiveState();
+
+  state.mucDoTruoc=current;
+  state.mucDo=next.level;
+  state.soBai=(Number(state.soBai)||0)+1;
+  state.soCau=(Number(state.soCau)||0)+questions.length;
+  state.soDung=(Number(state.soDung)||0)+correct;
+  state.tyLeGanNhat=percent;
+  state.lyDo=next.reason;
+  state.lichSu=Array.isArray(state.lichSu)?state.lichSu:[];
+
+  state.lichSu.push({
+    thoiGian:new Date().toISOString(),
+    maHS:student,
+    maKyThi:getMaKyThi(record),
+    mon:getBankMon(),
+    khoi:getKhoi(record),
+    mucDo:current,
+    mucDoTiepTheo:next.level,
+    soCau:questions.length,
+    soDung:correct,
+    tyLe:percent,
+    thoiGianLam:seconds
+  });
+
+  state.lichSu=state.lichSu.slice(-20);
+  localStorage.setItem(adaptiveKey(),JSON.stringify(state));
+
+  return state;
+}
+
+async function loadBank(){
+  const path=buildBankPath();
+  console.log("📚 Đường dẫn ngân hàng:",path);
+
+  const res=await fetch(path+"?v="+Date.now(),{cache:"no-store"});
+  if(!res.ok){
+    throw new Error("Không tìm thấy ngân hàng câu hỏi: "+path);
+  }
+
+  const code=await res.text();
+
+  let data;
+  try{
+    const fn=new Function(
+      code+`
+      return (
+        typeof nganHangDe !== "undefined" ? nganHangDe :
+        typeof cauHoi !== "undefined" ? {cauHoi:cauHoi} :
+        typeof questions !== "undefined" ? {questions:questions} :
+        []
+      );`
+    );
+    data=fn();
+  }catch(e){
+    throw new Error("Không đọc được file ngân hàng "+path+": "+e.message);
+  }
+
+  const all=normalizeQuestionBank(data);
+  if(!all.length){
+    throw new Error("File ngân hàng không có danh sách câu hỏi: "+path);
+  }
+
+  const state=readAdaptiveState();
+  const level=state.mucDo;
+
+  questions=all.filter(q=>{
+    const qLevel=String(
+      q.mucDoPhanHoa ?? q.mucDo ?? q.level ?? "P01"
+    ).toUpperCase().trim();
+    return qLevel===level;
+  });
+
+  // Nếu ngân hàng dùng trường mucDo thay cho mucDoPhanHoa,
+  // vẫn được hỗ trợ ở trên.
+  if(!questions.length){
+    throw new Error(
+      "Ngân hàng "+path+
+      " chưa có câu hỏi mức "+level+
+      ". Tổng câu trong ngân hàng: "+all.length
+    );
+  }
+
+  questions=questions.sort(()=>Math.random()-0.5).slice(0,10);
+  console.log("🎯 Mức:",level,"| Tổng:",all.length,"| Chọn:",questions.length);
+}
+
+function render(){
+  const state=readAdaptiveState();
+  const level=state.mucDo;
+  const room=getRoom(record);
+
+  document.getElementById("adaptiveStatus").textContent=
+    "🎯 Mức luyện tập hiện tại: "+level+" – "+levelLabel(level);
+
+  document.getElementById("info").innerHTML=`
+    <div class="meta">
+      <span class="badge">👤 ${esc(val(record,["hoTen","HoTen","Họ tên"]))}</span>
+      <span class="badge">🏫 ${esc(val(record,["lop","Lop","Lớp"]))}</span>
+      <span class="badge">🎯 ${esc(level)}</span>
+      <span class="badge">📚 ${esc(levelLabel(level))}</span>
+    </div>
+
+    <div class="level-box">
+      <h3 style="margin:0 0 8px">📊 Tiến trình phân hóa</h3>
+      <div class="grid">
+        <div class="stat">Mức hiện tại<b>${esc(level)}</b><span class="muted">${esc(levelLabel(level))}</span></div>
+        <div class="stat">Số bài đã luyện<b>${Number(state.soBai)||0}</b></div>
+        <div class="stat">Kết quả gần nhất<b>${Number(state.tyLeGanNhat)||0}%</b></div>
+      </div>
+      <div class="progress"><span style="width:${Math.max(0,Math.min(100,Number(state.tyLeGanNhat)||0))}%"></span></div>
+    </div>
+
+    <p><b>Kỳ thi:</b> ${esc(getTenKyThi(record)||getTenKyThi(context)||"")}</p>
+    <p><b>Môn:</b> ${esc(getMon(record))} · <b>Khối:</b> ${esc(getKhoi(record))}</p>
+    <p><b>Phòng:</b> ${esc(room)}</p>
+  `;
+
+  document.getElementById("app").innerHTML=`
+    <h2>📝 Bài luyện tập ${esc(level)} – ${esc(levelLabel(level))}</h2>
+    <p class="muted">${questions.length} câu được chọn từ ngân hàng theo mức hiện tại.</p>
+
+    <div class="note">
+      💡 Từ 85% trở lên: tăng mức; dưới 60%: củng cố ở mức thấp hơn;
+      từ 60% đến 84%: tiếp tục mức hiện tại.
+    </div>
+
+    <div id="questions"></div>
+
+    <div class="actions">
+      <button class="btn primary" onclick="submitPractice()">Nộp bài</button>
+      <button class="btn gray" onclick="history.back()">Quay lại phòng học</button>
+    </div>
+  `;
+
+  document.getElementById("questions").innerHTML=
+    questions.map((q,i)=>renderQuestion(q,i)).join("");
+}
+
+function renderQuestion(q,i){
+  const type=String(q.loai||q.type||"MCQ").toUpperCase();
+
+  if(type==="MCQ" || !type){
+    return `<div class="question">
+      <h3>Câu ${i+1}. ${esc(q.cauHoi||q.question||"")}</h3>
+      ${["A","B","C","D"].filter(k=>q[k]!=null&&q[k]!=="").map(k=>
+        `<label class="option">
+          <input type="radio" name="q${i}" value="${esc(k)}"
+          onchange="answers[${i}]=this.value">
+          <b>${k}.</b> ${esc(q[k])}
+        </label>`
+      ).join("")}
+    </div>`;
+  }
+
+  if(type==="TRUEFALSE"){
+    return `<div class="question">
+      <h3>Câu ${i+1}. ${esc(q.cauHoi||q.question||"")}</h3>
+      <label class="option"><input type="radio" name="q${i}" value="A" onchange="answers[${i}]=this.value"> Đúng</label>
+      <label class="option"><input type="radio" name="q${i}" value="B" onchange="answers[${i}]=this.value"> Sai</label>
+    </div>`;
+  }
+
+  if(type==="FILL"){
+    return `<div class="question">
+      <h3>Câu ${i+1}. ${esc(q.cauHoi||q.question||"")}</h3>
+      <input style="width:100%;padding:12px;border:1px solid #dbe2ea;border-radius:10px"
+        onchange="answers[${i}]=this.value">
+    </div>`;
+  }
+
+  return `<div class="question">
+    <h3>Câu ${i+1}. ${esc(q.cauHoi||q.question||"")}</h3>
+    <p class="muted">Loại câu hỏi ${esc(type)} chưa được hỗ trợ trong phiên bản này.</p>
+  </div>`;
+}
+
+function answerCorrect(q,a){
+  const correct=q.dapAn ?? q.answer ?? q.correctAnswer;
+
+  if(Array.isArray(correct)){
+    const aa=Array.isArray(a)?a:String(a??"").split(/[|,;]/).map(x=>x.trim());
+    return correct.map(String).sort().join("|")===aa.map(String).sort().join("|");
+  }
+
+  return String(correct??"").trim().toLowerCase()===
+         String(a??"").trim().toLowerCase();
+}
+
+function submitPractice(){
+  if(!questions.length) return;
+
+  let correct=0;
+  questions.forEach((q,i)=>{
+    if(answerCorrect(q,answers[i])) correct++;
+  });
+
+  const percent=Math.round(correct/questions.length*100);
+  const seconds=Math.round((Date.now()-startTime)/1000);
+  const current=readAdaptiveState().mucDo;
+  const next=decideNextLevel(percent,current);
+  const state=saveAdaptiveResult(percent,correct,seconds,current,next);
+
+  const key="luyenTap_"+student+"_"+getMaKyThi(record)+"_"+current;
+  const history=JSON.parse(localStorage.getItem(key)||"[]");
+
+  history.push({
+    thoiGian:new Date().toISOString(),
+    maHS:student,
+    maKyThi:getMaKyThi(record),
+    mon:getBankMon(),
+    khoi:getKhoi(record),
+    mucDo:current,
+    soCau:questions.length,
+    soDung:correct,
+    tyLe:percent,
+    thoiGianLam:seconds,
+    mucDoTiepTheo:next.level
+  });
+
+  localStorage.setItem(key,JSON.stringify(history));
+
+  const changed=next.level!==current;
+
+  document.getElementById("app").innerHTML=`
+    <div class="question">
+      <h2>🎉 Đã hoàn thành</h2>
+      <p class="result">Kết quả: ${correct}/${questions.length} câu đúng (${percent}%)</p>
+      <p>Thời gian: ${seconds} giây</p>
+
+      <div class="level-box">
+        <h3 style="margin-top:0">🎯 Phân hóa sau bài luyện</h3>
+        <div class="grid">
+          <div class="stat">Mức vừa làm<b>${current}</b><span class="muted">${levelLabel(current)}</span></div>
+          <div class="stat">Mức tiếp theo<b>${next.level}</b><span class="muted">${levelLabel(next.level)}</span></div>
+        </div>
+        <p><b>${changed?"🔄 Đã điều chỉnh mức luyện tập.":"➡️ Giữ nguyên mức luyện tập."}</b></p>
+        <p class="muted">${esc(next.reason)}</p>
+      </div>
+
+      <p class="muted">Tổng số bài đã luyện: ${Number(state.soBai)||0}.</p>
+
+      <div class="actions">
+        <button class="btn primary" onclick="location.reload()">Luyện bài tiếp theo</button>
+        <button class="btn gray" onclick="location.href='phong-hoc.html'">Về phòng học</button>
+      </div>
+    </div>`;
+}
+
+async function start(){
+  try{
+    document.getElementById("adaptiveStatus").textContent=
+      "🔄 Đang xác định học sinh...";
+
+    await loadRecord();
+
+    document.getElementById("adaptiveStatus").textContent=
+      "🔄 Đang phân tích mức luyện tập...";
+
+    // Tạo state trước khi tải ngân hàng.
+    readAdaptiveState();
+
+    document.getElementById("adaptiveStatus").textContent=
+      "🔄 Đang tải câu hỏi...";
+
+    await loadBank();
+    render();
+
+  }catch(e){
+    console.error("❌ LỖI BÀI LUYỆN:",e);
+
+    document.getElementById("adaptiveStatus").textContent=
+      "❌ Không thể tải bài luyện tập";
+
+    document.getElementById("info").innerHTML=
+      `<div class="error"><b>⚠️ ${esc(e.message)}</b></div>`;
+
+    document.getElementById("app").innerHTML=`
+      <div class="muted">
+        Không thể tải dữ liệu. Hãy quay lại phòng học và thử lại.
+      </div>
+      <br>
+      <button class="btn gray" onclick="history.back()">Quay lại</button>`;
+  }
+}
+
+document.addEventListener("DOMContentLoaded",start);
+</script>
+</body>
+</html>
