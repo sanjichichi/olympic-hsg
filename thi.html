@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thi chính thức</title>
+    <link
+rel="stylesheet"
+href="css/style-old.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+<div class="exam-layout">
+
+    <div class="exam-container">
+
+    <div class="exam-header">
+
+        <h2>ÔN TẬP CỦNG CỐ-NÂNG CAO-ĐÁNH GIÁ NĂNG LỰC</h2>
+
+        <div class="info-box">
+            <div>
+    <strong>Thí sinh:</strong>
+    <span id="tenThiSinh"></span>
+    -
+    <strong>Ngày sinh:</strong>
+    <span id="ngaySinh"></span>
+</div>
+
+    <div>
+    <strong>Lớp:</strong>
+    <span id="lopThiSinh"></span>
+        </div>
+            <div>
+                <strong>Thời gian:</strong>
+                <span id="timer"></span>
+            </div>
+        </div>
+        <div class="progress-box">
+            Đã hoàn thành:
+             <span id="soCauDaLam">0</span>/<span id="tongSoCau">0</span> câu
+        </div>
+
+    </div>
+
+    <div id="khuVucCauHoi">
+    </div>
+    <button
+    class="submit-btn"
+    onclick="nopBai()">
+
+    NỘP BÀI
+
+    </button>
+    </div>
+
+<div class="question-nav">
+
+    <h3>Câu hỏi</h3>
+
+    <div id="questionNavContainer">
+    </div>
+
+</div>
+
+
+<script>
+/*
+=========================================================
+THI.HTML – NẠP NGÂN HÀNG CÂU HỎI CẤU TRÚC MỚI
+=========================================================
+
+Cấu trúc mới:
+  type
+  question
+  options[]
+  correctValues[]
+
+Không dùng <script src="fileDe"> nữa.
+Dùng fetch() để:
+  1. kiểm tra HTTP 404
+  2. đọc file JS
+  3. chuyển cấu trúc mới -> cấu trúc mà js/thi.js đang dùng
+
+Có fallback cho trường hợp fileDe cũ vẫn còn là:
+  nganhang/van/de-van.js
+=========================================================
+*/
+
+const fileDe = localStorage.getItem("fileDe");
+
+console.log("📚 fileDe =", fileDe);
+console.log("📚 tên kỳ thi =", localStorage.getItem("tenKyThi"));
+
+
+/* =====================================================
+   1. CHUYỂN CẤU TRÚC NGÂN HÀNG MỚI
+===================================================== */
+
+function chuyenNganHangMoiSangCu(bank) {
+
+    let list = [];
+
+    if (Array.isArray(bank)) {
+
+        list = bank;
+
+    }
+    else if (
+        bank &&
+        Array.isArray(bank.cauHoi)
+    ) {
+
+        list = bank.cauHoi;
+
+    }
+    else if (
+        bank &&
+        Array.isArray(bank.questions)
+    ) {
+
+        list = bank.questions;
+
+    }
+
+    return list.map(function(q) {
+
+        const type = String(
+            q.type ||
+            q.loai ||
+            "single_select"
+        )
+        .trim()
+        .toLowerCase();
+
+
+        /*
+         * Ngân hàng mới dùng options[].
+         * Ngân hàng cũ có thể lưu trực tiếp A/B/C/D.
+         * Chuẩn hóa cả hai để tránh tình trạng câu hỏi hiện
+         * nhưng không hiện các phương án trả lời.
+         */
+        const options =
+            Array.isArray(q.options)
+                ? q.options
+                : ["A", "B", "C", "D"]
+                    .filter(function(key) {
+                        return q[key] !== undefined && q[key] !== "";
+                    })
+                    .map(function(key) {
+                        return {
+                            value: key,
+                            label: q[key]
+                        };
+                    });
+
+
+        const correctValues =
+            Array.isArray(q.correctValues)
+                ? q.correctValues
+                : (
+                    q.correctValue != null
+                        ? [q.correctValue]
+                        : []
+                );
+
+
+        const base = {
+
+            id:
+                q.id ||
+                q.maCau ||
+                "",
+
+            cauHoi:
+                q.question ||
+                q.cauHoi ||
+                "",
+
+            question:
+                q.question ||
+                q.cauHoi ||
+                "",
+
+            hint:
+                q.hint ||
+                "",
+
+            chuDe:
+                q.chuDe ||
+                "",
+
+            mucDo:
+                q.mucDo ||
+                q.mucDoPhanHoa ||
+                "",
+
+            mucDoPhanHoa:
+                q.mucDoPhanHoa ||
+                q.mucDo ||
+                "",
+
+            mon:
+                q.mon ||
+                "",
+
+            phamVi:
+                q.phamVi ||
+                "",
+
+            dinhHuong:
+                q.dinhHuong ||
+                "",
+
+            diem:
+                Number(q.diem || 1)
+
+        };
+
+
+        /* =========================
+           SINGLE SELECT
+        ========================= */
+
+        if (
+            type === "single_select" ||
+            type === "single-select" ||
+            type === "mcq"
+        ) {
+
+            const result = {
+
+                ...base,
+
+                loai:
+                    "MCQ",
+
+                type:
+                    "MCQ"
+
+            };
+
+
+            options.forEach(function(opt) {
+
+                const value =
+                    String(
+                        opt.value ?? ""
+                    );
+
+                if (value) {
+
+                    result[value] =
+                        opt.label ?? "";
+
+                }
+
+            });
+
+
+            result.dapAn =
+                correctValues.length
+                    ? String(
+                        correctValues[0]
+                    )
+                    : "";
+
+
+            return result;
+
+        }
+
+
+        /* =========================
+           TRUE / FALSE
+        ========================= */
+
+        if (
+            type === "true_false" ||
+            type === "truefalse" ||
+            type === "true-false"
+        ) {
+
+            const result = {
+
+                ...base,
+
+                loai:
+                    "TRUEFALSE",
+
+                type:
+                    "TRUEFALSE"
+
+            };
+
+
+            /*
+             * Cấu trúc mới có thể lưu:
+             * true / false
+             * hoặc A / B.
+             */
+
+            const answer =
+                String(
+                    correctValues[0] ?? ""
+                )
+                .trim()
+                .toLowerCase();
+
+
+            if (
+                answer === "true" ||
+                answer === "d" ||
+                answer === "a"
+            ) {
+
+                result.dapAn = "D";
+
+            }
+            else {
+
+                result.dapAn = "S";
+
+            }
+
+
+            return result;
+
+        }
+
+
+        /* =========================
+           MULTI SELECT
+        ========================= */
+
+        if (
+            type === "multi_select" ||
+            type === "multi-select" ||
+            type === "multi"
+        ) {
+
+            const result = {
+
+                ...base,
+
+                loai:
+                    "MULTI",
+
+                type:
+                    "MULTI",
+
+                dapAn:
+                    correctValues.map(
+                        String
+                    )
+
+            };
+
+
+            options.forEach(function(opt) {
+
+                const value =
+                    String(
+                        opt.value ?? ""
+                    );
+
+                if (value) {
+
+                    result[value] =
+                        opt.label ?? "";
+
+                }
+
+            });
+
+
+            return result;
+
+        }
+
+
+        /* =========================
+           FILL BLANK
+        ========================= */
+
+        if (
+            type === "fill_blank" ||
+            type === "fill" ||
+            type === "fill_blank_text"
+        ) {
+
+            return {
+
+                ...base,
+
+                loai:
+                    "FILL",
+
+                type:
+                    "FILL",
+
+                dapAn:
+                    correctValues.map(
+                        String
+                    ),
+
+                placeholder:
+                    q.placeholder ||
+                    "Nhập câu trả lời..."
+
+            };
+
+        }
+
+
+        /* =========================
+           MATCHING
+        ========================= */
+
+        if (
+            type === "matching" ||
+            type === "match"
+        ) {
+
+            return {
+
+                ...base,
+
+                loai:
+                    "MATCH",
+
+                type:
+                    "MATCH",
+
+                cotA:
+                    q.cotA ||
+                    q.left ||
+                    q.columnA ||
+                    [],
+
+                cotB:
+                    q.cotB ||
+                    q.right ||
+                    q.columnB ||
+                    [],
+
+                dapAn:
+                    q.dapAn ||
+                    q.correctMatches ||
+                    q.correctValues ||
+                    {}
+
+            };
+
+        }
+
+
+        /* =========================
+           ORDERING
+        ========================= */
+
+        if (
+            type === "ordering" ||
+            type === "order" ||
+            type === "sort"
+        ) {
+
+            return {
+
+                ...base,
+
+                loai:
+                    "SORT",
+
+                type:
+                    "SORT",
+
+                items:
+                    q.items ||
+                    q.options ||
+                    [],
+
+                dapAn:
+                    q.dapAn ||
+                    q.correctOrder ||
+                    q.correctValues ||
+                    []
+
+            };
+
+        }
+
+
+        /* =========================
+           FALLBACK
+        ========================= */
+
+        const fallback = {
+
+            ...base,
+
+            loai:
+                "MCQ",
+
+            type:
+                "MCQ",
+
+            dapAn:
+                correctValues.length
+                    ? String(
+                        correctValues[0]
+                    )
+                    : ""
+
+        };
+
+
+        options.forEach(function(opt) {
+
+            const value =
+                String(
+                    opt.value ?? ""
+                );
+
+            if (value) {
+
+                fallback[value] =
+                    opt.label ?? "";
+
+            }
+
+        });
+
+
+        return fallback;
+
+    });
+
+}
+
+
+/* =====================================================
+   2. TẠO DANH SÁCH ĐƯỜNG DẪN DỰ PHÒNG
+===================================================== */
+
+function taoDanhSachDuongDan() {
+
+    const ds = [];
+
+    function them(path) {
+        if (path && !ds.includes(path)) {
+            ds.push(path);
+        }
+    }
+
+    /* =================================================
+       1. ƯU TIÊN TUYỆT ĐỐI fileDe ĐANG LƯU
+       Cấu trúc chuẩn của dự án:
+       nganhang/mon/mon-khoi.js
+    ================================================= */
+    if (fileDe) {
+        them(String(fileDe).trim());
+    }
+
+    /* =================================================
+       2. TỰ NHẬN DIỆN MÔN TỪ fileDe / tenKyThi
+    ================================================= */
+    const raw = String(fileDe || "").trim().toLowerCase();
+    const ten = String(localStorage.getItem("tenKyThi") || "").toLowerCase();
+
+    let mon = "";
+
+    if (raw.includes("/van/") || raw.includes("\\van\\") || raw.includes("van-" ) || ten.includes("văn") || ten.includes("van ")) {
+        mon = "van";
+    }
+    else if (raw.includes("/toan/") || raw.includes("\\toan\\") || raw.includes("toan-" ) || ten.includes("toán") || ten.includes("toan ")) {
+        mon = "toan";
+    }
+    else if (raw.includes("/anh/") || raw.includes("\\anh\\") || raw.includes("anh-" ) || ten.includes("anh") || ten.includes("tiếng anh")) {
+        mon = "anh";
+    }
+
+    /* =================================================
+       3. FALLBACK ĐÚNG CẤU TRÚC THƯ MỤC THỰC TẾ
+       nganhang/van/van-9.js
+       nganhang/toan/toan-9.js
+       nganhang/anh/anh-9.js
+    ================================================= */
+    if (mon) {
+        them(`nganhang/${mon}/${mon}-9.js`);
+        them(`nganhang/${mon}/${mon}-phan-hoa-9.js`);
+
+        if (mon === "van") {
+            them("nganhang/van/de-van.js");
+        }
+        else if (mon === "toan") {
+            them("nganhang/toan/de-toan.js");
+        }
+        else if (mon === "anh") {
+            them("nganhang/anh/de-anh.js");
+        }
+    }
+
+    /* =================================================
+       4. TƯƠNG THÍCH VỚI fileDe CŨ dạng de-van.js,
+          de-toan.js, de-anh.js
+    ================================================= */
+    if (/de-(van|toan|anh)\.js$/i.test(raw)) {
+        const m = raw.match(/de-(van|toan|anh)\.js$/i)[1];
+        them(`nganhang/${m}/${m}-9.js`);
+        them(`nganhang/${m}/${m}-phan-hoa-9.js`);
+    }
+
+    return ds;
+
+}
+
+
+/* =====================================================
+   3. TẢI NGÂN HÀNG BẰNG FETCH
+===================================================== */
+
+async function taiNganHang() {
+
+    const danhSach =
+        taoDanhSachDuongDan();
+
+
+    if (!danhSach.length) {
+
+        throw new Error(
+            "Chưa có đường dẫn file đề."
+        );
+
+    }
+
+
+    let loiCuoi =
+        null;
+
+
+    for (
+        const path
+        of danhSach
+    ) {
+
+        try {
+
+            console.log(
+                "📥 Đang thử tải:",
+                path
+            );
+
+
+            const response =
+                await fetch(
+                    path +
+                    "?v=" +
+                    Date.now()
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "HTTP " +
+                    response.status
+                );
+
+            }
+
+
+            const code =
+                await response.text();
+
+
+            /*
+             * Chạy file ngân hàng trong
+             * scope riêng và lấy nganHangDe.
+             */
+
+            const fn =
+                new Function(
+                    code +
+                    `
+
+                    return (
+                        typeof nganHangDe !==
+                        "undefined"
+
+                    )
+
+                    ? nganHangDe
+
+                    : (
+
+                        typeof cauHoi !==
+                        "undefined"
+
+                        ? {
+                            cauHoi:
+                                cauHoi
+                          }
+
+                        : null
+
+                    );
+
+                    `
+                );
+
+
+            const data =
+                fn();
+
+
+            if (!data) {
+
+                throw new Error(
+                    "File không tạo ra nganHangDe/cauHoi."
+                );
+
+            }
+
+
+            const cauHoiMoi =
+                chuyenNganHangMoiSangCu(
+                    data
+                );
+
+
+            if (
+                !Array.isArray(
+                    cauHoiMoi
+                ) ||
+                cauHoiMoi.length === 0
+            ) {
+
+                throw new Error(
+                    "Ngân hàng không có câu hỏi."
+                );
+
+            }
+
+
+            /*
+             * Quan trọng:
+             * js/thi.js đang đọc biến cauHoi.
+             */
+
+            window.cauHoi =
+                cauHoiMoi;
+
+
+            console.log(
+                "✅ Đã tải ngân hàng:",
+                path
+            );
+
+            console.log(
+                "📊 Số câu:",
+                cauHoiMoi.length
+            );
+
+
+            return path;
+
+        }
+        catch(error) {
+
+            console.warn(
+                "⚠️ Không tải được:",
+                path,
+                error
+            );
+
+
+            loiCuoi =
+                error;
+
+        }
+
+    }
+
+
+    throw new Error(
+        "Không tải được ngân hàng câu hỏi.\n" +
+        "File đang lưu: " +
+        (fileDe || "(trống)") +
+        "\n" +
+        "Lỗi cuối: " +
+        (
+            loiCuoi
+                ? loiCuoi.message
+                : "không xác định"
+        )
+    );
+
+}
+
+
+/* =====================================================
+   4. KHỞI ĐỘNG
+===================================================== */
+
+async function khoiDongTrangThi() {
+
+    try {
+
+        if (!fileDe) {
+
+            throw new Error(
+                "Không tìm thấy localStorage.fileDe"
+            );
+
+        }
+
+
+        await taiNganHang();
+
+
+        /*
+         * Chỉ sau khi ngân hàng tải thành công
+         * mới chạy Question Engine.
+         */
+
+        const scriptThi =
+            document.createElement(
+                "script"
+            );
+
+
+        scriptThi.src =
+            "js/thi.js";
+
+
+        scriptThi.onload =
+            function() {
+
+                console.log(
+                    "✅ Đã tải js/thi.js"
+                );
+
+            };
+
+
+        scriptThi.onerror =
+            function() {
+
+                alert(
+                    "❌ Không tìm thấy js/thi.js"
+                );
+
+            };
+
+
+        document.body.appendChild(
+            scriptThi
+        );
+
+    }
+    catch(error) {
+
+        console.error(
+            "❌ Lỗi tải đề:",
+            error
+        );
+
+
+        alert(
+            "❌ Không tải được ngân hàng câu hỏi.\n\n" +
+            error.message +
+            "\n\n" +
+            "Hãy kiểm tra lại đường dẫn fileDe trong cấu hình kỳ thi."
+        );
+
+    }
+
+}
+
+
+khoiDongTrangThi();
+
+</script>
+
+</body>
+</html>
