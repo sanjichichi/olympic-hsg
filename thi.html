@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phú Đình EDU - Thi</title>
+<link rel="stylesheet" href="css/style-old.css">
+<link rel="stylesheet" href="css/responsive.css">
+<style>
+:root{
+  --blue:#1264c7;--blue2:#0878e8;--green:#2fcf5b;--green2:#159447;
+  --orange:#ff8a00;--red:#ff4d5e;--ink:#12305b;--sky:#e9f8ff;
+  --line:#b8dcff;--card:#ffffff;--soft:#f6fbff;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;min-height:100%;overflow-x:hidden}
+body{
+  font-family:Arial,"Segoe UI",sans-serif!important;color:#10284a;
+  background:
+    radial-gradient(circle at 8% 20%,rgba(255,255,255,.9) 0 40px,transparent 42px),
+    radial-gradient(circle at 92% 18%,rgba(255,255,255,.75) 0 50px,transparent 52px),
+    linear-gradient(180deg,#dff7ff 0,#effff5 45%,#f5ffe9 100%);
+  position:relative;
+}
+body:before,body:after{position:fixed;z-index:0;pointer-events:none;line-height:1;opacity:.95}
+body:before{content:"🌿  🌸  🦋";left:-12px;top:70px;font-size:38px;transform:rotate(-7deg)}
+body:after{content:"🌸  🐦  🌿";right:-10px;bottom:25px;font-size:38px;transform:rotate(7deg)}
+
+.exam-layout{position:relative;z-index:1;display:block!important;max-width:1500px;margin:0 auto;padding:14px 20px 110px!important;align-items:start!important;overflow:visible!important}
+.exam-container{min-width:0!important;overflow:visible!important}
+
+/* HEADER - theo đúng mẫu ảnh */
+.exam-header{position:sticky!important;top:0!important;z-index:1000!important;background:transparent!important;padding:0 0 12px!important;box-shadow:none!important}
+.exam-header h2{margin:0!important;min-height:108px;padding:25px 330px 20px 330px!important;display:flex;align-items:center;justify-content:center;text-align:center;font-size:34px!important;line-height:1.05!important;font-weight:900!important;letter-spacing:.3px;color:#9a4d16!important;text-transform:uppercase;background:linear-gradient(180deg,#fff4bf,#ffe9a4);border:3px solid #e5bd63;border-radius:25px;box-shadow:0 7px 18px rgba(31,98,135,.18);position:relative;overflow:hidden}
+.exam-header h2:before{content:"🎓  PHÚ ĐÌNH EDU";position:absolute;left:28px;top:25px;color:#0c58ae;font-size:25px;font-weight:900;text-transform:none;letter-spacing:0}
+.exam-header h2:after{content:"🐦   🐿️";position:absolute;right:25px;top:18px;font-size:43px;letter-spacing:8px}
+
+.info-box{display:grid!important;grid-template-columns:1.7fr 1fr .7fr .85fr;gap:10px!important;align-items:center!important;background:rgba(255,255,255,.95)!important;border:1px solid #c8e0f5!important;border-radius:16px!important;padding:12px 18px!important;margin:0!important;box-shadow:0 6px 18px rgba(31,93,140,.13)!important;min-height:64px!important}
+.info-box>div{display:flex!important;align-items:center!important;gap:6px!important;white-space:nowrap!important;min-width:0!important;overflow:hidden!important;font-size:18px!important}
+.info-box strong{color:#075fbd!important;font-size:18px!important;flex:0 0 auto!important}.info-box span{overflow:hidden;text-overflow:ellipsis;color:#152f52!important;font-weight:700}
+#timer{color:#ff7a00!important;font-size:25px!important;font-weight:900!important}
+.progress-box{display:flex!important;align-items:center!important;justify-content:center!important;gap:5px!important;margin:8px 0 0!important;padding:10px 16px!important;border-radius:12px!important;background:linear-gradient(90deg,#fff4bd,#fff9df)!important;border:1px solid #efd57c!important;color:#172d4c!important;font-size:18px!important;font-weight:800!important;box-shadow:0 3px 10px rgba(0,0,0,.08)!important}
+#soCauDaLam,#tongSoCau{color:#1264c7;font-weight:900}
+
+/* Khung thi */
+#khuVucCauHoi{padding-top:4px}
+.qe-question,.question{background:rgba(255,255,255,.97)!important;border:2px solid #a9d8ff!important;border-radius:24px!important;box-shadow:0 8px 24px rgba(29,107,161,.12)!important;margin:0 0 18px!important;padding:0!important;overflow:hidden!important;scroll-margin-top:185px!important}
+.qe-question-header{display:flex!important;align-items:center!important;gap:14px!important;padding:14px 22px!important;background:linear-gradient(90deg,#dff3ff,#effaff)!important;border-bottom:1px solid #c9e8ff!important}
+.qe-question-number{width:48px!important;height:48px!important;border-radius:50%!important;background:#e8f2ff!important;color:#125ec2!important;display:grid!important;place-items:center!important;font-size:23px!important;font-weight:900!important;position:relative!important}
+.qe-question-number:before{content:"🌸";position:absolute;left:-7px;top:-8px;font-size:21px}
+.qe-question-content{padding:22px 26px 26px!important;font-size:20px!important;line-height:1.6!important}
+.qe-question-content>p{font-size:22px!important;font-weight:600!important;line-height:1.55!important;margin:0 0 18px!important;color:#101d30!important}
+
+/* Đáp án */
+.qe-question-content label,.qe-question-content .option,.qe-option,.answer-option{border:2px solid #b7dcff!important;border-radius:15px!important;background:#fff!important;transition:.18s!important}
+.qe-question-content label:hover,.qe-question-content .option:hover,.qe-option:hover,.answer-option:hover{border-color:#3e9af5!important;background:#f2f9ff!important;transform:translateY(-1px)}
+input[type=radio],input[type=checkbox]{accent-color:#18b956}
+.done-question{background:#34cf5d!important;color:white!important;border-color:#22b64b!important}
+
+/* DANH SÁCH CÂU HỎI - CHẠY NGANG */
+.question-nav{position:relative!important;top:auto!important;align-self:auto!important;background:rgba(255,255,255,.97)!important;border:1px solid #d8e9f7!important;border-radius:20px!important;padding:12px 16px!important;box-shadow:0 6px 18px rgba(29,91,130,.12)!important;max-height:none!important;overflow:hidden!important;margin:10px 0 14px!important}
+.question-nav h3{margin:0 0 8px!important;text-align:left!important;color:#0c59ae!important;font-size:20px!important;font-weight:900!important}
+.question-nav h3:before{content:"📋  ";font-size:19px}
+#questionNavContainer{display:flex!important;flex-wrap:nowrap!important;gap:8px!important;overflow-x:auto!important;overflow-y:hidden!important;padding:4px 2px 7px!important;scrollbar-width:thin!important;scroll-behavior:smooth!important}
+#questionNavContainer::-webkit-scrollbar{height:7px!important}
+#questionNavContainer::-webkit-scrollbar-thumb{background:#9dc9ed;border-radius:20px}
+.nav-btn{flex:0 0 48px!important;width:48px!important;height:44px!important;border:2px solid #b8d7f2!important;border-radius:12px!important;background:#f7fbff!important;color:#124a83!important;font-size:17px!important;font-weight:900!important;cursor:pointer!important;box-shadow:none!important;transition:.15s!important}
+.nav-btn:hover{background:#e9f6ff!important;border-color:#4a9cf0!important;transform:translateY(-1px)}
+.nav-btn.done-question{background:#38ce59!important;color:#fff!important;border-color:#2fba4e!important}
+.nav-btn[aria-current="true"],.nav-btn.active{background:#1678e8!important;color:#fff!important;border-color:#1678e8!important;box-shadow:0 0 0 3px #c8e7ff!important}
+
+/* Thanh điều hướng cuối trang thi */
+.exam-bottom-bar{position:sticky!important;bottom:10px!important;z-index:900!important;display:grid!important;grid-template-columns:1fr auto 1fr auto!important;align-items:center!important;gap:12px!important;margin:10px 0 0!important;padding:10px 14px!important;background:rgba(255,255,255,.97)!important;border:1px solid #b9def6!important;border-radius:18px!important;box-shadow:0 8px 25px rgba(23,91,137,.18)!important;backdrop-filter:blur(8px)!important}
+.exam-bottom-current{justify-self:center!important;min-width:150px!important;text-align:center!important;color:#075fbd!important;font-size:18px!important;font-weight:900!important;background:#eaf6ff!important;border:1px solid #b9dcf5!important;border-radius:12px!important;padding:10px 16px!important}
+.exam-nav-btn{border:2px solid #a9d6f7!important;border-radius:12px!important;padding:11px 20px!important;background:#eef8ff!important;color:#075fbd!important;font-size:16px!important;font-weight:900!important;cursor:pointer!important;transition:.15s!important}
+.exam-nav-btn:hover{background:#dff2ff!important;transform:translateY(-1px)}
+.exam-nav-btn.next{background:#147bea!important;border-color:#147bea!important;color:#fff!important}
+.submit-btn{position:static!important;justify-self:end!important;border:0!important;border-radius:13px!important;padding:12px 20px!important;background:linear-gradient(135deg,#ff4054,#ff6472)!important;color:#fff!important;font-size:16px!important;font-weight:900!important;cursor:pointer!important;box-shadow:0 7px 16px rgba(255,66,83,.25)!important;white-space:nowrap!important}
+.submit-btn:before{content:"✈  ";font-size:15px}.submit-btn:hover{transform:translateY(-1px)}
+
+/* Các loại câu hỏi của engine */
+.qe-question img,.qe-question-image img{max-width:100%;height:auto;border-radius:14px}
+.qe-question table{max-width:100%;border-collapse:collapse}
+.qe-question td,.qe-question th{border:1px solid #b9d9ef;padding:7px}
+.qe-sort-list,.qe-match-list{border-radius:14px}
+
+@media(max-width:1050px){
+ .exam-layout{grid-template-columns:minmax(0,1fr) 250px;gap:14px;padding:10px!important}
+ .exam-header h2{font-size:27px!important;padding-left:250px!important;padding-right:200px!important}
+ .exam-header h2:before{font-size:20px;left:18px}.exam-header h2:after{font-size:32px}
+ .info-box{grid-template-columns:1.5fr 1fr .7fr!important}.info-box>div:last-child{grid-column:1/-1}
+ .submit-btn{right:18px;top:22px;font-size:15px;padding:11px 15px}
+}
+@media(max-width:760px){
+ body:before{font-size:25px;top:75px}body:after{font-size:25px}
+ .exam-layout{display:block!important;padding:8px 10px 100px!important}
+ .exam-header{position:sticky!important;top:0!important;padding-bottom:8px!important}
+ .exam-header h2{min-height:90px;padding:17px 85px 17px 115px!important;font-size:20px!important;border-radius:18px!important;line-height:1.1!important}
+ .exam-header h2:before{content:"🎓 PHÚ ĐÌNH EDU";left:10px;top:17px;font-size:14px}.exam-header h2:after{content:"🐦 🐿️";right:8px;top:15px;font-size:21px;letter-spacing:0}
+ .info-box{grid-template-columns:1fr 1fr!important;padding:9px 11px!important;border-radius:13px!important;gap:6px!important}
+ .info-box>div{font-size:13px!important}.info-box strong{font-size:13px!important}#timer{font-size:18px!important}
+ .progress-box{font-size:13px!important;padding:8px!important}
+ .exam-bottom-bar{position:sticky!important;bottom:6px!important;grid-template-columns:1fr 1fr!important;gap:7px!important;padding:8px!important;margin-top:8px!important;border-radius:15px!important}.exam-bottom-current{grid-column:1/-1;grid-row:1;min-width:0;font-size:14px!important;padding:7px!important}.exam-nav-btn{font-size:14px!important;padding:9px 7px!important}.submit-btn{grid-column:1/-1;grid-row:3;width:100%;padding:10px!important;border-radius:11px!important;font-size:15px!important}
+ .question-nav{position:relative!important;left:auto;right:auto;bottom:auto;top:auto!important;z-index:10;max-height:none!important;padding:10px!important;border-radius:15px!important;margin:8px 0 10px!important}
+ .question-nav.mobile-open{display:block}
+ #questionNavContainer{display:flex!important;grid-template-columns:none!important;gap:7px!important;overflow-x:auto!important;padding-bottom:6px!important}
+ .nav-btn{flex:0 0 42px!important;width:42px!important;height:40px!important;font-size:14px!important}
+ .qe-question{border-radius:17px!important;margin-bottom:90px!important}
+ .qe-question-header{padding:11px 14px!important}.qe-question-number{width:40px!important;height:40px!important;font-size:19px!important}
+ .qe-question-content{padding:16px!important;font-size:17px!important}.qe-question-content>p{font-size:18px!important}
+}
+
+/* ===== CHẾ ĐỘ 1 CÂU / LƯỚT NGANG ===== */
+#questionNavContainer{
+  display:flex!important; flex-direction:row!important; flex-wrap:nowrap!important;
+  width:100%!important; max-width:100%!important; overflow-x:auto!important; overflow-y:hidden!important;
+  -webkit-overflow-scrolling:touch!important; touch-action:pan-x!important;
+  overscroll-behavior-x:contain!important; scroll-snap-type:x proximity!important;
+}
+#questionNavContainer .nav-btn{
+  flex:0 0 48px!important; width:48px!important; min-width:48px!important;
+  scroll-snap-align:center!important;
+}
+@media(max-width:760px){
+  #questionNavContainer{gap:8px!important; padding:5px 3px 9px!important;}
+  #questionNavContainer .nav-btn{flex:0 0 42px!important;width:42px!important;min-width:42px!important;}
+}
+/* Chỉ hiển thị một câu tại một thời điểm; không còn danh sách câu dọc. */
+#khuVucCauHoi.single-question-mode .qe-question{display:none!important;}
+#khuVucCauHoi.single-question-mode .qe-question.active-question{display:block!important;}
+
+
+/* ===== KHUNG CÂU HỎI CỐ ĐỊNH TƯƠNG ĐỐI ===== */
+#khuVucCauHoi{
+  min-height:clamp(430px, 56vh, 650px)!important;
+  height:clamp(430px, 56vh, 650px)!important;
+  position:relative!important;
+}
+#khuVucCauHoi.single-question-mode .qe-question{
+  height:100%!important;
+  min-height:100%!important;
+  max-height:100%!important;
+  margin:0!important;
+  display:none!important;
+  overflow:hidden!important;
+}
+#khuVucCauHoi.single-question-mode .qe-question.active-question{
+  display:flex!important;
+  flex-direction:column!important;
+}
+#khuVucCauHoi .qe-question-header{flex:0 0 auto!important}
+#khuVucCauHoi .qe-question-content{
+  flex:1 1 auto!important;
+  min-height:0!important;
+  overflow:auto!important;
+  scrollbar-width:thin!important;
+  overscroll-behavior:contain!important;
+}
+#khuVucCauHoi .qe-question-content img,
+#khuVucCauHoi .qe-question-content video{
+  max-height:clamp(180px,30vh,320px)!important;
+  width:auto!important;
+  max-width:100%!important;
+  object-fit:contain!important;
+}
+#khuVucCauHoi .qe-question-content table{max-width:100%!important}
+#khuVucCauHoi .qe-question-content p{font-size:clamp(16px,1.45vw,22px)!important}
+#khuVucCauHoi .qe-question-content label,
+#khuVucCauHoi .qe-question-content .option,
+#khuVucCauHoi .qe-option,
+#khuVucCauHoi .answer-option{font-size:clamp(15px,1.2vw,19px)!important}
+@media(max-width:760px){
+  #khuVucCauHoi{height:clamp(390px,55vh,560px)!important;min-height:390px!important}
+  #khuVucCauHoi .qe-question-content{padding:14px!important}
+  #khuVucCauHoi .qe-question-content img,
+  #khuVucCauHoi .qe-question-content video{max-height:24vh!important}
+}
+/* =====================================================
+   THI CHÍNH THỨC – TỐI ƯU CHO FULLSCREEN
+===================================================== */
+
+/* Toàn bộ trang tận dụng chiều cao màn hình */
+html,
+body {
+    min-height: 100vh;
+}
+
+/* Khu vực thi */
+.exam-layout {
+    min-height: 100vh;
+    align-items: start;
+}
+
+/* Khung chính */
+.exam-container {
+    min-width: 0 !important;
+}
+
+/* Khu vực chứa câu hỏi */
+#khuVucCauHoi {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    overflow: visible !important;
+}
+
+/* =====================================================
+   KHUNG TỪNG CÂU
+===================================================== */
+
+#khuVucCauHoi > .qe-question,
+#khuVucCauHoi > .question {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+
+    box-sizing: border-box !important;
+}
+
+/* Nội dung câu hỏi */
+.qe-question-content {
+    width: 100% !important;
+    max-width: 100% !important;
+
+    box-sizing: border-box !important;
+
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+}
+
+/* Không để ảnh quá cao */
+.qe-question-content img {
+    max-width: 100% !important;
+    height: auto !important;
+
+    object-fit: contain;
+}
+
+/* Video nếu ngân hàng câu hỏi có */
+.qe-question-content video {
+    max-width: 100% !important;
+    height: auto !important;
+}
+
+/* MathJax không tạo khoảng cách quá lớn */
+.qe-question-content mjx-container[display="true"] {
+    margin: 4px 0 !important;
+}
+
+/* Đoạn văn */
+.qe-question-content p {
+    margin-top: 4px !important;
+    margin-bottom: 4px !important;
+}
+
+/* =====================================================
+   ĐÁP ÁN
+===================================================== */
+
+.qe-option {
+    box-sizing: border-box !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+
+    padding: 9px 12px !important;
+    margin: 7px 0 !important;
+
+    line-height: 1.4 !important;
+}
+
+/* =====================================================
+   MÀN HÌNH FULLSCREEN
+===================================================== */
+
+:fullscreen .exam-layout {
+    min-height: 100vh !important;
+}
+
+:fullscreen .exam-container {
+    min-height: 100vh !important;
+}
+
+/* Khi trình duyệt đang fullscreen */
+:fullscreen #khuVucCauHoi {
+    max-width: 100% !important;
+}
+
+/* =====================================================
+   MÀN HÌNH THẤP – laptop/phòng máy
+===================================================== */
+
+@media (max-height: 800px) and (min-width: 769px) {
+
+    .exam-header {
+        padding-top: 8px !important;
+        padding-bottom: 8px !important;
+    }
+
+    .exam-header h2 {
+        font-size: 20px !important;
+        margin: 4px 0 !important;
+    }
+
+    .exam-header .info-box {
+        padding: 6px 10px !important;
+        gap: 6px 10px !important;
+    }
+
+    .exam-header .progress-box {
+        min-height: 32px !important;
+        padding: 5px 10px !important;
+    }
+
+    .qe-question {
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;
+        padding: 14px !important;
+    }
+
+    .qe-question-content {
+        font-size: 16px !important;
+        line-height: 1.4 !important;
+    }
+
+    .qe-option {
+        padding: 7px 10px !important;
+        margin: 5px 0 !important;
+    }
+}
+</style>
+<script>
+window.MathJax={tex:{inlineMath:[['$','$'],['\(','\)']],displayMath:[['$$','$$'],['\[','\]']]},svg:{fontCache:'global'}};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+<div class="exam-layout">
+  <div class="exam-container">
+    <div class="exam-header">
+      <h2 id="examBanner">OLYMPIC HỌC SINH GIỎI – MÔN TOÁN 9</h2>
+      <div class="info-box">
+        <div><strong>Thí sinh:</strong><span id="tenThiSinh"></span></div>
+        <div><strong>Ngày sinh:</strong><span id="ngaySinh"></span></div>
+        <div><strong>Lớp:</strong><span id="lopThiSinh"></span></div>
+        <div><strong>Thời gian:</strong><span id="timer"></span></div>
+      </div>
+      <div class="progress-box">Đã hoàn thành: <span id="soCauDaLam">0</span>/<span id="tongSoCau">0</span> câu</div>
+    </div>
+    <div class="question-nav" id="questionNav">
+      <h3>Câu hỏi</h3>
+      <div id="questionNavContainer"></div>
+    </div>
+    <div id="khuVucCauHoi"></div>
+    <div class="exam-bottom-bar" id="examBottomBar">
+      <button type="button" class="exam-nav-btn prev" id="btnCauTruoc" onclick="cauTruocGiaoDien()">← Câu trước</button>
+      <div class="exam-bottom-current" id="cauDangLamGiaoDien">Câu đang làm: 1</div>
+      <button type="button" class="exam-nav-btn next" id="btnCauTiep" onclick="cauTiepGiaoDien()">Câu tiếp theo →</button>
+      <button class="submit-btn" onclick="nopBai()">NỘP BÀI</button>
+    </div>
+  </div>
+</div>
+<button id="mobileQuestionToggle" type="button" style="display:none">📋 Danh sách câu hỏi</button>
+<script>
+(function(){
+  const mon=(localStorage.getItem('monThi')||localStorage.getItem('mon')||'Toán 9').trim();
+  const banner=document.getElementById('examBanner');
+  if(banner && mon) banner.innerHTML='OLYMPIC HỌC SINH GIỎI <span style="display:block;font-size:.68em;color:#fff;background:#1689e8;border-radius:12px;padding:6px 18px;margin:7px auto 0;width:max-content;max-width:70%">MÔN '+String(mon).replace(/^MÔN\s*/i,'')+'</span>';
+
+  window._cauHienTaiGiaoDien = 1;
+  window.capNhatThanhDieuHuongGiaoDien = function(index){
+    index = Math.max(1, Number(index)||1);
+    window._cauHienTaiGiaoDien = index;
+    const label=document.getElementById('cauDangLamGiaoDien');
+    const total=document.querySelectorAll('#khuVucCauHoi .qe-question').length || document.querySelectorAll('#questionNavContainer .nav-btn').length || 0;
+    if(label) label.textContent='Câu đang làm: '+index+(total ? ' / '+total : '');
+    const prev=document.getElementById('btnCauTruoc'), next=document.getElementById('btnCauTiep');
+    if(prev) prev.disabled=index<=1;
+    if(next) next.disabled=total>0 && index>=total;
+    document.querySelectorAll('#questionNavContainer .nav-btn').forEach(function(btn){
+      btn.classList.toggle('active', btn.id==='nav'+index);
+    });
+    const active=document.getElementById('nav'+index);
+    if(active) active.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  };
+  window.diDenCauGiaoDien = function(index){
+    if(typeof window.diDenCau === 'function'){ window.diDenCau(index); }
+    else { const el=document.getElementById('cau'+index); if(el) el.scrollIntoView({behavior:'smooth',block:'start'}); }
+    window.capNhatThanhDieuHuongGiaoDien(index);
+  };
+  window.cauTruocGiaoDien=function(){ if(window._cauHienTaiGiaoDien>1) window.diDenCauGiaoDien(window._cauHienTaiGiaoDien-1); };
+  window.cauTiepGiaoDien=function(){
+    const total=document.querySelectorAll('#khuVucCauHoi .qe-question').length;
+    if(!total || window._cauHienTaiGiaoDien<total) window.diDenCauGiaoDien(window._cauHienTaiGiaoDien+1);
+  };
+
+  // Theo dõi câu đang nằm trong vùng nhìn thấy để thanh dưới cập nhật.
+  window.addEventListener('load', function(){
+    setTimeout(function(){
+      const questions=[...document.querySelectorAll('#khuVucCauHoi .qe-question')];
+      if(!questions.length) return;
+      const io=new IntersectionObserver(function(entries){
+        const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+        if(visible){ window.capNhatThanhDieuHuongGiaoDien(Number(visible.target.dataset.questionIndex)+1); }
+      },{rootMargin:'-20% 0px -55% 0px',threshold:[0.1,0.35,0.6]});
+      questions.forEach(q=>io.observe(q));
+      window.capNhatThanhDieuHuongGiaoDien(1);
+    },700);
+  });
+})();
+</script>
+<script>
+document.addEventListener('click', function(e){
+  const btn=e.target.closest && e.target.closest('#questionNavContainer .nav-btn');
+  if(btn){
+    const n=Number((btn.id||'').replace('nav',''));
+    if(n) setTimeout(function(){ if(window.capNhatThanhDieuHuongGiaoDien) window.capNhatThanhDieuHuongGiaoDien(n); },50);
+  }
+});
+</script>
+
+<script>
+/*
+=========================================================
+THI.HTML – NẠP NGÂN HÀNG CÂU HỎI CẤU TRÚC MỚI
+=========================================================
+
+Cấu trúc mới:
+  type
+  question
+  options[]
+  correctValues[]
+
+Không dùng <script src="fileDe"> nữa.
+Dùng fetch() để:
+  1. kiểm tra HTTP 404
+  2. đọc file JS
+  3. chuyển cấu trúc mới -> cấu trúc mà js/thi.js đang dùng
+
+Có fallback cho trường hợp fileDe cũ vẫn còn là:
+  nganhang/van/de-van.js
+=========================================================
+*/
+
+const fileDe = localStorage.getItem("fileDe");
+
+/*
+ * PHIÊN MỚI:
+ * - Khi đi từ trang xác nhận sang trang thi (navigation mới),
+ *   xóa phiên thi cũ để tiến độ bắt đầu đúng 0.
+ * - Khi F5/reload, giữ phiên để khôi phục bài đang làm.
+ */
+(function () {
+    try {
+        const nav = performance.getEntriesByType("navigation")[0];
+        const navType = nav ? nav.type : "navigate";
+
+        if (navType !== "reload") {
+            const sessionKey =
+                "baiThiDangLam_v2_" +
+                String(localStorage.getItem("maThiSinh") || "unknown") +
+                "_" +
+                String(
+                    localStorage.getItem("fileDe") ||
+                    localStorage.getItem("tenKyThi") ||
+                    "de"
+                );
+
+            localStorage.removeItem(sessionKey);
+            console.log("🆕 Bắt đầu phiên thi mới:", sessionKey);
+        }
+    } catch (e) {
+        console.warn("Không xác định được loại điều hướng:", e);
+    }
+})();
+
+
+console.log("📚 fileDe =", fileDe);
+console.log("📚 tên kỳ thi =", localStorage.getItem("tenKyThi"));
+
+
+/* =====================================================
+   1. CHUYỂN CẤU TRÚC NGÂN HÀNG MỚI
+===================================================== */
+
+function chuyenNganHangMoiSangCu(bank) {
+
+    let list = [];
+
+    if (Array.isArray(bank)) {
+
+        list = bank;
+
+    }
+    else if (
+        bank &&
+        Array.isArray(bank.cauHoi)
+    ) {
+
+        list = bank.cauHoi;
+
+    }
+    else if (
+        bank &&
+        Array.isArray(bank.questions)
+    ) {
+
+        list = bank.questions;
+
+    }
+
+    return list.map(function(q) {
+
+        const type = String(
+            q.type ||
+            q.loai ||
+            "single_select"
+        )
+        .trim()
+        .toLowerCase();
+
+
+        const options =
+            Array.isArray(q.options)
+                ? q.options
+                : [];
+
+
+        const correctValues =
+            Array.isArray(q.correctValues)
+                ? q.correctValues
+                : (
+                    q.correctValue != null
+                        ? [q.correctValue]
+                        : []
+                );
+
+
+        const base = {
+
+            id:
+                q.id ||
+                q.maCau ||
+                "",
+
+            cauHoi:
+                q.question ||
+                q.cauHoi ||
+                "",
+
+            question:
+                q.question ||
+                q.cauHoi ||
+                "",
+
+            hint:
+                q.hint ||
+                "",
+
+            chuDe:
+                q.chuDe ||
+                "",
+
+            mucDo:
+                q.mucDo ||
+                q.mucDoPhanHoa ||
+                "",
+
+            mucDoPhanHoa:
+                q.mucDoPhanHoa ||
+                q.mucDo ||
+                "",
+
+            mon:
+                q.mon ||
+                "",
+
+            phamVi:
+                q.phamVi ||
+                "",
+
+            dinhHuong:
+                q.dinhHuong ||
+                "",
+
+            diem:
+                Number(q.diem || 1)
+
+        };
+
+
+        /* =========================
+           SINGLE SELECT
+        ========================= */
+
+        if (
+            type === "single_select" ||
+            type === "single-select" ||
+            type === "mcq"
+        ) {
+
+            const result = {
+
+                ...base,
+
+                loai:
+                    "MCQ",
+
+                type:
+                    "MCQ"
+
+            };
+
+
+            options.forEach(function(opt) {
+
+                const value =
+                    String(
+                        opt.value ?? ""
+                    );
+
+                if (value) {
+
+                    result[value] =
+                        opt.label ?? "";
+
+                }
+
+            });
+
+
+            result.dapAn =
+                correctValues.length
+                    ? String(
+                        correctValues[0]
+                    )
+                    : "";
+
+
+            return result;
+
+        }
+
+
+        /* =========================
+           TRUE / FALSE
+        ========================= */
+
+        if (
+            type === "true_false" ||
+            type === "truefalse" ||
+            type === "true-false"
+        ) {
+
+            const result = {
+
+                ...base,
+
+                loai:
+                    "TRUEFALSE",
+
+                type:
+                    "TRUEFALSE"
+
+            };
+
+
+            /*
+             * Cấu trúc mới có thể lưu:
+             * true / false
+             * hoặc A / B.
+             */
+
+            const answer =
+                String(
+                    correctValues[0] ?? ""
+                )
+                .trim()
+                .toLowerCase();
+
+
+            if (
+                answer === "true" ||
+                answer === "d" ||
+                answer === "a"
+            ) {
+
+                result.dapAn = "D";
+
+            }
+            else {
+
+                result.dapAn = "S";
+
+            }
+
+
+            return result;
+
+        }
+
+
+        /* =========================
+           MULTI SELECT
+        ========================= */
+
+        if (
+            type === "multi_select" ||
+            type === "multi-select" ||
+            type === "multi"
+        ) {
+
+            const result = {
+
+                ...base,
+
+                loai:
+                    "MULTI",
+
+                type:
+                    "MULTI",
+
+                dapAn:
+                    correctValues.map(
+                        String
+                    )
+
+            };
+
+
+            options.forEach(function(opt) {
+
+                const value =
+                    String(
+                        opt.value ?? ""
+                    );
+
+                if (value) {
+
+                    result[value] =
+                        opt.label ?? "";
+
+                }
+
+            });
+
+
+            return result;
+
+        }
+
+
+        /* =========================
+           FILL BLANK
+        ========================= */
+
+        if (
+            type === "fill_blank" ||
+            type === "fill" ||
+            type === "fill_blank_text"
+        ) {
+
+            return {
+
+                ...base,
+
+                loai:
+                    "FILL",
+
+                type:
+                    "FILL",
+
+                dapAn:
+                    correctValues.map(
+                        String
+                    ),
+
+                placeholder:
+                    q.placeholder ||
+                    "Nhập câu trả lời..."
+
+            };
+
+        }
+
+
+        /* =========================
+           MATCHING
+        ========================= */
+
+        if (
+            type === "matching" ||
+            type === "match"
+        ) {
+
+            return {
+
+                ...base,
+
+                loai:
+                    "MATCH",
+
+                type:
+                    "MATCH",
+
+                cotA:
+                    q.cotA ||
+                    q.left ||
+                    q.columnA ||
+                    [],
+
+                cotB:
+                    q.cotB ||
+                    q.right ||
+                    q.columnB ||
+                    [],
+
+                dapAn:
+                    q.dapAn ||
+                    q.correctMatches ||
+                    q.correctValues ||
+                    {}
+
+            };
+
+        }
+
+
+        /* =========================
+           ORDERING
+        ========================= */
+
+        if (
+            type === "ordering" ||
+            type === "order" ||
+            type === "sort"
+        ) {
+
+            return {
+
+                ...base,
+
+                loai:
+                    "SORT",
+
+                type:
+                    "SORT",
+
+                items:
+                    q.items ||
+                    q.options ||
+                    [],
+
+                dapAn:
+                    q.dapAn ||
+                    q.correctOrder ||
+                    q.correctValues ||
+                    []
+
+            };
+
+        }
+
+
+        /* =========================
+           FALLBACK
+        ========================= */
+
+        const fallback = {
+
+            ...base,
+
+            loai:
+                "MCQ",
+
+            type:
+                "MCQ",
+
+            dapAn:
+                correctValues.length
+                    ? String(
+                        correctValues[0]
+                    )
+                    : ""
+
+        };
+
+
+        options.forEach(function(opt) {
+
+            const value =
+                String(
+                    opt.value ?? ""
+                );
+
+            if (value) {
+
+                fallback[value] =
+                    opt.label ?? "";
+
+            }
+
+        });
+
+
+        return fallback;
+
+    });
+
+}
+
+
+/* =====================================================
+   2. TẠO DANH SÁCH ĐƯỜNG DẪN DỰ PHÒNG
+===================================================== */
+
+function taoDanhSachDuongDan() {
+
+    const ds = [];
+
+
+    function them(path) {
+
+        if (
+            path &&
+            !ds.includes(path)
+        ) {
+
+            ds.push(path);
+
+        }
+
+    }
+
+
+    /*
+     * Ưu tiên chính xác fileDe đã lưu.
+     */
+
+    them(fileDe);
+
+
+    /*
+     * Nếu fileDe cũ là de-van.js,
+     * thử các file ngân hàng Văn 9 mới.
+     */
+
+    if (
+        fileDe &&
+        /de-van\.js$/i.test(fileDe)
+    ) {
+
+        const base =
+            fileDe
+                .replace(
+                    /de-van\.js$/i,
+                    ""
+                );
+
+
+        them(
+            base +
+            "van-9.js"
+        );
+
+
+        them(
+            base +
+            "van-phan-hoa-9.js"
+        );
+
+
+        them(
+            base +
+            "van-9-phan-hoa-chuan-hoa.js"
+        );
+
+    }
+
+
+    /*
+     * Nếu fileDe không có đường dẫn,
+     * thử vị trí chuẩn của ngân hàng.
+     */
+
+    if (
+        !fileDe ||
+        fileDe.trim() === ""
+    ) {
+
+        them(
+            "nganhang/van/9/van-9.js"
+        );
+
+        them(
+            "nganhang/van/9/van-phan-hoa-9.js"
+        );
+
+    }
+
+
+    return ds;
+
+}
+
+
+/* =====================================================
+   3. TẢI NGÂN HÀNG BẰNG FETCH
+===================================================== */
+
+async function taiNganHang() {
+
+    const danhSach =
+        taoDanhSachDuongDan();
+
+
+    if (!danhSach.length) {
+
+        throw new Error(
+            "Chưa có đường dẫn file đề."
+        );
+
+    }
+
+
+    let loiCuoi =
+        null;
+
+
+    for (
+        const path
+        of danhSach
+    ) {
+
+        try {
+
+            console.log(
+                "📥 Đang thử tải:",
+                path
+            );
+
+
+            const response =
+                await fetch(
+                    path +
+                    "?v=" +
+                    Date.now()
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "HTTP " +
+                    response.status
+                );
+
+            }
+
+
+            const code =
+                await response.text();
+
+
+            /*
+             * Chạy file ngân hàng trong
+             * scope riêng và lấy nganHangDe.
+             */
+
+            const fn =
+                new Function(
+                    code +
+                    `
+
+                    return (
+                        typeof nganHangDe !==
+                        "undefined"
+
+                    )
+
+                    ? nganHangDe
+
+                    : (
+
+                        typeof cauHoi !==
+                        "undefined"
+
+                        ? {
+                            cauHoi:
+                                cauHoi
+                          }
+
+                        : null
+
+                    );
+
+                    `
+                );
+
+
+            const data =
+                fn();
+
+
+            if (!data) {
+
+                throw new Error(
+                    "File không tạo ra nganHangDe/cauHoi."
+                );
+
+            }
+
+
+            const cauHoiMoi =
+                chuyenNganHangMoiSangCu(
+                    data
+                );
+
+
+            if (
+                !Array.isArray(
+                    cauHoiMoi
+                ) ||
+                cauHoiMoi.length === 0
+            ) {
+
+                throw new Error(
+                    "Ngân hàng không có câu hỏi."
+                );
+
+            }
+
+
+            /*
+             * Quan trọng:
+             * js/thi.js đang đọc biến cauHoi.
+             */
+
+            window.cauHoi =
+                cauHoiMoi;
+
+
+            console.log(
+                "✅ Đã tải ngân hàng:",
+                path
+            );
+
+            console.log(
+                "📊 Số câu:",
+                cauHoiMoi.length
+            );
+
+
+            return path;
+
+        }
+        catch(error) {
+
+            console.warn(
+                "⚠️ Không tải được:",
+                path,
+                error
+            );
+
+
+            loiCuoi =
+                error;
+
+        }
+
+    }
+
+
+    throw new Error(
+        "Không tải được ngân hàng câu hỏi.\n" +
+        "File đang lưu: " +
+        (fileDe || "(trống)") +
+        "\n" +
+        "Lỗi cuối: " +
+        (
+            loiCuoi
+                ? loiCuoi.message
+                : "không xác định"
+        )
+    );
+
+}
+
+
+/* =====================================================
+   4. KHỞI ĐỘNG
+===================================================== */
+
+async function khoiDongTrangThi() {
+
+    try {
+
+        if (!fileDe) {
+
+            throw new Error(
+                "Không tìm thấy localStorage.fileDe"
+            );
+
+        }
+
+
+        await taiNganHang();
+
+
+        /*
+         * Chỉ sau khi ngân hàng tải thành công
+         * mới chạy Question Engine.
+         */
+
+        const scriptThi =
+            document.createElement(
+                "script"
+            );
+
+
+        scriptThi.src =
+            "js/thi.js";
+
+
+        scriptThi.onload =
+            function() {
+
+                console.log(
+                    "✅ Đã tải js/thi.js"
+                );
+
+            };
+
+
+        scriptThi.onerror =
+            function() {
+
+                alert(
+                    "❌ Không tìm thấy js/thi.js"
+                );
+
+            };
+
+
+        document.body.appendChild(
+            scriptThi
+        );
+
+    }
+    catch(error) {
+
+        console.error(
+            "❌ Lỗi tải đề:",
+            error
+        );
+
+
+        alert(
+            "❌ Không tải được ngân hàng câu hỏi.\n\n" +
+            error.message +
+            "\n\n" +
+            "Hãy kiểm tra lại đường dẫn fileDe trong cấu hình kỳ thi."
+        );
+
+    }
+
+}
+
+
+khoiDongTrangThi();
+
+</script>
+
+<script>
+/* =====================================================
+   THI.HTML - HIỂN THỊ TỪNG CÂU + DANH SÁCH CÂU NGANG
+   Không sửa js/thi.js: chỉ thay cách trình bày ở giao diện.
+===================================================== */
+(function(){
+  let ready=false, current=1;
+  function setup(){
+    const box=document.getElementById('khuVucCauHoi');
+    const nav=document.getElementById('questionNavContainer');
+    const qs=box ? Array.from(box.querySelectorAll('.qe-question')) : [];
+    if(!box || !nav || !qs.length) return false;
+    if(!ready){
+      ready=true;
+      box.classList.add('single-question-mode');
+      // Gắn số câu cho các nút nếu engine đã tạo.
+      nav.querySelectorAll('.nav-btn').forEach((b,i)=>{
+        b.dataset.questionNumber=String(i+1);
+        b.addEventListener('click',()=>show(i+1));
+      });
+      // Thay hàm diDenCau của engine bằng chế độ 1 câu.
+      window.diDenCau=function(n){ show(Number(n)||1); };
+      show(1);
+    }
+    return true;
+  }
+  function show(n){
+    const box=document.getElementById('khuVucCauHoi');
+    const nav=document.getElementById('questionNavContainer');
+    const qs=box ? Array.from(box.querySelectorAll('.qe-question')) : [];
+    if(!qs.length) return;
+    n=Math.max(1,Math.min(n,qs.length)); current=n;
+    qs.forEach((q,i)=>q.classList.toggle('active-question',i===n-1));
+    nav && nav.querySelectorAll('.nav-btn').forEach((b,i)=>{
+      const on=i===n-1; b.classList.toggle('active',on); b.setAttribute('aria-current',on?'true':'false');
+    });
+    const active=nav && nav.querySelector('.nav-btn:nth-child('+n+')');
+    if(active) active.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+    if(window.capNhatThanhDieuHuongGiaoDien) window.capNhatThanhDieuHuongGiaoDien(n);
+    const q=qs[n-1];
+    // MathJax chỉ cần typeset câu đang hiển thị.
+    if(window.MathJax && MathJax.typesetPromise){
+      MathJax.typesetPromise([q]).catch(()=>{});
+    }
+  }
+  window.addEventListener('load',function(){
+    let tries=0;
+    const timer=setInterval(function(){
+      tries++;
+      if(setup() || tries>100) clearInterval(timer);
+    },100);
+  });
+  // Cho nút dưới trang dùng cùng chế độ.
+  window.addEventListener('keydown',function(e){
+    if(e.key==='ArrowLeft' && current>1) show(current-1);
+    if(e.key==='ArrowRight'){
+      const total=document.querySelectorAll('#khuVucCauHoi .qe-question').length;
+      if(current<total) show(current+1);
+    }
+  });
+})();
+</script>
+
+</body></html>
