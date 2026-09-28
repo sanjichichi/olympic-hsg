@@ -335,6 +335,42 @@ body {
         margin: 5px 0 !important;
     }
 }
+/* =========================
+   THÔNG TIN THÍ SINH
+   ========================= */
+
+.exam-header .info-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 14px;
+}
+
+.exam-header .info-box > div {
+    white-space: nowrap;
+}
+
+
+/* ===== ĐIỆN THOẠI ===== */
+@media (max-width: 768px) {
+
+    .exam-header .info-box {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) !important;
+        gap: 4px 10px !important;
+        width: 100% !important;
+    }
+
+    .exam-header .info-box > div {
+        min-width: 0 !important;
+        white-space: normal !important;
+        line-height: 1.35 !important;
+    }
+
+    #tenThiSinh {
+        overflow-wrap: anywhere;
+    }
+}
 </style>
 <script>
 window.MathJax={tex:{inlineMath:[['$','$'],['\(','\)']],displayMath:[['$$','$$'],['\[','\]']]},svg:{fontCache:'global'}};
@@ -345,7 +381,7 @@ window.MathJax={tex:{inlineMath:[['$','$'],['\(','\)']],displayMath:[['$$','$$']
 <div class="exam-layout">
   <div class="exam-container">
     <div class="exam-header">
-      <h2 id="examBanner">OLYMPIC HỌC SINH GIỎI – MÔN TOÁN 9</h2>
+      <h2 id="examBanner">ÔN TẬP – MÔN TOÁN 9</h2>
       <div class="info-box">
         <div><strong>Thí sinh:</strong><span id="tenThiSinh"></span></div>
         <div><strong>Ngày sinh:</strong><span id="ngaySinh"></span></div>
