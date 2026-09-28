@@ -1375,6 +1375,170 @@ khoiDongTrangThi();
     }
   });
 })();
+// =====================================================
+// BẢO VỆ THI: F5 / CTRL+R / BACK
+// LẦN 1: CẢNH BÁO
+// LẦN 2: NỘP BÀI
+// =====================================================
+
+(function () {
+
+    const KEY = "baoVeThi_F5_Back";
+
+    // Nếu bài đã nộp thì không chạy bảo vệ nữa
+    if (sessionStorage.getItem("daNopBai") === "1") {
+        return;
+    }
+
+    // Lấy số lần cảnh báo
+    function getCount() {
+        return Number(sessionStorage.getItem(KEY) || "0");
+    }
+
+    function setCount(n) {
+        sessionStorage.setItem(KEY, String(n));
+    }
+
+    // -------------------------------------------------
+    // BACK
+    // -------------------------------------------------
+
+    // Tạo một history state để giữ học sinh ở trang thi
+    history.pushState(
+        { trangThi: true },
+        "",
+        window.location.href
+    );
+
+    window.addEventListener("popstate", function () {
+
+        if (sessionStorage.getItem("daNopBai") === "1") {
+            return;
+        }
+
+        let count = getCount();
+
+        // Lần 1
+        if (count === 0) {
+
+            setCount(1);
+
+            alert(
+                "⚠️ CẢNH BÁO\n\n" +
+                "Bạn đang trong thời gian làm bài.\n" +
+                "Không được quay lại trang trước khi hoàn thành bài thi.\n\n" +
+                "Nếu bạn tiếp tục thao tác quay lại lần nữa, " +
+                "bài thi sẽ được nộp."
+            );
+
+            // Giữ lại trang thi
+            history.pushState(
+                { trangThi: true },
+                "",
+                window.location.href
+            );
+
+            return;
+        }
+
+        // Lần 2
+        if (count >= 1) {
+
+            sessionStorage.setItem("daNopBai", "1");
+
+            alert(
+                "⚠️ Bạn đã quay lại lần thứ hai.\n\n" +
+                "Bài thi sẽ được nộp."
+            );
+
+            if (typeof nopBai === "function") {
+                nopBai();
+            } else {
+                console.error("Không tìm thấy hàm nopBai()");
+            }
+        }
+    });
+
+
+    // -------------------------------------------------
+    // F5 / CTRL + R
+    // -------------------------------------------------
+
+    window.addEventListener("keydown", function (e) {
+
+        const isF5 = e.key === "F5";
+
+        const isCtrlR =
+            (e.ctrlKey || e.metaKey) &&
+            e.key.toLowerCase() === "r";
+
+        if (!isF5 && !isCtrlR) {
+            return;
+        }
+
+        // Chặn thao tác ngay lập tức
+        e.preventDefault();
+
+        let count = getCount();
+
+        // Lần 1
+        if (count === 0) {
+
+            setCount(1);
+
+            alert(
+                "⚠️ CẢNH BÁO\n\n" +
+                "Bạn đang trong thời gian làm bài.\n" +
+                "Không nên tải lại trang thi.\n\n" +
+                "Nếu tiếp tục nhấn F5 hoặc Ctrl + R lần nữa, " +
+                "bài thi sẽ được nộp."
+            );
+
+            return;
+        }
+
+        // Lần 2
+        if (count >= 1) {
+
+            sessionStorage.setItem("daNopBai", "1");
+
+            alert(
+                "⚠️ Bạn đã tải lại trang lần thứ hai.\n\n" +
+                "Bài thi sẽ được nộp."
+            );
+
+            if (typeof nopBai === "function") {
+                nopBai();
+            } else {
+                console.error("Không tìm thấy hàm nopBai()");
+            }
+        }
+    });
+
+
+    // -------------------------------------------------
+    // XỬ LÝ RELOAD THẬT
+    // -------------------------------------------------
+
+    window.addEventListener("beforeunload", function (e) {
+
+        if (sessionStorage.getItem("daNopBai") === "1") {
+            return;
+        }
+
+        /*
+         * Chỉ tạo cảnh báo của trình duyệt khi người dùng
+         * thực sự cố reload/đóng trang.
+         *
+         * Không tự gọi nopBai() ở đây vì trình duyệt
+         * không cho phép xử lý async đáng tin cậy.
+         */
+
+        e.preventDefault();
+        e.returnValue = "";
+    });
+
+})();
 </script>
 
 </body></html>
