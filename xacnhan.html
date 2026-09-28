@@ -67,11 +67,9 @@ href="css/style-old.css">
 
         </label>
 
-        <button onclick="batDauThi()">
-
-            🚀 BẮT ĐẦU THI
-
-        </button>
+        <button type="button" onclick="batDauThi()">
+    🚀 BẮT ĐẦU THI
+</button>
 
     </div>
 
@@ -111,6 +109,8 @@ document.getElementById("thoiGian").innerHTML = localStorage.getItem("thoiGian")
 document.getElementById("soCau").innerHTML = localStorage.getItem("soCau");
 function batDauThi() {
 
+    alert("HÀM BẮT ĐẦU THI ĐÃ CHẠY");
+
     const camKet = document.getElementById("camKet");
 
     if (!camKet || !camKet.checked) {
@@ -118,11 +118,9 @@ function batDauThi() {
         return;
     }
 
-    // Đánh dấu đây là một phiên thi mới
     localStorage.setItem("phienThiMoi", "1");
 
-    // Chuyển sang trang thi
-    window.location.href = "thi.html";
+    window.location.href = "./thi.html";
 }
 
 </script>
