@@ -109,26 +109,20 @@ if (!localStorage.getItem("fileDe")) {
 // Hiển thị thời gian, số câu hỏi
 document.getElementById("thoiGian").innerHTML = localStorage.getItem("thoiGian");
 document.getElementById("soCau").innerHTML = localStorage.getItem("soCau");
-function batDauThi(){
+function batDauThi() {
 
-    if(
-    !document.getElementById(
-    "camKet"
-    ).checked
-    ){
+    const camKet = document.getElementById("camKet");
 
-        alert(
-        "Vui lòng xác nhận cam kết!"
-        );
-
+    if (!camKet || !camKet.checked) {
+        alert("Vui lòng xác nhận cam kết!");
         return;
     }
 
-    document.documentElement
-    .requestFullscreen();
+    // Đánh dấu đây là một phiên thi mới
+    localStorage.setItem("phienThiMoi", "1");
 
-    window.location.href =
-    "thi.html";
+    // Chuyển sang trang thi
+    window.location.href = "thi.html";
 }
 
 </script>
