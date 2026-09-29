@@ -1376,167 +1376,361 @@ khoiDongTrangThi();
   });
 })();
 // =====================================================
-// BẢO VỆ THI: F5 / CTRL+R / BACK
-// LẦN 1: CẢNH BÁO
-// LẦN 2: NỘP BÀI
+// BẢO VỆ LƯỢT THI: F5 / CTRL+R / BACK
+//
+// LẦN 1: CẢNH BÁO + TIẾP TỤC THI
+// LẦN 2: KHÓA LƯỢT THI + NỘP BÀI
+//
+// BACK và F5 dùng chung số lần.
+// Khóa riêng theo thí sinh + đề thi.
 // =====================================================
 
 (function () {
 
-    const KEY = "baoVeThi_F5_Back";
+    // =================================================
+    // TẠO KHÓA RIÊNG CHO LƯỢT THI
+    // =================================================
 
-    // Nếu bài đã nộp thì không chạy bảo vệ nữa
-    if (sessionStorage.getItem("daNopBai") === "1") {
+    const maThiSinh =
+        localStorage.getItem("maThiSinh") || "unknown";
+
+    const fileDe =
+        localStorage.getItem("fileDe") ||
+        localStorage.getItem("tenKyThi") ||
+        "de";
+
+    const KEY_LAN =
+        "soLanRoiKhoiBaiThi_" +
+        maThiSinh + "_" + fileDe;
+
+    const KEY_KHOA =
+        "thiDaBiKhoa_" +
+        maThiSinh + "_" + fileDe;
+
+    const KEY_DA_NOP =
+        "daNopBai_" +
+        maThiSinh + "_" + fileDe;
+
+
+    // =================================================
+    // KIỂM TRA LƯỢT THI ĐÃ BỊ KHÓA
+    // =================================================
+
+    if (localStorage.getItem(KEY_KHOA) === "1") {
+
+        console.warn(
+            "Lượt thi đã bị khóa:",
+            KEY_KHOA
+        );
+
         return;
     }
 
-    // Lấy số lần cảnh báo
+
+    // =================================================
+    // LẤY SỐ LẦN BACK / F5
+    // =================================================
+
     function getCount() {
-        return Number(sessionStorage.getItem(KEY) || "0");
+
+        return Number(
+            localStorage.getItem(KEY_LAN) || "0"
+        );
+
     }
+
 
     function setCount(n) {
-        sessionStorage.setItem(KEY, String(n));
+
+        localStorage.setItem(
+            KEY_LAN,
+            String(n)
+        );
+
     }
 
-    // -------------------------------------------------
-    // BACK
-    // -------------------------------------------------
 
-    // Tạo một history state để giữ học sinh ở trang thi
+    // =================================================
+    // KIỂM TRA ĐÃ NỘP
+    // =================================================
+
+    function daNopBai() {
+
+        return (
+            localStorage.getItem(KEY_DA_NOP) === "1"
+        );
+
+    }
+
+
+    // =================================================
+    // KHÓA LƯỢT THI
+    // =================================================
+
+    function khoaLuotThi(lyDo) {
+
+        // Không cho khóa lần nữa
+        if (
+            localStorage.getItem(KEY_KHOA) === "1"
+        ) {
+            return;
+        }
+
+
+        // ---------------------------------------------
+        // ĐÁNH DẤU KHÓA NGAY LẬP TỨC
+        // ---------------------------------------------
+
+        localStorage.setItem(
+            KEY_KHOA,
+            "1"
+        );
+
+
+        // Đánh dấu đã yêu cầu nộp
+        localStorage.setItem(
+            KEY_DA_NOP,
+            "1"
+        );
+
+
+        sessionStorage.setItem(
+            "daNopBai",
+            "1"
+        );
+
+
+        // ---------------------------------------------
+        // THÔNG BÁO
+        // ---------------------------------------------
+
+        alert(
+            "🔒 LƯỢT THI ĐÃ BỊ KHÓA\n\n" +
+
+            "Bạn đã " + lyDo + " lần thứ 2.\n\n" +
+
+            "Hệ thống sẽ chốt đáp án và nộp bài.\n\n" +
+
+            "Bạn không thể tiếp tục làm bài " +
+            "hoặc thi lại lượt thi này."
+        );
+
+
+        // ---------------------------------------------
+        // NỘP BÀI
+        // ---------------------------------------------
+
+        if (
+            typeof nopBai === "function"
+        ) {
+
+            nopBai();
+
+        } else {
+
+            console.error(
+                "Không tìm thấy hàm nopBai()"
+            );
+
+        }
+
+    }
+
+
+    // =================================================
+    // XỬ LÝ BACK / F5
+    // =================================================
+
+    function xuLyRoiKhoiBaiThi(lyDo) {
+
+        // Đã khóa
+        if (
+            localStorage.getItem(KEY_KHOA) === "1"
+        ) {
+            return;
+        }
+
+
+        // Đã nộp
+        if (daNopBai()) {
+            return;
+        }
+
+
+        const count = getCount();
+
+
+        // =============================================
+        // LẦN 1
+        // =============================================
+
+        if (count === 0) {
+
+            setCount(1);
+
+
+            alert(
+                "⚠️ CẢNH BÁO\n\n" +
+
+                "Bạn vừa " + lyDo + ".\n\n" +
+
+                "Đây là lần cảnh báo thứ 1.\n\n" +
+
+                "Bạn vẫn được tiếp tục làm bài.\n\n" +
+
+                "⚠️ Nếu tiếp tục Back hoặc F5 lần nữa, " +
+                "bài thi sẽ tự động được chốt, " +
+                "nộp kết quả và khóa lượt thi."
+            );
+
+
+            return;
+        }
+
+
+        // =============================================
+        // LẦN 2
+        // =============================================
+
+        if (count >= 1) {
+
+            khoaLuotThi(lyDo);
+
+        }
+
+    }
+
+
+    // =================================================
+    // CHỐNG BACK
+    // =================================================
+
     history.pushState(
-        { trangThi: true },
+        {
+            trangThi: true,
+            baoVe: true
+        },
         "",
         window.location.href
     );
 
-    window.addEventListener("popstate", function () {
 
-        if (sessionStorage.getItem("daNopBai") === "1") {
-            return;
-        }
+    window.addEventListener(
+        "popstate",
+        function () {
 
-        let count = getCount();
-
-        // Lần 1
-        if (count === 0) {
-
-            setCount(1);
-
-            alert(
-                "⚠️ CẢNH BÁO\n\n" +
-                "Bạn đang trong thời gian làm bài.\n" +
-                "Không được quay lại trang trước khi hoàn thành bài thi.\n\n" +
-                "Nếu bạn tiếp tục thao tác quay lại lần nữa, " +
-                "bài thi sẽ được nộp."
-            );
-
-            // Giữ lại trang thi
+            // Tạo lại điểm chặn ngay lập tức
             history.pushState(
-                { trangThi: true },
+                {
+                    trangThi: true,
+                    baoVe: true
+                },
                 "",
                 window.location.href
             );
 
-            return;
-        }
 
-        // Lần 2
-        if (count >= 1) {
-
-            sessionStorage.setItem("daNopBai", "1");
-
-            alert(
-                "⚠️ Bạn đã quay lại lần thứ hai.\n\n" +
-                "Bài thi sẽ được nộp."
+            xuLyRoiKhoiBaiThi(
+                "quay lại trang trước"
             );
 
-            if (typeof nopBai === "function") {
-                nopBai();
-            } else {
-                console.error("Không tìm thấy hàm nopBai()");
+        }
+    );
+
+
+    // =================================================
+    // CHỐNG F5 / CTRL + R
+    // =================================================
+
+    window.addEventListener(
+        "keydown",
+        function (e) {
+
+            const isF5 =
+                e.key === "F5";
+
+
+            const isCtrlR =
+                (e.ctrlKey || e.metaKey) &&
+                e.key.toLowerCase() === "r";
+
+
+            if (
+                !isF5 &&
+                !isCtrlR
+            ) {
+                return;
             }
-        }
-    });
 
 
-    // -------------------------------------------------
-    // F5 / CTRL + R
-    // -------------------------------------------------
+            // Chặn F5 / Ctrl + R
+            e.preventDefault();
 
-    window.addEventListener("keydown", function (e) {
 
-        const isF5 = e.key === "F5";
-
-        const isCtrlR =
-            (e.ctrlKey || e.metaKey) &&
-            e.key.toLowerCase() === "r";
-
-        if (!isF5 && !isCtrlR) {
-            return;
-        }
-
-        // Chặn thao tác ngay lập tức
-        e.preventDefault();
-
-        let count = getCount();
-
-        // Lần 1
-        if (count === 0) {
-
-            setCount(1);
-
-            alert(
-                "⚠️ CẢNH BÁO\n\n" +
-                "Bạn đang trong thời gian làm bài.\n" +
-                "Không nên tải lại trang thi.\n\n" +
-                "Nếu tiếp tục nhấn F5 hoặc Ctrl + R lần nữa, " +
-                "bài thi sẽ được nộp."
+            xuLyRoiKhoiBaiThi(
+                isF5
+                    ? "nhấn F5"
+                    : "nhấn Ctrl + R"
             );
 
-            return;
-        }
-
-        // Lần 2
-        if (count >= 1) {
-
-            sessionStorage.setItem("daNopBai", "1");
-
-            alert(
-                "⚠️ Bạn đã tải lại trang lần thứ hai.\n\n" +
-                "Bài thi sẽ được nộp."
-            );
-
-            if (typeof nopBai === "function") {
-                nopBai();
-            } else {
-                console.error("Không tìm thấy hàm nopBai()");
-            }
-        }
-    });
+        },
+        true
+    );
 
 
-    // -------------------------------------------------
+    // =================================================
     // XỬ LÝ RELOAD THẬT
-    // -------------------------------------------------
+    //
+    // Không tự gọi nopBai() ở đây.
+    // beforeunload không đảm bảo AJAX/fetch hoàn tất.
+    // =================================================
 
-    window.addEventListener("beforeunload", function (e) {
+    window.addEventListener(
+        "beforeunload",
+        function (e) {
 
-        if (sessionStorage.getItem("daNopBai") === "1") {
-            return;
+            if (
+                localStorage.getItem(KEY_KHOA) === "1"
+            ) {
+                return;
+            }
+
+
+            if (daNopBai()) {
+                return;
+            }
+
+
+            e.preventDefault();
+
+            e.returnValue = "";
+
         }
+    );
 
-        /*
-         * Chỉ tạo cảnh báo của trình duyệt khi người dùng
-         * thực sự cố reload/đóng trang.
-         *
-         * Không tự gọi nopBai() ở đây vì trình duyệt
-         * không cho phép xử lý async đáng tin cậy.
-         */
 
-        e.preventDefault();
-        e.returnValue = "";
-    });
+    // =================================================
+    // GHI RA CONSOLE ĐỂ DỄ KIỂM TRA
+    // =================================================
+
+    console.log(
+        "🛡️ Bảo vệ lượt thi đã bật"
+    );
+
+    console.log(
+        "Mã thí sinh:",
+        maThiSinh
+    );
+
+    console.log(
+        "Đề thi:",
+        fileDe
+    );
+
+    console.log(
+        "Số lần Back/F5:",
+        getCount()
+    );
 
 })();
 </script>
