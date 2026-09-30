@@ -1,0 +1,2156 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kết quả bài thi</title>
+<script>
+window.MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']]
+  },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<style>
+*{box-sizing:border-box}
+:root{
+  --blue:#1677ff;
+  --green:#16b364;
+  --purple:#7c3aed;
+  --orange:#ff9f1c;
+  --red:#ef3340;
+  --ink:#172033;
+}
+html,body{margin:0;min-height:100%;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}
+body{
+  min-height:100vh;
+  overflow-x:hidden;
+  background:
+    radial-gradient(circle at 12% 15%,rgba(74,144,226,.22),transparent 28%),
+    radial-gradient(circle at 88% 20%,rgba(255,191,0,.18),transparent 25%),
+    linear-gradient(135deg,#eaf4ff 0%,#f8fbff 45%,#fff7ef 100%);
+}
+
+/* Nền trang thi phía sau */
+.exam-backdrop{
+  position:fixed;inset:0;z-index:0;
+  padding:28px;
+  filter:blur(1px);
+  opacity:.72;
+}
+.fake-header{
+  height:72px;border-radius:18px;background:#fff;
+  box-shadow:0 8px 28px rgba(30,60,100,.08);
+  margin-bottom:20px;
+}
+.fake-layout{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:18px}
+.fake-card{
+  height:130px;background:#fff;border-radius:18px;margin-bottom:16px;
+  box-shadow:0 8px 28px rgba(30,60,100,.06);
+}
+.fake-nav{height:560px;background:#fff;border-radius:18px;box-shadow:0 8px 28px rgba(30,60,100,.06)}
+
+/* Lớp phủ */
+.result-overlay{
+  position:fixed;inset:0;z-index:20;
+  display:flex;align-items:center;justify-content:center;
+  padding:24px;
+  background:rgba(13,25,48,.58);
+  backdrop-filter:blur(7px);
+  overflow:auto;
+}
+
+/* Hiệu ứng pháo hoa */
+.fireworks{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.firework{
+  position:absolute;width:8px;height:8px;border-radius:50%;
+  animation:boom 2.8s ease-out infinite;
+}
+.firework:before,.firework:after{
+  content:"";position:absolute;inset:-42px;
+  background:
+    radial-gradient(circle at 50% 0,#ffd54a 0 3px,transparent 4px),
+    radial-gradient(circle at 100% 50%,#ff5c8a 0 3px,transparent 4px),
+    radial-gradient(circle at 50% 100%,#57b5ff 0 3px,transparent 4px),
+    radial-gradient(circle at 0 50%,#a878ff 0 3px,transparent 4px);
+}
+.firework:after{transform:rotate(45deg)}
+.f1{left:18%;top:18%;background:#ffd54a}
+.f2{right:18%;top:15%;background:#63b3ff;animation-delay:.65s}
+.f3{left:50%;top:7%;background:#ff6b9a;animation-delay:1.2s}
+.f4{right:10%;top:46%;background:#b58cff;animation-delay:1.8s}
+@keyframes boom{
+  0%,100%{transform:scale(.15);opacity:0}
+  15%{transform:scale(1);opacity:1}
+  45%{transform:scale(1.3);opacity:.95}
+  70%{transform:scale(1.5);opacity:.35}
+}
+
+/* Confetti */
+.confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+/* ===== PHÁO GIẤY TỰ SINH ===== */
+.confetti{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:30;
+}
+
+.confetti i{
+  position:absolute;
+  top:-30px;
+  width:9px;
+  height:17px;
+  border-radius:3px;
+  opacity:0;
+  animation:confettiFall linear infinite;
+  will-change:transform,opacity;
+}
+
+@keyframes confettiFall{
+  0%{
+    transform:translate3d(0,-40px,0) rotate(0deg);
+    opacity:0;
+  }
+
+  8%{
+    opacity:1;
+  }
+
+  100%{
+    transform:
+      translate3d(var(--drift),110vh,0)
+      rotate(var(--rotate));
+    opacity:.9;
+  }
+}
+/* ===== MÀU PHÁO GIẤY ===== */
+
+.confetti i:nth-child(1){background:#ff3b30;}
+.confetti i:nth-child(2){background:#ffd60a;}
+.confetti i:nth-child(3){background:#34c759;}
+.confetti i:nth-child(4){background:#0a84ff;}
+.confetti i:nth-child(5){background:#af52de;}
+.confetti i:nth-child(6){background:#ff2d55;}
+.confetti i:nth-child(7){background:#ff9500;}
+.confetti i:nth-child(8){background:#30d158;}
+.confetti i:nth-child(9){background:#64d2ff;}
+.confetti i:nth-child(10){background:#bf5af2;}
+.confetti i:nth-child(11){background:#ff375f;}
+.confetti i:nth-child(12){background:#ffd60a;}
+
+.confetti i:nth-child(9){
+  left:22%;
+  --drift:90px;
+  animation-duration:5.9s;
+  animation-delay:.5s;
+}
+
+.confetti i:nth-child(10){
+  left:35%;
+  --drift:-70px;
+  animation-duration:6.3s;
+  animation-delay:1.5s;
+}
+
+.confetti i:nth-child(11){
+  left:67%;
+  --drift:110px;
+  animation-duration:5.6s;
+  animation-delay:.9s;
+}
+
+.confetti i:nth-child(12){
+  left:80%;
+  --drift:-90px;
+  animation-duration:6.7s;
+  animation-delay:1.7s;
+}
+/* Hộp rơi từ trên xuống */
+.result-card{
+  position:relative;
+  width:min(1080px,100%);
+  max-height:calc(100vh - 36px);
+  overflow:auto;
+  border-radius:32px;
+  background:linear-gradient(180deg,#fff 0%,#fffdf8 100%);
+  box-shadow:0 35px 90px rgba(0,0,0,.30);
+  border:2px solid rgba(255,255,255,.85);
+  animation:dropIn .85s cubic-bezier(.16,1.25,.32,1) both;
+}
+@keyframes dropIn{
+  0%{transform:translateY(-110vh) scale(.82);opacity:0}
+  65%{transform:translateY(12px) scale(1.015);opacity:1}
+  82%{transform:translateY(-6px) scale(1)}
+  100%{transform:translateY(0) scale(1)}
+}
+
+.close-btn{
+  position:absolute;right:18px;top:18px;z-index:5;
+  width:42px;height:42px;border:0;border-radius:50%;
+  background:rgba(255,255,255,.9);color:#1769d2;
+  font-size:25px;font-weight:800;cursor:pointer;
+  box-shadow:0 5px 18px rgba(0,0,0,.12);
+}
+
+.hero{
+  position:relative;
+  min-height:205px;
+  padding:28px 42px 18px;
+  text-align:center;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 0,#fff3b0 0,transparent 38%),
+    linear-gradient(135deg,#fff8df,#fff);
+}
+.trophy{font-size:74px;line-height:1;filter:drop-shadow(0 8px 10px rgba(255,165,0,.28));animation:float 2.2s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-8px)}}
+.ribbon{
+  display:inline-block;margin-top:5px;padding:14px 52px;
+  border-radius:14px 14px 26px 26px;
+  color:#fff;font-size:clamp(26px,4vw,44px);font-weight:900;
+  background:linear-gradient(90deg,#ef2634,#ff4f5c,#ef2634);
+  box-shadow:0 10px 20px rgba(239,38,52,.25);
+  text-shadow:0 2px 0 rgba(0,0,0,.12);
+}
+.hero p{margin:12px 0 0;font-size:18px;color:#1769d2;font-weight:700}
+
+.content{padding:10px 42px 34px}
+.score-grid{
+  display:grid;grid-template-columns:1.25fr 1fr;gap:18px;align-items:stretch;
+}
+.score-box,.encourage{
+  border-radius:24px;padding:24px;
+  border:1px solid #ffe1a2;
+}
+.score-box{
+  background:linear-gradient(135deg,#fffaf0,#fff);
+  text-align:center;
+}
+.score-title{font-size:20px;font-weight:800}
+.score{
+  font-size:clamp(54px,8vw,82px);line-height:1;
+  font-weight:950;color:#e92d3a;margin:10px 0;
+}
+.percent{
+  display:inline-block;padding:8px 18px;border-radius:999px;
+  background:#d9f8d9;color:#149447;font-weight:900;font-size:20px;
+}
+.encourage{
+  display:flex;flex-direction:column;justify-content:center;
+  background:linear-gradient(135deg,#fff0f5,#fff9fb);
+  border-color:#ffc6da;
+}
+.encourage .big{font-size:26px;font-weight:900;color:#e92d5b}
+.encourage p{font-size:17px;line-height:1.55;margin:10px 0 0}
+
+.stats{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px;
+}
+.stat{
+  padding:18px;border-radius:20px;text-align:center;
+  border:1px solid #dbe8f5;background:#f7fbff;
+}
+.stat-icon{font-size:30px}
+.stat-label{font-weight:700;color:#52647c;margin-top:5px}
+.stat-value{font-size:30px;font-weight:950;margin-top:4px}
+.stat.green{background:#effcf3;border-color:#bdebc9}
+.stat.green .stat-value{color:#159447}
+.stat.red{background:#fff1f2;border-color:#ffc5c9}
+.stat.red .stat-value{color:#e3343e}
+.stat.blue{background:#eff7ff;border-color:#c6e1ff}
+.stat.blue .stat-value{color:#1769d2}
+
+.actions{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px;
+}
+.action{
+  border:0;border-radius:18px;padding:17px 12px;
+  color:#fff;font-size:17px;font-weight:900;cursor:pointer;
+  min-height:68px;box-shadow:0 8px 18px rgba(0,0,0,.13);
+  transition:.18s;
+}
+.action:hover{transform:translateY(-3px);box-shadow:0 13px 24px rgba(0,0,0,.17)}
+.action.blue{background:linear-gradient(135deg,#1677ff,#2e9bff)}
+.action.green{background:linear-gradient(135deg,#12a95b,#25c76f)}
+.action.purple{background:linear-gradient(135deg,#7136db,#9857ff)}
+.action.orange{background:linear-gradient(135deg,#ff9d16,#ffbd3c)}
+
+.panel{
+  display:none;position:fixed;inset:0;z-index:40;
+  background:rgba(8,19,38,.66);backdrop-filter:blur(6px);
+  padding:22px;align-items:center;justify-content:center;
+}
+.panel.open{display:flex}
+.panel-card{
+  width:min(900px,100%);max-height:90vh;overflow:auto;
+  background:#fff;border-radius:26px;padding:25px;
+  box-shadow:0 25px 70px rgba(0,0,0,.3);
+}
+.panel-head{display:flex;justify-content:space-between;align-items:center;gap:15px}
+.panel-head h2{margin:0;color:#145fc0}
+.panel-close{border:0;background:#eef5ff;color:#1769d2;width:40px;height:40px;border-radius:50%;font-size:22px;cursor:pointer}
+.detail-item{
+  padding:16px;margin:12px 0;border-radius:17px;border:1px solid #dce7f2;
+  background:#f9fbfd;
+}
+.detail-top{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.qnum{font-weight:900;color:#1769d2}
+.badge{padding:5px 9px;border-radius:999px;font-size:12px;font-weight:800;background:#edf2f7}
+.correct{color:#118a48;font-weight:900}
+.wrong{color:#d92735;font-weight:900}
+.answer-line{margin-top:8px;line-height:1.6}
+.empty{padding:30px;text-align:center;color:#65748a}
+
+@media(max-width:760px){
+  .result-overlay{padding:10px}
+  .result-card{border-radius:24px;max-height:calc(100vh - 20px)}
+  .hero{padding:22px 18px 15px;min-height:180px}
+  .trophy{font-size:58px}
+  .ribbon{padding:11px 24px;font-size:28px}
+  .content{padding:8px 18px 22px}
+  .score-grid,.stats,.actions{grid-template-columns:1fr}
+  .score{font-size:58px}
+  .action{min-height:58px}
+}
+
+/* ===== PHIÊN BẢN GỌN - VỪA KHUNG MÀN HÌNH, KHÔNG CUỘN ===== */
+html,body{width:100%;height:100%;overflow:hidden!important}
+
+.result-overlay{
+  position:fixed!important;inset:0!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  padding:8px!important;overflow:hidden!important;
+}
+
+.result-card{
+  width:min(1120px,96vw)!important;
+  height:min(94vh,760px)!important;
+  max-height:94vh!important;
+  overflow:hidden!important;
+  display:flex!important;flex-direction:column!important;
+  border-radius:30px!important;
+}
+
+.hero{
+  flex:0 0 22%!important;min-height:125px!important;
+  padding:7px 26px 4px!important;
+}
+.trophy{font-size:clamp(40px,5.8vh,58px)!important}
+.ribbon{
+  margin-top:1px!important;padding:7px 36px!important;
+  font-size:clamp(22px,3.8vh,35px)!important;
+}
+.hero p{margin:5px 0 0!important;font-size:clamp(12px,1.9vh,16px)!important}
+
+.content{
+  flex:1!important;min-height:0!important;
+  padding:4px 28px 16px!important;
+  display:flex!important;flex-direction:column!important;
+}
+
+.score-grid{
+  flex:0 0 30%!important;min-height:0!important;
+  gap:11px!important;
+}
+.score-box,.encourage{
+  padding:10px 15px!important;border-radius:19px!important;
+  min-height:0!important;
+}
+.score-title{font-size:clamp(14px,2vh,18px)!important}
+.score{
+  font-size:clamp(40px,6.5vh,64px)!important;
+  margin:3px 0!important;line-height:.95!important;
+}
+.percent{font-size:clamp(12px,1.9vh,17px)!important;padding:4px 12px!important}
+.encourage .big{font-size:clamp(16px,2.6vh,23px)!important}
+.encourage p{font-size:clamp(11px,1.7vh,15px)!important;line-height:1.3!important}
+
+.stats{
+  flex:0 0 24%!important;min-height:0!important;
+  gap:10px!important;margin-top:10px!important;
+}
+.stat{padding:8px 8px!important;border-radius:17px!important;min-height:0!important}
+.stat-icon{font-size:clamp(20px,3.2vh,28px)!important}
+.stat-label{font-size:clamp(10px,1.6vh,15px)!important;margin-top:1px!important}
+.stat-value{font-size:clamp(22px,4vh,31px)!important;margin-top:1px!important}
+
+.actions{
+  flex:1!important;min-height:48px!important;
+  gap:9px!important;margin-top:10px!important;
+}
+.action{
+  min-height:48px!important;max-height:62px!important;
+  padding:7px 6px!important;border-radius:14px!important;
+  font-size:clamp(11px,1.8vh,15px)!important;
+}
+
+/* Nhiều pháo hoa hơn, kích thước nhỏ hơn */
+.firework{width:5px!important;height:5px!important}
+.firework:before,.firework:after{inset:-32px!important}
+.f5{left:8%;top:58%;background:#ffcf45;animation-delay:.4s}
+.f6{right:28%;top:10%;background:#58d68d;animation-delay:1.5s}
+.f7{left:72%;top:52%;background:#ff6ba6;animation-delay:2.1s}
+.f8{left:35%;top:25%;background:#5ea8ff;animation-delay:2.5s}
+
+/* =========================================================
+   MOBILE - TRANG KẾT QUẢ
+   Dễ đọc - dễ bấm - không làm thay đổi desktop
+   ========================================================= */
+
+@media (max-width: 760px){
+
+  html,
+  body{
+    width:100%;
+    height:100%;
+    overflow:hidden !important;
+  }
+
+  .result-overlay{
+    padding:6px !important;
+    align-items:center !important;
+    justify-content:center !important;
+  }
+
+  /* Khung kết quả */
+  .result-card{
+    width:100% !important;
+    height:calc(100vh - 12px) !important;
+    max-height:calc(100vh - 12px) !important;
+    border-radius:20px !important;
+    overflow:hidden !important;
+  }
+
+  /* =========================
+     PHẦN ĐẦU
+     ========================= */
+
+  .hero{
+    flex:0 0 20% !important;
+    min-height:120px !important;
+    padding:8px 12px 6px !important;
+  }
+
+  .trophy{
+    font-size:42px !important;
+  }
+
+  .ribbon{
+    margin-top:2px !important;
+    padding:7px 20px !important;
+    font-size:24px !important;
+    border-radius:10px 10px 18px 18px !important;
+  }
+
+  .hero p{
+    margin:5px 0 0 !important;
+    font-size:12px !important;
+    line-height:1.3 !important;
+  }
+
+  /* =========================
+     NỘI DUNG
+     ========================= */
+
+  .content{
+    flex:1 !important;
+    min-height:0 !important;
+    padding:6px 10px 10px !important;
+  }
+
+  /* Điểm + lời nhận xét */
+  .score-grid{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:7px !important;
+    flex:0 0 35% !important;
+  }
+
+  .score-box,
+  .encourage{
+    padding:8px 10px !important;
+    border-radius:15px !important;
+    min-height:0 !important;
+  }
+
+  .score-title{
+    font-size:15px !important;
+  }
+
+  .score{
+    font-size:42px !important;
+    line-height:.95 !important;
+    margin:4px 0 !important;
+  }
+
+  .percent{
+    font-size:13px !important;
+    padding:4px 12px !important;
+  }
+
+  .encourage{
+    text-align:center !important;
+    align-items:center !important;
+    justify-content:center !important;
+  }
+
+  .encourage .big{
+    font-size:16px !important;
+    line-height:1.2 !important;
+  }
+
+  .encourage p{
+    font-size:11px !important;
+    line-height:1.35 !important;
+    margin:4px 0 0 !important;
+  }
+
+  #saveStatus{
+    font-size:11px !important;
+    margin-top:4px !important;
+  }
+
+  /* =========================
+     THỐNG KÊ
+     ========================= */
+
+  .stats{
+    display:grid !important;
+    grid-template-columns:repeat(3,1fr) !important;
+    gap:7px !important;
+    margin-top:7px !important;
+    flex:0 0 22% !important;
+  }
+
+  .stat{
+    padding:7px 3px !important;
+    border-radius:13px !important;
+    min-width:0 !important;
+  }
+
+  .stat-icon{
+    font-size:22px !important;
+  }
+
+  .stat-label{
+    font-size:10px !important;
+    line-height:1.15 !important;
+    margin-top:2px !important;
+  }
+
+  .stat-value{
+    font-size:23px !important;
+    line-height:1.1 !important;
+    margin-top:3px !important;
+  }
+
+  .stat > div:last-child{
+    font-size:10px !important;
+  }
+
+  /* =========================
+     4 NÚT CHỨC NĂNG
+     ========================= */
+
+  .actions{
+    display:grid !important;
+    grid-template-columns:1fr 1fr !important;
+    gap:7px !important;
+    margin-top:8px !important;
+    flex:1 !important;
+    min-height:0 !important;
+  }
+
+  .action{
+    min-height:48px !important;
+    max-height:none !important;
+    padding:6px 5px !important;
+    border-radius:12px !important;
+    font-size:13px !important;
+    line-height:1.2 !important;
+    white-space:normal !important;
+  }
+
+  /* =========================
+     NÚT ĐÓNG
+     ========================= */
+
+  .close-btn{
+    width:32px !important;
+    height:32px !important;
+    right:6px !important;
+    top:6px !important;
+    font-size:19px !important;
+  }
+}
+
+
+/* =========================================================
+   ĐIỆN THOẠI RẤT NHỎ
+   320 - 380px
+   ========================================================= */
+
+@media (max-width:380px){
+
+  .hero{
+    flex-basis:19% !important;
+    min-height:105px !important;
+  }
+
+  .trophy{
+    font-size:36px !important;
+  }
+
+  .ribbon{
+    font-size:21px !important;
+    padding:6px 16px !important;
+  }
+
+  .hero p{
+    font-size:10px !important;
+  }
+
+  .score-grid{
+    flex-basis:34% !important;
+  }
+
+  .score-title{
+    font-size:14px !important;
+  }
+
+  .score{
+    font-size:38px !important;
+  }
+
+  .percent{
+    font-size:11px !important;
+  }
+
+  .encourage .big{
+    font-size:14px !important;
+  }
+
+  .encourage p{
+    font-size:10px !important;
+  }
+
+  .stat-icon{
+    font-size:19px !important;
+  }
+
+  .stat-label{
+    font-size:9px !important;
+  }
+
+  .stat-value{
+    font-size:20px !important;
+  }
+
+  .action{
+    font-size:12px !important;
+    min-height:45px !important;
+  }
+}
+
+@media(max-height:700px) and (min-width:761px){
+  .result-card{height:94vh!important}
+  .hero{flex-basis:20%!important;min-height:110px!important}
+  .trophy{font-size:40px!important}.ribbon{font-size:26px!important;padding:5px 30px!important}
+  .hero p{font-size:11px!important}.content{padding:3px 25px 12px!important}
+  .stats{margin-top:8px!important}.actions{margin-top:8px!important}
+}
+
+/* ================================
+   HỘP PHẦN THƯỞNG
+================================ */
+
+.reward-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(5,10,30,.78);
+    backdrop-filter:blur(8px);
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
+    z-index:1000;
+}
+
+.reward-overlay.show{
+    display:flex;
+}
+
+.reward-box-wrap{
+    position:relative;
+    width:min(90vw,420px);
+    text-align:center;
+
+    animation:rewardAppear .5s ease;
+}
+
+.reward-title{
+    color:#fff;
+    font-size:25px;
+    font-weight:800;
+    margin-bottom:30px;
+
+    text-shadow:
+        0 0 10px #fff,
+        0 0 25px #ffd54a;
+}
+
+.reward-box{
+    position:relative;
+
+    width:180px;
+    height:180px;
+
+    margin:auto;
+
+    cursor:pointer;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    animation:
+        giftFloat 2s ease-in-out infinite,
+        giftShake 3s ease-in-out infinite;
+
+    filter:
+        drop-shadow(0 0 15px #ffd54a)
+        drop-shadow(0 0 35px rgba(255,213,74,.8));
+}
+
+.reward-box .gift-body{
+    position:absolute;
+
+    font-size:120px;
+
+    z-index:2;
+}
+
+.reward-box .gift-lid{
+    position:absolute;
+
+    top:5px;
+
+    font-size:95px;
+
+    z-index:3;
+
+    transform-origin:center bottom;
+}
+
+.reward-glow{
+    position:absolute;
+
+    width:150px;
+    height:150px;
+
+    border-radius:50%;
+
+    background:radial-gradient(
+        circle,
+        rgba(255,213,74,.65),
+        rgba(255,213,74,0) 70%
+    );
+
+    animation:glowPulse 1.5s ease-in-out infinite;
+}
+
+.reward-hint{
+    margin-top:20px;
+
+    color:#fff;
+    font-size:15px;
+
+    opacity:.9;
+}
+
+.reward-close{
+    margin-top:25px;
+
+    padding:8px 18px;
+
+    border:0;
+    border-radius:20px;
+
+    background:rgba(255,255,255,.15);
+    color:#fff;
+
+    cursor:pointer;
+}
+
+@keyframes rewardAppear{
+    from{
+        opacity:0;
+        transform:scale(.7);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+@keyframes giftFloat{
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-12px);
+    }
+}
+
+@keyframes giftShake{
+    0%,80%,100%{
+        rotate:0deg;
+    }
+
+    84%{
+        rotate:-5deg;
+    }
+
+    88%{
+        rotate:5deg;
+    }
+
+    92%{
+        rotate:-3deg;
+    }
+
+    96%{
+        rotate:3deg;
+    }
+}
+
+@keyframes glowPulse{
+    0%,100%{
+        transform:scale(.85);
+        opacity:.6;
+    }
+
+    50%{
+        transform:scale(1.15);
+        opacity:1;
+    }
+}
+/* ===== NÚT NHẬN PHẦN THƯỞNG ===== */
+.reward-btn{
+    background:linear-gradient(135deg,#ffb300,#ff6f00) !important;
+    color:#fff !important;
+    border:none !important;
+
+    box-shadow:
+        0 6px 18px rgba(255,152,0,.35),
+        0 0 12px rgba(255,193,7,.25);
+
+    font-weight:800 !important;
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+.reward-btn:hover{
+    transform:translateY(-2px) scale(1.02);
+
+    box-shadow:
+        0 8px 22px rgba(255,152,0,.45),
+        0 0 20px rgba(255,193,7,.4);
+}
+
+.reward-btn:active{
+    transform:scale(.97);
+}
+
+/* =================================
+   HIỆU ỨNG MỞ HỘP QUÀ
+================================= */
+
+.gift-box{
+    position:relative;
+    width:150px;
+    height:150px;
+    margin:auto;
+
+    animation:giftFloat 2s ease-in-out infinite;
+}
+
+.gift-body{
+    position:absolute;
+
+    left:25px;
+    bottom:20px;
+
+    width:100px;
+    height:85px;
+
+    border-radius:8px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent 42%,
+            #ffd54a 42%,
+            #ffd54a 58%,
+            transparent 58%
+        ),
+        linear-gradient(
+            #ff4d6d,
+            #ff1744
+        );
+
+    box-shadow:
+        0 8px 20px rgba(255,23,68,.35);
+}
+
+.gift-lid{
+    position:absolute;
+
+    left:15px;
+    top:35px;
+
+    width:120px;
+    height:45px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:70px;
+
+    z-index:5;
+
+    transform-origin:
+        15px 100%;
+
+    transition:
+        transform .8s cubic-bezier(.2,1.5,.4,1);
+}
+
+/* Khi mở */
+.reward-box.open .gift-lid{
+    transform:
+        translate(-25px,-65px)
+        rotate(-25deg);
+}
+
+/* Hộp rung trước khi mở */
+.reward-box.shaking .gift-box{
+    animation:giftShakeFast .5s ease;
+}
+
+@keyframes giftShakeFast{
+
+    0%{transform:rotate(0)}
+
+    20%{transform:rotate(-8deg)}
+
+    40%{transform:rotate(8deg)}
+
+    60%{transform:rotate(-6deg)}
+
+    80%{transform:rotate(6deg)}
+
+    100%{transform:rotate(0)}
+}
+
+/* Ánh sáng mạnh khi mở */
+.reward-box.open .reward-glow{
+    animation:
+        rewardExplosion .9s ease-out forwards;
+}
+
+@keyframes rewardExplosion{
+
+    0%{
+        transform:scale(.8);
+        opacity:.7;
+    }
+
+    50%{
+        transform:scale(2.5);
+        opacity:1;
+    }
+
+    100%{
+        transform:scale(4);
+        opacity:0;
+    }
+}
+
+/* Số xu */
+.reward-coins{
+    margin-top:20px;
+
+    font-size:42px;
+    font-weight:900;
+
+    color:#ffd54a;
+
+    text-shadow:
+        0 0 8px #fff,
+        0 0 18px #ffd54a,
+        0 0 35px #ff9800;
+
+    animation:
+        coinAppear .7s cubic-bezier(.2,1.5,.4,1);
+}
+
+@keyframes coinAppear{
+
+    0%{
+        opacity:0;
+        transform:scale(.2) translateY(30px);
+    }
+
+    70%{
+        transform:scale(1.15);
+    }
+
+    100%{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+/* ===== NÚT SAU KHI NHẬN THƯỞNG ===== */
+
+.reward-actions{
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+    margin-top:18px;
+}
+
+.reward-actions.show{
+    display:flex;
+}
+
+.reward-profile-btn{
+    border:0;
+    border-radius:14px;
+    padding:12px 24px;
+
+    background:linear-gradient(
+        135deg,
+        #1677ff,
+        #6a5cff
+    );
+
+    color:#fff;
+    font-size:16px;
+    font-weight:900;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 8px 22px rgba(22,119,255,.35);
+
+    transition:.2s;
+}
+
+.reward-profile-btn:hover{
+    transform:translateY(-2px) scale(1.03);
+    box-shadow:
+        0 10px 28px rgba(22,119,255,.45);
+}
+#rewardBox.open {
+    pointer-events: none;
+}
+
+#rewardActions,
+#rewardActions button {
+    pointer-events: auto !important;
+    position: relative;
+    z-index: 10020;
+}
+</style>
+</head>
+
+<body>
+<div class="exam-backdrop" aria-hidden="true">
+  <div class="fake-header"></div>
+  <div class="fake-layout">
+    <div>
+      <div class="fake-card"></div><div class="fake-card"></div>
+      <div class="fake-card"></div><div class="fake-card"></div>
+    </div>
+    <div class="fake-nav"></div>
+  </div>
+</div>
+
+<div class="result-overlay">
+  <div class="fireworks">
+    <span class="firework f1"></span><span class="firework f2"></span><span class="firework f3"></span><span class="firework f4"></span><span class="firework f5"></span><span class="firework f6"></span><span class="firework f7"></span><span class="firework f8"></span>
+  </div>
+  <div class="confetti" id="confetti"></div>
+
+  <main class="result-card">
+    <button class="close-btn" onclick="veTrangChu()" title="Về trang chủ">×</button>
+
+    <section class="hero">
+      <div class="trophy">🏆</div>
+      <div class="ribbon">Chúc mừng bạn!</div>
+      <p id="message">Bạn đã hoàn thành bài thi. Rất tuyệt vời!</p>
+    </section>
+
+    <section class="content">
+      <div class="score-grid">
+        <div class="score-box">
+          <div class="score-title">⭐ Điểm số của bạn</div>
+          <div class="score"><span id="diem">0</span>/<span id="diemToiDa">0</span></div>
+          <div class="percent">Đạt <span id="tyLe">0</span>%</div>
+        </div>
+
+        <div class="encourage">
+          <div class="big" id="xepLoai">Bạn đã làm rất tốt! 🎉</div>
+          <p id="encourageText">Hãy tiếp tục cố gắng để đạt kết quả cao hơn nữa nhé!</p>
+          <div id="saveStatus" style="margin-top:8px;font-size:13px;font-weight:800;color:#1769d2">⏳ Đang lưu kết quả...</div>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat green">
+          <div class="stat-icon">✅</div>
+          <div class="stat-label">Số câu đúng</div>
+          <div class="stat-value" id="soCauDung">0</div>
+          <div>/ <span id="tongSoCau1">0</span> câu</div>
+        </div>
+        <div class="stat red">
+          <div class="stat-icon">❌</div>
+          <div class="stat-label">Số câu sai</div>
+          <div class="stat-value" id="soCauSai">0</div>
+          <div>/ <span id="tongSoCau2">0</span> câu</div>
+        </div>
+        <div class="stat blue">
+          <div class="stat-icon">⏱️</div>
+          <div class="stat-label">Thời gian làm bài</div>
+          <div class="stat-value" id="thoiGian">--:--</div>
+          <div id="soLanRoiTabText"></div>
+        </div>
+      </div>
+
+      <div class="actions">
+  <button class="action blue" onclick="moChiTiet()">
+    ☷ &nbsp; Xem chi tiết kết quả
+  </button>
+
+  <button class="action green" onclick="moDapAn()">
+    ▥ &nbsp; Xem đáp án
+  </button>
+
+  <button class="action reward-btn" onclick="moHopThuong()">
+    🎁 &nbsp; Nhận phần thưởng
+  </button>
+
+  <button class="action orange" onclick="veTrangChu()">
+    ⌂ &nbsp; Về trang chủ
+  </button>
+</div>
+    </section>
+  </main>
+</div>
+
+<div class="panel" id="detailPanel">
+  <div class="panel-card">
+    <div class="panel-head">
+      <h2>📊 Chi tiết kết quả</h2>
+      <button class="panel-close" onclick="dongPanel('detailPanel')">×</button>
+    </div>
+    <div id="detailList"></div>
+  </div>
+</div>
+
+<div class="panel" id="answerPanel">
+  <div class="panel-card">
+    <div class="panel-head">
+      <h2>📚 Xem đáp án</h2>
+      <button class="panel-close" onclick="dongPanel('answerPanel')">×</button>
+    </div>
+    <div id="answerList"></div>
+  </div>
+</div>
+<!-- ================================
+     HỘP PHẦN THƯỞNG
+================================= -->
+<div id="rewardOverlay" class="reward-overlay">
+
+  <div class="reward-box-wrap">
+
+    <div class="reward-title">
+      🎉 Bạn có một phần thưởng!
+    </div>
+
+    <div
+      class="reward-box"
+      id="rewardBox"
+      onclick="moQua()"
+    >
+      <div class="reward-glow"></div>
+
+      <div class="gift-box">
+        <div class="gift-lid">🎁</div>
+        <div class="gift-body"></div>
+      </div>
+    </div>
+
+    <div
+      class="reward-hint"
+      id="rewardHint"
+    >
+      Chạm vào hộp quà để mở
+    </div>
+
+    <button
+        class="reward-profile-btn"
+        onclick="xemTrangCaNhan()"
+    >
+        👤 Xem trang cá nhân
+    </button>
+
+    <button
+      class="reward-close"
+      onclick="dongHopThuong()"
+    >
+      Đóng
+    </button>
+
+  </div>
+
+</div>
+<script>
+(function(){
+  const get = k => localStorage.getItem(k);
+
+  /* =========================================================
+     GỬI KẾT QUẢ LÊN GOOGLE SHEETS - PHÚ ĐÌNH EDU
+     - Gửi tại trang kết quả, không gửi từ thi.js.
+     - Dùng POST urlencoded + no-cors để Apps Script nhận e.parameter.
+     - Có fallback maKyThi = tenKyThi.
+     - Chỉ đánh dấu đã gửi sau khi request hoàn tất.
+  ========================================================= */
+  const API_URL = "https://script.google.com/macros/s/AKfycbxWt7qf7N_wghFQ_zonxD8jcdOeebh8rbPtBu2PNTEVrhhMTWSKHWNJJnE78qkfFFB3/exec";
+                  
+  (function () {
+
+    const get = (key) =>
+        localStorage.getItem(key);
+
+    const API_URL =
+        "https://script.google.com/macros/s/AKfycbxWt7qf7N_wghFQ_zonxD8jcdOeebh8rbPtBu2PNTEVrhhMTWSKHWNJJnE78qkfFFB3/exec";
+
+
+    // =====================================================
+    // ĐỌC KẾT QUẢ
+    // =====================================================
+
+    let pkg = {};
+
+    try {
+
+        pkg = JSON.parse(
+            get("ketQuaQuestionEngine") || "{}"
+        ) || {};
+
+    } catch (error) {
+
+        console.warn(
+            "Không đọc được ketQuaQuestionEngine:",
+            error
+        );
+
+    }
+
+
+    const tongSoCau = Number(
+        get("tongSoCau") ??
+        pkg.tongSoCau ??
+        0
+    );
+
+
+    const soDung = Number(
+        pkg.soCauDung ??
+        get("soCauDung") ??
+        0
+    );
+
+
+    const soSai = Number(
+        get("soCauSai") ??
+        Math.max(
+            0,
+            tongSoCau - soDung
+        )
+    );
+
+
+    const diem = Number(
+        get("diemThi") ??
+        pkg.diem ??
+        0
+    );
+
+
+    const tyLe = Number(
+        get("tyLe") ??
+        pkg.tyLeDiem ??
+        0
+    );
+
+
+    // =====================================================
+    // THÔNG TIN THÍ SINH
+    // =====================================================
+
+    const maHS =
+        get("maThiSinh") ||
+        get("maHS") ||
+        "";
+
+
+    const tenKyThi =
+        get("tenKyThi") ||
+        "";
+
+
+    const maKyThi =
+        get("maKyThi") ||
+        tenKyThi ||
+        "";
+
+
+    // =====================================================
+    // HIỂN THỊ KẾT QUẢ
+    // =====================================================
+
+    const elDiem =
+        document.getElementById("diem");
+
+    const elSoDung =
+        document.getElementById("soDung");
+
+    const elSoSai =
+        document.getElementById("soSai");
+
+    const elTong =
+        document.getElementById("tongSoCau");
+
+    const elTyLe =
+        document.getElementById("tyLe");
+
+    const elXepLoai =
+        document.getElementById("xepLoai");
+
+
+    if (elDiem) {
+
+        elDiem.textContent =
+            diem + "/" + tongSoCau;
+
+    }
+
+
+    if (elSoDung) {
+
+        elSoDung.textContent =
+            soDung;
+
+    }
+
+
+    if (elSoSai) {
+
+        elSoSai.textContent =
+            soSai;
+
+    }
+
+
+    if (elTong) {
+
+        elTong.textContent =
+            tongSoCau;
+
+    }
+
+
+    if (elTyLe) {
+
+        elTyLe.textContent =
+            tyLe + "%";
+
+    }
+
+
+    // =====================================================
+    // XẾP LOẠI
+    // =====================================================
+
+    let xepLoai =
+        get("xepLoai") || "";
+
+
+    if (!xepLoai) {
+
+        if (tyLe >= 90) {
+
+            xepLoai =
+                "🏆 Xuất sắc";
+
+        } else if (tyLe >= 80) {
+
+            xepLoai =
+                "🥇 Tốt";
+
+        } else if (tyLe >= 70) {
+
+            xepLoai =
+                "🥈 Khá";
+
+        } else {
+
+            xepLoai =
+                "📚 Đạt";
+
+        }
+
+    }
+
+
+    if (elXepLoai) {
+
+        elXepLoai.textContent =
+            xepLoai;
+
+    }
+
+
+    // =====================================================
+    // LOG DỮ LIỆU
+    // =====================================================
+
+    console.log(
+        "===== KẾT QUẢ KETQUA ====="
+    );
+
+    console.log({
+        maKyThi,
+        maHS,
+        tenKyThi,
+        soDung,
+        soSai,
+        tongSoCau,
+        diem,
+        tyLe,
+        xepLoai
+    });
+
+
+    // =====================================================
+    // GỬI KẾT QUẢ LÊN GOOGLE SHEETS
+    // =====================================================
+
+    async function guiKetQuaLenSheet() {
+
+        if (!maHS || !maKyThi) {
+
+            console.error(
+                "❌ Không gửi được: thiếu maHS hoặc maKyThi.",
+                {
+                    maHS,
+                    maKyThi
+                }
+            );
+
+            return;
+
+        }
+
+
+        // -------------------------------------------------
+        // CHỐNG GỬI TRÙNG Ở TRÌNH DUYỆT
+        // -------------------------------------------------
+
+        const submitKey =
+            "submitted_v2_" +
+            String(maHS) +
+            "_" +
+            String(maKyThi);
+
+
+        if (
+            get(submitKey) === "true"
+        ) {
+
+            console.log(
+                "✅ Kết quả đã được gửi trước đó."
+            );
+
+            return;
+
+        }
+
+
+        // -------------------------------------------------
+        // TẠO PAYLOAD
+        // -------------------------------------------------
+
+        const payload =
+            new URLSearchParams();
+
+
+        payload.append(
+            "maKyThi",
+            maKyThi
+        );
+
+
+        payload.append(
+            "maHS",
+            maHS
+        );
+
+
+        payload.append(
+            "hoTen",
+            get("tenThiSinh") ||
+            get("hoTen") ||
+            ""
+        );
+
+
+        payload.append(
+            "gioiTinh",
+            get("gioiTinh") ||
+            ""
+        );
+
+
+        payload.append(
+            "lop",
+            get("lopThiSinh") ||
+            get("lop") ||
+            ""
+        );
+
+
+        payload.append(
+            "tenKyThi",
+            tenKyThi
+        );
+
+
+        payload.append(
+            "khoi",
+            get("khoi") ||
+            get("khoiThiSinh") ||
+            ""
+        );
+
+
+        payload.append(
+            "mon",
+            get("mon") ||
+            get("monThi") ||
+            ""
+        );
+
+
+        payload.append(
+            "soDung",
+            String(soDung)
+        );
+
+
+        payload.append(
+            "soSai",
+            String(soSai)
+        );
+
+
+        payload.append(
+            "tongSoCau",
+            String(tongSoCau)
+        );
+
+
+        payload.append(
+            "diem",
+            String(diem)
+        );
+
+
+        payload.append(
+            "thoiGian",
+            get("thoiGianHoanThanh") ||
+            pkg.thoiGianHoanThanh ||
+            ""
+        );
+
+
+        payload.append(
+            "roiTab",
+            get("soLanRoiTab") ||
+            pkg.soLanRoiTab ||
+            "0"
+        );
+
+
+        payload.append(
+            "ngayThi",
+            new Date()
+                .toISOString()
+                .split("T")[0]
+        );
+
+
+        payload.append(
+            "tyLe",
+            String(tyLe)
+        );
+
+
+        payload.append(
+            "xepLoai",
+            xepLoai
+        );
+
+
+        payload.append(
+            "dotThi",
+            get("dotThi") ||
+            ""
+        );
+
+
+        payload.append(
+            "namHoc",
+            get("namHoc") ||
+            ""
+        );
+
+
+        // -------------------------------------------------
+        // LOG PAYLOAD THỰC TẾ
+        // -------------------------------------------------
+
+        console.log(
+            "📤 GỬI KẾT QUẢ KETQUA:",
+            Object.fromEntries(payload)
+        );
+
+
+        console.log(
+            "🚨 PAYLOAD THỰC TẾ:",
+            Object.fromEntries(payload)
+        );
+
+
+        // -------------------------------------------------
+        // GỬI APPS SCRIPT
+        // -------------------------------------------------
+
+        try {
+
+            await fetch(
+                API_URL,
+                {
+                    method: "POST",
+                    mode: "no-cors",
+                    body: payload,
+                    keepalive: true
+                }
+            );
+
+
+            /*
+             * no-cors không cho đọc response
+             * của Apps Script.
+             *
+             * Vì vậy chỉ đánh dấu đã gửi
+             * sau khi fetch hoàn thành.
+             */
+
+            localStorage.setItem(
+                submitKey,
+                "true"
+            );
+
+
+            console.log(
+                "✅ Đã gửi POST kết quả tới Apps Script."
+            );
+
+
+            // Nếu giao diện mới có #saveStatus
+            // thì cập nhật trạng thái.
+
+            const status =
+                document.getElementById(
+                    "saveStatus"
+                );
+
+
+            if (status) {
+
+                status.textContent =
+                    "✅ Đã gửi kết quả. Dữ liệu đang được ghi vào KETQUA.";
+
+            }
+
+
+        } catch (error) {
+
+            console.error(
+                "❌ Lỗi khi gửi kết quả:",
+                error
+            );
+
+
+            const status =
+                document.getElementById(
+                    "saveStatus"
+                );
+
+
+            if (status) {
+
+                status.textContent =
+                    "❌ Chưa gửi được kết quả. Vui lòng thử lại.";
+
+            }
+
+        }
+
+    }
+
+
+    // =====================================================
+    // CHẠY GỬI KẾT QUẢ
+    // =====================================================
+
+    window.guiKetQuaLenSheet =
+        guiKetQuaLenSheet;
+
+
+    guiKetQuaLenSheet();
+
+
+})();
+
+  window.guiKetQuaLenSheet = guiKetQuaLenSheet;
+
+  const num = (v,d=0) => {
+    const n = Number(v);
+    return Number.isFinite(n) ? n : d;
+  };
+  const esc = s => String(s ?? "").replace(/[&<>"']/g, m => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[m]));
+
+  let pkg = {};
+  try { pkg = JSON.parse(get("ketQuaQuestionEngine") || "{}") || {}; } catch(e){}
+
+  const diem = num(get("diemThi"), num(pkg.diem));
+  const diemToiDa = num(get("diemToiDa"), num(pkg.diemToiDa, 10));
+  const tong = num(get("tongSoCau"), num(pkg.tongSoCau));
+  const dung = num(pkg.soCauDung, Math.max(0, tong - num(get("soCauSai"))));
+  const sai = num(get("soCauSai"), Math.max(0, tong - dung));
+  const tyLe = num(get("tyLe"), num(pkg.tyLeDiem));
+  const tg = get("thoiGianHoanThanh") || "--:--";
+  const xep = get("xepLoai") || "";
+  const name = get("tenThiSinh") || get("hoTen") || get("tenHS") || "bạn";
+  let chiTiet = [];
+  try { chiTiet = JSON.parse(get("chiTietBaiThi") || pkg.chiTiet ? get("chiTietBaiThi") || JSON.stringify(pkg.chiTiet||[]) : "[]") || []; } catch(e){ chiTiet=[]; }
+
+  document.getElementById("diem").textContent = diem;
+  document.getElementById("diemToiDa").textContent = diemToiDa;
+  document.getElementById("tyLe").textContent = tyLe;
+  document.getElementById("soCauDung").textContent = dung;
+  document.getElementById("soCauSai").textContent = sai;
+  document.getElementById("tongSoCau1").textContent = tong;
+  document.getElementById("tongSoCau2").textContent = tong;
+  document.getElementById("thoiGian").textContent = tg;
+  document.getElementById("xepLoai").textContent = xep ? ("Bạn đạt mức " + xep + "! 🎉") : "Bạn đã hoàn thành bài thi! 🎉";
+  document.getElementById("message").textContent = "Chúc mừng " + name + "! Bạn đã hoàn thành bài thi.";
+  document.getElementById("encourageText").textContent =
+    tyLe >= 90 ? "Thành tích rất ấn tượng! Hãy tiếp tục phát huy nhé." :
+    tyLe >= 70 ? "Bạn đã có một kết quả đáng ghi nhận. Tiếp tục luyện tập nhé!" :
+    "Mỗi lần làm bài là một bước tiến. Hãy xem lại câu sai và thử lại nhé!";
+
+  const roiTab = num(get("soLanRoiTab"), num(pkg.soLanRoiTab));
+  if (roiTab > 0) document.getElementById("soLanRoiTabText").textContent = "Rời tab: " + roiTab + " lần";
+
+  // Gửi sau khi đã đọc và hiển thị đầy đủ kết quả.
+  guiKetQuaLenSheet();
+
+
+  function normalize(v){
+    if (v == null) return "Chưa có";
+    if (Array.isArray(v)) return v.map(x => normalize(x)).join(", ");
+    if (typeof v === "object") {
+      if ("value" in v) return normalize(v.value);
+      if ("answer" in v) return normalize(v.answer);
+      return Object.values(v).map(x => normalize(x)).join(", ");
+    }
+    return String(v);
+  }
+
+  window.moChiTiet = function(){
+    const box = document.getElementById("detailList");
+    if(!chiTiet.length){
+      box.innerHTML = '<div class="empty">Chưa có dữ liệu chi tiết cho bài thi này.</div>';
+    } else {
+      box.innerHTML = chiTiet.map((q,i) => `
+        <div class="detail-item">
+          <div class="detail-top">
+            <span class="qnum">Câu ${i+1}</span>
+            <span class="badge">${esc(q.loai || "Câu hỏi")}</span>
+            <span class="${q.dung ? "correct":"wrong"}">${q.dung ? "✓ Đúng":"✗ Sai"}</span>
+          </div>
+          <div class="answer-line"><b>Câu hỏi:</b> ${q.cauHoi || "—"}</div>
+          <div class="answer-line"><b>Bạn trả lời:</b> ${esc(normalize(q.traLoi))}</div>
+          <div class="answer-line"><b>Đáp án:</b> ${esc(normalize(q.dapAn))}</div>
+          <div class="answer-line"><b>Điểm:</b> ${esc(q.diem ?? 0)}</div>
+        </div>
+      `).join("");
+    }
+    document.getElementById("detailPanel").classList.add("open");
+    if(window.MathJax) MathJax.typesetPromise([box]).catch(()=>{});
+  };
+
+  window.moDapAn = function(){
+    const box = document.getElementById("answerList");
+    if(!chiTiet.length){
+      box.innerHTML = '<div class="empty">Chưa có dữ liệu đáp án cho bài thi này.</div>';
+    } else {
+      box.innerHTML = chiTiet.map((q,i) => `
+        <div class="detail-item">
+          <div class="detail-top">
+            <span class="qnum">Câu ${i+1}</span>
+            <span class="${q.dung ? "correct":"wrong"}">${q.dung ? "✓ Bạn đúng":"✗ Bạn sai"}</span>
+          </div>
+          <div class="answer-line"><b>Đáp án:</b> ${esc(normalize(q.dapAn))}</div>
+          <div class="answer-line"><b>Bạn chọn:</b> ${esc(normalize(q.traLoi))}</div>
+        </div>
+      `).join("");
+    }
+    document.getElementById("answerPanel").classList.add("open");
+    if(window.MathJax) MathJax.typesetPromise([box]).catch(()=>{});
+  };
+
+  window.dongPanel = function(id){ document.getElementById(id).classList.remove("open"); };
+
+  window.lamLai = function(){
+    const ma = get("maThiSinh") || "unknown";
+    const de = get("fileDe") || get("tenKyThi") || "de";
+    localStorage.removeItem("baiThiDangLam_v2_" + ma + "_" + de);
+    localStorage.setItem("phienThiMoi","1");
+    location.href = "thi.html";
+  };
+
+  window.veTrangChu = function(){
+    location.href = "index.html";
+  };
+
+  document.querySelectorAll(".panel").forEach(p => {
+    p.addEventListener("click", e => { if(e.target === p) p.classList.remove("open"); });
+  });
+})();
+</script>
+<script>
+/* ===== TỰ ĐỘNG SINH PHÁO GIẤY ===== */
+(function taoPhaoGiay(){
+
+  const container = document.getElementById("confetti");
+
+  if(!container) return;
+
+  // Số lượng pháo giấy
+  const soLuong = 70;
+
+  const mau = [
+    "#ff3b30",
+    "#ffd60a",
+    "#34c759",
+    "#0a84ff",
+    "#af52de",
+    "#ff2d55",
+    "#ff9500",
+    "#30d158",
+    "#64d2ff",
+    "#bf5af2"
+  ];
+
+  for(let i = 0; i < soLuong; i++){
+
+    const piece = document.createElement("i");
+
+    // Vị trí bắt đầu
+    piece.style.left = Math.random() * 100 + "%";
+
+    // Kích thước
+    piece.style.width =
+      (6 + Math.random() * 7) + "px";
+
+    piece.style.height =
+      (10 + Math.random() * 14) + "px";
+
+    // Màu
+    piece.style.background =
+      mau[Math.floor(Math.random() * mau.length)];
+
+    // Độ lệch khi rơi
+    piece.style.setProperty(
+      "--drift",
+      (Math.random() * 300 - 150) + "px"
+    );
+
+    // Độ xoay
+    piece.style.setProperty(
+      "--rotate",
+      (Math.random() * 1440 - 720) + "deg"
+    );
+
+    // Tốc độ rơi
+    piece.style.animationDuration =
+      (4.5 + Math.random() * 4) + "s";
+
+    // Thời điểm xuất hiện
+    piece.style.animationDelay =
+      "-" + (Math.random() * 5) + "s";
+
+    // Hình dạng
+    piece.style.borderRadius =
+      Math.random() > 0.5 ? "2px" : "50%";
+
+    container.appendChild(piece);
+  }
+
+})();
+</script>
+<script>
+function moHopThuong(){
+
+    const overlay =
+        document.getElementById("rewardOverlay");
+
+    if(!overlay) return;
+
+    overlay.classList.add("show");
+}
+
+function dongHopThuong(){
+
+    const overlay =
+        document.getElementById("rewardOverlay");
+
+    if(!overlay) return;
+
+    overlay.classList.remove("show");
+}
+</script>
+<script>
+/* =========================================================
+   HỆ THỐNG MỞ HỘP PHẦN THƯỞNG
+========================================================= */
+
+window.moQua = function(){
+
+    const box = document.getElementById("rewardBox");
+    const hint = document.getElementById("rewardHint");
+    const actions = document.getElementById("rewardActions");
+    const closeBefore = document.getElementById("rewardCloseBefore");
+
+    if(!box) return;
+
+    // Không cho mở lại
+    if(box.classList.contains("opened")) return;
+
+    box.classList.add("opened");
+
+    if(hint){
+        hint.textContent = "🎉 Chúc mừng! Em nhận được phần thưởng!";
+    }
+
+    // ==============================
+    // LẤY DỮ LIỆU
+    // ==============================
+
+    const maHS =
+        localStorage.getItem("maHS") ||
+        localStorage.getItem("maThiSinh") ||
+        "";
+
+    const maKyThi =
+        localStorage.getItem("maKyThi") ||
+        localStorage.getItem("tenKyThi") ||
+        "";
+
+    const hoTen =
+        localStorage.getItem("tenThiSinh") ||
+        localStorage.getItem("hoTen") ||
+        "";
+
+    const diem =
+        Number(localStorage.getItem("diemThi") || 0);
+
+
+    // ==============================
+    // TÍNH XU
+    // ==============================
+
+    let xu = 5;
+
+    if(diem >= 9){
+        xu = 50;
+    }
+    else if(diem >= 8){
+        xu = 40;
+    }
+    else if(diem >= 7){
+        xu = 30;
+    }
+    else if(diem >= 6){
+        xu = 20;
+    }
+    else if(diem >= 5){
+        xu = 10;
+    }
+
+    /* ==============================
+           MỞ NẮP HỘP
+        ============================== */
+
+        box.classList.add("open");
+
+    // ==============================
+    // HIỂN THỊ XU
+    // ==============================
+
+    setTimeout(function(){
+
+        let xuText =
+            document.getElementById("rewardXu");
+
+        if(!xuText){
+            xuText = document.createElement("div");
+            xuText.id = "rewardXu";
+
+            xuText.style.position = "relative";
+            xuText.style.zIndex = "10020";
+            xuText.style.fontSize = "30px";
+            xuText.style.fontWeight = "800";
+            xuText.style.color = "#f59e0b";
+            xuText.style.margin = "15px 0";
+
+            if(box.parentNode){
+                box.parentNode.insertBefore(
+                    xuText,
+                    hint
+                );
+            }
+        }
+
+        xuText.textContent =
+            "+" + xu + " 🪙";
+
+    },500);
+
+
+    // ==============================
+    // GỬI XU LÊN GOOGLE SHEETS
+    // ==============================
+
+    const API_URL =
+        "https://script.google.com/macros/s/AKfycbxWt7qf7N_wghFQ_zonxD8jcdOeebh8rbPtBu2PNTEVrhhMTWSKHWNJJnE78qkfFFB3/exec";
+
+    const data = new URLSearchParams();
+
+    data.append("action","nhanPhanThuong");
+    data.append("maHS",maHS);
+    data.append("maKyThi",maKyThi);
+    data.append("hoTen",hoTen);
+    data.append("diem",diem);
+    data.append("xu",xu);
+
+    fetch(API_URL,{
+        method:"POST",
+        mode:"no-cors",
+        body:data,
+        keepalive:true
+    }).catch(function(error){
+        console.error(
+            "Lỗi gửi phần thưởng:",
+            error
+        );
+    });
+
+
+    // ==============================
+    // HIỆN NÚT
+    // ==============================
+
+    if(closeBefore){
+        closeBefore.style.display = "none";
+    }
+
+    if(actions){
+
+        actions.style.display = "flex";
+        actions.style.position = "relative";
+        actions.style.zIndex = "10010";
+        actions.style.pointerEvents = "auto";
+
+    }
+
+
+    // ==============================
+    // PHÁO HOA
+    // ==============================
+
+    if(typeof confetti === "function"){
+
+        confetti({
+            particleCount:120,
+            spread:90,
+            origin:{
+                y:.6
+            }
+        });
+
+    }
+
+};
+window.xemTrangCaNhan = function(){
+
+    window.location.href = "trangcanhan.html";
+
+};
+
+
+window.dongHopThuong = function(){
+
+    const overlay =
+        document.getElementById("rewardOverlay");
+
+    if(overlay){
+        overlay.classList.remove("show");
+    }
+
+};
+</script>
+</body>
+</html>
