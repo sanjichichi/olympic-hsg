@@ -1,0 +1,722 @@
+const cauHoi = [
+    {
+        "cauHoi": "My brother ____ a student.",
+        "A": "am",
+        "B": "is",
+        "C": "are",
+        "D": "be",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Choose the correct word: I go to school ____ bike.",
+        "A": "by",
+        "B": "on",
+        "C": "in",
+        "D": "at",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "She ____ TV every evening.",
+        "A": "watch",
+        "B": "watches",
+        "C": "watching",
+        "D": "watched",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "How do you write the number 15 in English?",
+        "A": "Fifteen",
+        "B": "Fifty",
+        "C": "Fourteen",
+        "D": "Five",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "The sky is ____.",
+        "A": "green",
+        "B": "blue",
+        "C": "red",
+        "D": "black",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Which animal says 'Meow'?",
+        "A": "Dog",
+        "B": "Cat",
+        "C": "Duck",
+        "D": "Cow",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "____ is your birthday?",
+        "A": "Who",
+        "B": "What",
+        "C": "When",
+        "D": "Where",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "The book is ____ the table.",
+        "A": "on",
+        "B": "under",
+        "C": "behind",
+        "D": "between",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "We study English in the ____.",
+        "A": "library",
+        "B": "classroom",
+        "C": "hospital",
+        "D": "market",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Look! They ____ football now.",
+        "A": "play",
+        "B": "plays",
+        "C": "are playing",
+        "D": "played",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "My father's brother is my ____.",
+        "A": "uncle",
+        "B": "aunt",
+        "C": "cousin",
+        "D": "grandfather",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "I have ____ apple.",
+        "A": "a",
+        "B": "an",
+        "C": "the",
+        "D": "Ø",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Which month comes after June?",
+        "A": "May",
+        "B": "July",
+        "C": "August",
+        "D": "September",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "A car is ____ than a bike.",
+        "A": "fast",
+        "B": "faster",
+        "C": "fastest",
+        "D": "more fast",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Which one is a fruit?",
+        "A": "Potato",
+        "B": "Carrot",
+        "C": "Banana",
+        "D": "Onion",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "You ____ wear a helmet when riding a motorbike.",
+        "A": "should",
+        "B": "shouldn't",
+        "C": "can't",
+        "D": "mustn't",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Yesterday I ____ to school late.",
+        "A": "go",
+        "B": "goes",
+        "C": "went",
+        "D": "gone",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "Tom and I are friends. ____ are classmates.",
+        "A": "He",
+        "B": "They",
+        "C": "We",
+        "D": "She",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "Choose the opposite of 'happy'.",
+        "A": "glad",
+        "B": "sad",
+        "C": "excited",
+        "D": "kind",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "A doctor works in a ____.",
+        "A": "school",
+        "B": "factory",
+        "C": "hospital",
+        "D": "library",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "I think it ____ tomorrow.",
+        "A": "rains",
+        "B": "will rain",
+        "C": "rain",
+        "D": "raining",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "There are ____ days in a week.",
+        "A": "5",
+        "B": "6",
+        "C": "7",
+        "D": "8",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "The opposite of 'big' is ____.",
+        "A": "small",
+        "B": "long",
+        "C": "high",
+        "D": "short",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "When it is raining, we use a(n) ____.",
+        "A": "umbrella",
+        "B": "helmet",
+        "C": "hat",
+        "D": "bag",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "She sings very ____.",
+        "A": "good",
+        "B": "well",
+        "C": "better",
+        "D": "best",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "What is the English word for 'bàn'?",
+        "A": "Chair",
+        "B": "Desk",
+        "C": "Door",
+        "D": "Window",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Choose the synonym of 'begin'.",
+        "A": "End",
+        "B": "Finish",
+        "C": "Start",
+        "D": "Stop",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "You are a student, ____?",
+        "A": "are you",
+        "B": "aren't you",
+        "C": "do you",
+        "D": "don't you",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "A: 'How are you?' B: '____'",
+        "A": "I'm fine, thank you.",
+        "B": "Goodbye.",
+        "C": "See you.",
+        "D": "You're welcome.",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Choose the best title for a passage about protecting the environment.",
+        "A": "My Favorite Sport",
+        "B": "Protecting Our Environment",
+        "C": "My Family",
+        "D": "School Subjects",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Arrange the words into a correct sentence.",
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": "",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Arrange the words into a correct sentence.",
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": "",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Arrange the words into a correct sentence.",
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": "",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "Arrange the words into a correct sentence.",
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": "",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Arrange the words into a correct sentence.",
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": "",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Arrange the words into a correct sentence.",
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": "",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "Arrange the words into a correct sentence.",
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": "",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Arrange the words into a correct sentence.",
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": "",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Arrange the words into a correct sentence.",
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": "",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Arrange the words into a correct sentence.",
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": "",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Arrange the words into a correct sentence.",
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": "",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Arrange the words into a correct sentence.",
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": "",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Arrange the words into a correct sentence.",
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": "",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Arrange the words into a correct sentence.",
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": "",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Arrange the words into a correct sentence.",
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": "",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Arrange the words into a correct sentence.",
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": "",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Arrange the words into a correct sentence.",
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": "",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Arrange the words into a correct sentence.",
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": "",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Arrange the words into a correct sentence.",
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": "",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Arrange the words into a correct sentence.",
+        "A": "",
+        "B": "",
+        "C": "",
+        "D": "",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Which English word means 'hình tam giác'?",
+        "A": "Square",
+        "B": "Triangle",
+        "C": "Circle",
+        "D": "Rectangle",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "What is the English word for 'phân số'?",
+        "A": "Decimal",
+        "B": "Fraction",
+        "C": "Equation",
+        "D": "Angle",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "5 + 8 = 13. What is the correct English sentence?",
+        "A": "Five plus eight equals thirteen.",
+        "B": "Five minus eight equals thirteen.",
+        "C": "Five times eight equals thirteen.",
+        "D": "Five divided by eight equals thirteen.",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Which shape has four equal sides?",
+        "A": "Triangle",
+        "B": "Circle",
+        "C": "Square",
+        "D": "Oval",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "The result of a multiplication is called a ____.",
+        "A": "difference",
+        "B": "product",
+        "C": "sum",
+        "D": "quotient",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "The opposite sides of a rectangle are ____.",
+        "A": "equal",
+        "B": "short",
+        "C": "curved",
+        "D": "round",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Tom has 12 apples. He gives away 5. How many apples does he have left?",
+        "A": "5",
+        "B": "6",
+        "C": "7",
+        "D": "8",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "Which symbol means 'greater than'?",
+        "A": "<",
+        "B": ">",
+        "C": "=",
+        "D": "≠",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "What is the English word for 'bài thơ'?",
+        "A": "Novel",
+        "B": "Poem",
+        "C": "Story",
+        "D": "Essay",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "A person who writes books is called a ____.",
+        "A": "teacher",
+        "B": "doctor",
+        "C": "writer",
+        "D": "engineer",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "A fairy tale usually has ____.",
+        "A": "magic",
+        "B": "equations",
+        "C": "maps",
+        "D": "experiments",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "A poem is usually written in ____.",
+        "A": "lines",
+        "B": "tables",
+        "C": "pictures",
+        "D": "graphs",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "The main character of a story is called the ____.",
+        "A": "author",
+        "B": "reader",
+        "C": "character",
+        "D": "teacher",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "Which word means 'nhân vật'?",
+        "A": "Sentence",
+        "B": "Character",
+        "C": "Chapter",
+        "D": "Paragraph",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Which activity helps you understand a story better?",
+        "A": "Reading carefully",
+        "B": "Sleeping",
+        "C": "Running",
+        "D": "Drawing only",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "We learn equations in ____.",
+        "A": "English",
+        "B": "Math",
+        "C": "Music",
+        "D": "History",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "We read poems in ____.",
+        "A": "Literature",
+        "B": "Physics",
+        "C": "Chemistry",
+        "D": "Geography",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Which sentence is correct?",
+        "A": "Eight divided by two equals four.",
+        "B": "Eight plus two equals four.",
+        "C": "Eight minus two equals four.",
+        "D": "Eight times two equals four.",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "A paragraph should have ____.",
+        "A": "one main idea",
+        "B": "many unrelated ideas",
+        "C": "only numbers",
+        "D": "only pictures",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "Which sentence is grammatically correct?",
+        "A": "Math is my favorite subject.",
+        "B": "Math are my favorite subject.",
+        "C": "Math my favorite is subject.",
+        "D": "My favorite subject are Math.",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "My sister ____ to school every day.",
+        "A": "go",
+        "B": "goes",
+        "C": "going",
+        "D": "went",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "They ____ football at the moment.",
+        "A": "play",
+        "B": "plays",
+        "C": "are playing",
+        "D": "played",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "Yesterday, I ____ my grandparents.",
+        "A": "visit",
+        "B": "visits",
+        "C": "visited",
+        "D": "visiting",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "She usually ____ breakfast at 6.30.",
+        "A": "have",
+        "B": "has",
+        "C": "having",
+        "D": "had",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Listen! The baby ____.",
+        "A": "cries",
+        "B": "cry",
+        "C": "is crying",
+        "D": "cried",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "We ____ English tomorrow.",
+        "A": "study",
+        "B": "studied",
+        "C": "will study",
+        "D": "studying",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "Nam ____ TV every evening.",
+        "A": "watch",
+        "B": "watches",
+        "C": "watching",
+        "D": "watched",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "My friends ____ in the park now.",
+        "A": "run",
+        "B": "runs",
+        "C": "are running",
+        "D": "ran",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "Last Sunday, we ____ to the zoo.",
+        "A": "go",
+        "B": "went",
+        "C": "goes",
+        "D": "going",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "He ____ his homework before dinner every day.",
+        "A": "do",
+        "B": "does",
+        "C": "did",
+        "D": "doing",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "If it is sunny tomorrow, we ____ camping.",
+        "A": "go",
+        "B": "went",
+        "C": "will go",
+        "D": "going",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "My father ____ a newspaper every morning.",
+        "A": "read",
+        "B": "reads",
+        "C": "reading",
+        "D": "readed",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "Look! The birds ____ in the sky.",
+        "A": "fly",
+        "B": "flies",
+        "C": "are flying",
+        "D": "flew",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "Lan ____ her room yesterday.",
+        "A": "clean",
+        "B": "cleans",
+        "C": "cleaned",
+        "D": "cleaning",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "The children ____ cartoons every weekend.",
+        "A": "watch",
+        "B": "watches",
+        "C": "watched",
+        "D": "watching",
+        "dapAn": "A"
+    },
+    {
+        "cauHoi": "I ____ my grandparents next week.",
+        "A": "visit",
+        "B": "visited",
+        "C": "will visit",
+        "D": "visiting",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "She ____ dinner now.",
+        "A": "cook",
+        "B": "cooks",
+        "C": "is cooking",
+        "D": "cooked",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "My brother ____ a bike to school every day.",
+        "A": "ride",
+        "B": "rides",
+        "C": "rode",
+        "D": "riding",
+        "dapAn": "B"
+    },
+    {
+        "cauHoi": "They ____ a new school next year.",
+        "A": "build",
+        "B": "built",
+        "C": "will build",
+        "D": "building",
+        "dapAn": "C"
+    },
+    {
+        "cauHoi": "We ____ our teacher yesterday.",
+        "A": "meet",
+        "B": "meets",
+        "C": "met",
+        "D": "meeting",
+        "dapAn": "C"
+    }
+];
