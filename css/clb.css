@@ -1,0 +1,172 @@
+.club-intro{
+
+padding:60px 0;
+
+text-align:center;
+
+}
+
+.section-title h2{
+
+font-size:34px;
+
+color:#0b63c6;
+
+}
+
+.line{
+
+width:90px;
+
+height:4px;
+
+background:#ff9800;
+
+margin:15px auto 30px;
+
+border-radius:20px;
+
+}
+
+.intro-text{
+
+max-width:900px;
+
+margin:auto;
+
+line-height:1.8;
+
+font-size:18px;
+
+color:#555;
+
+}
+.club-counter{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+
+gap:25px;
+
+margin:60px 0;
+
+}
+
+.counter-card{
+
+background:white;
+
+padding:35px;
+
+text-align:center;
+
+border-radius:20px;
+
+box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+transition:.3s;
+
+}
+
+.counter-card:hover{
+
+transform:translateY(-8px);
+
+}
+
+.counter-card i{
+
+font-size:45px;
+
+color:#0b63c6;
+
+margin-bottom:15px;
+
+}
+
+.counter-card h3{
+
+font-size:38px;
+
+color:#ff9800;
+
+margin-bottom:10px;
+
+}
+.club-list{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:30px;
+    margin-top:40px;
+}
+
+@media(max-width:992px){
+    .club-list{
+        grid-template-columns:1fr;
+    }
+}
+
+.club-card{
+    background:#fff;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.club-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 15px 30px rgba(0,0,0,.12);
+}
+
+.club-card img{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+    transition:.35s;
+}
+
+.club-card:hover img{
+    transform:scale(1.05);
+}
+
+.club-body{
+    padding:18px;
+}
+
+.club-body h3{
+    font-size:22px;
+    color:#0b63c6;
+    margin-bottom:12px;
+}
+
+.club-body p{
+    font-size:15px;
+    line-height:1.6;
+    margin-bottom:15px;
+}
+
+.club-body ul{
+    list-style:none;
+    margin:15px 0;
+    padding:0;
+}
+
+.club-body li{
+    margin:8px 0;
+}
+
+.club-body a{
+    display:inline-block;
+    margin-top:12px;
+    padding:10px 20px;
+    border-radius:25px;
+    background:#0b63c6;
+    color:#fff;
+    text-decoration:none;
+}
+
+.club-body a:hover{
+    background:#ff9800;
+}
