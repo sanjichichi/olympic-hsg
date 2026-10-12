@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Quản lý kỳ thi - Giáo viên</title>
+<style>
+:root{
+    --primary:#173b8f;
+    --blue:#2563eb;
+    --green:#16a34a;
+    --red:#dc2626;
+    --bg:#f4f7fb;
+    --card:#fff;
+    --text:#1f2937;
+    --muted:#64748b;
+    --border:#e5e7eb;
+}
+*{box-sizing:border-box}
+body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:Arial,Helvetica,sans-serif;
+}
+.header{
+    background:linear-gradient(135deg,#102d70,#2563eb);
+    color:white;padding:22px 30px;
+    display:flex;justify-content:space-between;align-items:center;
+    gap:20px;
+}
+.header h1{margin:0;font-size:24px}
+.header p{margin:6px 0 0;opacity:.88}
+.header-actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{
+    border:0;border-radius:9px;padding:10px 14px;
+    font-weight:700;cursor:pointer;text-decoration:none;
+    display:inline-block;
+}
+.btn-light{background:white;color:var(--primary)}
+.btn-blue{background:var(--blue);color:white}
+.container{width:95%;max-width:1500px;margin:25px auto}
+.card{
+    background:white;border:1px solid var(--border);
+    border-radius:16px;padding:22px;
+    box-shadow:0 4px 16px rgba(15,23,42,.05);
+}
+.teacher-info{
+    margin-bottom:18px;padding:14px 16px;
+    background:#eff6ff;color:#1e40af;border-radius:10px;
+    line-height:1.5;
+}
+.section-head{
+    display:flex;justify-content:space-between;align-items:center;
+    gap:15px;flex-wrap:wrap;margin-bottom:18px;
+}
+.section-head h2{margin:0;color:var(--primary)}
+.filters{
+    display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;
+}
+.filters input,.filters select{
+    padding:11px 13px;border:1px solid #cbd5e1;
+    border-radius:9px;outline:none;background:white;
+}
+.filters input{min-width:280px}
+.table-wrap{width:100%;overflow-x:auto}
+table{width:100%;min-width:950px;border-collapse:collapse}
+th,td{
+    padding:11px 10px;border-bottom:1px solid var(--border);
+    text-align:left;white-space:nowrap;
+}
+th{background:#eff6ff;color:var(--primary)}
+tr:hover td{background:#f8fafc}
+.ten-ky-thi small{display:block;color:var(--muted);margin-top:4px}
+.status{
+    display:inline-block;padding:6px 10px;border-radius:999px;
+    font-size:12px;font-weight:700;
+}
+.status-luyen{background:#dbeafe;color:#1d4ed8}
+.status-thi{background:#dcfce7;color:#166534}
+.status-dong{background:#fee2e2;color:#991b1b}
+.actions{display:flex;gap:6px}
+.btn-small{
+    border:0;border-radius:7px;padding:7px 9px;
+    cursor:pointer;font-size:12px;font-weight:700;
+}
+.btn-edit{background:#fef3c7;color:#92400e}
+.btn-status{background:#e0e7ff;color:#3730a3}
+.btn-delete{background:#fee2e2;color:#991b1b}
+.loading,.empty{padding:35px;text-align:center;color:var(--muted)}
+.error{
+    padding:16px;background:#fee2e2;color:#991b1b;
+    border-radius:10px;font-weight:600;
+}
+footer{
+    margin-top:40px;background:#173b8f;color:white;
+    text-align:center;padding:20px;
+}
+@media(max-width:700px){
+    .header{flex-direction:column;align-items:flex-start}
+    .filters input{width:100%;min-width:0}
+}
+</style>
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+<header class="header">
+    <div>
+        <h1>📝 Quản lý kỳ thi</h1>
+        <p>Danh sách và quản lý các kỳ thi do giáo viên phụ trách</p>
+    </div>
+
+    <div class="header-actions">
+        <button class="btn btn-light" onclick="taiDanhSach()">
+            🔄 Làm mới
+        </button>
+
+        <a class="btn btn-light" href="tao-ky-thi.html">
+            ➕ Tạo kỳ thi
+        </a>
+
+        <button class="btn btn-light" onclick="quayLaiTrangGV()">
+            ← Về trang giáo viên
+        </button>
+    </div>
+</header>
+
+<main class="container">
+
+<section class="card">
+
+    <div id="teacherInfo" class="teacher-info">
+        ⏳ Đang tải thông tin giáo viên...
+    </div>
+
+    <div class="section-head">
+        <h2>📋 Kỳ thi của tôi</h2>
+        <strong id="tongKyThi">0 kỳ thi</strong>
+    </div>
+
+    <div class="filters">
+        <input
+            id="timKiem"
+            type="text"
+            placeholder="🔎 Tìm tên hoặc mã kỳ thi..."
+            oninput="locKyThi()">
+
+        <select id="locTrangThai" onchange="locKyThi()">
+            <option value="">Tất cả trạng thái</option>
+            <option value="0">🔴 Đóng</option>
+            <option value="1A">🔵 Luyện tập</option>
+            <option value="1B">🟢 Thi thật</option>
+        </select>
+    </div>
+
+    <div id="loading" class="loading">
+        ⏳ Đang tải danh sách kỳ thi...
+    </div>
+
+    <div id="error" class="error" style="display:none"></div>
+
+    <div id="empty" class="empty" style="display:none">
+        📭 Bạn chưa có kỳ thi nào.
+    </div>
+
+    <div id="tableWrapper" class="table-wrap" style="display:none">
+        <table>
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên kỳ thi</th>
+                    <th>Môn</th>
+                    <th>Khối</th>
+                    <th>Số câu</th>
+                    <th>Thời gian</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody id="examBody"></tbody>
+        </table>
+    </div>
+
+</section>
+
+</main>
+
+<footer>
+    Olympic HSG Online © 2026
+</footer>
+
+<script src="js/quan-ly-ky-thi-gv.js"></script>
+</body>
+</html>

@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hồ sơ học sinh - Olympic HSG Online</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f7fb;color:#1f2937}button{font-family:inherit}.header{background:linear-gradient(135deg,#2563eb,#4f46e5);color:#fff;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;box-shadow:0 3px 12px rgba(0,0,0,.12)}.header-left{display:flex;align-items:center;gap:14px}.btn-back{border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.12);color:#fff;padding:9px 14px;border-radius:10px;cursor:pointer;font-weight:600}.btn-back:hover{background:rgba(255,255,255,.2)}.logo{font-size:20px;font-weight:800}.container{max-width:1100px;margin:28px auto;padding:0 18px}.card{background:#fff;border-radius:18px;box-shadow:0 5px 20px rgba(15,23,42,.08);margin-bottom:20px;overflow:hidden}.profile-top{padding:28px;display:flex;align-items:center;gap:24px;background:linear-gradient(135deg,#eef5ff,#fff)}.avatar{width:120px;height:120px;border-radius:50%;object-fit:cover;border:5px solid #fff;box-shadow:0 4px 16px rgba(0,0,0,.15);background:#e5e7eb;flex:none}.avatar-fallback{width:120px;height:120px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#dbeafe;color:#1d4ed8;font-size:42px;font-weight:800;border:5px solid #fff;box-shadow:0 4px 16px rgba(0,0,0,.15);flex:none}.profile-name{font-size:30px;font-weight:800;margin:0 0 8px}.profile-code{color:#64748b;font-size:15px;margin-bottom:12px}.badge{display:inline-block;padding:6px 11px;border-radius:999px;font-size:13px;font-weight:700;background:#dcfce7;color:#166534}.section{padding:24px}.section-title{margin:0 0 18px;font-size:20px;color:#172554;display:flex;align-items:center;gap:9px}.info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.info-item{border:1px solid #e5e7eb;border-radius:12px;padding:14px 16px;background:#fafcff}.info-label{font-size:13px;color:#64748b;margin-bottom:5px}.info-value{font-size:16px;font-weight:650;word-break:break-word}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.stat{padding:20px;border-radius:14px;background:#f8fafc;border:1px solid #e5e7eb;text-align:center}.stat-value{font-size:28px;font-weight:800;color:#2563eb}.stat-label{font-size:13px;color:#64748b;margin-top:5px}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:760px}th,td{padding:12px 10px;border-bottom:1px solid #e5e7eb;text-align:left;vertical-align:middle}th{background:#f8fafc;color:#475569;font-size:13px}td{font-size:14px}.empty{padding:28px;text-align:center;color:#64748b;border:1px dashed #cbd5e1;border-radius:12px;background:#f8fafc}.loading{text-align:center;padding:45px 20px;color:#64748b}.error{background:#fef2f2;border:1px solid #fecaca;color:#991b1b;padding:16px;border-radius:12px;line-height:1.55}.hidden{display:none!important}.footer{text-align:center;color:#94a3b8;padding:15px 0 30px;font-size:13px}@media(max-width:760px){.header{padding:13px 15px}.logo{font-size:16px}.container{padding:0 12px;margin-top:16px}.profile-top{padding:20px;gap:16px}.avatar,.avatar-fallback{width:88px;height:88px}.avatar-fallback{font-size:30px}.profile-name{font-size:22px}.info-grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.section{padding:18px}}
+/* ==============================
+   XP
+============================== */
+
+.xp-box{
+  background:linear-gradient(
+    135deg,
+    #eff6ff,
+    #eef2ff
+  );
+
+  border:1px solid #dbeafe;
+
+  border-radius:16px;
+
+  padding:22px;
+}
+
+
+.xp-top{
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  gap:20px;
+
+  margin-bottom:18px;
+}
+
+
+.xp-label{
+  font-size:13px;
+
+  color:#64748b;
+
+  margin-bottom:5px;
+}
+
+
+.xp-value{
+  font-size:32px;
+
+  font-weight:800;
+
+  color:#2563eb;
+}
+
+
+.level-box{
+  text-align:center;
+
+  min-width:90px;
+
+  padding:10px 16px;
+
+  border-radius:14px;
+
+  background:#fff;
+
+  border:1px solid #dbeafe;
+}
+
+
+.level-label{
+  font-size:12px;
+
+  color:#64748b;
+}
+
+
+.level-value{
+  font-size:28px;
+
+  font-weight:800;
+
+  color:#4f46e5;
+}
+
+
+.xp-progress{
+  height:14px;
+
+  background:#dbeafe;
+
+  border-radius:999px;
+
+  overflow:hidden;
+}
+
+
+.xp-progress-bar{
+  height:100%;
+
+  background:linear-gradient(
+    90deg,
+    #2563eb,
+    #7c3aed
+  );
+
+  border-radius:999px;
+
+  transition:width .5s ease;
+}
+
+
+.xp-note{
+  margin-top:9px;
+
+  font-size:13px;
+
+  color:#64748b;
+
+  text-align:right;
+}
+
+
+/* ==============================
+   HUY HIỆU
+============================== */
+
+.achievement-grid{
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,minmax(0,1fr));
+
+  gap:15px;
+}
+
+
+.achievement{
+  border:1px solid #e5e7eb;
+
+  border-radius:15px;
+
+  padding:18px;
+
+  text-align:center;
+
+  background:#fff;
+
+  transition:
+    transform .2s,
+    box-shadow .2s;
+}
+
+
+.achievement:hover{
+  transform:translateY(-3px);
+
+  box-shadow:
+    0 7px 20px rgba(15,23,42,.08);
+}
+
+
+.achievement-icon{
+  font-size:42px;
+
+  margin-bottom:10px;
+}
+
+
+.achievement-name{
+  font-weight:750;
+
+  color:#1e293b;
+
+  margin-bottom:5px;
+}
+
+
+.achievement-desc{
+  font-size:12px;
+
+  color:#64748b;
+
+  line-height:1.45;
+}
+
+
+/* ==============================
+   HOẠT ĐỘNG
+============================== */
+
+.activity-item{
+  display:flex;
+
+  gap:14px;
+
+  padding:14px 0;
+
+  border-bottom:1px solid #e5e7eb;
+}
+
+
+.activity-item:last-child{
+  border-bottom:none;
+}
+
+
+.activity-icon{
+  width:42px;
+
+  height:42px;
+
+  border-radius:50%;
+
+  background:#eff6ff;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  font-size:20px;
+
+  flex:none;
+}
+
+
+.activity-content{
+  flex:1;
+}
+
+
+.activity-title{
+  font-weight:650;
+
+  margin-bottom:4px;
+}
+
+
+.activity-time{
+  font-size:12px;
+
+  color:#94a3b8;
+}
+
+
+@media(max-width:760px){
+
+  .achievement-grid{
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
+  }
+
+  .xp-value{
+    font-size:26px;
+  }
+
+}
+.achievement-block{
+  margin-top:28px;
+}
+
+.activity-block{
+  margin-top:28px;
+}
+
+.sub-title{
+  font-size:17px;
+  font-weight:750;
+  color:#1e293b;
+  margin:0 0 15px;
+  padding-bottom:10px;
+  border-bottom:1px solid #e5e7eb;
+}
+.section-title-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:20px;
+}
+
+.section-title-row .section-title{
+  margin:0;
+}
+
+.btn-refresh-achievement{
+  border:none;
+  background:#eff6ff;
+  color:#2563eb;
+  border:1px solid #bfdbfe;
+  padding:8px 14px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:600;
+  transition:.2s;
+}
+
+.btn-refresh-achievement:hover{
+  background:#dbeafe;
+  transform:translateY(-1px);
+}
+</style>
+</head>
+<body>
+<header class="header"><div class="header-left"><button class="btn-back" onclick="quayLai()">← Quay lại</button><div class="logo">🏆 OLYMPIC HSG ONLINE</div></div></header>
+<main class="container">
+<div id="loading" class="card loading">⏳ Đang tải hồ sơ học sinh...</div>
+<div id="errorBox" class="card section hidden"></div>
+<div id="profileContent" class="hidden">
+<section class="card"><div class="profile-top"><div id="avatarWrap"><div class="avatar-fallback" id="avatarFallback">HS</div></div><div><h1 class="profile-name" id="hoTen">---</h1><div class="profile-code">Mã học sinh: <strong id="maHS">---</strong></div><span class="badge" id="trangThai">Đang học</span></div></div></section>
+<section class="card section"><h2 class="section-title">👤 Thông tin cá nhân</h2><div class="info-grid">
+<div class="info-item"><div class="info-label">Họ và tên</div><div class="info-value" id="infoHoTen">---</div></div>
+<div class="info-item"><div class="info-label">Ngày sinh</div><div class="info-value" id="infoNgaySinh">---</div></div>
+<div class="info-item"><div class="info-label">Giới tính</div><div class="info-value" id="infoGioiTinh">---</div></div>
+<div class="info-item"><div class="info-label">Mã học sinh</div><div class="info-value" id="infoMaHS">---</div></div>
+<div class="info-item"><div class="info-label">Lớp</div><div class="info-value" id="infoLop">---</div></div>
+<div class="info-item"><div class="info-label">Quyền</div><div class="info-value" id="infoQuyen">Học sinh</div></div>
+</div></section>
+<section class="card section"><h2 class="section-title">🏫 Thông tin trường học</h2><div class="info-grid">
+<div class="info-item"><div class="info-label">Trường</div><div class="info-value" id="infoTruong">---</div></div>
+<div class="info-item"><div class="info-label">Trạng thái tài khoản</div><div class="info-value" id="infoTrangThai">---</div></div>
+</div></section>
+<section class="card section"><h2 class="section-title">📊 Thành tích học tập</h2><div class="stats">
+<div class="stat"><div class="stat-value" id="statSoLanThi">0</div><div class="stat-label">Lần dự thi</div></div>
+<div class="stat"><div class="stat-value" id="statDiemTB">0</div><div class="stat-label">Điểm trung bình</div></div>
+<div class="stat"><div class="stat-value" id="statDiemCaoNhat">0</div><div class="stat-label">Điểm cao nhất</div></div>
+<div class="stat"><div class="stat-value" id="statSoKyThi">0</div><div class="stat-label">Kỳ thi đã tham gia</div></div>
+</div></section>
+<section class="card section"><h2 class="section-title">📝 Kết quả các kỳ thi</h2><div id="ketQuaLoading" class="loading">⏳ Đang tải kết quả...</div><div id="ketQuaEmpty" class="empty hidden">Chưa có kết quả kỳ thi nào được ghi nhận.</div><div id="ketQuaError" class="error hidden"></div><div id="ketQuaTableWrap" class="table-wrap hidden"><table><thead><tr><th>STT</th><th>Kỳ thi</th><th>Môn</th><th>Lớp/Khối</th><th>Điểm</th><th>Đúng</th><th>Tổng câu</th><th>Ngày thi</th></tr></thead><tbody id="ketQuaBody"></tbody></table></div></section>
+<section class="card section">
+  <div class="section-title-row">
+
+  <h2 class="section-title">
+    🏅 Thành tích & hoạt động
+  </h2>
+
+  <button
+    class="btn-refresh-achievement"
+    onclick="taiThanhTichTuGoogleSheet()"
+  >
+    🔄 Cập nhật
+  </button>
+
+</div>
+
+  <!-- XP & CẤP ĐỘ -->
+  <div class="xp-box">
+    <div class="xp-top">
+
+      <div>
+        <div class="xp-label">⭐ Kinh nghiệm học tập</div>
+        <div class="xp-value" id="studentXP">0 XP</div>
+      </div>
+
+      <div class="level-box">
+        <div class="level-label">Cấp độ</div>
+        <div class="level-value" id="studentLevel">1</div>
+      </div>
+
+    </div>
+
+    <div class="xp-progress">
+      <div
+        class="xp-progress-bar"
+        id="xpProgressBar"
+        style="width:0%">
+      </div>
+    </div>
+
+    <div class="xp-note" id="xpNote">
+      0 / 100 XP đến cấp tiếp theo
+    </div>
+  </div>
+
+
+  <!-- HUY HIỆU -->
+  <div class="achievement-block">
+
+    <h3 class="sub-title">🏅 Huy hiệu & thành tích</h3>
+
+    <div id="achievementList" class="achievement-grid">
+      <!-- JS tự sinh -->
+    </div>
+
+  </div>
+
+
+  <!-- HOẠT ĐỘNG -->
+  <div class="activity-block">
+
+    <h3 class="sub-title">🕒 Hoạt động gần đây</h3>
+
+    <div id="activityList">
+      <div class="empty">
+        Chưa có hoạt động nào.
+      </div>
+    </div>
+
+  </div>
+
+</section>
+</div><div class="footer">OLYMPIC HSG ONLINE · Hồ sơ học sinh</div>
+</main>
+<script>
+const API_TAIKHOAN="https://script.google.com/macros/s/AKfycbzXRtrvbS2YpKDAZLwoV0cR1mFWHxlXljvNJzryHhFmnfOXZ3LzR0ai1cyltOF7l62hVQ/exec";
+const API_KETQUA="https://script.google.com/macros/s/AKfycbxWt7qf7N_wghFQ_zonxD8jcdOeebh8rbPtBu2PNTEVrhhMTWSKHWNJJnE78qkfFFB3/exec";
+function layMaHS(){const keys=["maHS","MaHS","maThiSinh","studentCode","maHocSinh"];for(const key of keys){const v=localStorage.getItem(key);if(v&&String(v).trim())return String(v).trim()}const objectKeys=["user","currentUser","taiKhoanHS","hocSinh"];for(const key of objectKeys){try{const o=JSON.parse(localStorage.getItem(key)||"null");if(o){const v=o.maHS||o.MaHS||o.maThiSinh||o.studentCode||o.maHocSinh;if(v&&String(v).trim())return String(v).trim()}}catch(e){}}return ""}
+function ganText(id,value){const el=document.getElementById(id);if(!el){console.warn("Không tìm thấy phần tử:",id);return}el.textContent=value===undefined||value===null||String(value).trim()===""?"---":String(value)}
+function escapeHTML(value){return String(value??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
+function dinhDangNgay(value){if(value===undefined||value===null||value==="")return "---";const s=String(value).trim();let m=s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);if(m)return String(m[1]).padStart(2,"0")+"/"+String(m[2]).padStart(2,"0")+"/"+m[3];m=s.match(/^[A-Za-z]{3}\s+([A-Za-z]{3})\s+(\d{1,2})\s+(\d{4})/);if(m){const thang={Jan:"01",Feb:"02",Mar:"03",Apr:"04",May:"05",Jun:"06",Jul:"07",Aug:"08",Sep:"09",Oct:"10",Nov:"11",Dec:"12"};if(thang[m[1]])return String(m[2]).padStart(2,"0")+"/"+thang[m[1]]+"/"+m[3]}m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);if(m)return String(m[3]).padStart(2,"0")+"/"+String(m[2]).padStart(2,"0")+"/"+m[1];return s}
+function dinhDangSo(value){const n=Number(value);if(!Number.isFinite(n))return "0";return Number.isInteger(n)?String(n):n.toFixed(2).replace(/0+$/," ").replace(/\.$/,"").trim()}
+function hienLoi(message){document.getElementById("loading").classList.add("hidden");const box=document.getElementById("errorBox");box.innerHTML="<strong>Không thể tải hồ sơ.</strong><br>"+escapeHTML(message);box.classList.remove("hidden")}
+function hienThiHoSo(hs){if(!hs||typeof hs!=="object"){hienLoi("Dữ liệu học sinh không hợp lệ.");return}const maHS=hs.maHS||hs.MaHS||hs.maHocSinh||"";const hoTen=hs.hoTen||hs.Hoten||hs.HoTen||hs.hoten||"";const ngaySinh=hs.ngaySinh||hs.Ngaysinh||hs.NgaySinh||"";const gioiTinh=hs.gioiTinh||hs.Gioitinh||hs.GioiTinh||"";const lop=hs.lop||hs.Lop||"";const truong=hs.truong||hs.Truong||"";const quyen=hs.quyen||hs.Quyen||"Học sinh";const trangThai=hs.trangThai??hs.Trangthai??"";const avatar=hs.avatar||hs.Avatar||"";ganText("hoTen",hoTen);ganText("maHS",maHS);ganText("infoHoTen",hoTen);ganText("infoNgaySinh",dinhDangNgay(ngaySinh));ganText("infoGioiTinh",gioiTinh);ganText("infoMaHS",maHS);ganText("infoLop",lop);ganText("infoQuyen",quyen);ganText("infoTruong",truong);const tt=String(trangThai)==="1"||String(trangThai).toLowerCase()==="active"?"Đang hoạt động":String(trangThai)==="0"?"Đã khóa":(trangThai||"Đang học");ganText("infoTrangThai",tt);ganText("trangThai",tt);if(avatar){const wrap=document.getElementById("avatarWrap");wrap.innerHTML='<img class="avatar" src="'+escapeHTML(avatar)+'" alt="Ảnh học sinh" onerror="this.parentElement.innerHTML=\'<div class=&quot;avatar-fallback&quot;>HS</div>\'">'}else{document.getElementById("avatarFallback").textContent=(hoTen||"HS").trim().split(/\s+/).slice(-2).map(x=>x.charAt(0)).join("").toUpperCase()}}
+async function taiHoSo(){
+
+  const maHS = layMaHS();
+
+  if(!maHS){
+    hienLoi(
+      "Không tìm thấy mã học sinh (MaHS) trong localStorage."
+    );
+    return;
+  }
+
+  const lop =
+    localStorage.getItem("hoSoLop") || "";
+
+  if(!lop){
+    hienLoi(
+      "Không tìm thấy lớp của học sinh."
+    );
+    return;
+  }
+
+  try{
+
+    /*
+     * TAIKHOAN hiện tại đã có API:
+     * layHocSinhTheoLop
+     *
+     * Ta lấy danh sách học sinh của lớp
+     * rồi tìm đúng MaHS.
+     */
+
+    const url =
+      API_TAIKHOAN +
+      "?action=layHocSinhTheoLop&lop=" +
+      encodeURIComponent(lop);
+
+    const response = await fetch(url,{
+      method:"GET",
+      cache:"no-store"
+    });
+
+    if(!response.ok){
+
+      throw new Error(
+        "API TAIKHOAN trả về HTTP " +
+        response.status
+      );
+
+    }
+
+    const data = await response.json();
+
+    if(!data.success){
+
+      throw new Error(
+        data.message ||
+        "Không thể lấy danh sách học sinh."
+      );
+
+    }
+
+    const danhSach =
+      Array.isArray(data.hocSinh)
+        ? data.hocSinh
+        : [];
+
+    /*
+     * Tìm đúng học sinh theo MaHS
+     */
+    const hs = danhSach.find(function(item){
+
+      const ma =
+        item.maHS ||
+        item.MaHS ||
+        "";
+
+      return String(ma).trim().toLowerCase()
+        === String(maHS).trim().toLowerCase();
+
+    });
+
+
+    if(!hs){
+
+      throw new Error(
+        "Không tìm thấy học sinh " +
+        maHS +
+        " trong lớp " +
+        lop
+      );
+
+    }
+
+
+    /*
+     * Hiển thị hồ sơ
+     */
+    hienThiHoSo(hs);
+
+    document
+      .getElementById("loading")
+      .classList.add("hidden");
+
+    document
+      .getElementById("profileContent")
+      .classList.remove("hidden");
+
+
+    /*
+     * Sau khi hồ sơ tải thành công
+     * mới tải kết quả thi
+     */
+    await taiKetQuaThi(maHS);
+
+
+  }catch(error){
+
+    console.error(error);
+
+    hienLoi(
+      error.message ||
+      "Có lỗi khi tải hồ sơ học sinh."
+    );
+
+  }
+}
+async function taiKetQuaThi(maHS){
+
+  const loading =
+    document.getElementById("ketQuaLoading");
+
+  const empty =
+    document.getElementById("ketQuaEmpty");
+
+  const errorBox =
+    document.getElementById("ketQuaError");
+
+  const tableWrap =
+    document.getElementById("ketQuaTableWrap");
+
+  loading.classList.remove("hidden");
+  empty.classList.add("hidden");
+  errorBox.classList.add("hidden");
+  tableWrap.classList.add("hidden");
+
+
+  try{
+
+    maHS = String(maHS || "").trim();
+
+    if(!maHS){
+      throw new Error("Không có MaHS để lấy kết quả.");
+    }
+
+
+    const url =
+      API_KETQUA +
+      "?action=layKetQuaTheoMaHS&maHS=" +
+      encodeURIComponent(maHS);
+
+
+    console.log("=== KETQUA ===");
+    console.log("MaHS:", maHS);
+    console.log("URL:", url);
+
+
+    const response = await fetch(url,{
+      method:"GET",
+      cache:"no-store"
+    });
+
+
+    console.log("HTTP:", response.status);
+
+
+    if(!response.ok){
+
+      throw new Error(
+        "API KETQUA trả về HTTP " +
+        response.status
+      );
+
+    }
+
+
+    const data = await response.json();
+
+
+    console.log("DỮ LIỆU KETQUA:", data);
+
+
+    if(!data.success){
+
+      throw new Error(
+        data.message ||
+        "API KETQUA trả về success=false."
+      );
+
+    }
+
+
+    /*
+     * Lấy mảng kết quả
+     */
+    let ketQua = [];
+
+    if(Array.isArray(data.ketQua)){
+      ketQua = data.ketQua;
+    }
+    else if(Array.isArray(data.data)){
+      ketQua = data.data;
+    }
+
+
+    console.log(
+      "SỐ KẾT QUẢ:",
+      ketQua.length
+    );
+
+
+    loading.classList.add("hidden");
+
+
+    if(ketQua.length === 0){
+
+      empty.textContent =
+        "Học sinh " +
+        maHS +
+        " chưa có kết quả thi.";
+
+      empty.classList.remove("hidden");
+
+      capNhatThongKe([]);
+
+      return;
+    }
+
+
+    /*
+     * Có kết quả → hiển thị bảng
+     */
+    hienThiBangKetQua(ketQua);
+
+    capNhatThongKe(ketQua);
+
+
+  }catch(error){
+
+    console.error(
+      "LỖI KETQUA:",
+      error
+    );
+
+
+    loading.classList.add("hidden");
+
+
+    errorBox.textContent =
+      "Không tải được kết quả thi: " +
+      (error.message || "Lỗi không xác định.");
+
+
+    errorBox.classList.remove("hidden");
+
+  }
+
+}
+function hienThiKhongCoKetQua(showMessage=true){const empty=document.getElementById("ketQuaEmpty");empty.textContent=showMessage?"Chưa có kết quả kỳ thi nào được ghi nhận.":"Kết quả thi chưa thể hiển thị. Thông tin hồ sơ vẫn được tải bình thường.";empty.classList.remove("hidden")}
+function hienThiBangKetQua(ds){const body=document.getElementById("ketQuaBody");body.innerHTML="";ds.forEach((item,index)=>{const tenKyThi=item.tenKyThi||item.TenKyThi||item.tenkythi||item.kyThi||item.maKyThi||"---";const mon=item.mon||item.Mon||"---";const khoi=item.khoi||item.Khoi||item.lop||item.Lop||"---";const diem=item.diem??item.Diem??0;const soDung=item.soDung??item.SoDung??0;const tongSoCau=item.tongSoCau??item.TongSoCau??0;const ngayThi=item.ngayThi||item.NgayThi||"";const tr=document.createElement("tr");tr.innerHTML=`<td>${index+1}</td><td>${escapeHTML(tenKyThi)}</td><td>${escapeHTML(mon)}</td><td>${escapeHTML(khoi)}</td><td><strong>${escapeHTML(dinhDangSo(diem))}</strong></td><td>${escapeHTML(soDung)}</td><td>${escapeHTML(tongSoCau)}</td><td>${escapeHTML(dinhDangNgay(ngayThi))}</td>`;body.appendChild(tr)});document.getElementById("ketQuaTableWrap").classList.remove("hidden")}
+function capNhatThongKe(ds){const soLanThi=ds.length;const diemList=ds.map(x=>Number(x.diem??x.Diem)).filter(Number.isFinite);const diemTB=diemList.length?diemList.reduce((a,b)=>a+b,0)/diemList.length:0;const diemCaoNhat=diemList.length?Math.max(...diemList):0;const kyThiSet=new Set(ds.map(x=>String(x.maKyThi||x.MaKyThi||x.tenKyThi||x.TenKyThi||"").trim()).filter(Boolean));ganText("statSoLanThi",soLanThi);ganText("statDiemTB",dinhDangSo(diemTB));ganText("statDiemCaoNhat",dinhDangSo(diemCaoNhat));ganText("statSoKyThi",kyThiSet.size)}
+function quayLai(){if(history.length>1)history.back();else window.location.href="lop-hoc.html"}
+async function taiThanhTichTuGoogleSheet(){
+
+  const maHS = layMaHS();
+
+  if(!maHS){
+    console.warn("Không có MaHS để tải thành tích.");
+    return;
+  }
+
+  try{
+
+    const url =
+      API_KETQUA +
+      "?action=layThanhTichHS&maHS=" +
+      encodeURIComponent(maHS) +
+      "&_t=" +
+      Date.now();
+
+    console.log(
+      ">>> TẢI THÀNH TÍCH TỪ GOOGLE SHEET:",
+      url
+    );
+
+    const response =
+      await fetch(
+        url,
+        {
+          method:"GET",
+          cache:"no-store"
+        }
+      );
+
+    if(!response.ok){
+
+      throw new Error(
+        "API thành tích trả về HTTP " +
+        response.status
+      );
+
+    }
+
+    const data =
+      await response.json();
+
+    console.log(
+      ">>> DỮ LIỆU THÀNH TÍCH:",
+      data
+    );
+
+    if(!data.success){
+
+      throw new Error(
+        data.message ||
+        "Không lấy được dữ liệu thành tích."
+      );
+
+    }
+
+
+    // ==========================================
+    // XP + CẤP ĐỘ
+    // ==========================================
+
+    hienThiXP(
+      Number(data.xp || 0),
+      Number(data.capDo || 1)
+    );
+
+
+    // ==========================================
+    // HUY HIỆU
+    // ==========================================
+
+    hienThiHuyHieuGoogle(
+      Array.isArray(data.huyHieu)
+        ? data.huyHieu
+        : []
+    );
+
+
+    // ==========================================
+    // HOẠT ĐỘNG
+    // ==========================================
+
+    hienThiHoatDongGoogle(
+      Array.isArray(data.hoatDong)
+        ? data.hoatDong
+        : []
+    );
+
+
+    console.log(
+      ">>> ĐÃ CẬP NHẬT THÀNH TÍCH CHO:",
+      maHS
+    );
+
+  }
+  catch(error){
+
+    console.error(
+      "LỖI TẢI THÀNH TÍCH:",
+      error
+    );
+
+    const achievement =
+      document.getElementById(
+        "achievementList"
+      );
+
+    if(achievement){
+
+      achievement.innerHTML =
+        `<div class="empty">
+          Không tải được dữ liệu huy hiệu.
+        </div>`;
+
+    }
+
+    const activity =
+      document.getElementById(
+        "activityList"
+      );
+
+    if(activity){
+
+      activity.innerHTML =
+        `<div class="empty">
+          Không tải được dữ liệu hoạt động.
+        </div>`;
+
+    }
+
+  }
+
+}
+function hienThiXP(xp, capDo){
+
+    ganText(
+        "studentXP",
+        xp + " XP"
+    );
+
+    ganText(
+        "studentLevel",
+        capDo
+    );
+
+    const xpTrongCap = xp % 100;
+
+    const progress =
+        document.getElementById("xpProgressBar");
+
+    if(progress){
+        progress.style.width =
+            xpTrongCap + "%";
+    }
+
+    ganText(
+        "xpNote",
+        xpTrongCap +
+        " / 100 XP đến cấp tiếp theo"
+    );
+}
+function hienThiHuyHieuGoogle(danhSach){
+
+  const container =
+    document.getElementById(
+      "achievementList"
+    );
+
+  if(!container) return;
+
+
+  if(!Array.isArray(danhSach) || danhSach.length === 0){
+
+    container.innerHTML = `
+      <div class="empty">
+        Học sinh chưa có huy hiệu nào.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  container.innerHTML = "";
+
+
+  danhSach.forEach(function(item){
+
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "achievement";
+
+
+    div.innerHTML = `
+
+      <div class="achievement-icon">
+        ${escapeHTML(
+          item.icon || "🏅"
+        )}
+      </div>
+
+      <div class="achievement-name">
+        ${escapeHTML(
+          item.ten ||
+          item.TenHuyHieu ||
+          "Huy hiệu"
+        )}
+      </div>
+
+      <div class="achievement-desc">
+        ${escapeHTML(
+          item.moTa ||
+          item.MoTa ||
+          ""
+        )}
+      </div>
+
+      ${
+        item.ngayDat
+          ?
+        `
+        <div
+          class="achievement-desc"
+          style="margin-top:8px"
+        >
+          Đạt:
+          ${escapeHTML(
+            dinhDangNgay(item.ngayDat)
+          )}
+        </div>
+        `
+          :
+        ""
+      }
+
+    `;
+
+
+    container.appendChild(div);
+
+  });
+
+}
+function hienThiHoatDongGoogle(danhSach){
+
+  const container =
+    document.getElementById(
+      "activityList"
+    );
+
+  if(!container) return;
+
+
+  if(!Array.isArray(danhSach) || danhSach.length === 0){
+
+    container.innerHTML = `
+      <div class="empty">
+        Chưa có hoạt động nào.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  // ==========================================
+  // SẮP XẾP HOẠT ĐỘNG MỚI NHẤT LÊN TRÊN
+  // ==========================================
+
+  danhSach =
+    danhSach.slice().sort(function(a,b){
+
+      const timeA =
+        new Date(
+          a.thoiGian ||
+          a.ThoiGian ||
+          0
+        ).getTime();
+
+      const timeB =
+        new Date(
+          b.thoiGian ||
+          b.ThoiGian ||
+          0
+        ).getTime();
+
+      return timeB - timeA;
+
+    });
+
+
+  container.innerHTML = "";
+
+
+  danhSach.forEach(function(item){
+
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "activity-item";
+
+
+    const tieuDe =
+      item.tieuDe ||
+      item.TieuDe ||
+      "Hoạt động học tập";
+
+
+    const moTa =
+      item.moTa ||
+      item.MoTa ||
+      "";
+
+
+    const icon =
+      item.icon ||
+      item.Icon ||
+      "📌";
+
+
+    const thoiGian =
+      item.thoiGian ||
+      item.ThoiGian ||
+      "";
+
+
+    div.innerHTML = `
+
+      <div class="activity-icon">
+        ${escapeHTML(icon)}
+      </div>
+
+      <div class="activity-content">
+
+        <div class="activity-title">
+          ${escapeHTML(tieuDe)}
+        </div>
+
+        ${
+          moTa
+            ?
+          `
+          <div
+            style="
+              font-size:13px;
+              color:#64748b;
+              margin-bottom:4px;
+            "
+          >
+            ${escapeHTML(moTa)}
+          </div>
+          `
+            :
+          ""
+        }
+
+        <div class="activity-time">
+          ${escapeHTML(
+            dinhDangNgay(thoiGian)
+          )}
+        </div>
+
+      </div>
+
+    `;
+
+
+    container.appendChild(div);
+
+  });
+
+}
+document.addEventListener("DOMContentLoaded", function(){
+    taiHoSo();
+    taiThanhTichTuGoogleSheet();
+});
+</script>
+<script src="js/chat-notification.js"></script>
+</body>
+</html>

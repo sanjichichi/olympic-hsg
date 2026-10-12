@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Kết quả thi</title>
+
+<link
+rel="stylesheet"
+href="css/style-old.css">
+  <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+
+<nav class="menu">
+
+ <a href="index.html">Trang chủ</a>
+
+ <a href="gioithieu.html">Giới thiệu</a>
+
+    <a href="thongbao.html">Thông báo</a>
+
+    <a href="xephang.html">Bảng xếp hạng</a>
+
+    <a href="thele.html">Thể lệ</a>
+
+    <a href="clb.html">CLB năng khiếu</a>
+
+<div class="user-menu">
+
+<a href="#"
+class="login-btn"
+id="taiKhoanBtn">
+
+</a>
+
+<div
+id="userDropdown"
+class="user-dropdown">
+
+<a href="trangcanhan.html">
+Hồ sơ cá nhân
+</a>
+
+<a href="chonkithi.html">
+🏆 Kỳ thi của tôi
+</a>
+
+<a href="ketquathi.html">
+📊 Kết quả thi
+</a>
+
+<a href="xephang.html">🏆 Bảng xếp hạng</a>
+
+<a href="#"
+onclick="dangXuat()">
+
+🚪 Đăng xuất
+
+</a>
+
+</div>
+
+</div>
+
+</nav>
+
+<section class="welcome-box">
+
+<h2>📊 KẾT QUẢ THI CỦA TÔI</h2>
+
+<p id="tenHocSinh"></p>
+<p id="lopHocSinh"></p>
+
+<table id="bangKetQua">
+<thead>
+
+<tr>
+
+<th>Kỳ thi</th>
+
+<th>Điểm</th>
+
+<th>Xếp loại</th>
+
+<th>Thời gian</th>
+
+<th>Xếp hạng</th>
+
+<th>Chứng nhận</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+</tbody>
+
+</table>
+
+</section>
+
+<script>
+
+console.log("tongSoCau =", localStorage.getItem("tongSoCau"));
+console.log("soCauSai =", localStorage.getItem("soCauSai"));
+console.log("tyLe =", localStorage.getItem("tyLe"));
+console.log("xepLoai =", localStorage.getItem("xepLoai"));
+if(
+localStorage.getItem("dangNhap")
+!== "true"
+){
+
+window.location.href =
+"login.html";
+
+}
+
+document.getElementById(
+"taiKhoanBtn"
+).innerHTML =
+localStorage.getItem("hoTen")
++ " ▼";
+
+document.getElementById(
+"tenHocSinh"
+).innerHTML =
+localStorage.getItem("hoTen");
+
+document.getElementById(
+"lopHocSinh"
+).innerHTML =
+localStorage.getItem("lop");
+
+const tbody = document.querySelector("#bangKetQua tbody");
+
+/*
+ * ============================================================
+ * KETQUA CHUNG
+ * ============================================================
+ * Tất cả kết quả của mọi môn, mọi khối, mọi kỳ thi nằm trong
+ * một Sheet KETQUA.
+ *
+ * Google Sheet cần được Publish to web -> CSV.
+ * Dán URL CSV của Sheet KETQUA vào biến KETQUA_CSV_URL.
+ *
+ * Cấu trúc cột:
+ * A maKyThi
+ * B maHS
+ * C hoTen
+ * D gioiTinh
+ * E lop
+ * F tenKyThi
+ * G khoi
+ * H mon
+ * I soDung
+ * J soSai
+ * K tongSoCau
+ * L diem
+ * M thoiGian
+ * N roiTab
+ * O ngayThi
+ * P tyLe
+ * Q xepLoai
+ * R dotThi
+ * S namHoc
+ */
+const KETQUA_CSV_URL =
+    localStorage.getItem("KETQUA_CSV_URL") ||
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vRULO6RaaXqNERaYMuLx9cpHLp3hxqL3i2PHuccrdbSvFaQgpsrPvRk-fhgzlOxamLUYCe1sLQMQvPL/pub?output=csv";
+
+async function taiKetQua(){
+
+    const maHS =
+        localStorage.getItem("maThiSinh") || "";
+
+    tbody.innerHTML = "";
+
+    if (!maHS) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="6">
+                    Không tìm thấy mã học sinh.
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    if (
+        !KETQUA_CSV_URL ||
+        KETQUA_CSV_URL ===
+        "DAN_URL_CSV_SHEET_KETQUA_VAO_DAY"
+    ) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="6">
+                    Chưa cấu hình URL CSV của Sheet KETQUA.
+                </td>
+            </tr>
+        `;
+        console.error("Chưa có KETQUA_CSV_URL");
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(KETQUA_CSV_URL);
+
+        if (!response.ok) {
+            throw new Error(
+                "Không tải được Sheet KETQUA: " +
+                response.status
+            );
+        }
+
+        const text =
+            await response.text();
+
+        const rows =
+            parseCSV(text);
+
+        if (rows.length <= 1) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="6">
+                        Sheet KETQUA chưa có dữ liệu.
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        const header = rows[0].map(h =>
+            String(h || "")
+                .trim()
+                .replace(/^\uFEFF/, "")
+        );
+
+        const index = {};
+
+        header.forEach((name, i) => {
+            index[name] = i;
+        });
+
+        console.log("Header KETQUA:", header);
+
+        const get = (row, name) => {
+            const i = index[name];
+            return i === undefined
+                ? ""
+                : String(row[i] ?? "").trim();
+        };
+
+        /*
+         * Lấy tất cả kết quả của học sinh.
+         */
+        const ketQuaCuaHS = rows
+            .slice(1)
+            .map(row => {
+
+                return {
+                    maKyThi: get(row, "maKyThi"),
+                    maHS: get(row, "maHS"),
+                    hoTen: get(row, "hoTen"),
+                    lop: get(row, "lop"),
+                    tenKyThi: get(row, "tenKyThi"),
+                    khoi: get(row, "khoi"),
+                    mon: get(row, "mon"),
+                    diem: Number(
+                        get(row, "diem") || 0
+                    ),
+                    soDung: Number(
+                        get(row, "soDung") || 0
+                    ),
+                    soSai: Number(
+                        get(row, "soSai") || 0
+                    ),
+                    tongSoCau: Number(
+                        get(row, "tongSoCau") || 0
+                    ),
+                    thoiGian:
+                        get(row, "thoiGian"),
+                    roiTab: Number(
+                        get(row, "roiTab") || 0
+                    ),
+                    ngayThi:
+                        get(row, "ngayThi"),
+                    tyLe: Number(
+                        get(row, "tyLe") || 0
+                    ),
+                    xepLoai:
+                        get(row, "xepLoai"),
+                    dotThi:
+                        get(row, "dotThi"),
+                    namHoc:
+                        get(row, "namHoc")
+                };
+
+            })
+            .filter(item =>
+                item.maHS === maHS
+            );
+
+        if (!ketQuaCuaHS.length) {
+
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="6">
+                        Chưa có kết quả thi.
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+        /*
+         * Tính xếp hạng riêng cho từng maKyThi.
+         */
+        const cacheRank = {};
+
+        for (const ketQua of ketQuaCuaHS) {
+
+            if (!ketQua.maKyThi) {
+                cacheRank[ketQua.tenKyThi] =
+                    cacheRank[ketQua.tenKyThi] ||
+                    { hang: "-", tong: 0 };
+                continue;
+            }
+
+            if (cacheRank[ketQua.maKyThi]) {
+                continue;
+            }
+
+            const dsKyThi = rows
+                .slice(1)
+                .map(row => {
+
+                    return {
+                        maKyThi:
+                            get(row, "maKyThi"),
+
+                        maHS:
+                            get(row, "maHS"),
+
+                        diem:
+                            Number(
+                                get(row, "diem") || 0
+                            ),
+
+                        roiTab:
+                            Number(
+                                get(row, "roiTab") || 0
+                            ),
+
+                        thoiGian:
+                            get(row, "thoiGian")
+                    };
+
+                })
+                .filter(item =>
+                    item.maKyThi ===
+                    ketQua.maKyThi
+                );
+
+            dsKyThi.sort((a, b) => {
+
+                if (b.diem !== a.diem) {
+                    return b.diem - a.diem;
+                }
+
+                if (a.roiTab !== b.roiTab) {
+                    return a.roiTab - b.roiTab;
+                }
+
+                return parseTG(a.thoiGian) -
+                       parseTG(b.thoiGian);
+
+            });
+
+            const hang =
+                dsKyThi.findIndex(item =>
+                    item.maHS === maHS
+                ) + 1;
+
+            cacheRank[ketQua.maKyThi] = {
+                hang:
+                    hang > 0 ? hang : "-",
+                tong:
+                    dsKyThi.length
+            };
+        }
+
+        /*
+         * Hiển thị kết quả.
+         */
+        ketQuaCuaHS.forEach(ketQua => {
+
+            const rank =
+                cacheRank[ketQua.maKyThi] ||
+                { hang: "-", tong: 0 };
+
+            let xepLoai =
+                ketQua.xepLoai || "Đạt";
+
+            if (!ketQua.xepLoai) {
+
+                if (ketQua.tyLe >= 90) {
+                    xepLoai = "Xuất sắc";
+                }
+                else if (ketQua.tyLe >= 80) {
+                    xepLoai = "Giỏi";
+                }
+                else if (ketQua.tyLe >= 65) {
+                    xepLoai = "Khá";
+                }
+                else if (ketQua.tyLe >= 50) {
+                    xepLoai = "Đạt";
+                }
+                else {
+                    xepLoai = "Cần cố gắng";
+                }
+
+            }
+
+            let chungNhan =
+                "Chưa đạt";
+
+            if (
+                ketQua.diem >= 80 ||
+                (
+                    rank.hang !== "-" &&
+                    Number(rank.hang) <= 10
+                )
+            ) {
+
+                chungNhan = `
+                    <button onclick="
+                        localStorage.setItem(
+                            'cnHoTen',
+                            '${escapeHTML(
+                                ketQua.hoTen
+                            )}'
+                        );
+
+                        localStorage.setItem(
+                            'cnLop',
+                            '${escapeHTML(
+                                ketQua.lop
+                            )}'
+                        );
+
+                        localStorage.setItem(
+                            'cnKyThi',
+                            '${escapeHTML(
+                                ketQua.tenKyThi
+                            )}'
+                        );
+
+                        localStorage.setItem(
+                            'cnDiem',
+                            '${ketQua.diem}'
+                        );
+
+                        localStorage.setItem(
+                            'cnHang',
+                            '${rank.hang}/${rank.tong}'
+                        );
+
+                        localStorage.setItem(
+                            'cnMaKyThi',
+                            '${escapeHTML(
+                                ketQua.maKyThi
+                            )}'
+                        );
+
+                        window.location.href =
+                            'chungnhan.html';
+                    ">
+                        📜 Xem
+                    </button>
+                `;
+
+            }
+
+            tbody.innerHTML += `
+                <tr>
+                    <td>${escapeHTML(
+                        ketQua.tenKyThi
+                    )}</td>
+
+                    <td>${ketQua.diem}</td>
+
+                    <td>${escapeHTML(
+                        xepLoai
+                    )}</td>
+
+                    <td>${escapeHTML(
+                        ketQua.thoiGian
+                    )}</td>
+
+                    <td>
+                        🏆 ${rank.hang}/${rank.tong}
+                    </td>
+
+                    <td>${chungNhan}</td>
+                </tr>
+            `;
+
+        });
+
+    } catch (err) {
+
+        console.error(
+            "Lỗi khi tải KETQUA:",
+            err
+        );
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="6">
+                    Không thể tải dữ liệu kết quả.
+                    Kiểm tra URL CSV của Sheet KETQUA.
+                </td>
+            </tr>
+        `;
+
+    }
+
+}
+
+
+/*
+ * CSV parser đơn giản, hỗ trợ ô có dấu phẩy và dấu ngoặc kép.
+ */
+function parseCSV(text) {
+
+    const rows = [];
+
+    let row = [];
+    let cell = "";
+    let inQuotes = false;
+
+    for (let i = 0; i < text.length; i++) {
+
+        const char = text[i];
+        const next = text[i + 1];
+
+        if (char === '"' && inQuotes && next === '"') {
+
+            cell += '"';
+            i++;
+            continue;
+
+        }
+
+        if (char === '"') {
+
+            inQuotes = !inQuotes;
+            continue;
+
+        }
+
+        if (char === "," && !inQuotes) {
+
+            row.push(cell);
+            cell = "";
+            continue;
+
+        }
+
+        if (
+            (char === "\n" || char === "\r") &&
+            !inQuotes
+        ) {
+
+            if (char === "\r" && next === "\n") {
+                i++;
+            }
+
+            row.push(cell);
+            cell = "";
+
+            if (
+                row.length > 1 ||
+                row[0] !== ""
+            ) {
+                rows.push(row);
+            }
+
+            row = [];
+            continue;
+
+        }
+
+        cell += char;
+
+    }
+
+    row.push(cell);
+
+    if (
+        row.length > 1 ||
+        row[0] !== ""
+    ) {
+        rows.push(row);
+    }
+
+    return rows;
+}
+
+
+/*
+ * Tránh HTML injection khi đưa dữ liệu Sheet vào giao diện.
+ */
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+function parseTG(tg){
+
+    if(!tg) return 999999;
+
+    const p = tg.split(":");
+
+    if(p.length === 3){
+
+        return Number(p[0])*3600 +
+               Number(p[1])*60 +
+               Number(p[2]);
+
+    }
+
+    return 999999;
+
+}
+taiKetQua();
+
+</script>
+
+</body>
+
+</html>

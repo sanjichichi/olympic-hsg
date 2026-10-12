@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lớp học - PHÚ ĐÌNH EDU</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#172033}
+.header{height:70px;background:#fff;border-bottom:1px solid #e6ebf2;display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:20}
+.header-left{display:flex;align-items:center;gap:14px}.logo{font-size:21px;font-weight:800;color:#2563eb}
+.btn{border:0;border-radius:10px;padding:10px 15px;font-weight:700;cursor:pointer}.btn-back{background:#eef3f8;color:#334155}
+.container{max-width:1180px;margin:auto;padding:24px}.hero{background:linear-gradient(135deg,#2563eb,#4f46e5);color:#fff;border-radius:20px;padding:28px;margin-bottom:22px}
+.hero h1{margin:0 0 8px;font-size:30px}.hero p{margin:5px 0;opacity:.92}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}.card{background:#fff;border:1px solid #e7edf5;border-radius:16px;padding:18px}
+.stat-number{font-size:27px;font-weight:800;margin-top:5px}.stat-label{color:#64748b;font-size:14px}
+.grid{display:grid;grid-template-columns:1.6fr 1fr;gap:20px}.card h2{font-size:19px;margin:0 0 16px}
+.loading,.empty,.error{text-align:center;padding:30px;color:#64748b}.error{color:#b91c1c}
+.student-list,.rank-list{display:flex;flex-direction:column;gap:10px}.student{display:flex;align-items:center;gap:13px;padding:12px;border:1px solid #edf1f6;border-radius:13px;background:#fbfdff}
+.avatar,.rank-avatar{width:46px;height:46px;border-radius:50%;object-fit:cover;background:#e8eef7;flex:0 0 46px}.student-main{min-width:0;flex:1}
+.student-name{font-weight:800;margin-bottom:4px}.student-meta{font-size:13px;color:#64748b}
+.badge{font-size:12px;padding:5px 9px;border-radius:999px;background:#ecfdf5;color:#047857;font-weight:700}
+.rank{display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;background:#f8fafc}.rank-no{width:30px;text-align:center;font-weight:800}
+.rank-avatar{width:38px;height:38px;flex-basis:38px}.rank-name{flex:1;font-weight:700}.rank-xp{font-weight:800;color:#2563eb}
+.toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:14px}.search{width:260px;max-width:100%;border:1px solid #dbe3ed;border-radius:10px;padding:10px 12px;outline:none}
+.notice{background:#eff6ff;color:#1d4ed8;padding:11px 13px;border-radius:10px;font-size:13px;margin-top:12px}
+@media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.header{padding:0 12px}.container{padding:14px}.hero h1{font-size:24px}}
+.btn-xem-ho-so {
+    border: none;
+    background: transparent;
+    color: #2563eb;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 6px 0;
+}
+
+.btn-xem-ho-so:hover {
+    text-decoration: underline;
+}
+
+
+.btn-xem-ho-so,
+.btn-tro-chuyen{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    padding:7px 11px;
+    border:0;
+    border-radius:9px;
+    cursor:pointer;
+    font-size:13px;
+    font-weight:600;
+    margin-right:5px;
+    transition:all .2s ease;
+}
+
+.btn-xem-ho-so{
+    background:#eef2ff;
+    color:#4f46e5;
+}
+
+.btn-tro-chuyen{
+    background:#ecfdf5;
+    color:#059669;
+}
+
+.btn-xem-ho-so:hover,
+.btn-tro-chuyen:hover{
+    transform:translateY(-1px);
+    filter:brightness(.97);
+}
+
+.student-online{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-top:5px;
+    font-size:12px;
+    font-weight:700;
+}
+
+.online-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    display:inline-block;
+}
+
+.is-online{
+    color:#16a34a;
+}
+
+.is-online .online-dot{
+    background:#22c55e;
+    box-shadow:0 0 0 3px #dcfce7;
+}
+
+.is-offline{
+    color:#94a3b8;
+}
+
+.is-offline .online-dot{
+    background:#cbd5e1;
+}
+.student-online{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin-top:5px;
+    font-size:12px;
+    color:#94a3b8;
+}
+
+.online-dot{
+    width:8px;
+    height:8px;
+    border-radius:50%;
+    display:inline-block;
+}
+
+.online-dot.online{
+    background:#22c55e;
+    box-shadow:0 0 0 3px #dcfce7;
+}
+
+.online-dot.offline{
+    background:#cbd5e1;
+}
+</style>
+</head>
+<body>
+<header class="header">
+<div class="header-left">
+  <button class="btn btn-back" onclick="quayLaiDanhSach()">← Quay lại danh sách lớp</button>
+   <button class="btn btn-back" onclick="quayLaiCaNhan()">← Quay lại trang Giáo viên</button>
+  <div class="logo">🏆 PHÚ ĐÌNH EDU</div></div>
+<div id="maLopHeader"></div>
+</header>
+<main class="container">
+<section class="hero"><h1 id="tenLop">Lớp học</h1><p id="thongTinLop">Đang tải thông tin lớp...</p><div class="notice">Danh sách học sinh được lấy trực tiếp từ Sheet <b>Taikhoan</b>.</div></section>
+<section class="stats">
+<div class="card"><div class="stat-label">Học sinh</div><div class="stat-number" id="soHocSinh">—</div></div>
+<div class="card"><div class="stat-label">Nam</div><div class="stat-number" id="soNam">—</div></div>
+<div class="card"><div class="stat-label">Nữ</div><div class="stat-number" id="soNu">—</div></div>
+<div class="card"><div class="stat-label">Trạng thái</div><div class="stat-number">🟢</div><div class="stat-label">Đang hoạt động</div></div>
+</section>
+<section class="grid">
+<div class="card"><div class="toolbar"><h2>👨‍🎓 Thành viên lớp</h2><input id="timKiem" class="search" placeholder="Tìm học sinh..." oninput="locHocSinh()"></div><div id="danhSachHocSinh" class="student-list"><div class="loading">⏳ Đang tải danh sách học sinh...</div></div></div>
+<div class="card"><h2>🏆 Xếp hạng lớp</h2><div id="bangXepHang" class="rank-list"><div class="loading">Đang tải...</div></div></div>
+</section>
+</main>
+<script>
+const API_URL="https://script.google.com/macros/s/AKfycbzXRtrvbS2YpKDAZLwoV0cR1mFWHxlXljvNJzryHhFmnfOXZ3LzR0ai1cyltOF7l62hVQ/exec";
+let hocSinh=[],lopHienTai="";
+function layMaLop(){
+
+  const role = String(
+    localStorage.getItem("role") || ""
+  ).trim().toLowerCase();
+
+
+  // =====================================================
+  // HỌC SINH
+  // Luôn lấy lớp từ thông tin tài khoản học sinh
+  // Không lấy olympic_class_name cũ
+  // =====================================================
+  if(role === "hocsinh"){
+
+    let lopHS =
+      localStorage.getItem("lopThiSinh") ||
+      localStorage.getItem("lop") ||
+      "";
+
+    // Nếu chưa có thì lấy từ object học sinh
+    if(!lopHS){
+
+      try{
+
+        const hs = JSON.parse(
+          localStorage.getItem("hocSinh") || ""
+        );
+
+        lopHS =
+          hs?.lop ||
+          hs?.lopThiSinh ||
+          "";
+
+      }catch(e){}
+    }
+
+    lopHS = String(lopHS)
+      .replace(/^Lớp\s*/i, "")
+      .trim()
+      .toUpperCase();
+
+    if(lopHS){
+
+      // Đồng bộ lại lớp chính xác
+      localStorage.setItem(
+        "olympic_class_name",
+        lopHS
+      );
+
+      return lopHS;
+    }
+
+    console.warn(
+      "Không tìm thấy lớp của học sinh."
+    );
+
+    return "";
+  }
+
+
+  // =====================================================
+  // GIÁO VIÊN / ADMIN
+  // Giữ nguyên cơ chế chọn lớp hiện tại
+  // =====================================================
+
+  const tenLop =
+    localStorage.getItem("olympic_class_name") ||
+    localStorage.getItem("olympic_class_className") ||
+    localStorage.getItem("className") ||
+    localStorage.getItem("lop") ||
+    localStorage.getItem("tenLop") ||
+    "";
+
+  const ten = String(tenLop).trim();
+
+  if(ten && !/^\d{8,}$/.test(ten)){
+    return ten;
+  }
+
+  return String(
+    localStorage.getItem("olympic_class_id") || ""
+  ).trim();
+}
+function quayLaiDanhsach(){window.location.href="danhsach-lop.html"}
+function quayLaiCaNhan(){window.location.href="trang-gv.html"}
+function avatarSrc(a){if(a&&String(a).startsWith("data:image"))return a;if(a&&/^https?:\/\//i.test(a))return a;return"anhnen/avatar-default.png"}
+function escapeHtml(t){return String(t??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
+async function taiHocSinh(){
+lopHienTai=layMaLop();
+if(!lopHienTai){hienLoi("Không tìm thấy mã lớp. Hãy quay lại danh sách lớp và chọn một lớp.");return}
+if(API_URL==="DAN_URL_WEB_APP_APPS_SCRIPT_VAO_DAY"){hienLoi("Chưa cấu hình API_URL trong lop-hoc.html. Hãy dán URL Web App Apps Script vào dòng API_URL.");return}
+document.getElementById("tenLop").textContent="Lớp "+lopHienTai;
+document.getElementById("maLopHeader").textContent="Mã lớp: "+lopHienTai;
+const url=API_URL+"?action=layHocSinhTheoLop&lop="+encodeURIComponent(lopHienTai);
+try{const r=await fetch(url,{method:"GET",cache:"no-store"});if(!r.ok)throw new Error("HTTP "+r.status);const data=await r.json();if(!data.success)throw new Error(data.message||"API trả về lỗi.");hocSinh=Array.isArray(data.hocSinh)?data.hocSinh:[];document.getElementById("thongTinLop").textContent="Danh sách thành viên của lớp "+lopHienTai;capNhatThongKe();renderHocSinh(hocSinh);renderXepHang(hocSinh)}
+catch(e){console.error(e);hienLoi("Không thể tải danh sách học sinh.<br><small>"+escapeHtml(e.message)+"</small>")}}
+function capNhatThongKe(){const nam=hocSinh.filter(h=>String(h.gioiTinh||"").trim().toLowerCase()==="nam").length;const nu=hocSinh.filter(h=>["nữ","nu"].includes(String(h.gioiTinh||"").trim().toLowerCase())).length;document.getElementById("soHocSinh").textContent=hocSinh.length;document.getElementById("soNam").textContent=nam;document.getElementById("soNu").textContent=nu}
+async function renderHocSinh(ds) {
+
+  const b = document.getElementById("danhSachHocSinh");
+
+  if (!ds.length) {
+    b.innerHTML =
+      '<div class="empty">Chưa có học sinh trong lớp này.</div>';
+    return;
+  }
+
+  b.innerHTML = ds.map(h => `
+
+    <div class="student"
+         data-mahs="${escapeHtml(h.maHS || '')}">
+
+      <button
+        type="button"
+        class="btn-xem-ho-so"
+        onclick="event.stopPropagation(); xemHoSo('${h.maHS || ''}')">
+
+        👤 Xem hồ sơ →
+
+      </button>
+
+      <img
+        class="avatar"
+        src="${avatarSrc(h.avatar)}"
+        alt=""
+        onerror="this.src='anhnen/avatar-default.png'">
+
+      <div class="student-main">
+
+        <div class="student-name">
+          ${escapeHtml(h.hoTen || "Chưa có tên")}
+        </div>
+
+        <div class="student-meta">
+          ${escapeHtml(h.maHS || '')}
+          ${h.gioiTinh ? " · " + escapeHtml(h.gioiTinh) : ""}
+          ${h.ngaySinh ? " · " + escapeHtml(h.ngaySinh) : ""}
+        </div>
+
+        <div
+          class="student-online"
+          id="online-${escapeHtml(h.maHS || '')}">
+
+          <span class="online-dot offline"></span>
+          <span>Ngoại tuyến</span>
+
+        </div>
+
+      </div>
+
+      <button
+        type="button"
+        class="btn-chat"
+        onclick="event.stopPropagation(); moChat('${h.maHS || ''}','${escapeHtml(h.hoTen || '')}')">
+
+        💬 Trò chuyện
+
+      </button>
+
+    </div>
+
+  `).join("");
+
+  await capNhatTrangThaiOnline(ds);
+}
+
+async function capNhatTrangThaiOnline(ds) {
+
+  await Promise.all(
+    ds.map(async h => {
+
+      const maHS = String(h.maHS || '').trim();
+
+      if (!maHS) return;
+
+      try {
+
+        const url =
+          API_URL +
+          "?action=presence&userId=" +
+          encodeURIComponent(maHS);
+
+        const r = await fetch(
+          url,
+          {
+            method: "GET",
+            cache: "no-store"
+          }
+        );
+
+        const data = await r.json();
+
+        const el =
+          document.getElementById(
+            "online-" + maHS
+          );
+
+        if (!el) return;
+
+        if (data.ok && data.online) {
+
+          el.innerHTML = `
+            <span class="online-dot online"></span>
+            <span>Đang hoạt động</span>
+          `;
+
+        } else {
+
+          el.innerHTML = `
+            <span class="online-dot offline"></span>
+            <span>Ngoại tuyến</span>
+          `;
+
+        }
+
+      } catch (e) {
+
+        console.warn(
+          "Không kiểm tra được online:",
+          maHS,
+          e
+        );
+
+      }
+
+    })
+  );
+}
+/* =====================================================
+   TRÒ CHUYỆN VỚI HỌC SINH
+   ===================================================== */
+
+function troChuyen(maHS, hoTen, lop, avatar){
+
+    maHS = decodeURIComponent(maHS || "");
+    hoTen = decodeURIComponent(hoTen || "");
+    lop = decodeURIComponent(lop || "");
+    avatar = decodeURIComponent(avatar || "");
+
+    if(!maHS){
+        alert("Không xác định được mã học sinh.");
+        return;
+    }
+
+    localStorage.setItem("chatTargetMaHS", maHS);
+    localStorage.setItem("chatTargetName", hoTen);
+    localStorage.setItem("chatTargetClass", lop);
+    localStorage.setItem("chatTargetAvatar", avatar);
+
+    // Quan trọng: xóa cuộc trò chuyện cũ
+    // để chat.html tạo/mở đúng cuộc trò chuyện với người vừa chọn
+    localStorage.removeItem("chatConversationId");
+
+    window.location.href = "chat.html";
+}
+function renderXepHang(ds){const b=document.getElementById("bangXepHang");if(!ds.length){b.innerHTML='<div class="empty">Chưa có dữ liệu.</div>';return}b.innerHTML=ds.slice(0,10).map((h,i)=>`<div class="rank"><div class="rank-no">${i+1}</div><img class="rank-avatar" src="${avatarSrc(h.avatar)}" alt="" onerror="this.src='anhnen/avatar-default.png'"><div class="rank-name">${escapeHtml(h.hoTen||"Chưa có tên")}</div><div class="rank-xp">—</div></div>`).join("")}
+function locHocSinh(){const k=document.getElementById("timKiem").value.trim().toLowerCase();renderHocSinh(hocSinh.filter(h=>[h.hoTen,h.maHS,h.gioiTinh].join(" ").toLowerCase().includes(k)))}
+function hienLoi(m){document.getElementById("danhSachHocSinh").innerHTML='<div class="error">⚠️ '+m+"</div>";document.getElementById("bangXepHang").innerHTML='<div class="error">Chưa thể tải dữ liệu.</div>'}
+document.addEventListener("DOMContentLoaded",taiHocSinh);
+setInterval(
+    async function(){
+        await taiHocSinh();
+    },
+    30000
+);
+function xemHoSo(maHS){
+
+  maHS = decodeURIComponent(String(maHS || "")).trim();
+
+  if(!maHS){
+    alert("Học sinh chưa có mã MaHS.");
+    return;
+  }
+
+  // Lưu mã học sinh
+  localStorage.setItem("maHS", maHS);
+  localStorage.setItem("MaHS", maHS);
+  localStorage.setItem("studentCode", maHS);
+
+  // Lưu luôn lớp hiện tại để hồ sơ có thể lấy danh sách
+  // học sinh theo lớp rồi lọc đúng MaHS
+  if(lopHienTai){
+    localStorage.setItem("hoSoLop", lopHienTai);
+  }
+
+  window.location.href = "ho-so-hoc-sinh.html";
+}
+</script>
+<script src="js/online-hoc-sinh.js"></script>
+<script src="js/chat-notification.js"></script>
+</body>
+</html>

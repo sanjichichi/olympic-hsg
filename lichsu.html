@@ -1,0 +1,2564 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lịch sử quê hương Phú Đình</title>
+<style>
+:root{
+  --bg:#09140f;
+  --panel:rgba(12,35,29,.78);
+  --line:rgba(255,255,255,.16);
+  --gold:#f6cf72;
+  --gold2:#ffe9a8;
+  --text:#f8f5eb;
+  --muted:#d5ddd8;
+  --red:#a94432;
+  --green:#173e32;
+}
+*{box-sizing:border-box}
+html,body{
+  margin:0;min-height:100%;
+  font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  background:var(--bg);color:var(--text)
+}
+body{overflow-x:hidden}
+button{font:inherit}
+
+.hero{
+  min-height:100vh;
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  background:
+    linear-gradient(180deg,rgba(255,244,214,.02),rgba(3,12,9,.12) 58%,rgba(3,10,8,.62) 100%),
+    url('anhnen/baner-ls.png') center center/cover no-repeat;
+}
+.hero:before{
+  content:"";
+  position:absolute;inset:0;z-index:-1;
+  background:linear-gradient(180deg,rgba(255,255,255,.05),transparent 42%,rgba(0,0,0,.28));
+  pointer-events:none;
+}
+.topbar{
+  position:absolute;top:0;left:0;right:0;z-index:10;
+  display:flex;align-items:center;gap:20px;
+  padding:14px clamp(18px,4vw,50px);
+  background:linear-gradient(180deg,rgba(4,15,10,.32),transparent);
+  border:0;
+}
+.brand{display:flex;align-items:center;gap:10px;margin-right:auto}
+.brand-icon{
+  width:38px;height:38px;border:1px solid rgba(246,207,114,.65);
+  border-radius:12px;display:grid;place-items:center;color:var(--gold);
+  background:rgba(5,18,13,.25);backdrop-filter:blur(8px)
+}
+.brand b{display:block;font-size:13px;letter-spacing:1px}
+.brand span{display:block;font-size:10px;color:#edf0e8;opacity:.8}
+.nav{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.nav button{
+  border:1px solid rgba(255,255,255,.18);background:rgba(3,15,10,.28);
+  color:#fff;padding:8px 12px;border-radius:10px;cursor:pointer;
+  backdrop-filter:blur(8px);transition:.25s
+}
+.nav button:hover,.nav button.active{
+  color:var(--gold2);border-color:rgba(246,207,114,.48);
+  background:rgba(12,36,27,.55)
+}
+
+.hero-content{
+  position:relative;z-index:2;max-width:1220px;min-height:100vh;
+  margin:auto;padding:clamp(60px,7vh,78px) 22px 34px;
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+}
+.kicker{
+  color:#21352b;letter-spacing:4px;font-size:11px;font-weight:800;
+  text-transform:uppercase;text-shadow:0 1px 10px rgba(255,255,255,.35)
+}
+h1{
+  font-family:Georgia,"Times New Roman",serif;
+  font-weight:700;font-size:clamp(46px,7vw,82px);
+  margin:8px 0 0;line-height:.98;letter-spacing:0 !important;word-spacing:0 !important;
+  color:#153b2d;text-shadow:0 3px 14px rgba(255,255,255,.55)
+}
+
+
+
+
+.hero-script{
+  display:inline-block;
+  width:max-content;
+  max-width:100%;
+  font-family:"Times New Roman",Georgia,serif;
+  font-size:clamp(38px,6vw,72px);
+  font-style:italic;
+  font-weight:700;
+  color:#a83f24;
+  line-height:.95;
+  letter-spacing:normal !important;
+  word-spacing:normal !important;
+  text-align:center !important;
+  white-space:nowrap;
+  font-kerning:none;
+  font-feature-settings:"kern" 0;
+  font-variant-ligatures:none;
+  text-rendering:geometricPrecision;
+  text-shadow:0 3px 12px rgba(255,255,255,.55);
+}
+.hero-history{
+  display:inline-block;
+  width:max-content;
+  max-width:100%;
+  font-family:"Times New Roman",Georgia,serif;
+  font-size:clamp(36px,5.5vw,64px);
+  font-weight:700;
+  color:#153b2d;
+  line-height:1.02;
+  letter-spacing:normal !important;
+  word-spacing:normal !important;
+  text-align:center !important;
+  white-space:nowrap;
+  font-kerning:none;
+  font-feature-settings:"kern" 0;
+  font-variant-ligatures:none;
+  text-rendering:geometricPrecision;
+  text-shadow:0 3px 12px rgba(255,255,255,.55);
+}
+
+.subtitle{
+  color:#26382f;max-width:620px;font-family:Georgia,serif;
+  font-size:16px;line-height:1.45;margin:42px auto 18px;
+  text-shadow:0 1px 8px rgba(255,255,255,.65)
+}
+.scene{display:none}
+.dots{display:none}
+
+.actions{
+  display:flex;gap:18px;flex-wrap:wrap;justify-content:center;
+  margin-top:8px;position:relative
+}
+.btn{
+  border:0;border-radius:22px;padding:14px 26px;cursor:pointer;
+  font-weight:800;transition:.25s;box-shadow:0 8px 24px rgba(0,0,0,.2)
+}
+.btn-primary{
+  background:linear-gradient(135deg,#ffe18a,#e9b84f);
+  color:#30210b;box-shadow:0 10px 30px rgba(238,183,64,.3)
+}
+.btn-primary:hover{transform:translateY(-2px) scale(1.01)}
+.btn-ghost{
+  background:rgba(14,51,39,.82);color:#fff;
+  border:1px solid rgba(255,255,255,.22)
+}
+.btn-ghost:hover{transform:translateY(-2px);background:rgba(18,61,46,.92)}
+
+.journey{
+  width:min(540px,92%);margin-top:18px;text-align:left;
+  padding:12px 17px;border:1px solid rgba(255,255,255,.25);
+  border-radius:16px;background:rgba(16,39,31,.72);
+  backdrop-filter:blur(10px);box-shadow:0 12px 35px rgba(0,0,0,.2)
+}
+.journey>div:first-child{display:flex;justify-content:space-between;gap:12px;font-size:12px;color:#f1f1e8}
+.journey b{color:var(--gold)}
+.progress{
+  height:6px;background:rgba(255,255,255,.18);border-radius:10px;
+  margin-top:9px;overflow:hidden
+}
+.progress i{
+  display:block;height:100%;width:0;
+  background:linear-gradient(90deg,#e7b54e,#ffe49a);transition:.5s
+}
+
+/* Hai thẻ chính giữa */
+.home-cards{
+  width:min(790px,92%);
+  display:grid;grid-template-columns:1fr 1fr;gap:22px;
+  margin:14px auto 0
+}
+.home-card{
+  min-height:142px;padding:22px 24px;border-radius:22px;
+  text-align:left;position:relative;overflow:hidden;
+  color:#fff;border:1px solid rgba(255,255,255,.2);
+  box-shadow:0 15px 40px rgba(0,0,0,.24);
+  backdrop-filter:blur(5px);cursor:pointer;transition:.25s
+}
+.home-card:hover{transform:translateY(-4px)}
+.home-card.red{background:linear-gradient(135deg,rgba(141,49,37,.94),rgba(82,38,29,.9))}
+.home-card.green{background:linear-gradient(135deg,rgba(27,75,60,.94),rgba(19,55,44,.9))}
+.home-card .icon{font-size:35px;line-height:1;margin-bottom:9px}
+.home-card h3{font-size:18px;letter-spacing:1px;margin:0 0 7px}
+.home-card p{font-size:12px;line-height:1.45;margin:0;max-width:285px;color:#f4f0e7}
+.home-card .arrow{
+  position:absolute;right:20px;bottom:18px;width:38px;height:38px;
+  border-radius:50%;display:grid;place-items:center;
+  background:#fff0c8;color:#3a2b12;font-size:22px;font-weight:800
+}
+
+/* Sections */
+.section{
+  display:none;position:relative;z-index:4;padding:55px 20px 80px;
+  background:linear-gradient(180deg,#081810,#07131c)
+}
+.section.show{display:block;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.section-head{max-width:1100px;margin:0 auto 25px}
+.section-head .kicker{font-size:11px;color:var(--gold)}
+.section-head h2{font:500 clamp(30px,5vw,46px) Georgia,serif;margin:8px 0}
+.section-head p{color:var(--muted);max-width:700px;line-height:1.6}
+.grid{max-width:1100px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{
+  min-height:220px;padding:20px;border-radius:20px;border:1px solid var(--line);
+  background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.025));
+  position:relative;overflow:hidden;transition:.25s
+}
+.card:hover{transform:translateY(-4px);border-color:rgba(243,201,105,.4)}
+.card-art{height:105px;border-radius:14px;margin-bottom:15px;position:relative;overflow:hidden}
+.card-art:after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(243,201,105,.15),transparent 50%,rgba(0,0,0,.3))}
+.art1{background:linear-gradient(135deg,#375968,#15252a)}
+.art2{background:linear-gradient(135deg,#69573c,#18252a)}
+.art3{background:linear-gradient(135deg,#354d3f,#101e24)}
+.art4{background:linear-gradient(135deg,#536b71,#16242a)}
+.art5{background:linear-gradient(135deg,#665642,#1a2425)}
+.art6{background:linear-gradient(135deg,#455c51,#101c22)}
+#siteGrid .explore-card h3 {
+    margin: 0 0 10px;
+    font-family: Arial, "Segoe UI", sans-serif !important;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: 0 !important;
+    word-spacing: 0 !important;
+    line-height: 1.4;
+    text-transform: none;
+}
+#siteGrid .explore-card .mini-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 9px 15px;
+    border: 1px solid rgba(246, 207, 114, .45);
+    border-radius: 8px;
+    background: rgba(246, 207, 114, .1);
+    color: #ffe9a8;
+    font-family: Arial, "Segoe UI", sans-serif;
+    font-size: 14px;
+    letter-spacing: 0;
+    cursor: pointer;
+}
+
+#siteGrid .explore-card .mini-btn:hover {
+    background: #f6cf72;
+    color: #09140f;
+}
+.card p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}
+
+.footer{text-align:center;padding:28px;color:#819097;font-size:12px;background:#061018}
+
+.challenge-box{
+  max-width:900px;margin:30px auto 0;padding:22px;border:1px solid rgba(243,201,105,.28);
+  border-radius:20px;background:linear-gradient(120deg,rgba(243,201,105,.09),rgba(255,255,255,.03));
+  display:flex;align-items:center;justify-content:space-between;gap:20px
+}
+.challenge-box small{color:var(--gold);letter-spacing:2px}
+.challenge-box h3{font:500 25px Georgia,serif;margin:7px 0}.challenge-box p{margin:0;color:var(--muted)}
+.btn:disabled{opacity:.5;cursor:not-allowed;filter:grayscale(.4)}
+.modal{position:fixed;inset:0;z-index:30;display:none;place-items:center;padding:20px;background:rgba(0,0,0,.72);backdrop-filter:blur(8px)}
+.modal.show{display:grid}
+.modal-box{width:min(650px,100%);background:#0b1c26;border:1px solid rgba(243,201,105,.3);border-radius:24px;padding:26px;box-shadow:0 30px 90px #000}
+
+.modal-box {
+  max-height: 90vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.modal-box .tag{color:var(--gold);font-size:11px;letter-spacing:2px}
+.modal-box h2 {
+    font-family: Arial, "Segoe UI", sans-serif !important;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.4;
+    letter-spacing: 0 !important;
+    word-spacing: 0 !important;
+    font-kerning: normal;
+    text-transform: none;
+    margin: 8px 0 20px;
+}
+.modal-box p{color:#c6d0d3;line-height:1.7}.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:20px}
+
+.site-number{position:absolute;left:12px;top:10px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(4,14,20,.72);border:1px solid rgba(243,201,105,.4);color:var(--gold);font-weight:800;font-size:12px}
+.site-year{display:inline-block;color:var(--gold);font-size:11px;letter-spacing:1.4px;margin-bottom:7px;text-transform:uppercase}
+#siteGrid{grid-template-columns:repeat(3,1fr)}
+.learning-intro{max-width:900px;margin:25px auto 18px;padding:20px;border:1px solid rgba(243,201,105,.22);border-radius:20px;background:rgba(243,201,105,.045);display:flex;gap:17px;align-items:flex-start}
+.learning-icon{font-size:30px}.learning-intro small{color:var(--gold);letter-spacing:2px}.learning-intro h3{font:500 25px Georgia,serif;margin:5px 0}.learning-intro p{margin:0;color:var(--muted);line-height:1.55}
+.learning-grid{max-width:900px;margin:18px auto 30px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.lesson-card{overflow:hidden;border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.035)}
+.lesson-card img{width:100%;height:155px;object-fit:cover;display:block;filter:saturate(.82)}
+.lesson-body{padding:17px}.lesson-body span{font-size:10px;letter-spacing:1.5px;color:var(--gold)}.lesson-body h3{font:500 21px Georgia,serif;margin:7px 0}.lesson-body p{color:var(--muted);font-size:13px;line-height:1.55}.lesson-btn{border:1px solid rgba(243,201,105,.28);background:rgba(243,201,105,.08);color:var(--gold2);border-radius:10px;padding:9px 12px;cursor:pointer}
+.lesson-modal{max-height:90vh;overflow:auto}.lesson-content{color:#d3dcde;line-height:1.7}.lesson-content h4{color:var(--gold);margin:20px 0 7px}.lesson-content ul{padding-left:20px}.lesson-content img{width:100%;max-height:300px;object-fit:cover;border-radius:15px;margin:10px 0}
+.quiz-box{margin-top:18px;padding:17px;border:1px solid var(--line);border-radius:15px;background:rgba(255,255,255,.035)}.quiz-box b{display:block;margin-bottom:10px}.quiz-option{display:block;width:100%;text-align:left;margin:7px 0;padding:10px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:#e8eeee;border-radius:10px;cursor:pointer}.quiz-option.correct{border-color:#71b88a;background:rgba(70,160,100,.12)}.quiz-option.wrong{border-color:#c96b63;background:rgba(190,60,50,.1)}
+
+@media(max-width:900px){
+  .home-cards{width:min(720px,94%)}
+  .grid,#siteGrid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:700px){
+  .topbar{padding:10px 14px}.brand span{display:none}.nav button{font-size:12px;padding:7px 9px}
+  .hero-content{padding-top:70px}
+  
+
+
+
+.subtitle{margin-top:28px}
+  .home-cards{grid-template-columns:1fr;gap:12px}
+  .home-card{min-height:125px}
+}
+@media(max-width:520px){
+  .grid,#siteGrid,.learning-grid{grid-template-columns:1fr}
+  .hero-content{padding-left:14px;padding-right:14px}
+  h1{font-size:clamp(42px,13vw,60px);letter-spacing:-1px}
+  .kicker{letter-spacing:2px}
+  
+
+
+
+.subtitle{font-size:14px}
+  .actions{width:100%}.actions .btn{width:100%}
+  .journey{width:100%}
+  .timeline-item{grid-template-columns:65px 1fr}
+}
+
+/* Thông tin người dùng đã đăng nhập */
+.topbar{flex-wrap:wrap}
+.user-profile{
+  display:flex;align-items:center;gap:9px;
+  padding:7px 11px;border:1px solid rgba(255,255,255,.25);
+  border-radius:14px;background:rgba(5,22,15,.68);
+  color:#fff;backdrop-filter:blur(10px);max-width:240px;
+}
+.user-avatar{
+  width:36px;height:36px;flex:0 0 36px;border-radius:50%;
+  display:grid;place-items:center;background:rgba(246,207,114,.18);
+  border:1px solid rgba(246,207,114,.55);color:#ffe9a8;
+  font-size:17px;font-weight:800;overflow:hidden;
+}
+.user-avatar img{width:100%;height:100%;object-fit:cover}
+.user-meta{min-width:0;display:flex;flex-direction:column;gap:2px}
+.user-greeting{font-size:9px;color:#f6cf72;letter-spacing:0}
+.user-meta strong{font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px}
+.user-meta small{font-size:10px;color:#d5ddd8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px}
+@media(max-width:900px){
+  .user-profile{order:3;margin-left:auto;max-width:200px}
+  .topbar{gap:9px}
+}
+@media(max-width:600px){
+  .user-profile{padding:5px 8px;max-width:155px}
+  .user-avatar{width:30px;height:30px;flex-basis:30px}
+  .user-meta strong,.user-meta small{max-width:105px}
+  .user-meta small{display:none}
+}
+/* Ảnh lịch sử ẩn hiện như vết mực */
+.history-ink {
+  position: absolute;
+  top: 24%;
+  left: 5%;
+  width: clamp(280px, 35vw, 500px);
+  aspect-ratio: 4 / 3;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  animation: inkReveal 12s ease-in-out infinite;
+}
+
+.history-ink img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: sepia(.7) grayscale(.35) contrast(1.1);
+
+  /* Mép ảnh tan dần như vết mực loang */
+  -webkit-mask-image: radial-gradient(
+    ellipse at center,
+    #000 38%,
+    rgba(0,0,0,.8) 58%,
+    transparent 76%
+  );
+  mask-image: radial-gradient(
+    ellipse at center,
+    #000 38%,
+    rgba(0,0,0,.8) 58%,
+    transparent 76%
+  );
+}
+
+@keyframes inkReveal {
+  0%, 10% {
+    opacity: 0;
+    transform: scale(.88);
+    filter: blur(8px);
+  }
+  25%, 60% {
+    opacity: .72;
+    transform: scale(1);
+    filter: blur(0);
+  }
+  78%, 100% {
+    opacity: 0;
+    transform: scale(1.06);
+    filter: blur(7px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .history-ink {
+    animation: none;
+    opacity: .35;
+  }
+}
+/* Các ảnh xuất hiện tại những vị trí khác nhau */
+.ink-tin-keo {
+  top: 24%;
+  left: 5%;
+}
+
+.ink-khuon-tat {
+  top: 12%;
+  left: auto;
+  right: 5%;
+  animation-delay: 1s;
+}
+
+.ink-thac {
+  top: 48%;
+  left: 3%;
+  animation-delay: 2s;
+}
+
+.ink-pu-don {
+  top: 43%;
+  left: auto;
+  right: 4%;
+  animation-delay: 3s;
+}
+
+.ink-khau-ty {
+  top: 68%;
+  left: 15%;
+  animation-delay: 4s;
+}
+
+.ink-phung-hien {
+  top: 65%;
+  left: auto;
+  right: 12%;
+  animation-delay: 5s;
+}
+
+/* Không vượt quá chiều rộng màn hình điện thoại */
+@media (max-width: 600px) {
+  .history-ink {
+    width: 45vw;
+  }
+
+  .ink-tin-keo,
+  .ink-khuon-tat,
+  .ink-thac,
+  .ink-pu-don,
+  .ink-khau-ty,
+  .ink-phung-hien {
+    left: auto;
+    right: auto;
+  }
+
+  .ink-tin-keo,
+  .ink-thac,
+  .ink-khau-ty {
+    left: 2%;
+  }
+
+  .ink-khuon-tat,
+  .ink-pu-don,
+  .ink-phung-hien {
+    right: 2%;
+  }
+}
+
+/* ==========================================
+   NỘI DUNG CHI TIẾT DI TÍCH
+========================================== */
+
+.dt-content {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    color: #dce7e8;
+}
+
+.dt-content h3 {
+    margin: 7px 0 12px;
+    color: #f3d58f;
+    font-size: 20px;
+}
+
+.dt-content small {
+    color: #d5b66e;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.dt-content p {
+    font-size: 14px;
+    line-height: 1.8;
+}
+/* Chuẩn hóa chữ trong hộp chi tiết di tích */
+#detailModal,
+#detailModal .modal-box,
+#detailModal .modal-box * {
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+}
+
+#detailModal .modalKind,
+#detailModal .tag {
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+#detailModal .dt-content h3,
+#detailModal .dt-content h4,
+#detailModal .dt-content p,
+#detailModal .dt-content span,
+#detailModal .dt-content li {
+    font-family: Arial, "Segoe UI", sans-serif;
+    line-height: 1.7;
+}
+.dt-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.dt-controls {
+    display: flex;
+    gap: 7px;
+}
+
+.dt-arrow {
+    width: 34px;
+    height: 34px;
+    border: 1px solid #64777c;
+    border-radius: 50%;
+    background: #18333b;
+    color: #f3d58f;
+    font-size: 23px;
+    cursor: pointer;
+}
+
+.dt-arrow:hover {
+    background: #f3d58f;
+    color: #18333b;
+}
+
+/* Album chạy ngang */
+.dt-track {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    padding: 3px 2px 12px;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+
+.dt-photo {
+    flex: 0 0 220px;
+    min-width: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #3a5057;
+    border-radius: 12px;
+    background: #122a32;
+    color: #e7e2d6;
+    text-align: left;
+    cursor: pointer;
+    scroll-snap-align: start;
+}
+
+.dt-photo img {
+    display: block;
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    transition: transform .35s ease;
+}
+
+.dt-photo:hover img {
+    transform: scale(1.05);
+}
+
+.dt-photo span {
+    display: block;
+    padding: 10px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.dt-note {
+    margin: 4px 0 0;
+    color: #aebfc4;
+    font-size: 11px !important;
+}
+
+/* Phần lịch sử */
+.dt-year {
+    display: inline-block;
+    padding: 6px 12px;
+    border: 1px solid #9c814b;
+    border-radius: 20px;
+    color: #f3d58f;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.dt-desc {
+    white-space: pre-line;
+}
+
+.dt-subsites {
+    margin-top: 15px;
+    padding: 14px;
+    border-radius: 10px;
+    background: #132b33;
+}
+
+.dt-subsites h4 {
+    margin: 0 0 10px;
+    color: #f3d58f;
+}
+
+.dt-subsites ul {
+    padding-left: 20px;
+    line-height: 1.9;
+}
+
+/* Dòng thời gian */
+.dt-timeline-item {
+    position: relative;
+    display: flex;
+    gap: 14px;
+    padding: 0 0 20px 16px;
+    border-left: 2px solid #9c814b;
+}
+
+.dt-timeline-item:last-child {
+    padding-bottom: 0;
+}
+
+.dt-dot {
+    position: absolute;
+    left: -7px;
+    top: 4px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #f3d58f;
+}
+
+.dt-timeline-item h4 {
+    margin: 0 0 5px;
+    color: #f3d58f;
+}
+
+.dt-timeline-item p {
+    margin: 0;
+}
+
+/* Khu vực video */
+.dt-video-placeholder {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    border: 1px solid #3a5057;
+    border-radius: 12px;
+    background: #122a32;
+}
+
+.dt-video-placeholder > span {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #f3d58f;
+    color: #172b31;
+}
+
+.dt-video-placeholder strong {
+    color: #f3d58f;
+}
+
+.dt-video-placeholder p {
+    margin: 5px 0 0;
+    color: #b9c9cd;
+}
+
+/* Gợi ý học tập */
+.dt-hint-btn {
+    padding: 9px 15px;
+    border: 1px solid #b89a5a;
+    border-radius: 22px;
+    background: transparent;
+    color: #f3d58f;
+    cursor: pointer;
+}
+
+.dt-hint-btn:hover {
+    background: #f3d58f;
+    color: #172b31;
+}
+
+.dt-hint {
+    padding: 12px;
+    border-radius: 9px;
+    background: #122a32;
+}
+
+/* Phóng to ảnh */
+.dt-image-viewer {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 24px;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, .94);
+}
+
+.dt-image-viewer.show {
+    display: flex;
+}
+
+.dt-image-viewer img {
+    max-width: 100%;
+    max-height: 82vh;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.dt-image-viewer p {
+    color: #f3d58f;
+    text-align: center;
+}
+
+.dt-viewer-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    width: 42px;
+    height: 42px;
+    border: 1px solid #65777b;
+    border-radius: 50%;
+    background: #18333b;
+    color: white;
+    font-size: 26px;
+    cursor: pointer;
+}
+
+@media (max-width: 600px) {
+    .dt-photo {
+        flex-basis: 75%;
+    }
+
+    .dt-photo img {
+        height: 135px;
+    }
+
+    .dt-content h3 {
+        font-size: 18px;
+    }
+}
+
+/* =========================================
+   ALBUM ẢNH DI TÍCH LỊCH SỬ
+========================================= */
+
+.dt-album {
+  margin: 0 0 28px;
+  padding: 20px;
+  border: 1px solid rgba(243, 201, 105, 0.22);
+  border-radius: 18px;
+  background: linear-gradient(
+    145deg,
+    rgba(243, 201, 105, 0.08),
+    rgba(255, 255, 255, 0.025)
+  );
+  overflow: hidden;
+}
+
+.dt-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.dt-heading small {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--gold, #f3c969);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.dt-heading h3 {
+  margin: 0;
+  color: var(--gold, #f3c969);
+  font-family: Georgia, serif;
+  font-size: 21px;
+  line-height: 1.4;
+}
+
+.dt-controls {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.dt-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(243, 201, 105, 0.4);
+  border-radius: 50%;
+  background: rgba(243, 201, 105, 0.1);
+  color: var(--gold, #f3c969);
+  font-size: 27px;
+  line-height: 1;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.dt-arrow:hover {
+  background: var(--gold, #f3c969);
+  color: #18251f;
+  transform: scale(1.06);
+}
+
+/* Dải ảnh có thể cuộn ngang */
+
+.dt-track {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding: 2px 2px 12px;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold, #f3c969) rgba(255,255,255,0.08);
+}
+
+.dt-track::-webkit-scrollbar {
+  height: 6px;
+}
+
+.dt-track::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: rgba(255,255,255,0.08);
+}
+
+.dt-track::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: var(--gold, #f3c969);
+}
+
+/* Thẻ ảnh */
+
+.dt-photo {
+  position: relative;
+  display: block;
+  flex: 0 0 220px;
+  width: 220px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(243, 201, 105, 0.25);
+  border-radius: 13px;
+  background: #18251f;
+  color: #fff;
+  text-align: left;
+  cursor: pointer;
+  scroll-snap-align: start;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.dt-photo:hover {
+  transform: translateY(-3px);
+  border-color: var(--gold, #f3c969);
+}
+
+.dt-photo img {
+  display: block;
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.dt-photo:hover img {
+  transform: scale(1.04);
+}
+
+.dt-photo span {
+  display: block;
+  min-height: 43px;
+  padding: 10px 11px;
+  color: #e5e8e4;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Hướng dẫn sử dụng album */
+
+.dt-note {
+  margin: 12px 0 0;
+  color: #aebbb4;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* Nội dung lịch sử bên dưới album */
+
+.site-detail-content h3 {
+  margin: 22px 0 9px;
+  color: var(--gold, #f3c969);
+  font-family: Georgia, serif;
+  font-size: 19px;
+  line-height: 1.4;
+}
+
+.site-detail-content p {
+  margin: 0 0 12px;
+  color: #d5ddd8;
+  font-size: 15px;
+  line-height: 1.85;
+  text-align: left;
+}
+
+.site-detail-content ul {
+  padding-left: 22px;
+  color: #d5ddd8;
+  line-height: 1.8;
+}
+
+.site-detail-content li {
+  margin-bottom: 5px;
+}
+
+.site-detail-content .site-year {
+  color: var(--gold, #f3c969);
+  font-size: 12px;
+  letter-spacing: 1.5px;
+}
+
+.site-question {
+  margin-top: 22px;
+  padding: 16px;
+  border-left: 3px solid var(--gold, #f3c969);
+  border-radius: 0 12px 12px 0;
+  background: rgba(243, 201, 105, 0.07);
+}
+
+.site-note {
+  margin-top: 18px !important;
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(255, 190, 80, 0.08);
+  font-size: 13px !important;
+}
+
+/* Tối ưu trên điện thoại */
+
+@media (max-width: 600px) {
+  .dt-album {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .dt-heading h3 {
+    font-size: 18px;
+  }
+
+  .dt-heading small {
+    font-size: 9px;
+    letter-spacing: 1.3px;
+  }
+
+  .dt-arrow {
+    width: 33px;
+    height: 33px;
+    font-size: 23px;
+  }
+
+  .dt-photo {
+    flex-basis: 180px;
+    width: 180px;
+  }
+
+  .dt-photo img {
+    height: 125px;
+  }
+
+  .site-detail-content h3 {
+    font-size: 17px;
+  }
+
+  .site-detail-content p {
+    font-size: 14px;
+  }
+}
+
+.card-art {
+  position: relative;
+  height: 118px;
+  overflow: hidden;
+  border-radius: 15px;
+  background: #1b302a;
+}
+
+.card-art .site-cover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.explore-card:hover .site-cover {
+  transform: scale(1.05);
+}
+
+.card-art .site-number {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  z-index: 2;
+}
+
+
+/* =========================================
+   DÒNG THỜI GIAN LỊCH SỬ PHÚ ĐÌNH
+========================================= */
+
+#history .history-timeline-section {
+  max-width: 1000px;
+  margin: 25px auto 40px;
+  padding: 24px 0;
+  color: #e9eee9;
+}
+
+#history .timeline-intro {
+  max-width: 760px;
+  margin: 0 auto 32px;
+  text-align: center;
+}
+
+#history .timeline-intro small {
+  color: var(--gold, #f3c969);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+}
+
+#history .timeline-intro h2 {
+  margin: 12px 0;
+  color: var(--gold, #f3c969);
+  font-family: Georgia, serif;
+  font-size: clamp(25px, 4vw, 36px);
+  line-height: 1.35;
+}
+
+#history .timeline-intro p {
+  max-width: 650px;
+  margin: 0 auto;
+  color: #bdc9c1;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+#history .history-timeline {
+  position: relative;
+  max-width: 850px;
+  margin: 0 auto;
+  padding-left: 36px;
+}
+
+#history .history-timeline::before {
+  position: absolute;
+  top: 10px;
+  bottom: 15px;
+  left: 10px;
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    var(--gold, #f3c969),
+    rgba(243, 201, 105, 0.12)
+  );
+  content: "";
+}
+
+#history .timeline-entry {
+  position: relative;
+  margin-bottom: 12px;
+}
+
+#history .timeline-entry::before {
+  position: absolute;
+  top: 23px;
+  left: -31px;
+  z-index: 2;
+  width: 12px;
+  height: 12px;
+  border: 3px solid #14251e;
+  border-radius: 50%;
+  background: var(--gold, #f3c969);
+  box-shadow: 0 0 0 3px rgba(243, 201, 105, 0.12);
+  content: "";
+}
+
+#history .timeline-toggle {
+  display: grid;
+  grid-template-columns: 82px minmax(0, 1fr) 24px;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 17px 18px;
+  border: 1px solid rgba(243, 201, 105, 0.2);
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.035);
+  color: #edf1ed;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+
+#history .timeline-toggle:hover,
+#history .timeline-entry.is-open .timeline-toggle {
+  border-color: rgba(243, 201, 105, 0.65);
+  background: rgba(243, 201, 105, 0.08);
+}
+
+#history .timeline-year {
+  color: var(--gold, #f3c969);
+  font-family: Georgia, serif;
+  font-size: 18px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+#history .timeline-event-title {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+#history .timeline-chevron {
+  color: var(--gold, #f3c969);
+  font-size: 22px;
+  text-align: center;
+  transition: transform 0.25s ease;
+}
+
+#history .timeline-entry.is-open .timeline-chevron {
+  transform: rotate(180deg);
+}
+
+/* Nội dung ẩn và mở rộng */
+#history .timeline-detail {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease;
+}
+
+#history .timeline-entry.is-open .timeline-detail {
+  grid-template-rows: 1fr;
+}
+
+#history .timeline-detail-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+#history .timeline-detail-content {
+  margin-top: 7px;
+  padding: 20px 22px;
+  border: 1px solid rgba(243, 201, 105, 0.15);
+  border-radius: 12px;
+  background: rgba(7, 19, 15, 0.45);
+}
+
+#history .timeline-detail-content p {
+  margin: 0 0 13px;
+  color: #d0dad3;
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+#history .timeline-detail-content p:last-child {
+  margin-bottom: 0;
+}
+
+#history .timeline-detail-content strong {
+  color: var(--gold, #f3c969);
+}
+
+/* Điện thoại */
+@media (max-width: 600px) {
+  #history .history-timeline-section {
+    padding: 18px 0;
+  }
+
+  #history .history-timeline {
+    padding-left: 27px;
+  }
+
+  #history .history-timeline::before {
+    left: 8px;
+  }
+
+  #history .timeline-entry::before {
+    left: -24px;
+    width: 10px;
+    height: 10px;
+  }
+
+  #history .timeline-toggle {
+    grid-template-columns: 64px minmax(0, 1fr) 18px;
+    gap: 8px;
+    padding: 14px 10px;
+  }
+
+  #history .timeline-year {
+    font-size: 15px;
+  }
+
+  #history .timeline-event-title {
+    font-size: 13px;
+  }
+
+  #history .timeline-detail-content {
+    padding: 15px;
+  }
+
+  #history .timeline-detail-content p {
+    font-size: 13px;
+    line-height: 1.8;
+  }
+}
+
+.learning-info-card {
+  max-width: 720px;
+  margin: 22px auto;
+  padding: 24px;
+  background: linear-gradient(145deg, #123b32, #1d5143);
+  border: 1px solid rgba(224, 190, 112, .45);
+  border-radius: 20px;
+  color: #fff;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .16);
+}
+
+.learning-info-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.learning-info-icon {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  background: rgba(224, 190, 112, .15);
+  border-radius: 14px;
+  font-size: 28px;
+}
+
+.learning-info-head h3 {
+  margin: 0 0 5px;
+  color: #f2d28b;
+  font-size: 20px;
+}
+
+.learning-info-head p,
+.learning-info-item p {
+  margin: 0;
+  color: #d3e0da;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.learning-badge {
+  margin-left: auto;
+  padding: 6px 10px;
+  border-radius: 20px;
+  background: rgba(242, 210, 139, .15);
+  color: #f2d28b;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.learning-info-desc {
+  margin: 20px 0;
+  color: #eef5f0;
+  line-height: 1.8;
+}
+
+.learning-info-item {
+  display: flex;
+  gap: 13px;
+  align-items: flex-start;
+  padding: 14px 0;
+  border-top: 1px solid rgba(255, 255, 255, .12);
+}
+
+.learning-info-item > span {
+  font-size: 23px;
+}
+
+.learning-info-item strong {
+  display: block;
+  margin-bottom: 5px;
+  color: #f2d28b;
+}
+
+@media (max-width: 520px) {
+  .learning-info-card {
+    padding: 18px;
+    border-radius: 16px;
+  }
+
+  .learning-info-head h3 {
+    font-size: 18px;
+  }
+
+  .learning-badge {
+    margin-left: 0;
+  }
+}
+
+
+
+</style>
+</head>
+<body>
+
+<div class="hero" id="home">
+  <div class="history-ink">
+  <img src="anhnen/tin-keo.jpg">
+</div>
+
+<!-- Ảnh 2: Khuôn Tát -->
+<div class="history-ink ink-khuon-tat">
+  <img src="anhnen/khuontat-ls.jpg">
+</div>
+
+<!-- Ảnh 3: Thác Khuôn Tát -->
+<div class="history-ink ink-thac">
+  <img src="anhnen/bacho-ls.jpg">
+</div>
+
+<!-- Ảnh 4: Đồi Pụ Đồn -->
+<div class="history-ink ink-pu-don">
+  <img src="anhnen/bacho-ls-2.jpg">
+
+</div>
+
+<!-- Ảnh 5: Đồi Khau Tý -->
+<div class="history-ink ink-khau-ty">
+  <img src="anhnen/phonguong-ls.jpeg">
+</div>
+
+<!-- Ảnh 6: Phụng Hiển -->
+<div class="history-ink ink-phung-hien">
+  <img src="anhnen/dentho-ls.jpg">
+</div>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-icon">🏛️</div>
+      <div><b>LỊCH SỬ QUÊ HƯƠNG</b><span>Phú Đình · Thái Nguyên</span></div>
+    </div>
+    <nav class="nav">
+      <button data-target="sites">🏛️ Di tích lịch sử</button>
+      <button data-target="history">📜 Lịch sử xã Phú Đình</button>
+     <button data-target="quaylai" onclick="window.location.href='index.html'">
+    Quay lại
+</button>
+    </nav>
+    <div class="user-profile" id="userProfile" aria-live="polite">
+      <div class="user-avatar" id="userAvatar">👤</div>
+      <div class="user-meta">
+        <span class="user-greeting">Đang đăng nhập</span>
+        <strong id="userName">Đang tải...</strong>
+        <small id="userDetails">Tài khoản</small>
+      </div>
+    </div>
+  </header>
+
+  <main class="hero-content">
+    <div class="kicker">Không gian ký ức · học tập · trải nghiệm</div>
+    <h1>Phú Đình</h1>
+    <div class="hero-script">Những dấu ấn</div>
+    <div class="hero-history">lịch sử</div>
+    <div style="width:420px;max-width:75%;height:1px;background:rgba(102,61,30,.45);margin:15px auto 0;position:relative">
+      <span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:28px;height:28px;border-radius:50%;background:#ad3d26;color:#ffe7a0;display:grid;place-items:center;font-size:14px">★</span>
+    </div>
+    <p class="subtitle">Khám phá những câu chuyện, con người và địa danh góp phần làm nên lịch sử quê hương trong những năm tháng kháng chiến.</p>
+
+    <div class="home-cards">
+      <div class="home-card red" data-target="sites">
+        <div class="icon">🏛️</div>
+        <h3>DI TÍCH LỊCH SỬ</h3>
+        <p>Khám phá các điểm di tích tiêu biểu trên địa bàn xã Phú Đình</p>
+        <div class="arrow">→</div>
+      </div>
+      <div class="home-card green" data-target="history">
+        <div class="icon">📖</div>
+        <h3>LỊCH SỬ XÃ PHÚ ĐÌNH</h3>
+        <p>Tìm hiểu các giai đoạn lịch sử, những sự kiện và con người tiêu biểu</p>
+        <div class="arrow">→</div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <a class="btn btn-primary" id="startLearningBtn" href="trac-nghiem-lich-su.html">📖 &nbsp; BẮT ĐẦU HỌC TẬP &nbsp; →</a>
+    </div>
+    
+
+    <div class="journey">
+      <div><span>📍 &nbsp;Hành trình khám phá</span><b id="progressText">0 / 9 nội dung</b></div>
+      <div class="progress"><i id="progressBar"></i></div>
+    </div>
+  </main>
+</div>
+
+<section class="section" id="sites">
+  <div class="section-head">
+    <div class="kicker">ATK Định Hóa · Phú Đình</div>
+    <h2>Di tích lịch sử</h2>
+    <p>Khám phá 9 điểm/nhóm điểm thuộc Di tích quốc gia đặc biệt ATK Định Hóa trên địa bàn xã Phú Đình hiện nay.</p>
+  </div>
+  <div class="grid" id="siteGrid"></div>
+</section>
+
+
+<section class="section" id="history">
+
+  <div class="section-head">
+    <div class="kicker">Dòng thời gian</div>
+    <h2>Lịch sử xã Phú Đình</h2>
+    <p>
+      Khám phá những dấu mốc lịch sử từ năm 1945 đến nay,
+      tìm hiểu truyền thống cách mạng ATK Định Hóa và
+      hành trình xây dựng, phát triển quê hương Phú Đình.
+    </p>
+  </div>
+
+  <!-- DÒNG THỜI GIAN LỊCH SỬ MỚI -->
+  <section class="history-timeline-section" id="historyTimeline">
+
+    <div class="timeline-intro">
+      <small>HÀNH TRÌNH LỊCH SỬ</small>
+      <h2>Dòng chảy lịch sử Phú Đình</h2>
+      <p>
+        Mỗi dấu mốc mở ra một câu chuyện về con người,
+        quê hương và truyền thống cách mạng.
+        Nhấn vào từng mốc để khám phá nội dung.
+      </p>
+    </div>
+
+    <div
+      class="history-timeline"
+      id="historyTimelineList">
+      <!-- JavaScript tự tạo các mốc lịch sử tại đây -->
+    </div>
+
+  </section>
+
+  <!-- THỬ THÁCH LỊCH SỬ: GIỮ NGUYÊN -->
+  <div class="challenge-box" id="challengeBox">
+    <div>
+      <small>SAU KHI HỌC TẬP & TRẢI NGHIỆM</small>
+      <h3>🎯 Thử thách lịch sử quê hương</h3>
+      <p id="challengeStatus">
+        Hãy khám phá dòng thời gian để mở khóa.
+      </p>
+    </div>
+
+    <button
+      class="btn btn-primary"
+      id="challengeBtn"
+      disabled>
+      🔒 Chưa mở khóa
+    </button>
+  </div>
+
+</section>
+
+
+<div class="modal" id="lessonModal">
+  <div class="modal-box lesson-modal">
+    <div class="tag" id="lessonTag">BÀI HỌC</div>
+    <h2 id="lessonTitle">Bài học lịch sử</h2>
+    <div class="lesson-content" id="lessonContent"></div>
+    <div class="quiz-box" id="quizBox"></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" id="closeLesson">Đóng</button>
+      <button class="btn btn-primary" id="completeLesson">✓ Hoàn thành bài học</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="detailModal">
+  <div class="modal-box">
+    <div class="tag" id="modalKind">DI TÍCH</div>
+    <h2 id="modalTitle">Tên di tích</h2>
+    <p id="modalText">Nội dung giới thiệu.</p>
+    <p>📍 <b>Vị trí:</b> Phú Đình, Định Hóa, Thái Nguyên<br>
+       📚 <b>Trải nghiệm:</b> xem tư liệu · đọc câu chuyện · khám phá địa điểm</p>
+    <div class="modal-actions"><button class="btn btn-ghost" id="closeModal">Đóng</button><button class="btn btn-primary" id="markExplore">✓ Đã khám phá</button></div>
+  </div>
+</div>
+<footer class="footer">Lịch sử quê hương Phú Đình · Học tập số – Sáng tạo – Vươn xa</footer>
+
+<script>
+
+// Hiển thị thông tin tài khoản đăng nhập từ Olympic HSG Online
+(function hienThiNguoiDungTrangLichSu(){
+  const profileEl = document.getElementById("userProfile");
+  const nameEl = document.getElementById("userName");
+  const detailsEl = document.getElementById("userDetails");
+  const avatarEl = document.getElementById("userAvatar");
+  if (!profileEl || !nameEl || !detailsEl || !avatarEl) return;
+
+  const keys = [
+    "olympicUser", "currentUser", "user", "studentInfo",
+    "taiKhoanHS", "hocSinh", "userInfo", "thongTinNguoiDung"
+  ];
+  let user = null;
+
+  for (const key of keys) {
+    const raw = localStorage.getItem(key);
+    if (!raw) continue;
+    try {
+      const parsed = JSON.parse(raw);
+      if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+        const hasIdentity = parsed.hoTen || parsed.name || parsed.fullName ||
+          parsed.tenHocSinh || parsed.maHS || parsed.MaHS ||
+          parsed.studentCode || parsed.id || parsed.username;
+        if (hasIdentity) { user = parsed; break; }
+      }
+    } catch (_) {}
+  }
+
+  if (!user) {
+    const code = localStorage.getItem("maHS") ||
+      localStorage.getItem("MaHS") ||
+      localStorage.getItem("studentCode");
+    const name = localStorage.getItem("hoTenDangNhap") ||
+      localStorage.getItem("hoTen") ||
+      localStorage.getItem("tenHocSinh");
+    if (code || name) user = { maHS: code || "", hoTen: name || "" };
+  }
+
+  if (!user) {
+    nameEl.textContent = "Chưa đăng nhập";
+    detailsEl.textContent = "Hãy đăng nhập tại Olympic HSG";
+    return;
+  }
+
+  const getValue = (...values) => {
+    for (const value of values) {
+      if (value !== undefined && value !== null && String(value).trim()) return String(value).trim();
+    }
+    return "";
+  };
+
+  const name = getValue(user.hoTen, user.hoten, user.name, user.fullName,
+    user.tenHocSinh, user.displayName, user.username, user.tenDangNhap);
+  const code = getValue(user.maHS, user.MaHS, user.studentCode, user.id, user.userId);
+  const className = getValue(user.lop, user.lopHoc, user.className, user.class, user.tenLop);
+  const avatar = getValue(user.avatar, user.anhDaiDien, user.photoURL, user.photo, user.image);
+
+  nameEl.textContent = name || code || "Học sinh";
+  detailsEl.textContent = [code ? "Mã: " + code : "", className ? "Lớp: " + className : ""]
+    .filter(Boolean).join(" · ") || "Tài khoản Olympic HSG";
+
+  if (avatar) {
+    const img = document.createElement("img");
+    img.src = avatar;
+    img.alt = "Ảnh đại diện";
+    img.onerror = () => { avatarEl.textContent = "👤"; };
+    avatarEl.textContent = "";
+    avatarEl.appendChild(img);
+  } else {
+    avatarEl.textContent = (name || code || "HS").trim().charAt(0).toUpperCase() || "👤";
+  }
+})();
+
+
+function openSection(id){
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("show"));
+  if(id==="home"){window.scrollTo({top:0,behavior:"smooth"});return}
+  const el=document.getElementById(id);
+  if(el){el.classList.add("show");setTimeout(()=>el.scrollIntoView({behavior:"smooth",block:"start"}),20)}
+  document.querySelectorAll(".nav button").forEach(b=>b.classList.toggle("active",b.dataset.target===id));
+}
+document.querySelectorAll("[data-target]:not(#startLearningBtn)").forEach(b=>b.addEventListener("click",()=>{
+  const target=b.dataset.target;
+  if(target==="quaylai"){ history.back(); return; }
+  openSection(target);
+}));
+let explored=new Set();
+const progressBar=document.getElementById("progressBar"),progressText=document.getElementById("progressText");
+const challengeBtn=document.getElementById("challengeBtn"),challengeStatus=document.getElementById("challengeStatus");
+function updateProgress(){
+  const n=Math.min(explored.size,9);
+  progressText.textContent=n+" / 9 nội dung";
+  progressBar.style.width=(n/9*100)+"%";
+  if(n>=9){
+    challengeBtn.disabled=false;
+    challengeBtn.textContent="🎯 Bắt đầu thử thách";
+    challengeStatus.textContent="Bạn đã hoàn thành hành trình khám phá. Thử thách đã được mở khóa!";
+  }
+}
+
+const sites = [
+  {
+    id: 1,
+    title: "Địa điểm Chủ tịch Hồ Chí Minh ở và làm việc tại đồi Tỉn Keo",
+    year: "1948–1954",
+    desc: "Đồi Tỉn Keo là một địa điểm quan trọng thuộc ATK Định Hóa, gắn với thời gian Chủ tịch Hồ Chí Minh ở và làm việc trong cuộc kháng chiến chống thực dân Pháp. Từ năm 1948 đến năm 1954, nơi đây là một trong những địa điểm phục vụ hoạt động lãnh đạo kháng chiến của Bác và Trung ương Đảng. Không gian di tích có lán ở, nơi làm việc và địa điểm hội họp, phản ánh điều kiện sinh hoạt giản dị giữa núi rừng Việt Bắc.",
+    story: "Hãy hình dung một buổi sáng giữa núi rừng Việt Bắc những năm đầu thập niên 1950. Trong căn lán đơn sơ, công việc kháng chiến vẫn diễn ra khẩn trương. Tin tức từ các chiến trường được chuyển về; tình hình quân địch, lực lượng của ta và đời sống nhân dân đều là những vấn đề cần được cân nhắc. Tại Tỉn Keo, Chủ tịch Hồ Chí Minh cùng Bộ Chính trị tham gia lãnh đạo, chỉ đạo cuộc kháng chiến trong giai đoạn quyết định. Những chủ trương được chuẩn bị và triển khai từ căn cứ góp phần tạo nên thắng lợi của cuộc kháng chiến, đỉnh cao là Chiến thắng Điện Biên Phủ năm 1954. Câu chuyện Tỉn Keo nhắc chúng ta rằng đằng sau những chiến thắng trên chiến trường còn có trí tuệ, tầm nhìn và những quyết định quan trọng.",
+    value: "Tỉn Keo là địa chỉ đỏ giáo dục truyền thống cách mạng, giúp thế hệ trẻ hiểu thêm vai trò của ATK Định Hóa, tinh thần làm việc nghiêm túc và lối sống giản dị của Chủ tịch Hồ Chí Minh.",
+    question: "Vì sao một căn lán nhỏ giữa núi rừng lại có thể gắn với những quyết định quan trọng đối với vận mệnh đất nước?",
+    art: "art1",
+    image: "anhnen/tin-keo-1.jpg"
+    
+  },
+
+  {
+    id: 2,
+    title: "Cụm di tích Chủ tịch Hồ Chí Minh ở Khuôn Tát",
+    year: "1947–1954",
+    desc: "Cụm di tích Khuôn Tát gồm cây đa Khuôn Tát, đoạn suối Khuôn Tát và nhà sàn cùng hầm ở đồi Nà Đình. Những địa điểm này gắn với thời gian Chủ tịch Hồ Chí Minh sống và làm việc tại ATK Định Hóa trong cuộc kháng chiến chống thực dân Pháp. Cây đa, dòng suối và căn nhà sàn giản dị giúp người tham quan hình dung rõ hơn không gian sinh hoạt của Bác giữa núi rừng Việt Bắc.",
+    story: "Khi đến Khuôn Tát, du khách có thể bắt gặp dòng suối chảy qua những tảng đá dưới bóng cây rừng. Trong ký ức về di tích, dòng suối còn gắn với sinh hoạt đời thường của Chủ tịch Hồ Chí Minh, trong đó có việc tắm, giặt và câu cá. Bên cạnh những công việc lãnh đạo kháng chiến, Bác vẫn duy trì nếp sống giản dị, gần gũi với thiên nhiên. Những dấu tích bình dị ấy giúp chúng ta hiểu rằng lịch sử không chỉ được ghi lại qua các trận đánh hay văn kiện lớn mà còn hiện diện trong không gian sống và những sinh hoạt thường ngày của con người.",
+    value: "Cụm di tích giúp học sinh tìm hiểu cuộc sống giản dị của Bác Hồ, trân trọng giá trị lịch sử của những địa điểm nhỏ bé và có ý thức gìn giữ di sản địa phương.",
+    question: "Những dấu tích bình dị ở Khuôn Tát giúp em hiểu thêm điều gì về cuộc sống của Bác Hồ trong kháng chiến?",
+    art: "art2",
+    children: [
+      "Cây đa Khuôn Tát",
+      "Đoạn suối Khuôn Tát",
+      "Nhà sàn và hầm Bác ở đồi Nà Đình"
+    ],
+    image: "anhnen/khuan-tat-1.jpg"
+  },
+
+  {
+    id: 3,
+    title: "Thắng cảnh Thác Khuôn Tát",
+    year: "Khuôn Tát",
+    desc: "Thác Khuôn Tát, còn được gọi là thác Bảy Tầng, là thắng cảnh thiên nhiên trong không gian ATK Định Hóa. Dòng nước chảy qua các tầng đá giữa rừng cây tạo nên vẻ đẹp đặc trưng của vùng núi Việt Bắc. Cảnh quan nơi đây góp phần làm phong phú giá trị tự nhiên của khu vực gắn với lịch sử căn cứ cách mạng.",
+    story: "Khi đứng trước dòng thác giữa núi rừng, chúng ta có thể hình dung những điều kiện tự nhiên mà cán bộ, chiến sĩ và nhân dân từng phải thích nghi trong những năm kháng chiến. Địa hình rừng núi gây khó khăn cho việc đi lại và sinh hoạt, nhưng cũng góp phần che chở cho căn cứ cách mạng. Cảnh quan thiên nhiên vì vậy không chỉ là phông nền của lịch sử mà còn là một phần của môi trường sống. Từ Thác Khuôn Tát, học sinh có thể tìm hiểu mối quan hệ giữa con người, thiên nhiên và hoạt động cách mạng ở vùng Việt Bắc.",
+    value: "Thác Khuôn Tát có giá trị cảnh quan, góp phần phát triển du lịch sinh thái gắn với tìm hiểu lịch sử. Việc tham quan cần đi đôi với bảo vệ môi trường, giữ gìn rừng và không xả rác.",
+    question: "Địa hình rừng núi có thể đem lại những thuận lợi và khó khăn gì cho cuộc sống tại một căn cứ cách mạng?",
+    art: "art3",
+    image: "anhnen/khuan-tat-2.jpg"
+  },
+
+  {
+    id: 4,
+    title: "Địa điểm Đồi Pụ Đồn",
+    year: "1948",
+    desc: "Đồi Pụ Đồn, còn gọi là đồi Phong Tướng, là địa điểm gắn với lễ phong quân hàm Đại tướng cho đồng chí Võ Nguyên Giáp do Chủ tịch Hồ Chí Minh chủ trì ngày 28/5/1948. Trước đó, ngày 20/1/1948, Chủ tịch Hồ Chí Minh đã ký sắc lệnh phong quân hàm Đại tướng cho đồng chí Võ Nguyên Giáp. Sự kiện là dấu mốc quan trọng trong quá trình xây dựng và trưởng thành của Quân đội nhân dân Việt Nam.",
+    story: "Năm 1948, cuộc kháng chiến chống thực dân Pháp vẫn còn nhiều khó khăn. Giữa vùng căn cứ Việt Bắc, lễ phong quân hàm Đại tướng cho Võ Nguyên Giáp được tổ chức trang trọng tại Pụ Đồn. Sự kiện diễn ra trong hoàn cảnh đất nước đang tập trung xây dựng lực lượng vũ trang, củng cố tổ chức chỉ huy và tiếp tục cuộc kháng chiến lâu dài. Địa điểm này vì thế không chỉ gắn với một nghi lễ quân đội mà còn ghi dấu quá trình trưởng thành của lực lượng vũ trang cách mạng. Khi tìm hiểu Pụ Đồn, chúng ta có thể hiểu thêm về vai trò của người chỉ huy, tinh thần tổ chức và trách nhiệm đối với nhiệm vụ bảo vệ đất nước.",
+    value: "Di tích góp phần giáo dục lòng yêu nước, niềm tự hào về truyền thống Quân đội nhân dân Việt Nam và ý thức trách nhiệm của thế hệ trẻ đối với Tổ quốc.",
+    question: "Sự kiện ngày 28/5/1948 tại Pụ Đồn cho em biết điều gì về quá trình xây dựng Quân đội nhân dân Việt Nam?",
+    art: "art4",
+    image: "anhnen/doi-phong-tuong-1.jpg"
+  },
+
+  {
+    id: 5,
+    title: "Nơi Chủ tịch Hồ Chí Minh ở và làm việc tại đồi Khau Tý",
+    year: "1947",
+    desc: "Đồi Khau Tý là địa điểm gắn với thời gian Chủ tịch Hồ Chí Minh ở và làm việc tại ATK Định Hóa trong năm 1947. Đây là giai đoạn cuộc kháng chiến chống thực dân Pháp gặp nhiều thử thách, các cơ quan lãnh đạo cách mạng phải tổ chức hoạt động trong điều kiện bí mật và luôn chủ động trước tình hình chiến sự.",
+    story: "Trong thời gian ở Khau Tý, Chủ tịch Hồ Chí Minh dành sự quan tâm không chỉ cho việc lãnh đạo kháng chiến mà còn cho công tác xây dựng đội ngũ cán bộ. Tại đây, Bác hoàn thành bản thảo cuốn Sửa đổi lối làm việc, tác phẩm đề cập đến phương pháp công tác, đạo đức, tác phong và trách nhiệm của cán bộ, đảng viên. Giữa hoàn cảnh chiến tranh, việc rèn luyện con người vẫn được đặt ra như một nhiệm vụ quan trọng. Tác phẩm nhấn mạnh tinh thần tự phê bình, sửa chữa khuyết điểm, làm việc có phương pháp và gắn bó với nhân dân. Câu chuyện Khau Tý cho thấy thắng lợi không chỉ cần sức mạnh vật chất mà còn cần con người có trách nhiệm và biết tự hoàn thiện.",
+    value: "Khau Tý gợi cho học sinh bài học về tinh thần tự học, tự rèn luyện, biết nhận ra hạn chế và sửa chữa sai sót trong học tập cũng như cuộc sống.",
+    question: "Em có thể vận dụng bài học về tự rèn luyện và làm việc có phương pháp vào việc học tập hằng ngày như thế nào?",
+    art: "art5",
+    image: "anhnen/khau-ty-1.jpg",
+    note: "Cần đối chiếu địa giới hành chính hiện nay trước khi xếp địa điểm này vào danh sách riêng của xã Phú Đình."
+  },
+
+  {
+    id: 6,
+    title: "Địa điểm Tổng Bí thư Trường Chinh và Văn phòng Trung ương Đảng làm việc tại Phụng Hiển",
+    year: "1947–1949",
+    desc: "Phụng Hiển là địa điểm gắn với hoạt động của Tổng Bí thư Trường Chinh và Văn phòng Trung ương Đảng trong giai đoạn 1947–1949. Đây là một phần trong hệ thống các địa điểm làm việc của cơ quan lãnh đạo cách mạng tại căn cứ Việt Bắc, phục vụ công tác chỉ đạo, tổng hợp thông tin và duy trì liên lạc trong thời kỳ kháng chiến.",
+    story: "Khi nhắc đến lịch sử kháng chiến, chúng ta thường nhớ đến các trận đánh và những chiến thắng lớn. Tuy nhiên, để một chủ trương được triển khai, nhiều công việc âm thầm phải được thực hiện: tài liệu cần chuẩn bị, thông tin từ cơ sở phải được tổng hợp, liên lạc giữa các cơ quan cần duy trì và các nhiệm vụ phải được truyền đạt chính xác. Tại những địa điểm như Phụng Hiển, cán bộ văn phòng và những người làm công tác thông tin góp phần bảo đảm hoạt động của cơ quan lãnh đạo cách mạng. Công việc đòi hỏi sự cẩn trọng, bí mật và tinh thần trách nhiệm cao. Câu chuyện Phụng Hiển nhắc chúng ta rằng lịch sử được tạo nên bởi cả những đóng góp thầm lặng phía sau chiến trường.",
+    value: "Di tích giúp người tham quan hiểu thêm về vai trò của các cơ quan tham mưu, văn phòng và công tác thông tin trong kháng chiến; đồng thời gợi nhắc về trách nhiệm và sự phối hợp trong công việc chung.",
+    question: "Vì sao việc tổng hợp thông tin và duy trì liên lạc lại có ý nghĩa quan trọng trong thời kỳ kháng chiến?",
+    art: "art6",
+    image: "anhnen/phung-hien-2.jpg",
+    note: "Cần đối chiếu địa giới hành chính hiện nay trước khi xếp địa điểm này vào danh sách riêng của xã Phú Đình."
+  },
+
+  {
+    id: 7,
+    title: "Địa điểm thành lập Hội Nhà báo Việt Nam",
+    year: "1950",
+    desc: "Ngày 21/4/1950, tại xóm Roòng Khoa, xã Điềm Mặc, huyện Định Hóa trước đây, Hội nghị thành lập Hội những người viết báo Việt Nam đã diễn ra. Hội nghị thống nhất thông qua điều lệ, chương trình hoạt động và bầu Ban Chấp hành Hội. Sự kiện đánh dấu một bước phát triển quan trọng trong quá trình tập hợp, đoàn kết đội ngũ những người làm báo cách mạng Việt Nam.",
+    story: "Trong kháng chiến, để một tờ báo đến được với người đọc là cả một quá trình nhiều công sức. Người làm báo phải tìm hiểu sự kiện, ghi chép, viết bài, biên tập và tổ chức in ấn, phát hành trong hoàn cảnh thiếu thốn. Thông tin trên báo chí góp phần tuyên truyền đường lối kháng chiến, cổ vũ tinh thần nhân dân và phản ánh đời sống ở các vùng căn cứ cũng như chiến trường. Việc thành lập Hội những người viết báo Việt Nam năm 1950 thể hiện nhu cầu tập hợp đội ngũ làm báo, trao đổi kinh nghiệm và nâng cao nghiệp vụ. Câu chuyện này cũng gợi ra bài học cho thời đại số: người truyền tải thông tin cần trung thực, có trách nhiệm và tôn trọng sự thật.",
+    value: "Di tích giúp học sinh tìm hiểu lịch sử báo chí cách mạng, đồng thời rèn luyện kỹ năng kiểm tra nguồn tin, nhận diện thông tin sai lệch và sử dụng mạng xã hội có trách nhiệm.",
+    question: "Người làm báo cần có những phẩm chất nào để thông tin đến với công chúng chính xác và có ích?",
+    art: "art1",
+    image: "anhnen/nha-bao-1.jpeg",
+    note: "Địa điểm thành lập Hội Nhà báo Việt Nam được ghi nhận tại Điềm Mặc trước đây. Cần kiểm tra lại địa giới hành chính hiện nay trước khi xếp vào danh sách riêng của xã Phú Đình."
+  },
+
+  {
+    id: 8,
+    title: "Địa điểm thành lập Ủy ban Hòa bình Việt Nam",
+    year: "Cần xác minh",
+    desc: "Tên địa điểm này cần được đối chiếu với hồ sơ di tích và tài liệu chính thức để xác định chính xác vị trí, thời gian thành lập và sự kiện lịch sử liên quan. Khi có nguồn tư liệu phù hợp, phần giới thiệu cần nêu rõ bối cảnh ra đời của tổ chức và vai trò của địa điểm trong lịch sử.",
+    story: "Hòa bình là điều kiện để con người được sống an toàn, trẻ em được đến trường, gia đình được sum họp và xã hội phát triển. Lịch sử Việt Nam trải qua nhiều cuộc chiến tranh, vì vậy khát vọng độc lập và hòa bình luôn có ý nghĩa sâu sắc. Khi tìm hiểu lịch sử các hoạt động vận động hòa bình, học sinh có thể suy ngẫm về giá trị của đối thoại, đoàn kết và tôn trọng lẫn nhau. Tuy nhiên, câu chuyện cụ thể gắn với địa điểm này cần được bổ sung sau khi xác minh hồ sơ chính thức, tránh nhầm lẫn về sự kiện hoặc địa danh.",
+    value: "Chủ đề hòa bình giúp học sinh nhận thức giá trị của cuộc sống không có chiến tranh, biết tôn trọng sự khác biệt và giải quyết mâu thuẫn bằng đối thoại thay vì bạo lực.",
+    question: "Học sinh có thể làm gì để góp phần xây dựng môi trường hòa bình, thân thiện ở trường học và nơi sinh sống?",
+    art: "art2",
+    image: "anhnen/uy-ban-hoa-binh.jpg",
+    note: "Chưa xác minh được đầy đủ địa điểm và mốc thời gian của sự kiện. Không nên công bố như một sự kiện đã được kiểm chứng cho đến khi đối chiếu nguồn chính thức."
+  },
+
+  {
+    id: 9,
+    title: "Địa điểm thành lập Ủy ban Kiểm tra Trung ương",
+    year: "1948",
+    desc: "Ngày 16/10/1948, Trung ương Đảng quyết định thành lập Ban Kiểm tra Trung ương, tiền thân của Ủy ban Kiểm tra Trung ương ngày nay. Đồng chí Trần Đăng Ninh được giao làm Trưởng ban đầu tiên. Sự ra đời của cơ quan kiểm tra phản ánh yêu cầu tăng cường công tác kiểm tra, giữ gìn kỷ luật và bảo đảm việc thực hiện chủ trương trong tổ chức Đảng giữa thời kỳ kháng chiến.",
+    story: "Trong một tổ chức lớn, chủ trương chỉ có ý nghĩa khi được thực hiện nghiêm túc và phù hợp với tình hình thực tế. Nếu thông tin từ cơ sở không được phản ánh kịp thời, nhiệm vụ không được thực hiện đầy đủ hoặc kỷ luật bị xem nhẹ, công việc chung có thể gặp trở ngại. Trong hoàn cảnh kháng chiến, những vấn đề ấy càng đòi hỏi sự theo dõi, kiểm tra và rút kinh nghiệm. Việc thành lập Ban Kiểm tra Trung ương năm 1948 thể hiện yêu cầu củng cố tổ chức và giữ vững kỷ luật. Công tác kiểm tra không chỉ nhằm phát hiện sai sót mà còn giúp nhìn nhận thực tế, nhận ra vấn đề và nâng cao chất lượng công việc.",
+    value: "Di tích gợi nhắc về tinh thần trách nhiệm, tính trung thực và ý thức chấp hành kỷ luật. Trong học tập, học sinh có thể vận dụng bài học này bằng cách tự kiểm tra kết quả, nhận lỗi và sửa lỗi khi mắc sai sót.",
+    question: "Vì sao một tập thể cần có tinh thần kiểm tra, tự đánh giá và sửa chữa sai sót?",
+    art: "art3",
+    image: "anhnen/uy-ban-kiem-tra.jpg",
+    note: "Cần xác minh chính xác địa điểm thành lập Ban Kiểm tra Trung ương và đối chiếu địa giới hành chính hiện nay trước khi gắn với xã Phú Đình."
+  }
+];
+
+
+const grid = document.getElementById("siteGrid");
+
+grid.innerHTML = sites.map(x => `
+  <article class="card explore-card" data-id="${x.id}">
+
+    <div class="card-art ${x.art}">
+      <img
+        class="site-cover"
+        src="${x.image || ''}"
+        alt="${x.title}"
+        loading="lazy"
+        onerror="this.style.display='none'"
+      >
+      <span class="site-number">
+        ${String(x.id).padStart(2, "0")}
+      </span>
+    </div>
+
+    <div class="site-year">${x.year || ""}</div>
+
+    <h3>${x.title}</h3>
+
+    <p>${x.desc || ""}</p>
+
+    <button type="button" class="mini-btn">
+      Khám phá →
+    </button>
+
+  </article>
+`).join("");
+
+const modal = document.getElementById("detailModal");
+const modalTitle = document.getElementById("modalTitle");
+const modalKind = document.getElementById("modalKind");
+const modalText = document.getElementById("modalText");
+
+let currentKey = "";
+
+
+/* ==========================================
+   HỘP KHÁM PHÁ DI TÍCH - PHIÊN BẢN MỞ RỘNG
+========================================== */
+
+// Album ảnh cho từng di tích.
+// Thay tên file bằng ảnh thực tế trong dự án.
+const siteAlbums = {
+  1: [
+    {
+      src: "anhnen/tin-keo-1.jpg",
+      caption: "Toàn cảnh khu di tích Tỉn Keo"
+    },
+    {
+      src: "anhnen/tin-keo-2.jpg",
+      caption: "Không gian di tích"
+    },
+    {
+      src: "anhnen/tin-keo-3.jpg",
+      caption: "Cảnh quan lịch sử"
+    },
+    {
+      src: "anhnen/tin-keo-4.jpg",
+      caption: "Tư liệu về Tỉn Keo"
+    }
+  ],
+  2: [
+    {
+      src: "anhnen/khuan-tat-1.jpg",
+      caption: "Cụm di tích Khuôn Tát"
+    },
+    {
+      src: "anhnen/khuan-tat-2.jpg",
+      caption: "Cảnh quan Khuôn Tát"
+    }
+  ],
+  3: [
+    {
+      src: "anhnen/khuan-tat-3.jpg",
+      caption: "Thắng cảnh Thác Khuôn Tát"
+    }
+  ],
+  4: [
+    {
+      src: "anhnen/doi-phong-tuong-1.jpg",
+      caption: "Địa điểm Đồi Pụ Đồn"
+    }
+  ],
+  5: [
+    {
+      src: "anhnen/khau-ty-1.jpg",
+      caption: "Di tích đồi Khau Tý"
+    }
+  ],
+  6: [
+    {
+      src: "anhnen/phung-hien.jpg",
+      caption: "Di tích Phụng Hiển"
+    }
+  ],
+  7: [
+    {
+      src: "anhnen/hoi-nha-bao-1.jpg",
+      caption: "Địa điểm thành lập Hội Nhà báo Việt Nam"
+    }
+  ],
+  8: [
+    {
+      src: "anhnen/uy-ban-hoa-binh.jpg",
+      caption: "Địa điểm lịch sử"
+    }
+  ],
+  9: [
+    {
+      src: "anhnen/uy-ban-kiem-tra.jpg",
+      caption: "Địa điểm lịch sử"
+    }
+  ]
+};
+
+
+grid.querySelectorAll(".explore-card").forEach(card => {
+  card.addEventListener("click", () => {
+    const x = sites.find(
+      v => String(v.id) === card.dataset.id
+    );
+
+    if (!x) return;
+
+    currentKey = "site-" + x.id;
+
+    modalKind.textContent =
+      "DI TÍCH LỊCH SỬ · ATK ĐỊNH HÓA";
+
+    modalTitle.textContent = x.title;
+
+    // Lấy danh sách ảnh của di tích
+    const photos = siteAlbums[x.id] || [];
+
+    // Tạo HTML cho album ảnh
+    const albumHTML = photos.length
+      ? `
+        <section class="dt-album">
+          <div class="dt-heading">
+            <div>
+              <small>THƯ VIỆN TƯ LIỆU</small>
+              <h3>Hình ảnh di tích</h3>
+            </div>
+
+            <div class="dt-controls">
+              <button
+                type="button"
+                class="dt-arrow"
+                data-scroll="-1"
+                aria-label="Ảnh trước">
+                ‹
+              </button>
+
+              <button
+                type="button"
+                class="dt-arrow"
+                data-scroll="1"
+                aria-label="Ảnh tiếp theo">
+                ›
+              </button>
+            </div>
+          </div>
+
+          <div class="dt-track">
+            ${photos.map(photo => `
+              <button
+                type="button"
+                class="dt-photo"
+                data-full="${photo.src}"
+                aria-label="Xem ảnh lớn: ${photo.caption}">
+
+                <img
+                  src="${photo.src}"
+                  alt="${photo.caption}"
+                  loading="lazy">
+
+                <span>${photo.caption}</span>
+              </button>
+            `).join("")}
+          </div>
+
+          <p class="dt-note">
+            Vuốt ngang hoặc bấm mũi tên để xem ảnh.
+            Nhấn ảnh để phóng to.
+          </p>
+        </section>
+      `
+      : `
+        <section class="dt-album">
+          <div class="dt-heading">
+            <div>
+              <small>THƯ VIỆN TƯ LIỆU</small>
+              <h3>Hình ảnh di tích</h3>
+            </div>
+          </div>
+
+          <p class="dt-note">
+            Album ảnh của di tích đang được cập nhật.
+          </p>
+        </section>
+      `;
+
+    
+    // ==========================================
+    // NỘI DUNG CHI TIẾT DI TÍCH
+    // ==========================================
+
+    const childrenHTML =
+      x.children && x.children.length
+        ? `
+          <div class="dt-subsites">
+            <h4>📍 Các điểm thành phần</h4>
+            <ul>
+              ${x.children.map(name => `<li>${name}</li>`).join("")}
+            </ul>
+          </div>
+        `
+        : "";
+
+    // Câu chuyện lịch sử: chỉ hiển thị một lần
+    const storyHTML = x.story
+      ? `
+        <section class="dt-story">
+          <small>NGHE LỊCH SỬ KỂ CHUYỆN</small>
+          <h3>📖 Câu chuyện lịch sử</h3>
+          <div class="dt-story-content">
+            <p>${x.story}</p>
+          </div>
+        </section>
+      `
+      : `
+        <section class="dt-story">
+          <small>NGHE LỊCH SỬ KỂ CHUYỆN</small>
+          <h3>🎬 Câu chuyện hoặc video</h3>
+          <div class="dt-video-placeholder">
+            <span>▶</span>
+            <div>
+              <strong>Góc tư liệu lịch sử</strong>
+              <p>
+                Video thuyết minh hoặc tư liệu kể chuyện
+                về di tích sẽ được bổ sung.
+              </p>
+            </div>
+          </div>
+        </section>
+      `;
+
+    // Giá trị di tích
+    const valueHTML = x.value
+      ? `
+        <div class="dt-timeline-item">
+          <span class="dt-dot"></span>
+          <div>
+            <h4>Giá trị của di tích</h4>
+            <p>${x.value}</p>
+          </div>
+        </div>
+      `
+      : `
+        <div class="dt-timeline-item">
+          <span class="dt-dot"></span>
+          <div>
+            <h4>Giá trị giáo dục</h4>
+            <p>
+              Góp phần giáo dục truyền thống cách mạng,
+              bồi dưỡng lòng tự hào về quê hương và đất nước.
+            </p>
+          </div>
+        </div>
+      `;
+
+    // Câu hỏi và gợi ý khám phá
+    const discoveryHTML = `
+      <section class="dt-discovery">
+        <small>CÙNG EM KHÁM PHÁ</small>
+        <h3>💡 Thử thách tìm hiểu</h3>
+
+        <p>
+          ${
+            x.question ||
+            "Theo em, di tích này có ý nghĩa như thế nào đối với lịch sử quê hương và đất nước?"
+          }
+        </p>
+
+        <button type="button" class="dt-hint-btn">
+          Xem gợi ý
+        </button>
+
+        <p class="dt-hint" hidden>
+          ${
+            x.hint ||
+            "Hãy dựa vào phần giới thiệu, hình ảnh và tư liệu lịch sử để tìm câu trả lời."
+          }
+        </p>
+      </section>
+    `;
+
+    // Ghép toàn bộ nội dung vào một mẫu duy nhất
+    const detailHTML = `
+      <div class="dt-content">
+
+        ${albumHTML}
+
+        <section class="dt-history">
+          <small>KHÁM PHÁ DI SẢN</small>
+          <h3>📜 Dấu ấn lịch sử</h3>
+
+          <div class="dt-year">${x.year || ""}</div>
+
+          <p class="dt-desc">${x.desc || ""}</p>
+
+          ${childrenHTML}
+
+          ${
+            x.note
+              ? `
+                <p class="dt-note">
+                  <strong>📌 Lưu ý tư liệu:</strong>
+                  ${x.note}
+                </p>
+              `
+              : ""
+          }
+        </section>
+
+        <section class="dt-timeline">
+          <small>DẤU ẤN VÀ GIÁ TRỊ</small>
+          <h3>🌿 Ý nghĩa của di tích</h3>
+
+          <div class="dt-timeline-item">
+            <span class="dt-dot"></span>
+            <div>
+              <h4>Giá trị lịch sử</h4>
+              <p>
+                ${
+                  x.value ||
+                  x.desc ||
+                  "Di tích gắn với những dấu ấn lịch sử cần được tìm hiểu và gìn giữ."
+                }
+              </p>
+            </div>
+          </div>
+
+          ${valueHTML}
+        </section>
+
+        ${storyHTML}
+
+        ${discoveryHTML}
+
+      </div>
+    `;
+
+    // Chỉ gán nội dung một lần
+    modalText.innerHTML = detailHTML;
+
+    // Hiển thị cửa sổ chi tiết
+    modal.classList.add("show");
+
+    // Xử lý nút Xem gợi ý
+    const hintButton = modalText.querySelector(".dt-hint-btn");
+    const hintText = modalText.querySelector(".dt-hint");
+
+    if (hintButton && hintText) {
+      hintButton.addEventListener("click", () => {
+        hintText.hidden = !hintText.hidden;
+
+        hintButton.textContent = hintText.hidden
+          ? "Xem gợi ý"
+          : "Ẩn gợi ý";
+      });
+    }
+  });
+});
+
+
+/* ==========================================
+   TƯƠNG TÁC BÊN TRONG HỘP DI TÍCH
+========================================== */
+
+modalText.addEventListener("click", event => {
+  // Nút chuyển album
+  const arrow = event.target.closest("[data-scroll]");
+
+  if (arrow) {
+    const track = arrow.closest(".dt-album")
+                       .querySelector(".dt-track");
+
+    const photo = track.querySelector(".dt-photo");
+
+    if (track && photo) {
+      const gap = 14;
+      const distance =
+        photo.getBoundingClientRect().width + gap;
+
+      track.scrollBy({
+        left: Number(arrow.dataset.scroll) * distance,
+        behavior: "smooth"
+      });
+    }
+
+    return;
+  }
+
+  // Nút xem gợi ý
+  const hintButton = event.target.closest(".dt-hint-btn");
+
+  if (hintButton) {
+    const hint = hintButton.nextElementSibling;
+
+    hint.hidden = !hint.hidden;
+
+    hintButton.textContent = hint.hidden
+      ? "Xem gợi ý"
+      : "Ẩn gợi ý";
+
+    return;
+  }
+
+  // Phóng to ảnh
+  const photo = event.target.closest(".dt-photo");
+
+  if (photo) {
+    const img = photo.querySelector("img");
+
+    if (img) {
+      let viewer = document.getElementById("dtImageViewer");
+
+      if (!viewer) {
+        viewer = document.createElement("div");
+        viewer.id = "dtImageViewer";
+        viewer.className = "dt-image-viewer";
+
+        viewer.innerHTML = `
+          <button type="button"
+                  class="dt-viewer-close"
+                  aria-label="Đóng ảnh">×</button>
+          <img alt="">
+          <p></p>
+        `;
+
+        document.body.appendChild(viewer);
+
+        viewer.addEventListener("click", e => {
+          if (
+            e.target === viewer ||
+            e.target.closest(".dt-viewer-close")
+          ) {
+            viewer.classList.remove("show");
+          }
+        });
+
+        document.addEventListener("keydown", e => {
+          if (e.key === "Escape") {
+            viewer.classList.remove("show");
+          }
+        });
+      }
+
+      viewer.querySelector("img").src =
+        photo.dataset.full || img.src;
+
+      viewer.querySelector("img").alt = img.alt;
+
+      viewer.querySelector("p").textContent = img.alt;
+
+      viewer.classList.add("show");
+    }
+  }
+});
+
+document.getElementById("closeModal").onclick=()=>modal.classList.remove("show");
+modal.addEventListener("click",e=>{if(e.target===modal)modal.classList.remove("show")});
+document.getElementById("markExplore").onclick=()=>{
+  if(!explored.has(currentKey)){explored.add(currentKey);updateProgress()}
+  modal.classList.remove("show");
+};
+challengeBtn.onclick=()=>{
+  if(!challengeBtn.disabled) window.location.href="thuthach-lichsu.html";
+};
+
+const lessons={
+"tinke o":{
+ tag:"BÀI HỌC 01 · TỈN KEO", title:"Quyết định làm thay đổi lịch sử",
+ img:"https://resource.kinhtedothi.vn/2021/12/25/62230b9a-a931-4817-8bc7-dfda1aeac1e2.jpg",
+ html:`<img src="https://resource.kinhtedothi.vn/2021/12/25/62230b9a-a931-4817-8bc7-dfda1aeac1e2.jpg"><p>Tỉn Keo là nơi Chủ tịch Hồ Chí Minh ở và làm việc giai đoạn 1948–1954. Di tích có lán ở, lán họp Bộ Chính trị, trạm gác, hầm trú và hệ thống đường hào.</p><h4>Em cần nhớ</h4><ul><li>Tỉn Keo thuộc xã Phú Đình, trung tâm của không gian ATK Định Hóa.</li><li>Ngày 6/12/1953, tại Tỉn Keo, Bộ Chính trị họp và quyết định mở Chiến dịch Điện Biên Phủ.</li><li>ATK là nơi các cơ quan đầu não của cuộc kháng chiến làm việc trong điều kiện an toàn.</li></ul><h4>Em hãy suy nghĩ</h4><p>Vì sao một cuộc họp diễn ra trong một căn lán giữa núi rừng lại có thể dẫn tới một quyết định có ý nghĩa lớn đối với lịch sử dân tộc?</p>`,
+ q:"Sự kiện quan trọng nào gắn với Tỉn Keo ngày 6/12/1953?", a:["Quyết định mở Chiến dịch Điện Biên Phủ","Thành lập Hội Nhà báo Việt Nam","Phong quân hàm Đại tướng","Thành lập Ủy ban Kiểm tra Trung ương"], correct:0
+},
+"khuon tat":{
+ tag:"BÀI HỌC 02 · KHUÔN TÁT", title:"Cuộc sống của Bác giữa chiến khu",
+ img:"https://bizweb.dktcdn.net/100/366/377/files/du-khach-tham-quan-lan-khuon-tat-o-atk-dinh-hoa.jpg?v=1670206406438",
+ html:`<img src="https://bizweb.dktcdn.net/100/366/377/files/du-khach-tham-quan-lan-khuon-tat-o-atk-dinh-hoa.jpg?v=1670206406438"><p>Cụm di tích Khuôn Tát gồm cây đa, đoạn suối Khuôn Tát và nhà sàn, hầm Bác ở đồi Nà Đình. Đây là không gian gắn với thời gian Bác ở và làm việc tại Khuôn Tát.</p><h4>Em cần nhớ</h4><ul><li>Bác sống và làm việc giữa điều kiện thiên nhiên, sinh hoạt giản dị của chiến khu.</li><li>Cây đa, dòng suối và nhà sàn giúp hình dung rõ hơn đời sống của con người trong ATK.</li><li>Lịch sử không chỉ có những quyết định lớn mà còn có những câu chuyện đời thường.</li></ul><h4>Nhiệm vụ trải nghiệm</h4><p>Hãy viết 3 câu mô tả cuộc sống của Bác ở chiến khu dựa trên những gì em quan sát được từ hình ảnh.</p>`,
+ q:"Cụm di tích Khuôn Tát gồm những điểm nào?", a:["Cây đa, đoạn suối, nhà sàn và hầm Bác ở đồi Nà Đình","Nhà tù, sân bay, bến phà","Chỉ có một nhà sàn","Chỉ có thác Khuôn Tát"], correct:0
+},
+"pu don":{
+ tag:"BÀI HỌC 03 · PỤ ĐỒN", title:"Một lễ phong quân hàm giữa núi rừng",
+ img:"https://baothainguyen.vn/file/oldimage/baothainguyen/UserFiles/image/dsc6553.jpg",
+ html:`<img src="https://baothainguyen.vn/file/oldimage/baothainguyen/UserFiles/image/dsc6553.jpg"><p>Đồi Pụ Đồn là địa điểm ghi dấu sự kiện Chủ tịch Hồ Chí Minh chủ trì lễ phong quân hàm Đại tướng cho Võ Nguyên Giáp năm 1948.</p><h4>Em cần nhớ</h4><ul><li>Ngày 20/1/1948, Chủ tịch Hồ Chí Minh ký Sắc lệnh số 110/SL phong quân hàm Đại tướng cho Võ Nguyên Giáp.</li><li>Ngày 28/5/1948, lễ phong quân hàm được tổ chức tại đồi Pụ Đồn.</li><li>Sự kiện gắn với quá trình xây dựng và trưởng thành của Quân đội nhân dân Việt Nam.</li></ul><h4>Em hãy liên hệ</h4><p>Qua sự kiện này, em hiểu thêm điều gì về vai trò của người chỉ huy và trách nhiệm đối với Tổ quốc?</p>`,
+ q:"Lễ phong quân hàm Đại tướng cho Võ Nguyên Giáp tại Pụ Đồn diễn ra năm nào?", a:["1948","1945","1950","1954"], correct:0
+}};
+const lessonModal=document.getElementById("lessonModal"),lessonTitle=document.getElementById("lessonTitle"),lessonTag=document.getElementById("lessonTag"),lessonContent=document.getElementById("lessonContent"),quizBox=document.getElementById("quizBox");
+let currentLesson=null,lessonPassed=false;
+document.querySelectorAll(".lesson-btn").forEach(btn=>btn.onclick=e=>{
+ e.stopPropagation(); currentLesson=lessons[btn.dataset.lesson]; lessonPassed=false;
+ lessonTag.textContent=currentLesson.tag; lessonTitle.textContent=currentLesson.title; lessonContent.innerHTML=currentLesson.html;
+ quizBox.innerHTML="<b>🧩 Kiểm tra nhanh</b>"+currentLesson.a.map((x,i)=>`<button class="quiz-option" data-i="${i}">${String.fromCharCode(65+i)}. ${x}</button>`).join("");
+ quizBox.querySelectorAll(".quiz-option").forEach(o=>o.onclick=()=>{const ok=+o.dataset.i===currentLesson.correct;o.classList.add(ok?"correct":"wrong");if(ok){lessonPassed=true;o.textContent+="  ✓ Chính xác";}else{o.textContent+="  ✗ Thử lại";}});
+ lessonModal.classList.add("show");
+});
+document.getElementById("closeLesson").onclick=()=>lessonModal.classList.remove("show");
+document.getElementById("completeLesson").onclick=()=>{
+ if(!lessonPassed){alert("Hãy hoàn thành câu hỏi kiểm tra nhanh trước nhé.");return}
+ const key="lesson-"+currentLesson.title;
+ explored.add(key); updateProgress(); lessonModal.classList.remove("show");
+};
+
+updateProgress();
+
+/* =========================================
+   DÒNG THỜI GIAN LỊCH SỬ PHÚ ĐÌNH
+========================================= */
+
+
+const historyEvents = [
+  {
+    year: "1945",
+    title: "Cách mạng Tháng Tám – bước ngoặt của quê hương",
+    content: [
+      "Tháng 3/1945, phong trào cách mạng ở Định Hóa phát triển mạnh. Lực lượng Cứu quốc quân và tự vệ chiến đấu tiến công đồn lính khố xanh ở Chợ Chu. Định Hóa trở thành địa bàn giành chính quyền sớm của tỉnh Thái Nguyên.",
+      "Tháng 5/1945, Việt Nam Giải phóng quân được thành lập tại Làng Quặng, xã Định Biên, trên cơ sở hợp nhất các lực lượng vũ trang cách mạng. Sự kiện này góp phần chuẩn bị lực lượng cho cuộc Tổng khởi nghĩa Tháng Tám.",
+      "Thắng lợi của Cách mạng Tháng Tám năm 1945 mở ra kỷ nguyên độc lập dân tộc, tạo tiền đề cho nhân dân vùng Định Hóa tham gia xây dựng và bảo vệ chính quyền cách mạng.",
+    
+    ]
+  },
+  {
+    year: "1946",
+    title: "Thành lập Chi bộ dự bị xã Lục Rã",
+    content: [
+      "Theo tư liệu giới thiệu cuốn Lịch sử Đảng bộ xã Phú Đình (1946–2016), năm 1946, Chi bộ dự bị xã Lục Rã được thành lập với 5 đảng viên, gồm 1 đảng viên chính thức và 4 đảng viên dự bị.",
+      "Sự kiện đánh dấu bước phát triển quan trọng của tổ chức Đảng tại địa phương, tạo cơ sở để tập hợp, vận động nhân dân tham gia các phong trào cách mạng và thực hiện nhiệm vụ trong giai đoạn đất nước vừa giành được độc lập.",
+      "Tổ chức Đảng ở cơ sở từng bước trưởng thành trong điều kiện còn nhiều khó khăn, gắn với nhiệm vụ xây dựng chính quyền, củng cố khối đoàn kết và chuẩn bị cho cuộc kháng chiến lâu dài.",
+      "Nguồn tham khảo: Lịch sử Đảng bộ xã Phú Đình (1946–2016), do Ban Chấp hành Đảng bộ xã tổ chức nghiên cứu, biên soạn."
+    ]
+  },
+  {
+    year: "1947",
+    title: "ATK Định Hóa trở thành căn cứ kháng chiến",
+    content: [
+      "Trong cuộc kháng chiến chống thực dân Pháp, vùng ATK Định Hóa giữ vị trí quan trọng trong hệ thống căn cứ địa Việt Bắc. Chủ tịch Hồ Chí Minh, Trung ương Đảng và nhiều cơ quan Trung ương hoạt động tại khu vực này để lãnh đạo cuộc kháng chiến.",
+      "Địa hình rừng núi, địa bàn rộng và sự đùm bọc của đồng bào các dân tộc tạo điều kiện để xây dựng nơi ở, làm việc, liên lạc và tổ chức các hoạt động chỉ đạo kháng chiến.",
+      "Các địa điểm như Khau Tý và nhiều địa chỉ lịch sử khác lưu giữ dấu ấn về cuộc sống, công việc của Chủ tịch Hồ Chí Minh và cán bộ cách mạng trong những năm đầu kháng chiến.",
+    ]
+  },
+  {
+    year: "1948",
+    title: "Lễ phong quân hàm Đại tướng Võ Nguyên Giáp",
+    content: [
+      "Ngày 28/5/1948, Chủ tịch Hồ Chí Minh chủ trì sự kiện phong quân hàm Đại tướng cho đồng chí Võ Nguyên Giáp trong thời kỳ cuộc kháng chiến chống thực dân Pháp đang diễn ra quyết liệt.",
+      "Đây là dấu mốc quan trọng đối với quá trình xây dựng và trưởng thành của Quân đội nhân dân Việt Nam, thể hiện sự quan tâm của Đảng và Chủ tịch Hồ Chí Minh đối với việc tổ chức, xây dựng đội ngũ chỉ huy quân đội.",
+      "Địa điểm Pụ Đồn gắn với ký ức lịch sử về sự kiện này và là một địa chỉ có giá trị trong giáo dục truyền thống cách mạng cho thế hệ trẻ.",
+    ]
+  },
+  {
+    year: "1949",
+    title: "Những thay đổi về địa giới hành chính địa phương",
+    content: [
+      "Theo phần giới thiệu Lịch sử Đảng bộ xã Phú Đình (1946–2016), tháng 3/1949, xã Phú Đình được sáp nhập với xã Quảng Nạp thành xã Bình Thành nhằm thuận tiện cho việc bảo vệ và phục vụ ATK.",
+      "Sự thay đổi này phản ánh yêu cầu tổ chức địa bàn trong hoàn cảnh kháng chiến, khi việc bảo vệ căn cứ, bảo đảm liên lạc và phục vụ các cơ quan cách mạng là nhiệm vụ quan trọng.",
+    ]
+  },
+  {
+    year: "1950",
+    title: "ATK – trung tâm chỉ đạo kháng chiến và đối ngoại",
+    content: [
+      "Trong những năm kháng chiến, ATK Định Hóa là nơi diễn ra nhiều hoạt động quan trọng của Trung ương Đảng, Chính phủ và các cơ quan cách mạng.",
+      "Tại vùng căn cứ, Chủ tịch Hồ Chí Minh và các đồng chí lãnh đạo chỉ đạo nhiều chiến dịch quân sự, đồng thời triển khai các hoạt động ngoại giao, vận động thi đua yêu nước và củng cố hậu phương kháng chiến.",
+      "Những hoạt động đó góp phần xây dựng thế trận kháng chiến toàn dân, phát huy sức mạnh đoàn kết giữa quân đội và nhân dân.",
+    ]
+  },
+  {
+    year: "1953",
+    title: "Tỉn Keo – quyết định mở Chiến dịch Điện Biên Phủ",
+    content: [
+      "Ngày 6/12/1953, tại đồi Tỉn Keo, Chủ tịch Hồ Chí Minh chủ trì cuộc họp Bộ Chính trị để xem xét phương án tác chiến trong Đông – Xuân 1953–1954. Bộ Chính trị thống nhất chủ trương mở Chiến dịch Điện Biên Phủ.",
+      "Tại cuộc họp, các quyết định về tổ chức chỉ huy chiến dịch và công tác bảo đảm hậu cần được đặt ra, chuẩn bị cho một chiến dịch có ý nghĩa chiến lược quyết định đối với cuộc kháng chiến chống thực dân Pháp.",
+      "Tỉn Keo vì vậy không chỉ là nơi ở và làm việc của Chủ tịch Hồ Chí Minh mà còn là địa điểm ghi dấu một quyết sách quan trọng của cách mạng Việt Nam.",
+    ]
+  },
+  {
+    year: "1954",
+    title: "Chiến thắng Điện Biên Phủ – kết thúc kháng chiến chống Pháp",
+    content: [
+      "Ngày 7/5/1954, Chiến dịch Điện Biên Phủ kết thúc thắng lợi. Chiến thắng có ý nghĩa quyết định đối với cuộc kháng chiến chống thực dân Pháp, góp phần đưa tới việc ký kết Hiệp định Genève về chấm dứt chiến tranh, lập lại hòa bình ở Đông Dương.",
+      "Thắng lợi ấy gắn với quá trình chuẩn bị lâu dài về đường lối, lực lượng, hậu cần và sự đóng góp của nhân dân trên khắp cả nước, trong đó có đồng bào vùng căn cứ Việt Bắc.",
+      "Các di tích ATK Định Hóa lưu giữ dấu ấn về nơi Chủ tịch Hồ Chí Minh và Trung ương Đảng lãnh đạo cuộc kháng chiến, giúp thế hệ sau hiểu rõ hơn giá trị của độc lập, hòa bình và đoàn kết dân tộc."
+    ]
+  },
+  {
+    year: "1953",
+    title: "Điều chỉnh địa giới, hình thành xã Phú Đình trong lịch sử",
+    content: [
+      "Theo tư liệu giới thiệu Lịch sử Đảng bộ xã Phú Đình (1946–2016), trong năm 1953 có những thay đổi về địa giới liên quan đến Lục Rã, Sơn Đầu, Phú Đình và Bình Thành.",
+      "Tư liệu ghi nhận các thôn Lục Rã và Sơn Đầu được tách khỏi xã Bình Thành vào cuối năm 1953 để hình thành các xã Sơn Phú và Phú Đình. Đây là một dấu mốc quan trọng trong lịch sử hành chính địa phương.",
+    ]
+  },
+  {
+    year: "1964",
+    title: "Chi bộ xã Phú Đình phát triển thành Đảng bộ",
+    content: [
+      "Theo tư liệu giới thiệu lịch sử Đảng bộ xã, năm 1964, Chi bộ xã Phú Đình được chuẩn y lên Đảng bộ.",
+      "Sự kiện đánh dấu bước phát triển về tổ chức, thể hiện quá trình xây dựng lực lượng chính trị tại địa phương sau những năm kháng chiến và trong giai đoạn xây dựng miền Bắc.",
+    ]
+  },
+  {
+    year: "1975",
+    title: "Đất nước thống nhất, quê hương bước vào giai đoạn mới",
+    content: [
+      "Đại thắng mùa Xuân năm 1975 kết thúc cuộc kháng chiến chống Mỹ, cứu nước, đưa đất nước bước vào thời kỳ thống nhất và xây dựng.",
+      "Đối với các địa phương miền núi như Phú Đình, giai đoạn sau chiến tranh đặt ra yêu cầu khôi phục sản xuất, ổn định đời sống, phát triển giáo dục và củng cố hệ thống chính trị cơ sở.",
+      "Những thay đổi cụ thể về kinh tế, văn hóa, giáo dục và đời sống của nhân dân Phú Đình trong giai đoạn này nên được bổ sung từ tư liệu địa phương thay vì suy diễn từ lịch sử chung của cả nước."
+    ]
+  },
+  {
+    year: "1981",
+    title: "ATK Định Hóa được xếp hạng di tích quốc gia",
+    content: [
+      "Khu di tích lịch sử ATK Định Hóa được xếp hạng di tích quốc gia năm 1981, tạo cơ sở quan trọng cho việc bảo vệ các địa điểm gắn với lịch sử kháng chiến.",
+      "Việc ghi nhận giá trị di tích góp phần nâng cao nhận thức về bảo tồn di sản, tạo điều kiện để tổ chức các hoạt động tham quan, nghiên cứu và giáo dục truyền thống.",
+      "Đối với Phú Đình, đây là mốc có thể kết nối với câu chuyện bảo vệ, giới thiệu và phát huy giá trị những địa điểm lịch sử trên địa bàn."
+    ]
+  },
+  {
+    year: "1986",
+    title: "Công cuộc Đổi mới và những yêu cầu phát triển quê hương",
+    content: [
+      "Đại hội VI của Đảng năm 1986 mở đầu công cuộc Đổi mới, tạo chuyển biến quan trọng trong tư duy phát triển kinh tế – xã hội của đất nước.",
+      "Trong bối cảnh chung đó, các địa phương từng bước tìm hướng phát triển sản xuất, cải thiện đời sống và mở rộng cơ hội tiếp cận giáo dục, dịch vụ xã hội.",
+    ]
+  },
+  {
+    year: "1990–2000",
+    title: "Giai đoạn chuyển biến trong đời sống địa phương",
+    content: [
+      "Giai đoạn cuối thế kỷ XX là thời kỳ nhiều địa phương tiếp tục chuyển đổi phương thức sản xuất, phát triển các hoạt động văn hóa – xã hội và từng bước cải thiện cơ sở hạ tầng.",
+      "Để tái hiện đúng lịch sử Phú Đình, có thể tìm trong sách lịch sử Đảng bộ và hồ sơ địa phương những dấu mốc về giao thông, trường học, y tế, sản xuất nông nghiệp, phong trào đoàn thể và đời sống đồng bào các dân tộc.",
+    ]
+  },
+  {
+    year: "2000–2010",
+    title: "Phát triển kinh tế, văn hóa và gìn giữ truyền thống",
+    content: [
+      "Đây là giai đoạn thích hợp để giới thiệu quá trình phát triển kinh tế, đời sống văn hóa, giáo dục và công tác bảo tồn các giá trị truyền thống tại địa phương.",
+      "Những câu chuyện về người có công, gia đình cách mạng, hoạt động của các đoàn thể và phong trào xây dựng quê hương sẽ giúp dòng thời gian gần gũi hơn với đời sống nhân dân.",
+    ]
+  },
+  {
+    year: "2011–2020",
+    title: "Bảo tồn di sản, giáo dục truyền thống cho thế hệ trẻ",
+    content: [
+      "Giá trị lịch sử của ATK Định Hóa tiếp tục là nguồn tư liệu quan trọng cho hoạt động tham quan, nghiên cứu và giáo dục truyền thống cách mạng.",
+      "Các di tích, địa danh và câu chuyện về Chủ tịch Hồ Chí Minh cùng các cơ quan Trung ương tại vùng căn cứ giúp học sinh hiểu rõ hơn vai trò của địa phương trong lịch sử dân tộc.",
+      "Để làm phong phú phần lịch sử riêng của xã Phú Đình, có thể bổ sung các hoạt động tu bổ di tích, sinh hoạt truyền thống, thành tựu giáo dục và phong trào cộng đồng đã được ghi nhận."
+    ]
+  },
+  {
+    year: "2016",
+    title: "Khép lại giai đoạn tư liệu của lịch sử Đảng bộ xã",
+    content: [
+      "Cuốn Lịch sử Đảng bộ xã Phú Đình (1946–2016) tổng kết quá trình hình thành và phát triển của tổ chức Đảng ở địa phương trong nhiều thời kỳ cách mạng.",
+      "Tư liệu này là cơ sở quan trọng để tìm hiểu các dấu mốc, nhân vật và bài học kinh nghiệm trong công tác lãnh đạo, xây dựng quê hương.",
+      "Đối với website, nên sử dụng cuốn sách làm nguồn chính cho các sự kiện từ năm 1946 đến năm 2016, đồng thời ghi chú rõ những nội dung cần cập nhật sau giai đoạn sách bao quát."
+    ]
+  },
+  {
+    year: "2021",
+    title: "Xuất bản Lịch sử Đảng bộ xã Phú Đình (1946–2016)",
+    content: [
+      "Cuốn sách do Ban Chấp hành Đảng bộ xã tổ chức nghiên cứu, biên soạn và xuất bản năm 2021; sách có 231 trang, gồm phần mở đầu, năm chương nội dung, kết luận và phụ lục.",
+      "Công trình hệ thống hóa lịch sử hình thành, phát triển của Đảng bộ xã qua các thời kỳ, góp phần lưu giữ tư liệu và phục vụ giáo dục truyền thống cách mạng, tình yêu quê hương cho các thế hệ.",
+      "Đây là tài liệu nên ưu tiên khai thác khi xây dựng nội dung lịch sử trên website Phú Đình."
+    ]
+  },
+  {
+    year: "2025",
+    title: "Sắp xếp đơn vị hành chính, thành lập xã Phú Đình mới",
+    content: [
+      "Năm 2025 đánh dấu bước chuyển quan trọng trong tổ chức đơn vị hành chính và định hướng phát triển địa phương. Theo Nghị quyết số 1683/NQ-UBTVQH15 ngày 16/6/2025, xã Phú Đình mới được thành lập trên cơ sở sắp xếp toàn bộ diện tích tự nhiên và dân số của xã Phú Đình và xã Điềm Mặc trước đây.",
+       "Trong năm, Đại hội đại biểu Đảng bộ xã Phú Đình lần thứ I, nhiệm kỳ 2025–2030 xác định phương hướng phát triển địa phương, gắn phát triển kinh tế – xã hội với nâng cao chất lượng giáo dục, xây dựng đời sống văn hóa, giữ gìn bản sắc văn hóa dân tộc và phát huy giá trị của vùng di tích lịch sử ATK Định Hóa.",
+        "Trong lĩnh vực giáo dục, công tác quản lý và hỗ trợ hoạt động giáo dục năm học 2025–2026 được triển khai trong bối cảnh tổ chức hành chính mới. Đây là giai đoạn đặt nền tảng cho việc phối hợp, sắp xếp và nâng cao hiệu quả hoạt động của các cơ sở giáo dục trên địa bàn.",
+         "Củng cố nền tảng tổ chức, tạo định hướng phát triển lâu dài cho văn hóa, giáo dục và bảo tồn di sản lịch sử địa phương.",
+    ]
+  },
+  {
+    year: "2026",
+    title: "Tiếp nối truyền thống, phát huy giá trị di sản",
+    content: [
+  "Năm 2026, xã Phú Đình tiếp tục triển khai các hoạt động nhằm nâng cao đời sống văn hóa, phát triển giáo dục và tăng cường sự gắn kết trong cộng đồng.",
+  "Ngày 23/4/2026, địa phương tổ chức ra mắt Thư viện và Trung tâm sinh hoạt văn hóa cộng đồng tại Nhà văn hóa xã Phú Đình cũ; đồng thời ra mắt Trung tâm chăm sóc sức khỏe cộng đồng và chăm sóc sức khỏe người cao tuổi tại Trạm Y tế xã Điềm Mặc cũ. Các công trình góp phần tạo thêm không gian đọc sách, sinh hoạt văn hóa và giao lưu cộng đồng.",
+  "Ngày 18/6/2026, đoàn khảo sát của Bộ Văn hóa, Thể thao và Du lịch làm việc tại xã về việc thực hiện Chương trình mục tiêu quốc gia phát triển văn hóa giai đoạn 2026–2030; đoàn cũng dâng hương tại Nhà tưởng niệm Chủ tịch Hồ Chí Minh.",
+  "Trong lĩnh vực giáo dục, xã triển khai công tác sắp xếp, tổ chức lại các cơ sở giáo dục trên địa bàn; đồng thời tiếp tục quan tâm công tác phổ cập giáo dục và xóa mù chữ. Tháng 8/2026, Trường THCS Phú Đình tổ chức chương trình giao lưu văn hóa Việt Nam – Nhật Bản với sự tham gia của Đoàn Thanh niên Hội Chữ thập đỏ Nhật Bản, góp phần mở rộng giao lưu quốc tế và tăng cường hiểu biết văn hóa cho học sinh.",
+  "Tiếp tục phát huy truyền thống cách mạng, nâng cao đời sống tinh thần của Nhân dân, quan tâm phát triển giáo dục và đưa các giá trị lịch sử – văn hóa địa phương đến gần hơn với thế hệ trẻ.",
+]
+  }
+];
+''
+
+function renderHistoryTimeline() {
+  const container = document.getElementById("historyTimelineList");
+
+  if (!container) {
+    console.warn("Không tìm thấy historyTimelineList.");
+    return;
+  }
+
+  container.innerHTML = historyEvents.map((event, index) => `
+    <article class="timeline-entry">
+      <button
+        type="button"
+        class="timeline-toggle"
+        id="timeline-button-${index}"
+        aria-expanded="false"
+        aria-controls="timeline-detail-${index}">
+
+        <span class="timeline-year">${event.year}</span>
+        <span class="timeline-event-title">${event.title}</span>
+        <span class="timeline-chevron" aria-hidden="true">⌄</span>
+      </button>
+
+      <div
+        class="timeline-detail"
+        id="timeline-detail-${index}"
+        role="region"
+        aria-labelledby="timeline-button-${index}"
+        aria-hidden="true">
+
+        <div class="timeline-detail-inner">
+          <div class="timeline-detail-content">
+            ${event.content.map(paragraph => `
+              <p>${paragraph}</p>
+            `).join("")}
+          </div>
+        </div>
+      </div>
+    </article>
+  `).join("");
+
+  container.querySelectorAll(".timeline-toggle").forEach(button => {
+    button.addEventListener("click", () => {
+      const entry = button.closest(".timeline-entry");
+      const detail = entry.querySelector(".timeline-detail");
+      const isOpen = entry.classList.contains("is-open");
+
+      // Đóng các mốc khác
+      container.querySelectorAll(".timeline-entry").forEach(item => {
+        item.classList.remove("is-open");
+
+        item.querySelector(".timeline-toggle")
+          .setAttribute("aria-expanded", "false");
+
+        item.querySelector(".timeline-detail")
+          .setAttribute("aria-hidden", "true");
+      });
+
+      // Mở mốc vừa nhấn nếu trước đó đang đóng
+      if (!isOpen) {
+        entry.classList.add("is-open");
+        button.setAttribute("aria-expanded", "true");
+        detail.setAttribute("aria-hidden", "false");
+      }
+    });
+  });
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener(
+    "DOMContentLoaded",
+    renderHistoryTimeline,
+    { once: true }
+  );
+} else {
+  renderHistoryTimeline();
+}
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Quản trị Chat — Olympic HSG Online</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f7fb;color:#182236;font-family:Inter,Segoe UI,Arial}
+.wrap{max-width:1200px;margin:30px auto;padding:0 16px}.head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.head h1{margin:0;font-size:25px}.head span{color:#758198;font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.stat{background:#fff;border:1px solid #e7ebf2;border-radius:18px;padding:18px;box-shadow:0 8px 28px rgba(30,45,80,.05)}.stat small{color:#788398}.stat b{display:block;font-size:28px;margin-top:7px}
+.panel{margin-top:18px;background:#fff;border:1px solid #e7ebf2;border-radius:18px;padding:18px;overflow:auto}.panel h2{font-size:17px;margin:0 0 14px}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:11px;border-bottom:1px solid #eef1f5;vertical-align:top}th{color:#657188;background:#fafbfe}
+.badge{display:inline-block;padding:4px 8px;border-radius:99px;background:#fff0f0;color:#d14a4a}.ok{background:#eefaf3;color:#2c9560}
+button{border:0;border-radius:10px;padding:8px 12px;cursor:pointer;background:#5969f2;color:white}
+@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="head"><div><h1>🛡️ Quản trị Chat</h1><span>Olympic HSG Online · Moderation Center</span></div><button onclick="load()">↻ Làm mới</button></div>
+<div class="grid">
+<div class="stat"><small>Bị chặn hôm nay</small><b id="blocked">—</b></div>
+<div class="stat"><small>Báo cáo chờ xử lý</small><b id="reports">—</b></div>
+<div class="stat"><small>Tài khoản có cảnh báo</small><b id="warned">—</b></div>
+<div class="stat"><small>Tỉ lệ tin nhắn an toàn</small><b id="safe">—</b></div>
+</div>
+<div class="panel"><h2>Báo cáo gần đây</h2><table><thead><tr><th>Thời gian</th><th>Message ID</th><th>Người báo</th><th>Lý do</th><th>Trạng thái</th><th></th></tr></thead><tbody id="reportBody"></tbody></table></div>
+<div class="panel"><h2>Vi phạm gần đây</h2><table><thead><tr><th>Thời gian</th><th>User</th><th>Cấp độ</th><th>Danh mục</th><th>Hành động</th><th>Lý do</th></tr></thead><tbody id="violationBody"></tbody></table></div>
+</div>
+<script>
+const API_URL='https://script.google.com/macros/s/AKfycbyX38uFR21yqnv5otQz4USbeyJ4GqW1MNtA8VI7HOtN3d_lcd0h6nD5-IB0XMGgquPiXw/exec';
+
+function getAdminId(){
+  for(const key of ['studentInfo','user','currentUser','olympicUser']){
+    try{
+      const raw=localStorage.getItem(key);
+      if(!raw) continue;
+      const obj=JSON.parse(raw);
+      const role=String(obj?.role||obj?.vaiTro||obj?.type||'').toLowerCase();
+      const id=obj?.id||obj?.userId||obj?.maGV||obj?.teacherId||obj?.username;
+      if(id && (role.includes('admin') || role.includes('quản') || role.includes('teacher') || role.includes('giáo'))){
+        return String(id);
+      }
+    }catch(e){}
+  }
+  return 'GV001';
+}
+const ADMIN_ID=getAdminId();
+async function load(){
+ if(API_URL.includes('PASTE_')) return alert('Hãy cấu hình API_URL.');
+ try{
+  const r=await fetch(API_URL+'?action=dashboard'); const d=await r.json();
+  if(!d.ok) return alert(d.error||'Lỗi API');
+  document.getElementById('blocked').textContent=d.stats.blockedToday;
+  document.getElementById('reports').textContent=d.stats.pendingReports;
+  document.getElementById('warned').textContent=d.stats.warnedAccounts;
+  document.getElementById('safe').textContent=d.stats.safePercent+'%';
+
+  document.getElementById('reportBody').innerHTML=d.reports.map(x=>`<tr>
+    <td>${new Date(x.createdAt).toLocaleString('vi-VN')}</td><td>${x.messageId}</td><td>${x.reporterId}</td><td>${x.reason}</td>
+    <td><span class="badge ${x.status==='resolved'?'ok':''}">${x.status}</span></td>
+    <td>${x.status==='pending'?`<button onclick="resolve('${x.id}')">Đã xử lý</button>`:''}</td>
+  </tr>`).join('');
+
+  document.getElementById('violationBody').innerHTML=d.violations.map(x=>`<tr>
+    <td>${new Date(x.createdAt).toLocaleString('vi-VN')}</td><td>${x.userId}</td><td>${x.level}</td><td>${x.category}</td><td>${x.action}</td><td>${x.reason}</td>
+  </tr>`).join('');
+ }catch(e){alert('Không kết nối được API.')}
+}
+async function resolve(id){
+ await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},
+ body:JSON.stringify({action:'resolve',reportId:id,adminId:ADMIN_ID,status:'resolved'})});
+ load();
+}
+load();
+</script>
+</body></html>

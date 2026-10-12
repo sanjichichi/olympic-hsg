@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Olympic HSG Online — Chat an toàn</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:#f5f7fb;color:#172033}
+.app{max-width:1180px;margin:28px auto;padding:0 16px}
+.card{background:#fff;border:1px solid #e7ebf2;border-radius:24px;box-shadow:0 14px 40px rgba(30,45,80,.08);overflow:hidden}
+.top{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid #edf0f5}
+.brand{display:flex;gap:12px;align-items:center}.logo{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:#eef2ff;font-size:22px}
+.brand b{display:block;font-size:17px}.brand span{font-size:12px;color:#7c8798}
+.body{display:grid;grid-template-columns:290px 1fr;min-height:650px}
+.side{border-right:1px solid #edf0f5;background:#fbfcfe}.search{margin:16px}.search input{width:100%;padding:12px 14px;border:1px solid #e4e8ef;border-radius:13px;outline:0}
+.contact{padding:13px 18px;display:flex;gap:12px;align-items:center;cursor:pointer}.contact:hover{background:#f1f5ff}.avatar{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#eef2ff;font-size:20px}.contact b{font-size:14px}.contact small{color:#8490a1}
+.chat{display:flex;flex-direction:column}.chathead{padding:17px 20px;border-bottom:1px solid #edf0f5}.chathead b{display:block}.chathead span{font-size:12px;color:#36a269}
+.messages{flex:1;padding:22px;overflow:auto;background:linear-gradient(180deg,#fbfcff,#f7f9fd)}
+.msg{max-width:70%;padding:11px 14px;margin:7px 0;border-radius:17px;line-height:1.45;font-size:14px}.mine{margin-left:auto;background:#5969f2;color:#fff;border-bottom-right-radius:5px}.other{background:#fff;border:1px solid #e9edf3;border-bottom-left-radius:5px}.meta{font-size:10px;opacity:.65;margin-top:4px}
+.composer{display:flex;gap:10px;padding:15px;border-top:1px solid #edf0f5}.composer input{flex:1;padding:13px 15px;border:1px solid #e0e5ed;border-radius:15px;outline:0}.composer button{border:0;border-radius:14px;padding:0 20px;background:#5969f2;color:#fff;font-weight:700;cursor:pointer}
+.notice{font-size:12px;color:#788396;padding:0 18px 15px;text-align:center}
+.toast{position:fixed;right:22px;bottom:22px;background:#1e2636;color:#fff;padding:13px 16px;border-radius:13px;box-shadow:0 10px 28px rgba(0,0,0,.18);display:none;max-width:360px}
+@media(max-width:760px){.body{grid-template-columns:1fr}.side{display:none}.msg{max-width:86%}}
+</style>
+</head>
+<body>
+<div class="app"><div class="card">
+<div class="top">
+  <div class="brand"><div class="logo">💬</div><div><b>Olympic HSG Online</b><span>Chat học tập an toàn</span></div></div>
+  <div id="accountBadge" title="Tài khoản đang đăng nhập">👤</div>
+</div>
+<div class="body">
+  <aside class="side">
+    <div class="search"><input id="search" placeholder="Tìm bạn học..."></div>
+    <div id="targetContact" class="contact" data-name="Đang tải..."><div class="avatar">👤</div><div><b id="targetContactName">Đang tải bạn...</b><small id="targetContactClass">Học sinh</small></div></div>
+    <div class="notice">Hệ thống tự động chặn nội dung xúc phạm, đe dọa hoặc không phù hợp.</div>
+  </aside>
+  <main class="chat">
+    <div class="chathead"><b id="chatName">Đang tải...</b><span id="chatStatus">● Đang hoạt động</span></div>
+    <div class="messages" id="messages"></div>
+    <div class="composer">
+      <input id="input" maxlength="1000" placeholder="Nhập tin nhắn học tập...">
+      <button id="send">Gửi</button>
+    </div>
+  </main>
+</div>
+</div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const API_URL='https://script.google.com/macros/s/AKfycbyX38uFR21yqnv5otQz4USbeyJ4GqW1MNtA8VI7HOtN3d_lcd0h6nD5-IB0XMGgquPiXw/exec';
+
+function getLoggedInUser(){
+  const keys=['maHS','MaHS','studentCode'];
+  for(const key of keys){const v=localStorage.getItem(key);if(v&&String(v).trim()){
+    const name=localStorage.getItem('hoTenDangNhap')||localStorage.getItem('hoTen')||'';
+    return {id:String(v).trim(),name:String(name)};
+  }}
+  for(const key of ['studentInfo','user','currentUser','olympicUser','taiKhoanHS','hocSinh']){
+    try{const obj=JSON.parse(localStorage.getItem(key)||'');const id=obj?.maHS||obj?.MaHS||obj?.studentCode||obj?.id||obj?.userId||obj?.studentId;const name=obj?.hoTen||obj?.name||obj?.fullName||obj?.studentName||'';if(id)return {id:String(id),name:String(name)};}catch(e){}
+  }
+  return {id:'',name:''};
+}
+const LOGGED_IN_USER=getLoggedInUser();
+const CURRENT_USER_ID=LOGGED_IN_USER.id;
+const TARGET={
+  id:(localStorage.getItem('chatTargetMaHS')||'').trim(),
+  name:localStorage.getItem('chatTargetName')||'',
+  className:localStorage.getItem('chatTargetClass')||'',
+  avatar:localStorage.getItem('chatTargetAvatar')||''
+};
+let CONVERSATION_ID=localStorage.getItem('chatConversationId')||'';
+let lastTime='';
+let messageStore=new Map();
+let loadingMessages=false;
+let sendingMessage=false;
+const $=id=>document.getElementById(id);
+function toast(text){$('toast').textContent=text;$('toast').style.display='block';clearTimeout(window.__toast);window.__toast=setTimeout(()=>$('toast').style.display='none',3500)}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function avatarLetter(name){const a=String(name||'HS').trim().split(/\s+/);return (a[a.length-1]||'H').charAt(0).toUpperCase()}
+function setupTargetUI(){
+  $('accountBadge').textContent=LOGGED_IN_USER.name?'👤 '+LOGGED_IN_USER.name:'👤 '+CURRENT_USER_ID;
+  $('chatName').textContent=TARGET.name||TARGET.id||'Bạn học';
+  $('targetContactName').textContent=TARGET.name||TARGET.id||'Bạn học';
+  $('targetContactClass').textContent=TARGET.className?('Lớp '+TARGET.className):'Học sinh';
+  const avatar=$('targetContact').querySelector('.avatar'); avatar.textContent=avatarLetter(TARGET.name);
+}
+async function ensureConversation(){
+  if(!CURRENT_USER_ID){throw new Error('Không xác định được MaHS của tài khoản đang đăng nhập.');}
+  if(!TARGET.id){throw new Error('Chưa chọn bạn để trò chuyện. Hãy quay lại trang lớp.');}
+  if(CURRENT_USER_ID===TARGET.id){throw new Error('Bạn không thể trò chuyện với chính mình.');}
+  if(CONVERSATION_ID)return CONVERSATION_ID;
+  const r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({
+    action:'getOrCreateConversation',userA:CURRENT_USER_ID,userAName:LOGGED_IN_USER.name,userB:TARGET.id,userBName:TARGET.name,userBClass:TARGET.className
+  })});
+  const data=await r.json();
+  if(!data.ok)throw new Error(data.error||'Không thể tạo cuộc trò chuyện.');
+  CONVERSATION_ID=data.conversationId;
+  localStorage.setItem('chatConversationId',CONVERSATION_ID);
+  return CONVERSATION_ID;
+}
+function render(messages){
+  const list=[...messageStore.values()]
+    .sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt));
+
+  $('messages').innerHTML=list.map(m=>
+    `<div class="msg ${String(m.senderId)===String(CURRENT_USER_ID)?'mine':'other'}">
+      ${escapeHtml(m.content)}
+      <div class="meta">
+        ${new Date(m.createdAt).toLocaleTimeString('vi-VN',{
+          hour:'2-digit',
+          minute:'2-digit'
+        })}
+      </div>
+    </div>`
+  ).join('');
+
+  $('messages').scrollTop=$('messages').scrollHeight;
+}
+async function loadMessages(){
+  if(loadingMessages)return;
+
+  loadingMessages=true;
+
+  try{
+    await ensureConversation();
+
+    const u=
+      `${API_URL}?action=messages&conversationId=${encodeURIComponent(CONVERSATION_ID)}`;
+
+    const r=await fetch(u,{cache:'no-store'});
+    const data=await r.json();
+
+    if(data.ok){
+
+      if(data.messages?.length){
+
+        data.messages.forEach(m=>{
+          if(m && m.id){
+            messageStore.set(String(m.id),m);
+          }
+        });
+
+        const list=[...messageStore.values()]
+          .sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt));
+
+        if(list.length){
+          lastTime=list[list.length-1].createdAt;
+        }
+
+        render(list);
+
+      }else if(!messageStore.size){
+
+        $('messages').innerHTML=
+          '<div class="notice">Hãy gửi lời chào đầu tiên 👋</div>';
+      }
+    }
+
+  }catch(e){
+
+    console.warn(e);
+
+    if(!messageStore.size){
+      $('messages').innerHTML=
+        '<div class="notice" style="color:#b91c1c">⚠️ '+
+        escapeHtml(e.message||'Không thể tải cuộc trò chuyện.')+
+        '</div>';
+    }
+
+  }finally{
+    loadingMessages=false;
+  }
+}
+async function sendMessage(){
+
+  if(sendingMessage)return;
+
+  const input=$('input');
+  const content=input.value.trim();
+
+  if(!content)return;
+
+  sendingMessage=true;
+
+  try{
+
+    await ensureConversation();
+
+    const r=await fetch(API_URL,{
+      method:'POST',
+      headers:{
+        'Content-Type':'text/plain;charset=utf-8'
+      },
+      body:JSON.stringify({
+        action:'send',
+        userId:CURRENT_USER_ID,
+        conversationId:CONVERSATION_ID,
+        content
+      })
+    });
+
+    const data=await r.json();
+
+    if(data.ok){
+
+      input.value='';
+
+      if(data.message && data.message.id){
+        messageStore.set(String(data.message.id),data.message);
+        render([...messageStore.values()]);
+      }
+
+      await loadMessages();
+
+    }else if(data.blocked){
+
+      toast('🛡️ Tin nhắn đã bị chặn: '+data.reason);
+
+    }else{
+
+      toast(data.error||'Không gửi được tin nhắn.');
+
+    }
+
+  }catch(e){
+
+    toast(e.message||'Không kết nối được máy chủ chat.');
+
+  }finally{
+
+    sendingMessage=false;
+
+  }
+}
+$('send').onclick=sendMessage;
+
+$('input').addEventListener('keydown',e=>{
+  if(e.key==='Enter'){
+    e.preventDefault();
+    sendMessage();
+  }
+});
+$('search').addEventListener('input',e=>{const q=e.target.value.toLowerCase();document.querySelectorAll('.contact').forEach(x=>x.style.display=x.dataset.name.toLowerCase().includes(q)?'flex':'none')});
+$('targetContact').onclick=()=>{$('targetContact').classList.add('active');$('chatName').textContent=TARGET.name||TARGET.id||'Bạn học'};
+setupTargetUI();
+loadMessages();
+setInterval(loadMessages,3000);
+</script>
+<script src="js/chat-notification.js"></script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trắc nghiệm lịch sử địa phương Phú Đình</title>
+<style>
+:root{--bg:#07151a;--panel:#10272a;--panel2:#153733;--gold:#f1cf86;--text:#f4f5ee;--muted:#b9c9c2;--line:rgba(255,255,255,.12);--green:#6ee7b7;--red:#fca5a5}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#173b34 0,#07151a 48%,#050e12 100%);font-family:Arial,sans-serif;color:var(--text);min-height:100vh}
+.topbar{padding:18px max(18px,calc((100% - 1050px)/2));border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-weight:800;color:var(--gold);letter-spacing:.3px}.back{color:var(--muted);text-decoration:none}.back:hover{color:var(--gold)}
+.wrap{max-width:1000px;margin:0 auto;padding:28px 18px 60px}
+.hero{padding:26px;border:1px solid rgba(241,207,134,.25);border-radius:22px;background:linear-gradient(135deg,rgba(21,55,51,.96),rgba(12,31,38,.96));margin-bottom:20px}
+.eyebrow{font-size:11px;letter-spacing:2px;font-weight:800;color:var(--gold)}h1{font:500 clamp(27px,4vw,39px)/1.2 Georgia,serif;margin:10px 0 12px}.hero p{color:var(--muted);line-height:1.7;margin:0;max-width:760px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px}.stat{padding:13px;background:rgba(255,255,255,.055);border:1px solid var(--line);border-radius:13px}.stat small{display:block;color:var(--muted);font-size:12px;margin-bottom:5px}.stat strong{font-size:20px;color:var(--gold)}
+.progress-shell{height:7px;background:#263b3c;border-radius:10px;overflow:hidden;margin:20px 0 7px}.progress{height:100%;width:0;background:linear-gradient(90deg,#cba45d,#f5df9f);transition:width .25s}.progress-label{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}
+.quiz-card{padding:clamp(18px,3vw,30px);background:rgba(16,39,42,.94);border:1px solid var(--line);border-radius:22px;box-shadow:0 18px 55px rgba(0,0,0,.18)}
+.qtop{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;color:var(--muted);font-size:13px}.pill{padding:7px 10px;border-radius:30px;background:rgba(241,207,134,.12);color:var(--gold);font-weight:700}
+.question{font-size:clamp(19px,2.5vw,25px);line-height:1.5;margin:20px 0 18px}.options{display:grid;gap:11px}.option{width:100%;text-align:left;padding:15px 16px;display:flex;gap:12px;align-items:flex-start;border-radius:13px;border:1px solid var(--line);background:rgba(255,255,255,.035);color:var(--text);font-size:15px;line-height:1.5;cursor:pointer;transition:.15s}.option:hover:not(:disabled){border-color:var(--gold);background:rgba(241,207,134,.07)}.option .letter{display:grid;place-items:center;flex:0 0 29px;height:29px;border:1px solid #61716a;border-radius:9px;color:var(--gold);font-weight:800}.option.correct{border-color:var(--green);background:rgba(110,231,183,.10)}.option.wrong{border-color:var(--red);background:rgba(252,165,165,.08)}.option:disabled{cursor:default}
+.feedback{display:none;margin-top:16px;padding:14px 16px;border-radius:12px;line-height:1.65;background:rgba(255,255,255,.055);border:1px solid var(--line)}.feedback.show{display:block}.feedback.good{border-color:rgba(110,231,183,.45)}.feedback.bad{border-color:rgba(252,165,165,.4)}.feedback strong{display:block;margin-bottom:4px}.actions{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:22px;flex-wrap:wrap}.btn{border:0;border-radius:12px;padding:13px 18px;font-weight:800;cursor:pointer;font-size:14px}.btn-primary{background:linear-gradient(135deg,#f4d994,#c89b4f);color:#17251e}.btn-secondary{background:rgba(255,255,255,.07);border:1px solid var(--line);color:var(--text)}.btn:disabled{opacity:.4;cursor:not-allowed}.result{display:none;text-align:center;padding:28px}.result.show{display:block}.result h2{font:500 32px Georgia,serif;color:var(--gold)}.result p{color:var(--muted);line-height:1.7}.result-score{font-size:50px;color:var(--gold);font-weight:800}.note{color:var(--muted);font-size:12px;line-height:1.6;margin:16px 2px}
+@media(max-width:650px){.stats{grid-template-columns:repeat(2,1fr)}.hero{padding:20px}.topbar{align-items:flex-start}.option{padding:13px}.actions .btn{flex:1}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">PHÚ ĐÌNH EDU · HỌC TẬP SỐ</div>
+  <a class="back" href="lichsu.html">← Quay lại</a>
+</header>
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">KHÁM PHÁ DI SẢN QUÊ HƯƠNG</div>
+    <h1>Trắc nghiệm lịch sử địa phương</h1>
+    <p>Ôn tập về Phú Đình, ATK Định Hóa, các địa điểm di tích và cách gìn giữ di sản. Mỗi lượt gồm 30 câu được chọn ngẫu nhiên. Mỗi câu đúng được cộng <b>10 xu</b>; trả lời liên tiếp đúng sẽ có thêm xu thưởng.</p>
+    <div class="stats">
+      <div class="stat"><small>Câu hỏi mỗi lượt</small><strong id="totalCount">30</strong></div>
+      <div class="stat"><small>Đã trả lời</small><strong id="answeredCount">0</strong></div>
+      <div class="stat"><small>Xu trong lượt này</small><strong id="sessionCoins">0</strong></div>
+      <div class="stat"><small>Chuỗi đúng</small><strong id="streakCount">0</strong></div>
+    </div>
+  </section>
+
+  <section class="quiz-card" id="quizCard">
+    <div class="qtop"><span id="questionCounter">Câu 1 / 30</span><span class="pill">+10 xu / câu đúng</span></div>
+    <div class="progress-shell"><div class="progress" id="progress"></div></div>
+    <div class="progress-label"><span>Tiến độ bài làm</span><span id="progressText">0%</span></div>
+    <h2 class="question" id="questionText">Đang tải câu hỏi…</h2>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback" aria-live="polite"></div>
+    <div class="actions">
+      <button class="btn btn-secondary" id="quitBtn" type="button">Về trang chủ</button>
+      <button class="btn btn-primary" id="nextBtn" type="button" disabled>Câu tiếp theo →</button>
+    </div>
+  </section>
+
+  <section class="quiz-card result" id="resultCard">
+    <div class="eyebrow">HOÀN THÀNH HÀNH TRÌNH</div>
+    <h2>Kết quả của em</h2>
+    <div class="result-score" id="finalScore">0/100</div>
+    <p id="resultSummary"></p>
+    <div class="stats">
+      <div class="stat"><small>Trả lời đúng</small><strong id="finalCorrect">0</strong></div>
+      <div class="stat"><small>Xu nhận được</small><strong id="finalCoins">0</strong></div>
+      <div class="stat"><small>Tỉ lệ đúng</small><strong id="finalPercent">0%</strong></div>
+      <div class="stat"><small>Chuỗi đúng dài nhất</small><strong id="finalStreak">0</strong></div>
+    </div>
+    <div class="actions" style="justify-content:center">
+      <button class="btn btn-secondary" id="homeBtn" type="button">Về trang chủ</button>
+      <button class="btn btn-primary" id="retryBtn" type="button">Làm lại bài kiểm tra</button>
+    </div>
+  </section>
+  <p class="note">Xu được gửi lên hệ thống tài khoản học sinh qua API. Hãy đăng nhập Olympic HSG Online trước khi làm bài để hệ thống nhận diện đúng tài khoản.</p>
+</main>
+<script src="nganhang/cauhoi-ls.js"></script>
+<script>
+(function(){
+  const questions = Array.isArray(window.CAU_HOI_LICH_SU) ? window.CAU_HOI_LICH_SU : [];
+  const $ = id => document.getElementById(id);
+  let order = [], index = 0, answered = 0, correct = 0, coins = 0, streak = 0, bestStreak = 0, locked = false;
+  const API_XU = "https://script.google.com/macros/s/AKfycbxWt7qf7N_wghFQ_zonxD8jcdOeebh8rbPtBu2PNTEVrhhMTWSKHWNJJnE78qkfFFB3/exec";
+  const SO_CAU_MOI_LUOT = 30;
+  let totalCoins = 0;
+  let maHS = "";
+
+  function layMaHS(){
+    for(const key of ["maHS","maThiSinh","MaHS","studentCode","maHocSinh"]){
+      const value = localStorage.getItem(key);
+      if(value && String(value).trim()) return String(value).trim();
+    }
+    for(const key of ["user","currentUser","olympicUser","studentInfo","taiKhoanHS","hocSinh"]){
+      try{
+        const obj = JSON.parse(localStorage.getItem(key) || "");
+        const value = obj?.maHS || obj?.MaHS || obj?.maThiSinh || obj?.studentCode || obj?.maHocSinh;
+        if(value && String(value).trim()) return String(value).trim();
+      }catch(e){}
+    }
+    return "";
+  }
+
+  async function taiXuTuAPI(){
+    maHS = layMaHS();
+    if(!maHS) return;
+    try{
+      const response = await fetch(API_XU + "?action=layThongTinXu&maHS=" + encodeURIComponent(maHS) + "&t=" + Date.now());
+      const data = await response.json();
+      if(data && data.success) totalCoins = Number(data.tongXu || 0);
+    }catch(error){
+      console.warn("Không tải được số xu từ API:", error);
+    }
+  }
+
+  async function guiCongXuAPI(soXu, idGiaoDich){
+    if(!maHS) throw new Error("Chưa đăng nhập hoặc không tìm thấy mã học sinh.");
+    // API Xu hiện có được dùng chung với cửa hàng Xu. Yêu cầu cộng xu được gửi riêng từng lượt.
+    const body = new URLSearchParams({
+      action: "congXu",
+      maHS: maHS,
+      soXu: String(soXu),
+      lyDo: "Trắc nghiệm lịch sử Phú Đình",
+      maGiaoDich: idGiaoDich
+    }).toString();
+    const response = await fetch(API_XU, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
+      body
+    });
+    // no-cors không cho đọc nội dung phản hồi; tải lại số dư sau khi gửi.
+    await new Promise(resolve => setTimeout(resolve, 900));
+    try{
+      const r = await fetch(API_XU + "?action=layThongTinXu&maHS=" + encodeURIComponent(maHS) + "&t=" + Date.now());
+      const d = await r.json();
+      if(d && d.success) totalCoins = Number(d.tongXu || 0);
+    }catch(e){}
+  }
+
+  $("totalCount").textContent = questions.length;
+  $("quitBtn").addEventListener("click", () => location.href = "index.html");
+  $("homeBtn").addEventListener("click", () => location.href = "index.html");
+  $("retryBtn").addEventListener("click", startQuiz);
+  $("nextBtn").addEventListener("click", nextQuestion);
+
+  function shuffle(arr){ return arr.map(x=>[Math.random(),x]).sort((a,b)=>a[0]-b[0]).map(x=>x[1]); }
+  function startQuiz(){
+    order = shuffle(questions.map((_,i)=>i)).slice(0, Math.min(SO_CAU_MOI_LUOT, questions.length));
+    index = answered = correct = coins = streak = bestStreak = 0; locked = false;
+    $("sessionCoins").textContent = "0"; $("answeredCount").textContent = "0"; $("streakCount").textContent = "0";
+    $("quizCard").style.display = ""; $("resultCard").classList.remove("show");
+    $("nextBtn").disabled = true;
+    renderQuestion();
+  }
+  function renderQuestion(){
+    if(index >= order.length){ finishQuiz(); return; }
+    locked = false;
+    const q = questions[order[index]];
+    $("questionCounter").textContent = `Câu ${index+1} / ${order.length}`;
+    $("progress").style.width = `${index/order.length*100}%`;
+    $("progressText").textContent = `${Math.round(index/order.length*100)}%`;
+    $("questionText").textContent = q.question;
+    $("options").innerHTML = "";
+    $("feedback").className = "feedback"; $("feedback").innerHTML = "";
+    $("nextBtn").disabled = true;
+    q.options.forEach((opt,i)=>{
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "option";
+      b.innerHTML = `<span class="letter">${String.fromCharCode(65+i)}</span><span></span>`;
+      b.querySelector("span:last-child").textContent = opt.text;
+      b.addEventListener("click", ()=>chooseAnswer(i,b,q));
+      $("options").appendChild(b);
+    });
+  }
+  function chooseAnswer(choice, button, q){
+    if(locked) return;
+    locked = true; answered++;
+    const buttons = [...$("options").querySelectorAll(".option")];
+    buttons.forEach((b,i)=>{ b.disabled = true; if(i === q.answer) b.classList.add("correct"); });
+    const fb = $("feedback");
+    if(choice === q.answer){
+      correct++; streak++; bestStreak = Math.max(bestStreak,streak);
+      let earned = Number(q.xu || 10);
+      let bonus = 0;
+      if(streak % 5 === 0) bonus = 5;
+      earned += bonus; coins += earned;
+      fb.className = "feedback show good";
+      fb.innerHTML = `<strong>✨ Chính xác! +${earned} xu${bonus ? ` (gồm ${bonus} xu thưởng chuỗi đúng)` : ""}</strong>`;
+    } else {
+      button.classList.add("wrong"); streak = 0;
+      fb.className = "feedback show bad";
+      fb.innerHTML = `<strong>Chưa chính xác.</strong>`;
+    }
+    const explanation = document.createElement("div");
+    explanation.textContent = q.explanation || "";
+    fb.appendChild(explanation);
+    $("answeredCount").textContent = answered;
+    $("sessionCoins").textContent = coins;
+    $("streakCount").textContent = streak;
+    $("progress").style.width = `${answered/order.length*100}%`;
+    $("progressText").textContent = `${Math.round(answered/order.length*100)}%`;
+    $("nextBtn").disabled = false;
+    $("nextBtn").textContent = index === order.length-1 ? "Xem kết quả →" : "Câu tiếp theo →";
+  }
+  function nextQuestion(){ if(!locked) return; index++; renderQuestion(); }
+  function finishQuiz(){
+    $("quizCard").style.display = "none"; $("resultCard").classList.add("show");
+    $("progress").style.width = "100%"; $("progressText").textContent = "100%";
+    $("finalScore").textContent = `${correct}/${order.length}`;
+    $("finalCorrect").textContent = correct; $("finalCoins").textContent = coins;
+    $("finalPercent").textContent = `${Math.round(correct/order.length*100)}%`;
+    $("finalStreak").textContent = bestStreak;
+    $("resultSummary").textContent = `Em đã hoàn thành ${order.length} câu, trả lời đúng ${correct} câu và có ${coins} xu thưởng trong lượt này. Đang đồng bộ xu lên tài khoản...`;
+    if(coins > 0 && maHS){
+      const transactionId = "LS-PHUDINH-" + maHS + "-" + Date.now();
+      guiCongXuAPI(coins, transactionId).then(()=>{
+        $("resultSummary").textContent = `Em đã hoàn thành ${order.length} câu, trả lời đúng ${correct} câu. Đã gửi yêu cầu cộng ${coins} xu lên tài khoản Olympic HSG Online. Số dư mới: ${totalCoins} xu.`;
+      }).catch(()=>{
+        $("resultSummary").textContent = `Em đã hoàn thành ${order.length} câu và đạt ${coins} xu thưởng. Chưa gửi được yêu cầu cộng xu; vui lòng báo giáo viên kiểm tra kết nối.`;
+      });
+    }else if(!maHS){
+      $("resultSummary").textContent = `Em đã hoàn thành ${order.length} câu và đạt ${coins} xu thưởng, nhưng chưa đăng nhập nên xu chưa được gửi lên tài khoản.`;
+    }else{
+      $("resultSummary").textContent = `Em đã hoàn thành ${order.length} câu và không có xu thưởng trong lượt này.`;
+    }
+  }
+  if(!questions.length){
+    $("questionText").textContent = "Chưa tải được ngân hàng câu hỏi. Hãy kiểm tra file nganhang/cauhoi-ls.js.";
+    $("nextBtn").disabled = true;
+  } else { taiXuTuAPI().finally(startQuiz); }
+})();
+</script>
+</body>
+</html>

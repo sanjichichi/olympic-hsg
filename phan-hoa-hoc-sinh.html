@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Phân hóa học sinh - FIX maHS</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#263238}
+.header{background:linear-gradient(135deg,#173b8f,#2563eb);color:#fff;padding:22px 35px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.header h1{margin:0;font-size:27px}.header p{margin:6px 0 0;opacity:.9}
+.btn{border:0;border-radius:9px;padding:10px 15px;cursor:pointer;font-weight:bold}.btn-light{background:#fff;color:#173b8f}.btn-blue{background:#2563eb;color:#fff}.btn-green{background:#16a34a;color:#fff}.btn-orange{background:#f59e0b;color:#fff}
+.container{width:95%;max-width:1500px;margin:24px auto 50px}.panel{background:#fff;border-radius:16px;padding:20px;margin-bottom:20px;box-shadow:0 5px 20px rgba(0,0,0,.07)}
+.filters{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.filters label{font-size:13px;font-weight:bold;color:#475569}.filters select,.filters input{width:100%;padding:11px;border:1px solid #d5dce5;border-radius:9px;margin-top:6px}
+.summary{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card{padding:18px;border-radius:14px;background:#f8fafc;border:1px solid #e2e8f0}.card b{font-size:28px;display:block;margin-top:5px}.basic{border-left:5px solid #22c55e}.develop{border-left:5px solid #3b82f6}.advanced{border-left:5px solid #8b5cf6}.hsg{border-left:5px solid #f59e0b}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}.toolbar input{flex:1;min-width:220px;padding:11px;border:1px solid #d5dce5;border-radius:9px}
+.table-wrap{overflow:auto}table{width:100%;border-collapse:collapse;min-width:1000px}th{background:#eef4ff;color:#173b8f;text-align:left;padding:12px}td{padding:11px 12px;border-bottom:1px solid #edf0f4}tr:hover td{background:#fafcff}
+.badge{display:inline-block;padding:5px 9px;border-radius:20px;font-size:12px;font-weight:bold}.b1{background:#dcfce7;color:#166534}.b2{background:#dbeafe;color:#1d4ed8}.b3{background:#ede9fe;color:#6d28d9}.b4{background:#fef3c7;color:#92400e}
+.note{padding:13px;background:#eff6ff;border-radius:10px;color:#1e3a8a;margin-top:12px}.warn{background:#fff7ed;color:#9a3412}.ok{background:#f0fdf4;color:#166534}
+@media(max-width:900px){.filters,.summary{grid-template-columns:1fr 1fr}}@media(max-width:600px){.header{flex-direction:column;align-items:flex-start}.filters,.summary{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="header">
+<div><h1>🎯 Phân hóa học sinh</h1><p>Khởi tạo dữ liệu phân hóa từ kết quả thi chính thức</p></div>
+<button class="btn btn-light" onclick="window.location.href='admin.html'">← Về Admin</button>
+</header>
+<main class="container">
+
+<section class="panel">
+<h2>⚙️ Khởi tạo phân hóa</h2>
+<div class="filters">
+<div><label>Kỳ thi đánh giá</label><select id="kyThi"><option value="">-- Chọn kỳ thi --</option></select></div>
+<div><label>Môn</label><select id="mon"><option value="">Tất cả môn</option></select></div>
+<div><label>Khối</label><select id="khoi"><option value="">Tất cả khối</option></select></div>
+<div><label>Kiểu phân hóa</label><select id="kieu"><option value="diem">Theo điểm tổng</option></select></div>
+</div>
+<div class="note">Ngưỡng mặc định: <b>P01 &lt; 60%</b> · <b>P02 60–&lt;80%</b> · <b>P03 80–&lt;90%</b> · <b>P04 ≥ 90%</b>.</div>
+<div id="status" class="note">Đang tải dữ liệu KETQUA...</div>
+<div class="toolbar">
+<button class="btn btn-blue" onclick="phanHoa()">🎯 Tạo dữ liệu phân hóa</button>
+<button class="btn btn-green" onclick="khoiTaoSheet()">💾 Phân hoá và ghi Sheet</button>
+<button class="btn btn-orange" onclick="xuatCSV()">⬇️ Xuất CSV</button>
+</div>
+</section>
+
+<section class="summary">
+<div class="card basic">🟢 P01 - Củng cố<b id="c1">0</b></div>
+<div class="card develop">🔵 P02 - Phát triển<b id="c2">0</b></div>
+<div class="card advanced">🟣 P03 - Nâng cao<b id="c3">0</b></div>
+<div class="card hsg">🏆 P04 - HSG<b id="c4">0</b></div>
+</section>
+
+<section class="panel">
+<h2>👥 Dữ liệu sẽ ghi vào PHAN_HOA</h2>
+<div class="toolbar">
+<input id="tim" placeholder="🔎 Tìm mã HS, họ tên, lớp..." oninput="render()">
+<select id="locPhong" onchange="render()"><option value="">Tất cả phòng</option><option>P01 - Củng cố</option><option>P02 - Phát triển</option><option>P03 - Nâng cao</option><option>P04 - HSG</option></select>
+</div>
+<div class="table-wrap">
+<table><thead><tr><th>STT</th><th>Mã HS</th><th>Họ tên</th><th>Lớp</th><th>Khối</th><th>Kỳ thi</th><th>Môn</th><th>Điểm</th><th>Tỷ lệ</th><th>Mức độ</th><th>Phòng</th></tr></thead>
+<tbody id="body"></tbody></table>
+</div>
+</section>
+</main>
+
+<script>
+const CSV_URL_KETQUA="https://docs.google.com/spreadsheets/d/e/2PACX-1vRULO6RaaXqNERaYMuLx9cpHLp3hxqL3i2PHuccrdbSvFaQgpsrPvRk-fhgzlOxamLUYCe1sLQMQvPL/pub?output=csv";
+const APPS_SCRIPT_URL="https://script.google.com/macros/s/AKfycbx11sY8PlWy4ppPKZfzDmFaINP3Oa7khvJ_rmWnB1zcRZ322_grNZT1YRGZtd9b4rwS/exec";
+let dsKetQua=[],data=[],thresholds={p1:60,p2:80,p3:90};
+
+const esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+
+function csvLine(s){
+  let a=[],v="",q=false;
+  for(let i=0;i<s.length;i++){
+    const c=s[i];
+    if(c==='"'){
+      if(q && s[i+1]==='"'){v+='"';i++;}
+      else q=!q;
+    }else if(c===','&&!q){a.push(v.trim());v="";}
+    else v+=c;
+  }
+  a.push(v.trim());
+  return a;
+}
+function csv(t){
+  const lines=t.replace(/^\uFEFF/,"").split(/\r?\n/).filter(x=>x.trim());
+  if(!lines.length)return [];
+  const h=csvLine(lines[0]).map(x=>String(x).replace(/^\uFEFF/,"").trim());
+  return lines.slice(1).map(line=>{
+    const v=csvLine(line),o={};
+    h.forEach((k,i)=>o[k]=v[i]??"");
+    return o;
+  });
+}
+function normKey(v){
+  return String(v??"").replace(/^\uFEFF/,"").trim().normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]/g,"");
+}
+function val(r,aliases){
+  for(const a of aliases){
+    if(r[a]!=null && String(r[a]).trim()!=="") return String(r[a]).trim();
+  }
+  const wanted=aliases.map(normKey);
+  for(const k of Object.keys(r)){
+    if(wanted.includes(normKey(k)) && String(r[k]).trim()!=="") return String(r[k]).trim();
+  }
+  return "";
+}
+function num(v){
+  const n=parseFloat(String(v??"").replace(",","."));
+  return Number.isFinite(n)?n:0;
+}
+function score(r){
+  let d=num(val(r,["diem","Diem","Điểm","score","Score"]));
+  let p=num(val(r,["tyLe","TyLe","Tỷ lệ","tyLeDung","TyLeDung"]));
+  if(p>0&&p<=1)p*=100;
+  if(!p){
+    const tong=num(val(r,["tongSoCau","TongSoCau","soCau","SoCau"]));
+    const dung=num(val(r,["soDung","SoDung","soCauDung","SoCauDung"]));
+    if(tong>0)p=dung/tong*100;
+    else if(d>=0&&d<=10)p=d*10;
+    else p=d;
+  }
+  return {d,p};
+}
+function room(p){
+  return p>=thresholds.p3?["HSG","P04 - HSG","b4"]:
+    p>=thresholds.p2?["Nâng cao","P03 - Nâng cao","b3"]:
+    p>=thresholds.p1?["Phát triển","P02 - Phát triển","b2"]:
+    ["Củng cố","P01 - Củng cố","b1"];
+}
+function loadOptions(){
+  const e=[...new Set(dsKetQua.map(r=>val(r,["maKyThi","MaKyThi"])).filter(Boolean))];
+  const m=[...new Set(dsKetQua.map(r=>val(r,["mon","Mon","Môn"])).filter(Boolean))];
+  const k=[...new Set(dsKetQua.map(r=>val(r,["khoi","Khoi","Khối"])).filter(Boolean))];
+  kyThi.innerHTML='<option value="">-- Chọn kỳ thi --</option>'+e.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
+  mon.innerHTML='<option value="">Tất cả môn</option>'+m.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
+  khoi.innerHTML='<option value="">Tất cả khối</option>'+k.map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join("");
+}
+async function load(){
+  status.textContent="⏳ Đang tải KETQUA...";
+  try{
+    const r=await fetch(CSV_URL_KETQUA+"&t="+Date.now(),{cache:"no-store"});
+    if(!r.ok)throw Error("HTTP "+r.status);
+    dsKetQua=csv(await r.text());
+    const header=Object.keys(dsKetQua[0]||{});
+    console.log("=== KETQUA DEBUG FIX ===");
+    console.log("HEADER KETQUA:",header);
+    console.log("DÒNG ĐẦU:",dsKetQua[0]);
+    console.log("maHS thử:",val(dsKetQua[0]||{},["maHS","MaHS","Mã HS","Mã học sinh","maHocSinh","studentCode"]));
+    console.log("maKyThi thử:",val(dsKetQua[0]||{},["maKyThi","MaKyThi"]));
+    loadOptions();
+    status.innerHTML=`✅ Đã tải <b>${dsKetQua.length}</b> kết quả. <b>Đã nhận diện trực tiếp maHS + maKyThi.</b> Hãy chọn kỳ thi rồi bấm Tạo dữ liệu phân hóa.`;
+  }catch(e){
+    status.textContent="⚠️ Không tải được KETQUA.";
+    console.error(e);
+  }
+}
+
+function phanHoa(){
+  const ex=String(kyThi.value||"").trim();
+  if(!ex)return alert("Hãy chọn kỳ thi cần phân hóa.");
+  const mo=String(mon.value||"").trim();
+  const kh=String(khoi.value||"").trim();
+
+  const ketQuaLoc=dsKetQua.filter(r=>
+    val(r,["maKyThi","MaKyThi"])===ex &&
+    (!mo||val(r,["mon","Mon","Môn"])===mo) &&
+    (!kh||val(r,["khoi","Khoi","Khối"])===kh)
+  );
+
+  console.log("=== PHÂN HÓA DEBUG FIX ===");
+  console.log("Kỳ thi:",ex,"Môn:",mo,"Khối:",kh,"Số dòng:",ketQuaLoc.length);
+  console.log("Dòng chọn đầu:",ketQuaLoc[0]);
+
+  if(!ketQuaLoc.length){alert("Không tìm thấy kết quả phù hợp trong KETQUA.");return;}
+
+  const invalid=[];
+  data=ketQuaLoc.map((r,i)=>{
+    const z=score(r),m=room(z.p);
+    const maHS=val(r,["maHS","MaHS","Mã HS","Mã học sinh","maHocSinh","MaHocSinh","studentCode","maThiSinh","MaThiSinh"]);
+    const maKyThi=val(r,["maKyThi","MaKyThi"])||ex;
+    if(!maHS||!maKyThi)invalid.push({index:i,maHS,maKyThi,row:r});
+    return {
+      maHS,
+      hoTen:val(r,["hoTen","HoTen","Họ và tên","hoVaTen"]),
+      lop:val(r,["lop","Lop","Lớp"]),
+      khoi:val(r,["khoi","Khoi","Khối"]),
+      maKyThi,
+      tenKyThi:val(r,["tenKyThi","TenKyThi"])||ex,
+      mon:val(r,["mon","Mon","Môn"]),
+      diem:z.d,
+      tyLe:Number(z.p.toFixed(1)),
+      phongHoc:m[1],
+      mucDo:m[0],
+      thoiGianPhanHoa:new Date().toISOString()
+    };
+  });
+
+  console.log("DỮ LIỆU PHÂN HÓA CUỐI:",data);
+  if(invalid.length){
+    console.error("BẢN GHI THIẾU KHÓA:",invalid);
+    alert("Có "+invalid.length+" bản ghi thiếu maHS/maKyThi. Mở F12 → Console xem 'BẢN GHI THIẾU KHÓA'.");
+    return;
+  }
+
+  render();
+  localStorage.setItem("phanHoaHocSinh",JSON.stringify(data));
+  status.innerHTML=`✅ Đã tạo <b>${data.length}</b> bản ghi phân hóa. Bấm <b>Phân hoá và ghi Sheet</b> để ghi PHAN_HOA.`;
+}
+
+function render(){
+  const q=(tim.value||"").toLowerCase(),p=locPhong.value;
+  const a=data.filter(x=>{const t=Object.values(x).join(" ").toLowerCase();return(!q||t.includes(q))&&(!p||x.phongHoc===p);});
+  body.innerHTML=a.map((x,i)=>{
+    const tyLe=Number(x.tyLe)||0;
+    const cls=x.mucDo==="Phát triển"?"b2":x.mucDo==="Nâng cao"?"b3":x.mucDo==="HSG"?"b4":"b1";
+    return `<tr><td>${i+1}</td><td>${esc(x.maHS)}</td><td>${esc(x.hoTen)}</td><td>${esc(x.lop)}</td><td>${esc(x.khoi)}</td><td>${esc(x.maKyThi)}</td><td>${esc(x.mon)}</td><td>${x.diem}</td><td><b>${tyLe.toFixed(1)}%</b></td><td><span class="badge ${cls}">${esc(x.mucDo)}</span></td><td>${esc(x.phongHoc)}</td></tr>`;
+  }).join("");
+  c1.textContent=data.filter(x=>x.mucDo==="Củng cố").length;
+  c2.textContent=data.filter(x=>x.mucDo==="Phát triển").length;
+  c3.textContent=data.filter(x=>x.mucDo==="Nâng cao").length;
+  c4.textContent=data.filter(x=>x.mucDo==="HSG").length;
+}
+
+async function khoiTaoSheet() {
+
+    if (!data || !Array.isArray(data) || !data.length) {
+        alert("Chưa có dữ liệu phân hóa.");
+        return;
+    }
+
+    if (!APPS_SCRIPT_URL) {
+        alert("Chưa cấu hình APPS_SCRIPT_URL.");
+        return;
+    }
+
+    /*
+     * TẠO PAYLOAD SẠCH
+     * Chỉ gửi đúng 11 trường của sheet PHAN_HOA
+     */
+    const rows = data.map(x => {
+
+        const row = {
+            maHS: String(x.maHS ?? "").trim(),
+            hoTen: String(x.hoTen ?? "").trim(),
+            lop: String(x.lop ?? "").trim(),
+            khoi: String(x.khoi ?? "").trim(),
+
+            maKyThi: String(x.maKyThi ?? "").trim(),
+
+            tenKyThi: String(
+                x.tenKyThi ??
+                x.maKyThi ??
+                ""
+            ).trim(),
+
+            mon: String(x.mon ?? "").trim(),
+
+            diem: x.diem ?? "",
+
+            phongHoc: String(
+                x.phongHoc ?? ""
+            ).trim(),
+
+            mucDo: String(
+                x.mucDo ?? ""
+            ).trim(),
+
+            thoiGianPhanHoa:
+                x.thoiGianPhanHoa ||
+                new Date().toISOString()
+        };
+
+        return row;
+    });
+
+    /*
+     * KIỂM TRA TRƯỚC KHI GỬI
+     */
+    const loi = rows.findIndex(
+        x =>
+            !x.maHS ||
+            !x.maKyThi
+    );
+
+    if (loi !== -1) {
+
+        console.error(
+            "❌ Dòng lỗi:",
+            rows[loi]
+        );
+
+        alert(
+            "Dữ liệu dòng " +
+            (loi + 1) +
+            " đang thiếu mã học sinh hoặc mã kỳ thi."
+        );
+
+        return;
+    }
+
+    console.log(
+        "📤 PAYLOAD GỬI APPS SCRIPT:",
+        rows
+    );
+
+    if (
+        !confirm(
+            "Ghi " +
+            rows.length +
+            " học sinh vào PHAN_HOA?"
+        )
+    ) {
+        return;
+    }
+
+    status.innerHTML =
+        "⏳ Đang ghi " +
+        rows.length +
+        " học sinh vào PHAN_HOA...";
+
+    try {
+
+        const response = await fetch(
+            APPS_SCRIPT_URL,
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type":
+                        "text/plain;charset=utf-8"
+                },
+
+                body: JSON.stringify({
+                    action: "khoiTaoPhanHoa",
+                    data: rows
+                })
+            }
+        );
+
+        const result =
+            await response.json();
+
+        console.log(
+            "📥 APPS SCRIPT TRẢ VỀ:",
+            result
+        );
+
+        if (!result.ok) {
+
+            throw new Error(
+                result.message ||
+                "Apps Script không ghi được dữ liệu."
+            );
+        }
+
+        /*
+         * Lưu tạm trên trình duyệt
+         */
+        localStorage.setItem(
+            "phanHoaHocSinh",
+            JSON.stringify(rows)
+        );
+
+        status.innerHTML = `
+            <span class="ok">
+                ✅ Đã ghi thành công
+                <b>${result.count || rows.length}</b>
+                học sinh vào PHAN_HOA.
+                <br>
+                ➕ Thêm mới:
+                <b>${result.inserted || 0}</b>
+                <br>
+                🔄 Cập nhật:
+                <b>${result.updated || 0}</b>
+            </span>
+        `;
+
+    } catch (error) {
+
+        console.error(
+            "❌ LỖI GHI PHAN_HOA:",
+            error
+        );
+
+        status.innerHTML = `
+            <span class="warn">
+                ❌ Không ghi được PHAN_HOA.
+                <br><br>
+                ${esc(error.message)}
+            </span>
+        `;
+    }
+}
+
+function xuatCSV(){
+  if(!data.length)return alert("Chưa có dữ liệu.");
+  const h=["maHS","hoTen","lop","khoi","maKyThi","tenKyThi","mon","diem","phongHoc","mucDo","thoiGianPhanHoa"];
+  const rows=[h,...data.map(x=>h.map(k=>x[k]??""))];
+  const c=rows.map(r=>r.map(v=>`"${String(v).replaceAll('"','""')}"`).join(",")).join("\n");
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+c],{type:"text/csv"}));a.download="PHAN_HOA.csv";a.click();
+}
+document.addEventListener("DOMContentLoaded",load);
+</script>
+</body>
+</html>

@@ -1,0 +1,1106 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Phòng truyền thống cá nhân - Olympic HSG</title>
+<style>
+*{box-sizing:border-box}body{margin:0;color:#392719;font:14px Segoe UI,Arial,sans-serif;background:linear-gradient(135deg,#e2f6ff,#bfeaf5 48%,#e6f8ed);min-height:100vh}a{text-decoration:none;color:inherit}
+.topbar{position:sticky;top:10px;z-index:10;max-width:1120px;margin:12px auto 18px;padding:9px;border-radius:30px;background:#fffffff2;box-shadow:0 10px 28px #4227122b;display:flex;gap:5px;justify-content:center}.nav{padding:10px 15px;border-radius:22px;font-weight:700;white-space:nowrap}.nav:hover{background:#f5eadb}.nav.active{background:linear-gradient(135deg,#6657ed,#7b3ff0);color:white}
+.wrap{max-width:1180px;margin:auto;padding:0 18px 50px}.hero{display:grid;grid-template-columns:1fr 1.4fr;gap:18px;margin-bottom:18px}.quote{min-height:310px;border-radius:18px;padding:28px;background:linear-gradient(160deg,#fff9eb,#f1dfc0);box-shadow:0 8px 20px #4d2c1730}.vertical{font-size:28px;font-weight:900;line-height:1.45;letter-spacing:2px}.smallquote{margin-top:35px;background:white;border-radius:18px;padding:17px 20px;font-style:italic;box-shadow:0 5px 15px #6b442322}
+.wood{background:linear-gradient(135deg,#61391f,#7a4827 48%,#57321d);border:5px solid #4b2a17;border-radius:20px;padding:20px;color:white;box-shadow:0 12px 28px #371e0c40,inset 0 0 0 2px #b47743}.student{display:grid;grid-template-columns:145px 1fr;gap:18px;align-items:center}.avatar{width:130px;height:130px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#ffe8bd,#f5b83c);border:8px solid #e9b33d;box-shadow:0 0 0 5px #fff3d0,0 8px 18px #2a160b55;font-size:74px}.student h1{margin:0 0 7px;font-size:27px}.student p{margin:6px 0;color:#ffe8bd}.bar{height:12px;border-radius:20px;background:#eee4d9;overflow:hidden}.bar span{display:block;height:100%;width:82%;background:linear-gradient(90deg,#25bce8,#22d3ee);border-radius:20px}.levelrow{display:flex;justify-content:space-between;font-size:13px;margin-top:6px}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:18px}.stat{background:linear-gradient(#fffdf7,#f7ead1);color:#332216;border-radius:15px;padding:14px 8px;text-align:center;box-shadow:0 4px 12px #29170b2b}.stat b{display:block;font-size:25px;color:#2446c7}.stat span{font-size:13px;font-weight:700}
+.grid{display:grid;grid-template-columns:1.15fr 1fr;gap:16px;margin-bottom:16px}.card{background:#fffdf5;border:2px solid #e5c98f;border-radius:17px;padding:18px;box-shadow:0 7px 20px #48281222}.card h2{margin:0 0 14px;font-size:18px}.card h2 a{float:right;color:#4f46e5;font-size:12px}table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;padding:9px;border-bottom:2px solid #ead9bd;color:#775d43}td{padding:10px 8px;border-bottom:1px solid #eee2d1}
+.badges{display:grid;grid-template-columns:repeat(5,1fr);gap:13px}.badge{text-align:center;font-size:11px;font-weight:700}.badgeIcon{width:65px;height:65px;margin:auto auto 7px;border-radius:18px;display:grid;place-items:center;font-size:33px;background:linear-gradient(145deg,#ffe06b,#c96d0b);border:3px solid #9d5511;box-shadow:0 4px 10px #59300d33}.lock .badgeIcon{filter:grayscale(1);opacity:.4}
+.arena{display:grid;grid-template-columns:1fr 1.3fr;gap:15px}.arenaStats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.mini{background:#faf0de;border-radius:12px;padding:11px;text-align:center}.mini b{font-size:24px;color:#2446c7;display:block}.mini span{font-size:11px}.winbar{height:9px;background:#e8dfd4;border-radius:20px;overflow:hidden}.winbar span{display:block;width:71%;height:100%;background:linear-gradient(90deg,#7047f4,#18b7e8)}.match{display:flex;gap:10px;padding:9px 0;border-top:1px solid #eee2d1;font-size:12px}.score{margin-left:auto;padding:5px 8px;border-radius:8px;background:#e9ddff;font-weight:800}
+.chart{height:160px;display:flex;align-items:end;gap:12px;padding:15px 8px 0;border-bottom:1px solid #d9c9b4}.barcol{flex:1;text-align:center;font-size:11px;color:#78634e}.barcol i{display:block;margin:auto;width:100%;max-width:36px;background:linear-gradient(#5b6cf2,#45bfe9);border-radius:8px 8px 0 0}.rewards{line-height:1.7}.rewards li{list-style:none;padding:10px 0;border-bottom:1px solid #eee2d1}.rewards ul{padding:0;margin:0}.cert{border:4px double #c89845;border-radius:12px;padding:20px;text-align:center;background:linear-gradient(135deg,#fffaf0,#f7ead0)}.cert .cup{font-size:42px}.cert b{font-size:20px;color:#b42318}.note{background:linear-gradient(135deg,#f4e0b8,#fff4d7);border-radius:15px;padding:20px;font:italic 18px Georgia,serif;line-height:1.55;border:1px solid #d5b16d;text-align:center}
+@media(max-width:900px){.hero,.grid,.arena{grid-template-columns:1fr}.stats{grid-template-columns:repeat(3,1fr)}.topbar{overflow:auto;justify-content:flex-start}}@media(max-width:600px){.wrap{padding:0 10px 30px}.student{grid-template-columns:1fr;text-align:center}.avatar{margin:auto}.stats{grid-template-columns:repeat(2,1fr)}.badges{grid-template-columns:repeat(3,1fr)}.vertical{font-size:22px}.nav{padding:9px 11px;font-size:12px}}
+</style>
+<style>
+.live-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+.live-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 14px;
+    border:1px solid #e5e7eb;
+    border-radius:13px;
+    background:#fafcff;
+}
+.live-icon{font-size:25px;flex:none}
+.live-main{flex:1}
+.live-main strong{display:block;color:#1e293b}
+.live-main small{display:block;margin-top:3px;color:#64748b}
+.live-badge{
+    font-size:11px;
+    font-weight:800;
+    padding:5px 9px;
+    border-radius:999px;
+    background:#dcfce7;
+    color:#166534;
+}
+.live-cert{
+    text-align:center;
+    padding:22px 16px;
+    border-radius:16px;
+    border:1px solid #e9d5ff;
+    background:linear-gradient(135deg,#faf5ff,#eef2ff);
+}
+.live-cert .cert-icon{font-size:42px}
+.live-cert strong{display:block;font-size:19px;color:#4c1d95;margin:7px 0}
+.arena-history-live{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+.arena-history-live .match{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:11px 12px;
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    background:#fff;
+}
+.arena-history-live .match-main{flex:1}
+.arena-history-live .match-main strong{display:block}
+.arena-history-live .match-main small{color:#64748b}
+.arena-history-live .match-score{font-weight:800;color:#4338ca}
+.arena-history-live .match-result{
+    font-size:11px;
+    font-weight:800;
+    padding:5px 8px;
+    border-radius:999px;
+}
+.arena-history-live .win{background:#dcfce7;color:#166534}
+.arena-history-live .loss{background:#fee2e2;color:#991b1b}
+.arena-history-live .draw{background:#fef3c7;color:#92400e}
+</style>
+
+</head><body>
+<nav class="topbar"><a class="nav" href="index.html">🏠 Trang chủ</a><a class="nav" href="lop-hoc.html">🏫 Lớp học</a><a class="nav" href="ho-so-hoc-sinh.html">👤 Hồ sơ</a><a class="nav active" href="thanh-tich-ca-nhan.html">🏆 Thành tích</a><a class="nav" href="dau-truong.html">🏟️ Đấu trường</a><a class="nav" href="xephang.html">📊 Bảng xếp hạng</a><a class="nav" href="phan-thuong.html">🎁 Phần thưởng</a></nav>
+<main class="wrap">
+<section class="hero"><div class="quote"><div class="vertical">Học<br>Tập<br>Sáng Tạo<br>Vươn Xa</div><div class="smallquote">“Kiến thức hôm nay là sức mạnh ngày mai!” 🌿</div></div>
+<div class="wood"><div class="student"><div class="avatar">🧑🏻‍🎓</div><div><h1 id="profileName">Đang tải...</h1><p id="profileClass">🏫 Đang tải thông tin...</p><p>“Học tập số - Sáng tạo - Vươn xa”</p><strong id="profileLevel">⭐ Hồ sơ học sinh</strong><div class="bar"><span></span></div><div class="levelrow"><span id="profileScoreLeft">Đang tải...</span><span id="profileScoreRight">Kết quả thi</span></div></div></div>
+<div class="stats"><div class="stat"><b id="statSoLanThi">0</b><span>Số lần thi</span></div><div class="stat"><b id="statDiemCaoNhat">0</b><span>Điểm cao nhất</span></div><div class="stat"><b id="statDiemTrungBinh">0</b><span>Điểm trung bình</span></div><div class="stat"><b id="statTranDau">0</b><span>Trận đấu</span></div><div class="stat"><b id="statTranThang">0</b><span>Trận thắng</span></div></div></div></section>
+
+<section class="card" id="arenaLiveCard">
+    <h2>🏟️ Thành tích Đấu trường</h2>
+
+    <div id="arenaLiveStatus"
+         style="font-size:12px;color:#6b7280;margin-bottom:12px">
+        Đang tải...
+    </div>
+
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-value" id="arenaLiveTran">0</div>
+            <div class="stat-label">Trận đấu</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value" id="arenaLiveThang">0</div>
+            <div class="stat-label">Chiến thắng</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value" id="arenaLiveThua">0</div>
+            <div class="stat-label">Thất bại</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value" id="arenaLiveTiLe">0%</div>
+            <div class="stat-label">Tỉ lệ thắng</div>
+        </div>
+    </div>
+
+    <div id="arenaLiveHistory" style="margin-top:16px"></div>
+</section>
+
+<section class="grid"><div class="card">
+<h2>🏆 Thành tích thi Olympic <span id="ketQuaStatus" style="float:right;color:#6b7280;font-size:12px;font-weight:600">Đang tải...</span></h2>
+<div id="ketQuaLoading" style="padding:24px;text-align:center;color:#6b7280">Đang lấy kết quả của bạn...</div>
+<div id="ketQuaEmpty" style="display:none;padding:24px;text-align:center;color:#6b7280">Chưa có kết quả kỳ thi nào.</div>
+<div id="ketQuaError" style="display:none;padding:16px;border-radius:12px;background:#fff1f2;color:#b91c1c"></div>
+<div style="overflow:auto">
+<table id="ketQuaTable" style="display:none">
+<thead><tr><th>#</th><th>Kỳ thi</th><th>Môn</th><th>Khối/Lớp</th><th>Điểm</th><th>Đúng</th><th>Tổng câu</th><th>Ngày thi</th></tr></thead>
+<tbody id="ketQuaBody"></tbody>
+</table>
+</div>
+</div>
+
+<div class="card">
+    <h2>⭐ Huy hiệu của tôi</h2>
+    <div id="achievementList" class="achievement-grid">
+        <div class="empty">⏳ Đang tải huy hiệu...</div>
+    </div>
+</div></section>
+
+
+<section class="grid"><div class="card"><h2>📊 Tiến bộ học tập
+</h2><div id="progressSummary" style="color:#6b7280;font-size:13px;margin-bottom:8px">Đang tính từ kết quả thi...</div><div class="chart"><div id="progressLiveEmpty" style="padding:18px;text-align:center;color:#6b7280">Dữ liệu tiến bộ sẽ được tính từ kết quả thật.</div></div></section>
+
+<section class="grid">
+
+<div class="card">
+    <h2>🎁 Phần thưởng đã nhận</h2>
+
+    <div id="rewardLiveStatus"
+         style="font-size:12px;color:#6b7280;margin-bottom:10px">
+        Đang tải...
+    </div>
+
+    <div class="rewards" id="rewardLiveList">
+        <div class="empty">⏳ Đang tải phần thưởng...</div>
+    </div>
+
+</div>
+
+<div class="card">
+    <h2>📜 Chứng nhận của tôi</h2>
+
+    <div id="certificateLiveList">
+        <div class="empty">⏳ Đang kiểm tra chứng nhận...</div>
+    </div>
+</div>
+
+</section>
+
+<div class="note">“Mỗi thành tích là một bước tiến đến ước mơ lớn hơn.”</div>
+</main>
+<script>
+/* =========================================================
+   🏆 PHÒNG TRUYỀN THỐNG CÁ NHÂN - DỮ LIỆU THẬT
+   Lấy MaHS theo tài khoản đang đăng nhập và gọi API KETQUA.
+========================================================= */
+
+const API_KETQUA = "https://script.google.com/macros/s/AKfycbxWt7qf7N_wghFQ_zonxD8jcdOeebh8rbPtBu2PNTEVrhhMTWSKHWNJJnE78qkfFFB3/exec";
+
+function layMaHS() {
+    const keys = ["maHS","MaHS","maThiSinh","studentCode","maHocSinh"];
+
+    for (const key of keys) {
+        const v = localStorage.getItem(key);
+        if (v && String(v).trim()) return String(v).trim();
+    }
+
+    const objectKeys = ["user","currentUser","taiKhoanHS","hocSinh","studentInfo"];
+
+    for (const key of objectKeys) {
+        try {
+            const o = JSON.parse(localStorage.getItem(key) || "null");
+            if (!o) continue;
+
+            const v =
+                o.maHS ||
+                o.MaHS ||
+                o.maThiSinh ||
+                o.studentCode ||
+                o.maHocSinh;
+
+            if (v && String(v).trim()) return String(v).trim();
+
+        } catch(e) {}
+    }
+
+    return "";
+}
+
+function layThongTinDangNhap() {
+
+    let hoTen =
+        localStorage.getItem("hoTenDangNhap") ||
+        localStorage.getItem("hoTen") ||
+        "";
+
+    let lop =
+        localStorage.getItem("lop") ||
+        localStorage.getItem("hoSoLop") ||
+        "";
+
+    const objectKeys = ["user","currentUser","taiKhoanHS","hocSinh","studentInfo"];
+
+    for (const key of objectKeys) {
+
+        try {
+
+            const o = JSON.parse(localStorage.getItem(key) || "null");
+
+            if (!o) continue;
+
+            hoTen =
+                hoTen ||
+                o.hoTen ||
+                o.name ||
+                o.ten ||
+                "";
+
+            lop =
+                lop ||
+                o.lop ||
+                o.className ||
+                o.lopHoc ||
+                "";
+
+        } catch(e) {}
+
+    }
+
+    return {
+        hoTen: String(hoTen || "").trim(),
+        lop: String(lop || "").trim()
+    };
+}
+
+function esc(v) {
+    return String(v ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+function fmtNumber(v) {
+    const n = Number(v);
+    if (!Number.isFinite(n)) return "0";
+    return Number.isInteger(n)
+        ? String(n)
+        : n.toFixed(2).replace(/0+$/,"").replace(/\.$/,"");
+}
+
+function fmtDate(v) {
+
+    if (!v) return "---";
+
+    const s = String(v).trim();
+
+    let m = s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+
+    if (m) {
+        return String(m[1]).padStart(2,"0") + "/" +
+               String(m[2]).padStart(2,"0") + "/" +
+               m[3];
+    }
+
+    m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);
+
+    if (m) {
+        return String(m[3]).padStart(2,"0") + "/" +
+               String(m[2]).padStart(2,"0") + "/" +
+               m[1];
+    }
+
+    return s;
+}
+
+function getField(item, names, fallback="") {
+
+    for (const name of names) {
+
+        if (
+            item &&
+            item[name] !== undefined &&
+            item[name] !== null &&
+            String(item[name]).trim() !== ""
+        ) {
+            return item[name];
+        }
+
+    }
+
+    return fallback;
+}
+
+function hienThiThongTinNguoiDung() {
+
+    const info = layThongTinDangNhap();
+
+    document.getElementById("profileName").textContent =
+        info.hoTen || "Học sinh Olympic HSG";
+
+    document.getElementById("profileClass").textContent =
+        "🏫 " + (info.lop || "Chưa xác định lớp") +
+        " · Trường THCS Phú Đình";
+
+}
+
+function hienThiKetQua(ds) {
+
+    const loading = document.getElementById("ketQuaLoading");
+    const empty = document.getElementById("ketQuaEmpty");
+    const error = document.getElementById("ketQuaError");
+    const table = document.getElementById("ketQuaTable");
+    const body = document.getElementById("ketQuaBody");
+    const status = document.getElementById("ketQuaStatus");
+
+    loading.style.display = "none";
+    error.style.display = "none";
+
+    if (!Array.isArray(ds) || ds.length === 0) {
+
+        empty.style.display = "block";
+        table.style.display = "none";
+        status.textContent = "Chưa có kết quả";
+
+        capNhatThongKe([]);
+
+        return;
+    }
+
+    empty.style.display = "none";
+    table.style.display = "table";
+    status.textContent = ds.length + " kết quả";
+
+    body.innerHTML = "";
+
+    ds.forEach((item,index) => {
+
+        const tenKyThi = getField(
+            item,
+            ["tenKyThi","TenKyThi","tenkythi","kyThi","maKyThi"],
+            "---"
+        );
+
+        const mon = getField(
+            item,
+            ["mon","Mon"],
+            "---"
+        );
+
+        const khoi = getField(
+            item,
+            ["khoi","Khoi","lop","Lop"],
+            "---"
+        );
+
+        const diem = getField(
+            item,
+            ["diem","Diem"],
+            0
+        );
+
+        const soDung = getField(
+            item,
+            ["soDung","SoDung"],
+            0
+        );
+
+        const tongSoCau = getField(
+            item,
+            ["tongSoCau","TongSoCau"],
+            0
+        );
+
+        const ngayThi = getField(
+            item,
+            ["ngayThi","NgayThi"],
+            ""
+        );
+
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${esc(tenKyThi)}</td>
+            <td>${esc(mon)}</td>
+            <td>${esc(khoi)}</td>
+            <td><strong>${esc(fmtNumber(diem))}</strong></td>
+            <td>${esc(soDung)}</td>
+            <td>${esc(tongSoCau)}</td>
+            <td>${esc(fmtDate(ngayThi))}</td>
+        `;
+
+        body.appendChild(tr);
+
+    });
+
+    capNhatThongKe(ds);
+}
+
+function capNhatThongKe(ds) {
+
+    const diemList = ds
+        .map(x => Number(getField(x,["diem","Diem"],0)))
+        .filter(Number.isFinite);
+
+    const soLan = ds.length;
+
+    const caoNhat = diemList.length
+        ? Math.max(...diemList)
+        : 0;
+
+    const trungBinh = diemList.length
+        ? diemList.reduce((a,b) => a+b,0) / diemList.length
+        : 0;
+
+    document.getElementById("statSoLanThi").textContent =
+        soLan;
+
+    document.getElementById("statDiemCaoNhat").textContent =
+        fmtNumber(caoNhat);
+
+    document.getElementById("statDiemTrungBinh").textContent =
+        fmtNumber(trungBinh);
+
+    document.getElementById("profileScoreLeft").textContent =
+        "📚 " + soLan + " lần tham gia";
+
+    document.getElementById("profileScoreRight").textContent =
+        "🏆 Cao nhất " + fmtNumber(caoNhat);
+
+    document.getElementById("progressSummary").textContent =
+        soLan
+            ? `Đã ghi nhận ${soLan} lần thi · điểm trung bình ${fmtNumber(trungBinh)} · cao nhất ${fmtNumber(caoNhat)}`
+            : "Chưa có dữ liệu để tính tiến bộ.";
+
+    // Hai chỉ số này để dành cho phần Đấu trường.
+    document.getElementById("statTranDau").textContent = "—";
+    document.getElementById("statTranThang").textContent = "—";
+}
+
+async function taiKetQuaThi() {
+
+    const maHS = layMaHS();
+
+    if (!maHS) {
+
+        document.getElementById("ketQuaLoading").style.display = "none";
+
+        const error = document.getElementById("ketQuaError");
+
+        error.innerHTML =
+            "⚠️ Không tìm thấy mã học sinh trong phiên đăng nhập.";
+
+        error.style.display = "block";
+
+        document.getElementById("ketQuaStatus").textContent =
+            "Chưa đăng nhập";
+
+        return;
+    }
+
+    try {
+
+        const url =
+            API_KETQUA +
+            "?action=layKetQuaTheoMaHS&maHS=" +
+            encodeURIComponent(maHS) +
+            "&_t=" +
+            Date.now();
+
+        const response = await fetch(url,{
+            method:"GET",
+            cache:"no-store"
+        });
+
+        if (!response.ok) {
+            throw new Error("API KETQUA trả về HTTP " + response.status);
+        }
+
+        const data = await response.json();
+
+        if (!data.success) {
+            throw new Error(
+                data.message ||
+                "Không thể lấy kết quả thi."
+            );
+        }
+
+        const ketQua =
+            Array.isArray(data.ketQua)
+                ? data.ketQua
+                : Array.isArray(data.data)
+                    ? data.data
+                    : [];
+
+        hienThiKetQua(ketQua);
+
+    } catch(error) {
+
+        console.error("Lỗi tải KETQUA:",error);
+
+        document.getElementById("ketQuaLoading").style.display = "none";
+
+        const box = document.getElementById("ketQuaError");
+
+        box.innerHTML =
+            "⚠️ Không tải được kết quả thi.<br>" +
+            esc(error.message || "Lỗi không xác định.");
+
+        box.style.display = "block";
+
+        document.getElementById("ketQuaStatus").textContent =
+            "Lỗi tải dữ liệu";
+    }
+}
+
+document.addEventListener("DOMContentLoaded",function(){
+
+    hienThiThongTinNguoiDung();
+    taiKetQuaThi();
+
+});
+</script>
+
+
+<script>
+/* =========================================================
+   🔴 DỮ LIỆU THẬT CHO 4 KHU VỰC PHÒNG TRUYỀN THỐNG
+   1. Đấu trường
+   2. Huy hiệu
+   3. Phần thưởng
+   4. Chứng nhận
+========================================================= */
+
+const API_ARENA =
+    "https://script.google.com/macros/s/AKfycbyX38uFR21yqnv5otQz4USbey1xU8VhSPaWf_Jo/exec";
+
+const API_XU =
+    "https://script.google.com/macros/s/AKfycbxWt7qf7N_wghFQ_zonxD8jcdOeebh8rbPtBu2PNTEVrhhMTWSKHWNJJnE78qkfFFB3/exec";
+
+/* MaHS đã có trong file, nhưng khai báo lại an toàn */
+function getCurrentMaHS() {
+    if (typeof layMaHS === "function") {
+        const v = layMaHS();
+        if (v) return String(v).trim();
+    }
+
+    const keys = [
+        "maHS","MaHS","maThiSinh",
+        "studentCode","maHocSinh"
+    ];
+
+    for (const key of keys) {
+        const v = localStorage.getItem(key);
+        if (v && String(v).trim()) {
+            return String(v).trim();
+        }
+    }
+
+    return "";
+}
+
+function liveEsc(v) {
+    return String(v ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+/* =========================================================
+   🏟️ 1. ĐẤU TRƯỜNG
+========================================================= */
+
+async function taiThanhTichDauTruongLive() {
+
+    const maHS = getCurrentMaHS();
+
+    const status =
+        document.getElementById("arenaLiveStatus");
+
+    if (!maHS) {
+        if (status) status.textContent =
+            "Chưa xác định được mã học sinh.";
+        return;
+    }
+
+    try {
+
+        const url =
+            API_ARENA +
+            "?action=lichSuDauTruong&maHS=" +
+            encodeURIComponent(maHS) +
+            "&_t=" + Date.now();
+
+        const response =
+            await fetch(url,{cache:"no-store"});
+
+        if (!response.ok) {
+            throw new Error(
+                "API Đấu trường HTTP " +
+                response.status
+            );
+        }
+
+        const data = await response.json();
+
+        if (!data.ok) {
+            throw new Error(
+                data.message ||
+                "Không lấy được thành tích Đấu trường."
+            );
+        }
+
+        document.getElementById("arenaLiveTran").textContent =
+            data.tongTran || 0;
+
+        document.getElementById("arenaLiveThang").textContent =
+            data.thang || 0;
+
+        document.getElementById("arenaLiveThua").textContent =
+            data.thua || 0;
+
+        document.getElementById("arenaLiveTiLe").textContent =
+            (data.tiLeThang || 0) + "%";
+
+        const topTran = document.getElementById("statTranDau");
+        const topThang = document.getElementById("statTranThang");
+
+        if (topTran) topTran.textContent = data.tongTran || 0;
+        if (topThang) topThang.textContent = data.thang || 0;
+
+
+        if (status) {
+            status.textContent =
+                "Dữ liệu của " + maHS;
+        }
+
+        const history =
+            document.getElementById("arenaLiveHistory");
+
+        const list =
+            Array.isArray(data.lichSu)
+                ? data.lichSu.slice(0,5)
+                : [];
+
+        if (!history) return;
+
+        if (!list.length) {
+            history.innerHTML =
+                '<div class="empty">🏟️ Chưa có trận đấu nào.</div>';
+            return;
+        }
+
+        history.innerHTML = `
+            <div style="font-weight:750;margin-bottom:9px">
+                🕘 5 trận gần nhất
+            </div>
+            <div class="arena-history-live">
+                ${list.map(x => {
+
+                    const k =
+                        String(x.ketQua || "").toLowerCase();
+
+                    const cls =
+                        k.includes("thắng") || k === "win"
+                            ? "win"
+                            : k.includes("thua") || k === "loss"
+                                ? "loss"
+                                : "draw";
+
+                    return `
+                        <div class="match">
+
+                            <div class="match-main">
+                                <strong>
+                                    ${liveEsc(
+                                        x.hoTenDoiThu ||
+                                        "Đối thủ"
+                                    )}
+                                </strong>
+
+                                <small>
+                                    ${liveEsc(
+                                        x.mon ||
+                                        "Đấu trường"
+                                    )}
+                                    · +${Number(x.xp || 0)} XP
+                                    · +${Number(x.xu || 0)} Xu
+                                </small>
+                            </div>
+
+                            <div class="match-score">
+                                ${Number(x.diemBan || 0)}
+                                -
+                                ${Number(x.diemDoiThu || 0)}
+                            </div>
+
+                            <span class="match-result ${cls}">
+                                ${liveEsc(
+                                    x.ketQua || "Hòa"
+                                )}
+                            </span>
+
+                        </div>
+                    `;
+
+                }).join("")}
+            </div>
+        `;
+
+    } catch (error) {
+
+        console.error(
+            "Lỗi thành tích Đấu trường:",
+            error
+        );
+
+        if (status) {
+            status.textContent =
+                "Chưa tải được dữ liệu Đấu trường.";
+        }
+    }
+}
+
+/* =========================================================
+   🏅 2. HUY HIỆU
+   Phần này đã có API layThanhTichHS.
+   Hàm hiện tại trong file sẽ nhận data.huyHieu.
+========================================================= */
+
+async function taiHuyHieuLive() {
+
+    const maHS = getCurrentMaHS();
+
+    if (!maHS) return;
+
+    try {
+
+        const url =
+            API_KETQUA +
+            "?action=layThanhTichHS&maHS=" +
+            encodeURIComponent(maHS) +
+            "&_t=" + Date.now();
+
+        const response =
+            await fetch(url,{cache:"no-store"});
+
+        const data = await response.json();
+
+        if (!data.success) {
+            throw new Error(
+                data.message ||
+                "Không tải được huy hiệu."
+            );
+        }
+
+        if (typeof hienThiHuyHieuGoogle === "function") {
+            hienThiHuyHieuGoogle(
+                Array.isArray(data.huyHieu)
+                    ? data.huyHieu
+                    : []
+            );
+        }
+
+    } catch(error) {
+
+        console.error(
+            "Lỗi huy hiệu:",
+            error
+        );
+    }
+}
+
+/* =========================================================
+   🎁 3. PHẦN THƯỞNG ĐÃ NHẬN
+   Dùng kho phần thưởng thật của MaHS.
+========================================================= */
+
+async function taiPhanThuongLive() {
+
+    const box =
+        document.getElementById("rewardLiveList");
+
+    const status =
+        document.getElementById("rewardLiveStatus");
+
+    const maHS = getCurrentMaHS();
+
+    if (!box) return;
+
+    if (!maHS) {
+        box.innerHTML =
+            '<div class="empty">⚠️ Chưa xác định được mã học sinh.</div>';
+        return;
+    }
+
+    try {
+
+        const url =
+            API_XU +
+            "?action=layKhoPhanThuong&maHS=" +
+            encodeURIComponent(maHS) +
+            "&t=" + Date.now();
+
+        const response =
+            await fetch(url,{cache:"no-store"});
+
+        const data = await response.json();
+
+        if (!data.success) {
+            throw new Error(
+                data.message ||
+                "Không tải được kho phần thưởng."
+            );
+        }
+
+        const items =
+            Array.isArray(data.items)
+                ? data.items
+                : [];
+
+        if (status) {
+            status.textContent =
+                items.length +
+                " phần thưởng đang sở hữu";
+        }
+
+        if (!items.length) {
+
+            box.innerHTML =
+                `<div class="empty">
+                    🎁 Chưa có phần thưởng nào.
+                 </div>`;
+
+            return;
+        }
+
+        const info = {
+
+            BADGE_CHIẾNBINH:{
+                ten:"Chiến binh tri thức",
+                icon:"🏆"
+            },
+
+            TITLE_TRITHUC:{
+                ten:"Danh hiệu Tri thức",
+                icon:"👑"
+            },
+
+            FRAME_VANG:{
+                ten:"Khung hồ sơ đặc biệt",
+                icon:"🎨"
+            },
+
+            BADGE_CHAMCHI:{
+                ten:"Người học chăm chỉ",
+                icon:"🌟"
+            }
+
+        };
+
+        box.innerHTML = `
+            <div class="live-list">
+                ${items.map(item => {
+
+                    const x =
+                        info[item.maThuong] ||
+                        {
+                            ten:
+                                item.tenThuong ||
+                                "Phần thưởng",
+                            icon:"🎁"
+                        };
+
+                    const active =
+                        String(
+                            item.trangThai || ""
+                        ).toUpperCase()
+                        === "DANG_SU_DUNG";
+
+                    return `
+                        <div class="live-item">
+
+                            <div class="live-icon">
+                                ${x.icon}
+                            </div>
+
+                            <div class="live-main">
+                                <strong>
+                                    ${liveEsc(x.ten)}
+                                </strong>
+
+                                <small>
+                                    ${active
+                                        ? "Đang sử dụng trên hồ sơ"
+                                        : "Đã sở hữu"
+                                    }
+                                </small>
+                            </div>
+
+                            <span class="live-badge">
+                                ${active
+                                    ? "ĐANG DÙNG"
+                                    : "ĐÃ NHẬN"
+                                }
+                            </span>
+
+                        </div>
+                    `;
+
+                }).join("")}
+            </div>
+        `;
+
+    } catch(error) {
+
+        console.error(
+            "Lỗi phần thưởng:",
+            error
+        );
+
+        box.innerHTML =
+            `<div class="empty">
+                ⚠️ Không tải được phần thưởng.
+             </div>`;
+    }
+}
+
+/* =========================================================
+   📜 4. CHỨNG NHẬN
+   Hệ thống cũ chưa có API chứng nhận riêng.
+   Không dùng dữ liệu local/demo.
+   Khi có API layChungNhanTheoMaHS, hàm này sẽ tự nhận.
+========================================================= */
+
+async function taiChungNhanLive() {
+
+    const box =
+        document.getElementById(
+            "certificateLiveList"
+        );
+
+    const maHS = getCurrentMaHS();
+
+    if (!box) return;
+
+    if (!maHS) {
+        box.innerHTML =
+            '<div class="empty">⚠️ Chưa xác định được mã học sinh.</div>';
+        return;
+    }
+
+    try {
+
+        const url =
+            API_KETQUA +
+            "?action=layChungNhanTheoMaHS&maHS=" +
+            encodeURIComponent(maHS) +
+            "&_t=" + Date.now();
+
+        const response =
+            await fetch(url,{cache:"no-store"});
+
+        const data = await response.json();
+
+        /*
+         * Nếu backend chưa có action này,
+         * tuyệt đối không hiển thị chứng nhận giả.
+         */
+        if (!data || !data.success) {
+
+            box.innerHTML =
+                `<div class="empty">
+                    📜 Học sinh chưa có chứng nhận được ghi nhận.
+                 </div>`;
+
+            return;
+        }
+
+        const list =
+            Array.isArray(data.chungNhan)
+                ? data.chungNhan
+                : [];
+
+        if (!list.length) {
+
+            box.innerHTML =
+                `<div class="empty">
+                    📜 Chưa có chứng nhận nào.
+                 </div>`;
+
+            return;
+        }
+
+        box.innerHTML = `
+            <div class="live-list">
+                ${list.map(c => `
+                    <div class="live-cert">
+
+                        <div class="cert-icon">🏆</div>
+
+                        <strong>
+                            ${liveEsc(
+                                c.xepHang ||
+                                c.tenChungNhan ||
+                                "Chứng nhận"
+                            )}
+                        </strong>
+
+                        <div>
+                            ${liveEsc(
+                                c.tenKyThi ||
+                                c.kyThi ||
+                                ""
+                            )}
+                        </div>
+
+                        <small>
+                            ${liveEsc(
+                                c.mon ||
+                                ""
+                            )}
+                            ${c.ngay
+                                ? " · " + liveEsc(c.ngay)
+                                : ""
+                            }
+                        </small>
+
+                    </div>
+                `).join("")}
+            </div>
+        `;
+
+    } catch(error) {
+
+        console.warn(
+            "Chưa có API chứng nhận:",
+            error
+        );
+
+        box.innerHTML =
+            `<div class="empty">
+                📜 Chưa có chứng nhận được ghi nhận.
+             </div>`;
+    }
+}
+
+/* =========================================================
+   🚀 TẢI CẢ 4 KHU VỰC THEO TÀI KHOẢN ĐĂNG NHẬP
+========================================================= */
+
+async function taiBonKhuVucCaNhan() {
+
+    await Promise.allSettled([
+
+        taiThanhTichDauTruongLive(),
+
+        taiHuyHieuLive(),
+
+        taiPhanThuongLive(),
+
+        taiChungNhanLive()
+
+    ]);
+
+}
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        /*
+         * Chờ một nhịp để taiHoSo() và
+         * taiThanhTichTuGoogleSheet() hiện tại
+         * hoàn tất phần hồ sơ trước.
+         */
+        setTimeout(
+            taiBonKhuVucCaNhan,
+            250
+        );
+
+    }
+);
+</script>
+
+</body></html>
