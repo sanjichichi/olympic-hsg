@@ -1100,81 +1100,112 @@ background:#b02a37;
     }
 }
 
-/* BẢNG VÀNG THÀNH TÍCH */
+/* THẺ GIAI ĐIỆU TỰ HÀO */
 
-.achievement-section{
-
-    max-width:1200px;
-
-    margin:50px auto;
-
-    text-align:center;
+.music-link {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    background: #fff;
+    border: 1px solid #ead8c2;
+    border-radius: 22px;
+    box-shadow: 0 8px 25px rgba(80, 25, 20, 0.08);
+    transition: transform .3s ease, box-shadow .3s ease;
 }
 
-.achievement-section h2{
-
-    color:#0057b8;
-
-    margin-bottom:25px;
+.music-link:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 32px rgba(130, 25, 35, 0.16);
 }
 
-.achievement-box{
-
-    background:white;
-
-    padding:30px;
-
-    border-radius:15px;
-
-    box-shadow:0 4px 15px rgba(0,0,0,0.15);
+.music-image {
+    width: 260px;
+    min-width: 260px;
+    min-height: 300px;
+    overflow: hidden;
+    background: #8c1722;
 }
 
-.achievement-grid{
-
-    display:flex;
-
-    justify-content:center;
-
-    gap:25px;
-
-    flex-wrap:wrap;
-
-    margin:25px 0;
+.music-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    object-fit: cover;
+    object-position: center;
+    transition: transform .5s ease;
 }
 
-.achievement-card{
-
-    width:220px;
-
-    background:#f8f9fa;
-
-    padding:20px;
-
-    border-radius:12px;
+.music-link:hover .music-image img {
+    transform: scale(1.05);
 }
 
-.achievement-card h1{
-
-    color:#d32f2f;
-
-    font-size:48px;
-
-    margin:0;
+.music-link .heritage-content {
+    flex: 1;
+    padding: 32px;
 }
 
-.achievement-card p{
-
-    font-size:20px;
-
-    font-weight:bold;
+.music-link .heritage-label {
+    display: inline-block;
+    color: #a21e2b;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
 }
 
-.achievement-box h4{
-
-    color:#0057b8;
-
-    font-size:22px;
+.music-link h3 {
+    margin: 0 0 14px;
+    color: #7d1722;
+    font-size: 28px;
 }
+
+.music-link p {
+    color: #596579;
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 24px;
+}
+
+.music-link .heritage-button {
+    display: inline-block;
+    padding: 12px 20px;
+    color: #fff;
+    background: linear-gradient(135deg, #8d1724, #c52c35);
+    border-radius: 10px;
+    font-weight: 700;
+}
+
+@media (max-width: 650px) {
+    .music-link {
+        flex-direction: column;
+    }
+
+    .music-image {
+        width: 100%;
+        min-width: 0;
+        height: 300px;
+        min-height: 0;
+    }
+
+    .music-image img {
+        height: 300px;
+        min-height: 0;
+        object-position: center 35%;
+    }
+
+    .music-link .heritage-content {
+        padding: 22px;
+    }
+
+    .music-link h3 {
+        font-size: 23px;
+    }
+}
+
 .thongtin-kythi{
 
     margin:20px 0;
