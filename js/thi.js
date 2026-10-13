@@ -236,6 +236,33 @@ function tronMang(arr) {
 }
 
 
+function locCauHoiTrung(nganHang) {
+    const daGap = new Set();
+
+    return nganHang.filter(cau => {
+        const noiDung = String(
+            cau?.question ??
+            cau?.cauHoi ??
+            cau?.noiDung ??
+            cau?.deBai ??
+            ""
+        )
+            .normalize("NFC")
+            .replace(/<[^>]*>/g, " ")
+            .replace(/\s+/g, " ")
+            .trim()
+            .toLocaleLowerCase("vi");
+
+        // Không tự loại câu không có nội dung
+        if (!noiDung) return true;
+
+        if (daGap.has(noiDung)) return false;
+
+        daGap.add(noiDung);
+        return true;
+    });
+}
+
 /*
  * Chia số câu theo tỷ lệ bằng phương pháp
  * "largest remainder", sau đó tự bù phần thiếu.
@@ -354,99 +381,72 @@ function tinhSoLuongTheoTyLe(soLuong, groups, tyLe) {
  * Khi ngân hàng được bổ sung TRUEFALSE/MULTI/FILL/MATCH/SORT:
  * → thuật toán tự phân bổ theo tỷ lệ cấu hình.
  */
+
 function taoDeTheoTyLeLoaiCau(nganHang, soLuong) {
+
+    // Loại câu trùng nội dung trước khi chọn đề
+    const nganHangSach = locCauHoiTrung(nganHang);
+
+    const mucTieu = Math.min(
+        Math.max(0, Number(soLuong) || 0),
+        nganHangSach.length
+    );
+
+    if (mucTieu === 0) return [];
 
     const groups = {};
 
-    nganHang.forEach(cau => {
-
-        const type =
-            layLoaiCauThongNhat(cau);
-
-        if (!groups[type]) {
-            groups[type] = [];
-        }
-
+    nganHangSach.forEach(cau => {
+        const type = layLoaiCauThongNhat(cau);
+        if (!groups[type]) groups[type] = [];
         groups[type].push(cau);
-
     });
 
-    const tyLe =
-        docTyLeLoaiCau();
+    const tyLe = docTyLeLoaiCau();
 
-    const soLuongTheoLoai =
-        tinhSoLuongTheoTyLe(
-            Math.min(
-                soLuong,
-                nganHang.length
-            ),
-            groups,
-            tyLe
-        );
+    const soLuongTheoLoai = tinhSoLuongTheoTyLe(
+        mucTieu,
+        groups,
+        tyLe
+    );
 
     const ketQua = [];
 
-    Object.keys(soLuongTheoLoai)
-        .forEach(type => {
+    Object.keys(soLuongTheoLoai).forEach(type => {
+        const soLuongCanLay = soLuongTheoLoai[type];
 
-            const soLuongCanLay =
-                soLuongTheoLoai[type];
-
-            if (soLuongCanLay <= 0) {
-                return;
-            }
-
-            const pool =
-                tronMang(groups[type]);
-
-            ketQua.push(
-                ...pool.slice(
-                    0,
-                    soLuongCanLay
-                )
-            );
-
-        });
-
-    /*
-     * Nếu vì ngân hàng quá nhỏ hoặc thiếu loại câu
-     * mà vẫn chưa đủ số câu, lấy bổ sung từ toàn bộ
-     * ngân hàng nhưng ưu tiên câu chưa được chọn.
-     */
-    if (ketQua.length < soLuong) {
-
-        const daChon =
-            new Set(
-                ketQua.map(cau => cau.id)
-            );
-
-        const conLai =
-            tronMang(
-                nganHang.filter(
-                    cau => !daChon.has(cau.id)
-                )
-            );
+        if (soLuongCanLay <= 0) return;
 
         ketQua.push(
-            ...conLai.slice(
-                0,
-                soLuong - ketQua.length
+            ...tronMang(groups[type]).slice(0, soLuongCanLay)
+        );
+    });
+
+    // Bù từ các câu chưa được chọn nếu cần
+    if (ketQua.length < mucTieu) {
+        const daChon = new Set(
+            ketQua.map(cau =>
+                String(cau.id || "") ||
+                String(cau.question || "").trim()
             )
         );
 
+        const conLai = tronMang(
+            nganHangSach.filter(cau => {
+                const key =
+                    String(cau.id || "") ||
+                    String(cau.question || "").trim();
+
+                return !daChon.has(key);
+            })
+        );
+
+        ketQua.push(
+            ...conLai.slice(0, mucTieu - ketQua.length)
+        );
     }
 
-    /*
-     * Trộn lần cuối để các loại câu không xuất hiện
-     * thành từng cụm MCQ → TRUEFALSE → FILL...
-     */
-    return tronMang(
-        ketQua.slice(
-            0,
-            soLuong
-        )
-    );
-
+    return tronMang(locCauHoiTrung(ketQua)).slice(0, mucTieu);
 }
 
 
