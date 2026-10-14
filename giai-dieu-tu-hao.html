@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Giai điệu tự hào | Học sinh và giáo viên</title>
+<style>
+:root{--red:#941c25;--gold:#f3cf78;--ink:#1c2938;--muted:#667085;--paper:#f8f5ef}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,Arial,sans-serif}a{color:inherit}.hero{color:#fff;background:linear-gradient(110deg,#330b12ed,#9d2029d9),radial-gradient(circle at 80% 10%,#e6b956,transparent 35%)}nav,main{max-width:1120px;width:calc(100% - 32px);margin:auto}nav{display:flex;justify-content:space-between;align-items:center;padding:18px 0;gap:16px}nav a{margin-left:16px;text-decoration:none;color:#ffe8bc;font-size:.9rem}.brand{font-weight:900}.brand span{color:var(--gold)}.intro{padding:54px 0 64px;max-width:1120px;width:calc(100% - 32px);margin:auto}.eyebrow{color:var(--gold);letter-spacing:.15em;font-weight:800;font-size:.78rem}.intro h1{font:700 clamp(2.7rem,7vw,5.3rem)/1 Georgia,serif;margin:17px 0}.intro p{max-width:650px;line-height:1.7;color:#f6e8dc}.btn{border:0;border-radius:999px;background:var(--gold);color:#421016;padding:11px 17px;font-weight:800;text-decoration:none;display:inline-block}.btn.outline{background:transparent;color:white;border:1px solid #e9d2ad;margin-left:8px}main{padding:26px 0 55px}.feature{display:grid;grid-template-columns:1fr 1fr;background:#fff;border:1px solid #eadfce;border-radius:20px;overflow:hidden}.art{display:grid;place-items:center;text-align:center;min-height:230px;color:#ffe8aa;background:linear-gradient(135deg,#5d1018,#b52a31 65%,#e5b85d);font:700 1.4rem Georgia,serif;padding:20px}.star{font-size:4.5rem}.copy{padding:28px;align-self:center}.copy h2{font:700 1.8rem Georgia,serif}.copy p,.desc{color:var(--muted);line-height:1.65}.sectionhead{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin:32px 0 15px}.sectionhead h2{font:700 2rem Georgia,serif;margin:0}.sectionhead p{color:var(--muted);margin:5px 0}.toolbar,.chips{display:flex;gap:9px;flex-wrap:wrap;margin:12px 0}.toolbar input,.toolbar select,.field input,.field select,.field textarea{border:1px solid #ddd2c3;border-radius:10px;padding:11px;background:white;font:inherit}.toolbar input{flex:1;min-width:210px}.chip,.small{border:1px solid #e4d7c6;border-radius:999px;background:white;color:#78212b;padding:8px 13px;cursor:pointer}.chip.active,.small.primary{background:var(--red);color:white;border-color:var(--red)}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:white;border:1px solid #e8dece;border-radius:16px;overflow:hidden;display:flex;flex-direction:column}.cover{height:145px;display:grid;place-items:center;text-align:center;padding:18px;color:#ffe6a6;background:linear-gradient(135deg,#5d1018,#b52a31 65%,#e5b85d);font:700 1.15rem Georgia,serif;position:relative}.kind{position:absolute;top:10px;left:10px;border-radius:20px;background:#fff0d9;color:#76202a;padding:5px 9px;font:800 .7rem system-ui}.body{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1}.body h3{margin:0;font-size:1.05rem}.meta{font-size:.82rem;color:var(--muted)}.body p{font-size:.9rem;color:#596678;line-height:1.5;margin:0}.actions{display:flex;gap:8px;margin-top:auto;padding-top:7px;flex-wrap:wrap}.small{border-radius:9px;font-weight:700}.player{display:none;background:#171b22;color:white;border-radius:16px;padding:16px;margin:20px 0}.player.show{display:block}.player iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:10px}.player audio{width:100%}.notice{background:#fff2d2;border:1px solid #f0d8a4;border-radius:12px;padding:14px;margin:25px 0;color:#714c15;line-height:1.6;font-size:.9rem}.admin{background:white;border:1px solid #e8dece;border-radius:18px;padding:20px;margin-top:30px}.admin summary{font-weight:850;cursor:pointer;font-size:1.1rem}.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}.field{display:flex;flex-direction:column;gap:6px}.field label{font-weight:750;font-size:.85rem}.field.full{grid-column:1/-1}.field textarea{min-height:75px}.row{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid #eee5d9;padding:10px 0}.footer{text-align:center;background:#21191b;color:#e3d2c4;padding:25px}.footer strong{color:var(--gold)}@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}.feature{grid-template-columns:1fr}.art{min-height:170px}}@media(max-width:550px){nav{align-items:flex-start;flex-direction:column}nav a{margin:0 12px 0 0}.grid,.fields{grid-template-columns:1fr}.field.full{grid-column:auto}.intro{padding:40px 0}.btn.outline{margin:10px 0 0}}
+
+/* ===== KHẮC PHỤC LỖI HIỂN THỊ TIẾNG VIỆT ===== */
+
+html,
+body,
+button,
+input,
+select,
+textarea {
+    font-family: Arial, "Segoe UI", Tahoma, sans-serif;
+    font-kerning: normal;
+    font-variant-ligatures: none;
+}
+
+body {
+    letter-spacing: normal;
+    word-spacing: normal;
+}
+
+h1, h2, h3, h4, p, a, span, label, button,
+.brand, .art, .cover, .copy, .body, .meta {
+    letter-spacing: normal;
+    word-spacing: normal;
+    text-transform: none;
+    font-variant-ligatures: none;
+}
+
+.art,
+.cover {
+    font-family: Arial, "Segoe UI", Tahoma, sans-serif;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.copy h2 {
+    font-family: Arial, "Segoe UI", Tahoma, sans-serif;
+    line-height: 1.35;
+}
+
+.body h3 {
+    font-family: Arial, "Segoe UI", Tahoma, sans-serif;
+    line-height: 1.4;
+}
+
+.btn-quay-lai {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 12px 16px;
+  padding: 8px 14px;
+  border: 1px solid #e5c36b;
+  border-radius: 20px;
+  background: #fff;
+  color: #9e1b32;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.btn-quay-lai:hover {
+  background: #9e1b32;
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .btn-quay-lai {
+    margin: 8px 10px;
+    padding: 7px 12px;
+    font-size: 13px;
+  }
+}
+
+</style></head><body>
+<a href="index.html" class="btn-quay-lai">← Quay lại</a>
+<header class="hero"><nav><div class="brand">🇻🇳 GIAI ĐIỆU <span>TỰ HÀO</span></div><div><a href="#kho">Kho media</a><a href="#y-nghia">Giá trị giáo dục</a></div></nav><div class="intro"><div class="eyebrow">ÂM NHẠC · LỊCH SỬ · QUÊ HƯƠNG</div><h1>Giai điệu tự hào</h1><p>Mỗi giai điệu là một câu chuyện. Mỗi lời ca là một nhịp đập của tình yêu quê hương, đất nước và con người Việt Nam.</p><a class="btn" href="#kho">Khám phá kho media ↓</a></div></header>
+<main><section class="feature" id="y-nghia"><div class="art"><div><div class="star">★</div><div>VIỆT NAM TRONG TIM TÔI</div><small>TỰ HÀO · BIẾT ƠN · TIẾP NỐI</small></div></div><div class="copy"><span class="meta">GÓC GIÁO DỤC</span><h2>Nghe bằng trái tim, hiểu bằng lịch sử</h2><p>Kho media dành cho ca khúc, video và câu chuyện về Tổ quốc. Có thể sử dụng trong sinh hoạt dưới cờ, hoạt động trải nghiệm, giáo dục truyền thống và các ngày lễ lớn.</p><p><b>Gợi ý:</b> Sau mỗi video, cùng học sinh tìm hiểu tác giả, hoàn cảnh ra đời và thông điệp của tác phẩm.</p></div></section>
+<section id="kho"><div class="sectionhead"><div><h2>Kho media</h2><p>Tìm kiếm theo tên bài, tác giả hoặc chủ đề.</p></div><span class="meta" id="count"></span></div><div class="toolbar"><input id="search" placeholder="Tìm bài hát, tác giả, chủ đề…"><select id="type"><option value="all">Tất cả định dạng</option><option value="video">Video</option><option value="audio">Âm thanh</option><option value="article">Câu chuyện</option></select><select id="sort"><option value="title">Tên A–Z</option><option value="new">Mới thêm trước</option></select></div><div class="chips" id="chips"></div><div class="player" id="player"><div style="display:flex;justify-content:space-between;gap:12px"><div><div class="eyebrow">ĐANG PHÁT / ĐANG XEM</div><h3 id="ptitle"></h3></div><button class="small" id="close">Đóng ✕</button></div><div id="pcontent"></div><p id="pdesc" class="meta"></p></div><div class="grid" id="grid"></div></section>
+<div class="notice"><b>📌 Giai điệu tự hào:</b> Trang dành cho học sinh và giáo viên xem, tìm kiếm và thưởng thức nội dung. Chức năng quản lý chỉ có tại trang quản trị.<br><br><b>📌 Lưu ý nguồn media:</b> Ưu tiên video từ kênh chính thức, liên kết được phép nhúng hoặc tệp nhà trường có quyền sử dụng. Dữ liệu bản mẫu lưu trên trình duyệt hiện tại; muốn dùng chung nhiều máy cần kết nối Google Sheets/API.</div>
+</main><footer class="footer"><strong>GIAI ĐIỆU TỰ HÀO</strong><br>Âm nhạc nuôi dưỡng tình yêu quê hương, đất nước.</footer>
+<script>
+const KEY='giaiDieuTuHaoMediaV1';
+// Kho JSON dùng chung trên GitHub Pages. Đặt tệp JSON cạnh trang HTML.
+const MEDIA_JSON_URL = new URL('giai-dieu-tu-hao-media.json', window.location.href).href;
+const seeds=[
+{id:'s1',title:'Tiến quân ca',artist:'Văn Cao · Quốc ca Việt Nam',category:'Bản hùng ca đất Việt',type:'video',url:'',description:'Tư liệu về Quốc ca Việt Nam. Bổ sung liên kết video từ nguồn chính thức được phép sử dụng.',createdAt:'2026-01-01'},
+{id:'s2',title:'Đất nước trọn niềm vui',artist:'Hoàng Hà',category:'Ngày lễ lớn',type:'video',url:'',description:'Tìm hiểu ngày thống nhất đất nước và giá trị của hòa bình.',createdAt:'2026-01-02'},
+{id:'s3',title:'Như có Bác Hồ trong ngày vui đại thắng',artist:'Phạm Tuyên',category:'Lịch sử qua âm nhạc',type:'video',url:'',description:'Tìm hiểu ca khúc và bối cảnh lịch sử.',createdAt:'2026-01-03'},
+{id:'s4',title:'Tự nguyện',artist:'Trương Quốc Khánh',category:'Tuổi trẻ Việt Nam',type:'video',url:'',description:'Gợi nhắc tinh thần cống hiến và trách nhiệm của tuổi trẻ.',createdAt:'2026-01-04'},
+{id:'s5',title:'Việt Nam quê hương tôi',artist:'Đỗ Nhuận',category:'Giai điệu quê hương',type:'video',url:'',description:'Khám phá vẻ đẹp thiên nhiên, con người và tình yêu quê hương.',createdAt:'2026-01-05'},
+{id:'s6',title:'Nối vòng tay lớn',artist:'Trịnh Công Sơn',category:'Tuổi trẻ Việt Nam',type:'video',url:'',description:'Chủ đề đoàn kết và tinh thần cộng đồng.',createdAt:'2026-01-06'}];
+let items;try{const x=JSON.parse(localStorage.getItem(KEY));items=Array.isArray(x)?x:seeds.slice()}catch(e){items=seeds.slice()}let cat='Tất cả';
+// Ưu tiên kho JSON công khai để mọi thiết bị nhìn thấy cùng dữ liệu.
+// Nếu chưa có tệp hoặc tải lỗi thì tạm dùng dữ liệu cục bộ/bản mẫu.
+async function loadSharedMedia(){
+  try{
+    const response=await fetch(MEDIA_JSON_URL + '?v=' + Date.now(), {cache:'no-store'});
+    if(!response.ok) throw new Error('HTTP '+response.status);
+    const data=await response.json();
+    if(!Array.isArray(data)) throw new Error('Tệp JSON phải chứa một mảng dữ liệu');
+    items=data.filter(x=>x && x.title && x.type);
+    render();
+  }catch(err){
+    console.info('Chưa tải được kho JSON dùng chung; đang dùng dữ liệu cục bộ/bản mẫu.',err);
+  }
+}
+const $=id=>document.getElementById(id), esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function showStatus(message, ok=true){const box=$('saveStatus');if(!box)return;box.style.display='block';box.textContent=message;box.style.background=ok?'#e8f7ed':'#fff0e8';box.style.color=ok?'#176534':'#8a2b16';box.style.border='1px solid '+(ok?'#b7e1c2':'#f2c3b4')}
+function save(){
+  try {
+    const data = JSON.stringify(items);
+    localStorage.setItem(KEY, data);
+    if (localStorage.getItem(KEY) !== data) throw new Error('Không xác minh được dữ liệu sau khi lưu');
+    return true;
+  } catch(err) {
+    console.error('Không lưu được kho media:', err);
+    showStatus('Không lưu được trong trình duyệt này. Hãy bấm “Xuất JSON” để sao lưu; nếu đang mở tệp HTML trực tiếp, hãy thử mở trang qua máy chủ web.', false);
+    return false;
+  }
+}
+function yt(url){try{let u=new URL(url);if(u.hostname.includes('youtu.be'))return u.pathname.slice(1);if(u.hostname.includes('youtube.com'))return u.searchParams.get('v')||(u.pathname.match(/\/(embed|shorts)\/([^/]+)/)||[])[2]||''}catch(e){}return ''}
+function render(){let q=$('search').value.toLocaleLowerCase('vi'),t=$('type').value;let cats=['Tất cả',...new Set(items.map(x=>x.category))];if(!cats.includes(cat))cat='Tất cả';$('chips').innerHTML=cats.map(c=>`<button class="chip ${c===cat?'active':''}" data-cat="${esc(c)}">${esc(c)}</button>`).join('');$('chips').querySelectorAll('[data-cat]').forEach(b=>b.onclick=()=>{cat=b.dataset.cat;render()});let arr=items.filter(x=>(cat==='Tất cả'||x.category===cat)&&(t==='all'||x.type===t)&&[x.title,x.artist,x.category,x.description].join(' ').toLocaleLowerCase('vi').includes(q));arr.sort((a,b)=>$('sort').value==='new'?(b.createdAt||'').localeCompare(a.createdAt||''):a.title.localeCompare(b.title,'vi'));$('count').textContent=arr.length+' mục';$('grid').innerHTML=arr.length?arr.map(x=>`<article class="card"><div class="cover"><span class="kind">${x.type==='video'?'VIDEO':x.type==='audio'?'ÂM THANH':'TƯ LIỆU'}</span><div>${x.type==='audio'?'♫':x.type==='article'?'📖':'▶'}<br>${esc(x.title)}</div></div><div class="body"><div class="meta">${esc(x.category)}${x.artist?' · '+esc(x.artist):''}</div><h3>${esc(x.title)}</h3><p>${esc(x.description||'Chưa có mô tả.')}</p><div class="actions"><button class="small primary" data-play="${esc(x.id)}">${x.type==='article'?'Đọc tư liệu':'▶ Mở nội dung'}</button></div></div></article>`).join(''):'<div style="grid-column:1/-1;text-align:center;padding:30px;background:white;border-radius:12px">Chưa có nội dung phù hợp.</div>'; $('grid').querySelectorAll('[data-play]').forEach(b=>b.onclick=()=>play(b.dataset.play));}
+function play(id){let x=items.find(i=>i.id===id);if(!x)return;$('ptitle').textContent=x.title;$('pdesc').textContent=x.description||'';$('pcontent').innerHTML='';if(x.type==='article'){$('pcontent').textContent=x.description||'Chưa có nội dung.'}else if(x.type==='video'&&yt(x.url||'')){let f=document.createElement('iframe');f.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(yt(x.url));f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';f.allowFullscreen=true;$('pcontent').appendChild(f)}else if(x.type==='audio'&&x.url){let a=document.createElement('audio');a.controls=true;a.preload='metadata';a.src=x.url;$('pcontent').appendChild(a)}else if(x.type==='video'&&x.url&&/\.(mp4|webm|ogg)(\?|#|$)/i.test(x.url)){let v=document.createElement('video');v.controls=true;v.playsInline=true;v.preload='metadata';v.src=x.url;v.style.width='100%';v.style.maxHeight='70vh';$('pcontent').appendChild(v)}else{$('pcontent').innerHTML=x.url?`<a target="_blank" rel="noopener" style="color:#f3cf78" href="${esc(x.url)}">Mở nguồn media trong tab mới ↗</a>`:'Mục này chưa có liên kết media. Vào Quản lý kho để bổ sung URL.'}$('player').classList.add('show');$('player').scrollIntoView({behavior:'smooth'})}
+$('search').oninput=render;$('type').onchange=render;$('sort').onchange=render;$('close').onclick=()=>{$('player').classList.remove('show');$('pcontent').innerHTML=''};
+render();
+window.addEventListener('storage', e=>{if(e.key===KEY){try{const fresh=JSON.parse(e.newValue||'[]');if(Array.isArray(fresh)){items=fresh;render();}}catch(err){console.warn(err)}}});
+</script></body></html>
