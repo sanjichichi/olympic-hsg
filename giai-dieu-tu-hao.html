@@ -45,8 +45,36 @@ h1, h2, h3, h4, p, a, span, label, button,
     font-family: Arial, "Segoe UI", Tahoma, sans-serif;
     line-height: 1.4;
 }
+.btn-quay-lai {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 12px 16px;
+  padding: 8px 14px;
+  border: 1px solid #e5c36b;
+  border-radius: 20px;
+  background: #fff;
+  color: #9e1b32;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: 0.2s;
+}
 
+.btn-quay-lai:hover {
+  background: #9e1b32;
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .btn-quay-lai {
+    margin: 8px 10px;
+    padding: 7px 12px;
+    font-size: 13px;
+  }
+}
 </style></head><body>
+    <a href="index.html" class="btn-quay-lai">← Quay lại</a>
 <header class="hero"><nav><div class="brand">🇻🇳 GIAI ĐIỆU <span>TỰ HÀO</span></div><div><a href="#kho">Kho media</a><a href="#y-nghia">Giá trị giáo dục</a></div></nav><div class="intro"><div class="eyebrow">ÂM NHẠC · LỊCH SỬ · QUÊ HƯƠNG</div><h1>Giai điệu tự hào</h1><p>Mỗi giai điệu là một câu chuyện. Mỗi lời ca là một nhịp đập của tình yêu quê hương, đất nước và con người Việt Nam.</p><a class="btn" href="#kho">Khám phá kho media ↓</a></div></header>
 <main><section class="feature" id="y-nghia"><div class="art"><div><div class="star">★</div><div>VIỆT NAM TRONG TIM TÔI</div><small>TỰ HÀO · BIẾT ƠN · TIẾP NỐI</small></div></div><div class="copy"><span class="meta">GÓC GIÁO DỤC</span><h2>Nghe bằng trái tim, hiểu bằng lịch sử</h2><p>Kho media dành cho ca khúc, video và câu chuyện về Tổ quốc. Có thể sử dụng trong sinh hoạt dưới cờ, hoạt động trải nghiệm, giáo dục truyền thống và các ngày lễ lớn.</p><p><b>Gợi ý:</b> Sau mỗi video, cùng học sinh tìm hiểu tác giả, hoàn cảnh ra đời và thông điệp của tác phẩm.</p></div></section>
 <section id="kho"><div class="sectionhead"><div><h2>Kho media</h2><p>Tìm kiếm theo tên bài, tác giả hoặc chủ đề.</p></div><span class="meta" id="count"></span></div><div class="toolbar"><input id="search" placeholder="Tìm bài hát, tác giả, chủ đề…"><select id="type"><option value="all">Tất cả định dạng</option><option value="video">Video</option><option value="audio">Âm thanh</option><option value="article">Câu chuyện</option></select><select id="sort"><option value="title">Tên A–Z</option><option value="new">Mới thêm trước</option></select></div><div class="chips" id="chips"></div><div class="player" id="player"><div style="display:flex;justify-content:space-between;gap:12px"><div><div class="eyebrow">ĐANG PHÁT / ĐANG XEM</div><h3 id="ptitle"></h3></div><button class="small" id="close">Đóng ✕</button></div><div id="pcontent"></div><p id="pdesc" class="meta"></p></div><div class="grid" id="grid"></div></section>
