@@ -50,8 +50,38 @@ h1, h2, h3, h4, p, a, span, label, button,
     font-family: Arial, "Segoe UI", Tahoma, sans-serif;
     line-height: 1.4;
 }
+.btn-quay-lai-admin {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 12px 16px;
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: 1px solid #e5c36b;
+  background: #fff;
+  color: #9e1b32;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
 
+.btn-quay-lai-admin:hover {
+  background: #9e1b32;
+  color: #fff;
+}
+
+@media (max-width: 600px) {
+  .btn-quay-lai-admin {
+    margin: 8px 10px;
+    padding: 7px 12px;
+    font-size: 13px;
+  }
+}
 </style></head><body>
+<a href="admin.html" class="btn-quay-lai-admin">
+  ← Quay lại
+</a>
 <div id="adminGate"><div class="gatebox"><h2>🔐 Khu vực quản trị</h2><p>Nhập mã quản trị để mở công cụ chỉnh sửa.</p><form id="gateForm"><input id="gatePin" type="password" autocomplete="current-password" placeholder="Mã quản trị" required><button class="btn" type="submit">Mở trang quản trị</button><p id="gateMsg" style="color:#941c25"></p><small>Đổi mã mặc định trong mã nguồn trước khi sử dụng. Với website công khai, cần xác thực phía máy chủ để bảo mật thực sự.</small></form></div></div>
 <script>
 /* Mã này chỉ là lớp ngăn truy cập nhầm trên HTML tĩnh, không thay thế xác thực máy chủ. */
