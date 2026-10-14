@@ -93,11 +93,41 @@ const seeds=[
 {id:'s5',title:'Việt Nam quê hương tôi',artist:'Đỗ Nhuận',category:'Giai điệu quê hương',type:'video',url:'',description:'Khám phá vẻ đẹp thiên nhiên, con người và tình yêu quê hương.',createdAt:'2026-01-05'},
 {id:'s6',title:'Nối vòng tay lớn',artist:'Trịnh Công Sơn',category:'Tuổi trẻ Việt Nam',type:'video',url:'',description:'Chủ đề đoàn kết và tinh thần cộng đồng.',createdAt:'2026-01-06'}];
 let items=seeds.slice(); let cat='Tất cả';
-async function loadSharedData(){
-  if(!GDT_API_URL || GDT_API_URL.includes('PASTE_WEB_APP')) { console.warn('Chưa cấu hình GDT_API_URL'); return; }
-  try { const r=await fetch(GDT_API_URL+'?action=get&ts='+Date.now(),{cache:'no-store'}); const j=await r.json(); if(j.success && Array.isArray(j.items)){items=j.items;render();} else console.warn('API kho media:',j.error||'Không đọc được dữ liệu'); }
-  catch(e){ console.error('Không tải được kho media dùng chung:',e); }
+
+async function loadSharedData() {
+  if (!GDT_API_URL || GDT_API_URL.includes('PASTE_WEB_APP')) {
+    console.error('Chưa cấu hình GDT_API_URL');
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      GDT_API_URL + '?action=get&ts=' + Date.now(),
+      { cache: 'no-store' }
+    );
+
+    if (!response.ok) {
+      throw new Error('HTTP ' + response.status);
+    }
+
+    const data = await response.json();
+
+    if (data.success !== true || !Array.isArray(data.items)) {
+      throw new Error(data.error || 'API trả về dữ liệu không hợp lệ');
+    }
+
+    items = data.items;
+    render();
+
+    console.log('Đã tải kho media:', items.length, 'mục');
+    console.log('Mục có URL:', items.filter(x => x.url && x.url.trim()).length);
+
+  } catch (error) {
+    console.error('Lỗi tải kho media:', error);
+    alert('Không tải được kho media từ máy chủ. Hãy kiểm tra Console.');
+  }
 }
+
 const $=id=>document.getElementById(id), esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function showStatus(message, ok=true){const box=$('saveStatus');if(!box)return;box.style.display='block';box.textContent=message;box.style.background=ok?'#e8f7ed':'#fff0e8';box.style.color=ok?'#176534':'#8a2b16';box.style.border='1px solid '+(ok?'#b7e1c2':'#f2c3b4')}
 function save(){
