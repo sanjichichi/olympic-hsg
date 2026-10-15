@@ -1019,8 +1019,7 @@ thongKe();
 /* =========================================================
    QUẢN LÝ ĐĂNG NHẬP CHUNG: HỌC SINH + GIÁO VIÊN
    ========================================================= */
-document.addEventListener("DOMContentLoaded", function(){
-
+document.addEventListener("DOMContentLoaded", function () {
     const loginBtn = document.getElementById("loginBtn");
     const userMenu = document.getElementById("userMenu");
     const userButton = document.getElementById("userButton");
@@ -1028,82 +1027,117 @@ document.addEventListener("DOMContentLoaded", function(){
     const tenDangNhap = document.getElementById("tenDangNhap");
     const chonDangNhap = document.getElementById("chonDangNhap");
 
+    const getItem = (...keys) => {
+        for (const key of keys) {
+            const value = localStorage.getItem(key);
+            if (value && value.trim() && value !== "null") {
+                return value.trim();
+            }
+        }
+        return "";
+    };
+
     const dangNhapHS = localStorage.getItem("dangNhap") === "true";
     const dangNhapGV = localStorage.getItem("dangNhapGV") === "true";
     const loaiTaiKhoan = localStorage.getItem("loaiTaiKhoan");
 
-    let daDangNhap = false;
-    let laGV = false;
-    let tenHienThi = "";
+    const laGV = dangNhapGV &&
+        (loaiTaiKhoan === "giaoVien" || !loaiTaiKhoan);
 
-    // Ưu tiên phiên GV nếu dữ liệu GV hợp lệ
-    if (dangNhapGV && loaiTaiKhoan === "giaoVien") {
-        daDangNhap = true;
-        laGV = true;
-        tenHienThi = localStorage.getItem("hoTenGV") || "Giáo viên";
-    } else if (dangNhapHS && loaiTaiKhoan === "hocSinh") {
-        daDangNhap = true;
-        laGV = false;
-        tenHienThi = localStorage.getItem("hoTen") || localStorage.getItem("tenThiSinh") || "Học sinh";
-    }
+    const daDangNhap = laGV || dangNhapHS;
 
     if (!daDangNhap) {
-        if (loginBtn) loginBtn.style.display = "none";
+        if (loginBtn) loginBtn.style.display = "";
         if (userMenu) userMenu.style.display = "none";
         if (chonDangNhap) chonDangNhap.style.display = "flex";
-    } else {
-        if (loginBtn) loginBtn.style.display = "none";
-        if (userMenu) userMenu.style.display = "inline-block";
-        if (chonDangNhap) chonDangNhap.style.display = "none";
-        if (tenDangNhap) tenDangNhap.textContent = (laGV ? "👨‍🏫 " : "👤 ") + tenHienThi;
+        return;
+    }
 
-        if (dropdown) {
-            if (laGV) {
-                dropdown.innerHTML = `
-                    <a href="trang-gv.html">🏫 Trang giáo viên</a>
-                    <a href="trang-gv.html">📊 Quản lý kết quả</a>
-                    <hr>
-                    <a href="#" id="logoutBtn">🚪 Đăng xuất</a>
-                `;
-            } else {
-                dropdown.innerHTML = `
-                    <a href="trangcanhan.html">👤 Trang cá nhân</a>
-                    <a href="chonkithi.html">📝 Kỳ thi của tôi</a>
-                    <a href="dau-truong.html">🏟️ Đấu trường</a>
-                    <a href="ketquathi.html">📊 Kết quả thi</a>
-                    <a href="xephang.html">🏆 Bảng xếp hạng</a>
-                    <hr>
-                    <a href="#" id="logoutBtn">🚪 Đăng xuất</a>
-                `;
-            }
-        }
+    const ten = laGV
+        ? getItem("hoTenGV", "hoTen", "tenDangNhap") || "Giáo viên"
+        : getItem(
+            "hoTen",
+            "tenThiSinh",
+            "hoTenDangNhap",
+            "userName",
+            "name"
+          ) || "Học sinh";
+
+    if (loginBtn) loginBtn.style.display = "none";
+    if (userMenu) userMenu.style.display = "block";
+    if (chonDangNhap) chonDangNhap.style.display = "none";
+
+    if (tenDangNhap) {
+        tenDangNhap.textContent =
+            (laGV ? "👨‍🏫 " : "👤 ") + ten;
+    }
+
+    if (userButton) {
+        userButton.setAttribute("role", "button");
+        userButton.setAttribute("aria-expanded", "false");
+        userButton.setAttribute("aria-label", "Mở menu tài khoản");
+    }
+
+    if (dropdown) {
+        dropdown.innerHTML = laGV
+            ? `
+                <a href="trang-gv.html">🏫 Trang giáo viên</a>
+                <a href="trang-gv.html">📊 Quản lý kết quả</a>
+                <hr>
+                <a href="#" id="logoutBtn">🚪 Đăng xuất</a>
+              `
+            : `
+                <a href="trangcanhan.html">👤 Trang cá nhân</a>
+                <a href="chonkithi.html">📝 Kỳ thi của tôi</a>
+                <a href="dau-truong.html">🏟️ Đấu trường</a>
+                <a href="ketquathi.html">📊 Kết quả thi</a>
+                <a href="xephang.html">🏆 Bảng xếp hạng</a>
+                <hr>
+                <a href="#" id="logoutBtn">🚪 Đăng xuất</a>
+              `;
+    }
+
+    function toggleMenu(open) {
+        if (!dropdown || !userButton) return;
+
+        const shouldOpen =
+            typeof open === "boolean"
+                ? open
+                : !dropdown.classList.contains("show");
+
+        dropdown.classList.toggle("show", shouldOpen);
+        userButton.setAttribute("aria-expanded", String(shouldOpen));
     }
 
     if (userButton && dropdown) {
-        userButton.addEventListener("click", function(e){
+        userButton.addEventListener("click", function (e) {
             e.preventDefault();
             e.stopPropagation();
-            dropdown.classList.toggle("show");
+            toggleMenu();
         });
 
-        document.addEventListener("click", function(e){
-            if (!userButton.contains(e.target) && !dropdown.contains(e.target)) {
-                dropdown.classList.remove("show");
+        document.addEventListener("click", function (e) {
+            if (
+                !userButton.contains(e.target) &&
+                !dropdown.contains(e.target)
+            ) {
+                toggleMenu(false);
             }
         });
     }
 
-    // Đăng xuất: chỉ xóa dữ liệu phiên đăng nhập, KHÔNG xóa toàn bộ localStorage
     const logoutBtn = document.getElementById("logoutBtn");
+
     if (logoutBtn) {
-        logoutBtn.addEventListener("click", function(e){
+        logoutBtn.addEventListener("click", function (e) {
             e.preventDefault();
 
             [
-                "dangNhap", "maThiSinh", "tenThiSinh", "hoTen", "ngaySinh",
-                "gioiTinh", "lopThiSinh", "truong", "quyen", "hocSinh",
-                "dangNhapGV", "maGV", "hoTenGV", "clbGV", "monGV",
-                "quyenGV", "giaoVien", "loaiTaiKhoan"
+                "dangNhap", "maThiSinh", "tenThiSinh", "hoTen",
+                "ngaySinh", "gioiTinh", "lopThiSinh", "truong",
+                "quyen", "hocSinh", "dangNhapGV", "maGV",
+                "hoTenGV", "clbGV", "monGV", "quyenGV",
+                "giaoVien", "loaiTaiKhoan"
             ].forEach(key => localStorage.removeItem(key));
 
             window.location.href = "index.html";
