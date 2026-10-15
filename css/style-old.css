@@ -2133,3 +2133,116 @@ body{
     color:#fff !important;
 }
 
+
+/* MENU TÀI KHOẢN TRÊN ĐIỆN THOẠI */
+.menu-user {
+    position: relative;
+    flex-shrink: 0;
+    z-index: 1000;
+}
+
+.user-menu {
+    position: relative;
+    display: inline-block;
+}
+
+#userButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    max-width: 100%;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#tenDangNhap {
+    display: inline;
+    overflow-wrap: anywhere;
+}
+
+.user-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    min-width: 210px;
+    max-width: min(280px, calc(100vw - 24px));
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    overflow: hidden;
+    z-index: 99999;
+}
+
+.user-dropdown.show {
+    display: block;
+}
+
+.user-dropdown a {
+    display: block;
+    padding: 12px 16px;
+    color: #222;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.user-dropdown a:hover,
+.user-dropdown a:focus {
+    background: #eef5ff;
+}
+
+.user-dropdown hr {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 4px 0;
+}
+
+@media (max-width: 768px) {
+    nav.menu {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        overflow: visible;
+        position: relative;
+        z-index: 1000;
+    }
+
+    .menu-links {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    .menu-user {
+        margin-left: auto;
+        max-width: 100%;
+    }
+
+    .user-menu {
+        max-width: calc(100vw - 24px);
+    }
+
+    #userButton {
+        min-height: 42px;
+        padding: 8px 12px;
+    }
+
+    .user-dropdown {
+        position: absolute;
+        right: 0;
+        left: auto;
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+
+    #chonDangNhap {
+        margin-left: 0 !important;
+        flex-wrap: wrap;
+        gap: 6px !important;
+    }
+}
