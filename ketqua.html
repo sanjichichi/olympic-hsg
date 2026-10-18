@@ -1462,7 +1462,15 @@ html,body{width:100%;height:100%;overflow:hidden!important}
     // GỬI KẾT QUẢ LÊN GOOGLE SHEETS
     // =====================================================
 
+    // Khóa trong bộ nhớ để hai lần gọi gần nhau không gửi hai POST.
+    let dangGuiKetQua = false;
+
     async function guiKetQuaLenSheet() {
+
+        if (dangGuiKetQua) {
+            console.log("Đang gửi kết quả, bỏ qua lần gọi trùng.");
+            return;
+        }
 
         if (!maHS || !maKyThi) {
 
@@ -1502,6 +1510,8 @@ html,body{width:100%;height:100%;overflow:hidden!important}
 
         }
 
+        // Đặt khóa ngay trước khi tạo/gửi request, không đợi fetch kết thúc.
+        dangGuiKetQua = true;
 
         // -------------------------------------------------
         // TẠO PAYLOAD
@@ -1713,6 +1723,8 @@ html,body{width:100%;height:100%;overflow:hidden!important}
 
         } catch (error) {
 
+            dangGuiKetQua = false;
+
             console.error(
                 "❌ Lỗi khi gửi kết quả:",
                 error
@@ -1744,13 +1756,9 @@ html,body{width:100%;height:100%;overflow:hidden!important}
     window.guiKetQuaLenSheet =
         guiKetQuaLenSheet;
 
-
-    guiKetQuaLenSheet();
-
-
 })();
 
-  window.guiKetQuaLenSheet = guiKetQuaLenSheet;
+  // Không gán lại guiKetQuaLenSheet ở phạm vi ngoài vì hàm nằm trong IIFE.
 
   const num = (v,d=0) => {
     const n = Number(v);
@@ -1793,8 +1801,10 @@ html,body{width:100%;height:100%;overflow:hidden!important}
   const roiTab = num(get("soLanRoiTab"), num(pkg.soLanRoiTab));
   if (roiTab > 0) document.getElementById("soLanRoiTabText").textContent = "Rời tab: " + roiTab + " lần";
 
-  // Gửi sau khi đã đọc và hiển thị đầy đủ kết quả.
-  guiKetQuaLenSheet();
+  // Gửi đúng một lần sau khi đã đọc và hiển thị đầy đủ kết quả.
+  if (typeof window.guiKetQuaLenSheet === "function") {
+    window.guiKetQuaLenSheet();
+  }
 
 
   function normalize(v){
