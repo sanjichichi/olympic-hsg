@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olympic Học sinh Giỏi</title>
+
+  <link
+rel="stylesheet"
+href="css/style-old.css">
+<link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+<style>
+/* Tên học sinh và menu xổ xuống trên điện thoại */
+.mobile-student-account{display:none;width:100%;position:relative;z-index:1000;box-sizing:border-box;}
+.mobile-student-button{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;border:0;border-radius:12px;background:rgba(255,255,255,.16);color:#fff;font-size:16px;font-weight:700;text-align:left;cursor:pointer;}
+.mobile-student-dropdown{display:none;width:100%;margin-top:6px;background:#fff;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.2);overflow:hidden;}
+.mobile-student-dropdown.show{display:block;}
+.mobile-student-dropdown a{display:block;padding:12px 16px;color:#174a85;text-decoration:none;font-size:15px;border-bottom:1px solid #edf1f5;}
+.mobile-student-dropdown a:last-child{border-bottom:0;color:#b42318;}
+@media(max-width:768px){
+  .mobile-student-account{display:none;grid-column:1 / -1;margin:8px 0 2px;}
+  .menu:has(.mobile-student-account){align-items:stretch;}
+  .mobile-student-account.is-visible{display:block;}
+  .menu-user #userMenu{display:none!important;}
+}
+@media(min-width:769px){.mobile-student-account{display:none!important;}}
+</style>
+
+</head>
+
+<body>
+<header class="hero">
+
+    <img src="anhnen/banner-clb.png"
+         alt="Banner Câu lạc bộ Học sinh Khá Giỏi"
+         class="hero-banner">
+
+</header>
+<div class="page-bg">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<nav class="menu">
+
+    <div class="menu-links">
+
+        <a href="index.html">Trang chủ</a>
+
+        <a href="gioithieu-thele.html">Giới thiệu</a>
+
+        <a href="chonkithi.html">Kỳ thi</a>
+
+        <a href="xephang.html">Bảng xếp hạng</a>
+
+        <a href="clb.html">CLB năng khiếu</a>
+    </div>
+
+    <!-- Tài khoản riêng cho giao diện điện thoại -->
+    <div class="mobile-student-account" id="mobileStudentAccount" style="display:none;">
+        <button type="button" class="mobile-student-button" id="mobileStudentButton" aria-expanded="false">
+            <span>👤 <span id="mobileStudentName">Học sinh</span></span>
+            <span id="mobileStudentArrow">▼</span>
+        </button>
+        <div class="mobile-student-dropdown" id="mobileStudentDropdown">
+            <a href="trangcanhan.html">👤 Trang cá nhân</a>
+            <a href="chonkithi.html">📝 Kỳ thi của tôi</a>
+            <a href="dau-truong.html">🏟️ Đấu trường</a>
+            <a href="ketquathi.html">📊 Kết quả thi</a>
+            <a href="xephang.html">🏆 Bảng xếp hạng</a>
+            <a href="#" id="mobileLogoutBtn">🚪 Đăng xuất</a>
+        </div>
+    </div>
+
+    <div class="menu-user">
+
+    <!-- Chưa đăng nhập -->
+    <a href="login.html"
+       class="login-btn"
+       id="loginBtn">
+
+        🔐 Đăng nhập
+
+    </a>
+
+    <!-- Đã đăng nhập -->
+    <div class="user-menu"
+         id="userMenu"
+         style="display:none;">
+
+        <a href="#"
+           class="login-btn"
+           id="userButton">
+
+            <span id="tenDangNhap"></span>
+            ▼
+
+        </a>
+
+        <div class="user-dropdown"
+             id="dropdown">
+
+            <a href="trangcanhan.html">👤 Trang cá nhân</a>
+
+            <a href="chonkithi.html">📝 Kỳ thi của tôi</a>
+
+            <a href="ketquathi.html">📊 Kết quả thi</a>
+
+            <a href="xephang.html">🏆 Bảng xếp hạng</a>
+
+            <hr>
+
+            <a href="#"
+               id="logoutBtn">
+
+                🚪 Đăng xuất
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+        <div id="chonDangNhap" class="login-choice" style="display:flex;gap:8px;align-items:center;margin-left:auto;">
+            <a href="login.html" class="login-choice student">
+            👨‍🎓 Học sinh
+            </a>
+
+            <a href="login-gv.html" class="login-choice teacher">
+    👨‍🏫 Giáo viên
+            </a>
+
+            <a href="login-admin.html" class="login-choice admin">
+             🛡️ Quản trị
+            </a>
+
+        </div>
+    </nav>
+
+<div class="welcome-container">
+<div class="side-box">
+
+    <h3>📢 THÔNG BÁO NHANH</h3>
+
+    <p>📌 Khai mạc các kỳ ôn tập năm học 2026-2027</p>
+
+    <p>📌 Mở thi đầu vào và phân hoá năng lực</p>
+
+    <p>📌 Luyện tập theo cấp độ và chuẩn bị cho đấu trường</p>
+
+</div>
+
+<section class="welcome-box">
+
+    <h1>CHÀO MỪNG ĐẾN VỚI</h1>
+
+    <h2>HỆ THỐNG HỌC TẬP, ÔN LUYỆN, ĐẤU TRƯỜNG TRỰC TUYẾN</h2>
+
+    <p>Trường THCS Phú Đình</p>
+
+</section>
+
+<div class="side-box">
+
+    <h3>📅 SẮP DIỄN RA</h3>
+
+    <p>15/10/2026 - Olympic Toán </p>
+
+    <p>1/10/2026 - Olympic Ngữ văn 9</p>
+
+    <p>17/10/2026 - Olympic Tiếng Anh </p>
+
+    <p>20/10/2026 - Olympic Sinh học </p>
+
+</div>
+
+</div>
+
+<section class="stats-section">
+
+<div class="stat-card">
+
+    <div class="stat-icon">
+
+    <i class="fa-solid fa-user-graduate"></i>
+
+    </div>
+
+    <h3 id="tongThiSinh">0</h3>
+
+    <p>Học sinh tham gia</p>
+
+</div>
+
+<div class="stat-card">
+
+    <div class="stat-icon">
+
+    <i class="fa-solid fa-file-signature"></i>
+
+    </div>
+
+    <h3 id="tongLuotThi">0</h3>
+
+    <p>Lượt thi</p>
+
+</div>
+
+<div class="stat-card">
+
+    <div class="stat-icon">
+
+    <i class="fa-solid fa-chalkboard-user"></i>
+
+    </div>
+
+    <h3 id="tongGiaoVien">8</h3>
+
+    <p>GV phụ trách</p>
+
+</div>
+
+<div class="stat-card">
+
+    <div class="stat-icon">
+
+    <i class="fa-solid fa-trophy"></i>
+
+    </div>
+
+    <h3 id="tongKyThi">4</h3>
+
+    <p>Kỳ thi Olympic</p>
+
+</div>
+
+</section>
+
+</section>
+
+<div class="dashboard-grid">
+
+<section class="top10-section">
+
+    <h2>🏆 TOP 10 HỌC SINH XUẤT SẮC</h2>
+
+    <table id="top10Table">
+
+        <thead>
+            <tr>
+                <th>Hạng</th>
+                <th>Mã HS</th>
+                <th>Họ tên</th>
+                <th>Lớp</th>
+                <th>Điểm cao nhất</th>
+            </tr>
+        </thead>
+
+        
+<div class="top10-filters" style="display:flex;align-items:center;gap:8px;flex-wrap:nowrap;margin:0 0 14px;overflow-x:auto;">
+    <select id="top10NamHoc" style="padding:7px 10px;border-radius:8px;border:1px solid #ddd;font-size:13px;min-width:125px;max-width:150px;">
+        <option value="ALL">Tất cả năm học</option>
+    </select>
+
+    <select id="top10KyThi" style="padding:7px 10px;border-radius:8px;border:1px solid #ddd;font-size:13px;min-width:180px;max-width:230px;">
+        <option value="ALL">Tất cả kỳ thi</option>
+    </select>
+
+    <select id="top10Khoi" style="padding:7px 10px;border-radius:8px;border:1px solid #ddd;font-size:13px;min-width:105px;max-width:125px;">
+        <option value="ALL">Tất cả khối</option>
+    </select>
+</div>
+
+<tbody id="top10Body"></tbody>
+
+    </table>
+
+</section>
+
+<section class="news-section">
+
+    <h2>📢 THÔNG BÁO MỚI NHẤT</h2>
+
+    <div class="news-box">
+
+        <div class="news-item">
+            <span class="date">10/10/2026</span>
+            <p>Triển khai dự án Ôn luyện trưc tuyến năm học 2026 - 2027.</p>
+        </div>
+
+        <div class="news-item">
+            <span class="date">15/10/2026</span>
+            <p>Phân hoá, ôn tập và tổ chức các cuộc thi đấu trường.</p>
+        </div>
+
+        <div class="news-item">
+            <span class="date">20/10/2026</span>
+            <p>Đánh giá kết quả và trao phần thưởng, định hướng ôn tập.</p>
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- KHÁM PHÁ LỊCH SỬ ĐỊA PHƯƠNG -->
+<section class="schedule-section history-section">
+
+
+
+    <a href="lichsu.html"
+       class="history-banner"
+       aria-label="Khám phá lịch sử địa phương Phú Đình">
+
+        <img
+            src="anhnen/baner-ls-index.png"
+            alt="Khám phá lịch sử địa phương Phú Đình"
+            class="history-banner-img"
+            loading="lazy"
+        >
+
+        <span class="history-banner__shine"
+              aria-hidden="true"></span>
+
+        <span class="history-banner__hint">
+            <span>KHÁM PHÁ LỊCH SỬ</span>
+            <span class="history-banner__arrow">→</span>
+        </span>
+
+    </a>
+
+</section>
+
+
+
+<section class="achievement-section">
+
+    <h2>🎵 GIAI ĐIỆU TỰ HÀO</h2>
+
+    <a href="giai-dieu-tu-hao-api.html"
+       class="heritage-link music-link">
+
+        <div class="heritage-image music-image">
+            <img src="anhnen/giai-dieu-tu-hao.png"
+                 alt="Giai điệu tự hào">
+        </div>
+
+        <div class="heritage-content">
+            <span class="heritage-label">GÓC ÂM NHẠC TRUYỀN THỐNG</span>
+
+            <h3>Giai điệu tự hào</h3>
+
+            <p>
+                Lắng nghe những ca khúc đi cùng năm tháng,
+                tìm hiểu lịch sử và bồi đắp tình yêu quê hương,
+                đất nước qua từng giai điệu.
+            </p>
+
+            <span class="heritage-button">
+                🎧 Khám phá ngay →
+            </span>
+        </div>
+
+    </a>
+
+</section>
+</div>
+
+<section class="people-section">
+
+    <h2>🏆 HỌC SINH TIÊU BIỂU VÀ GIÁO VIÊN PHỤ TRÁCH</h2>
+
+    <div class="people-carousel">
+
+        <button class="carousel-btn prev" onclick="movePeople(-1)">
+            ❮
+        </button>
+
+        <div class="people-track" id="peopleTrack">
+
+            <!-- HỌC SINH -->
+            <div class="person-card">
+                <img src="anhnen/hs1.png" alt="Đoàn Thanh Loan">
+                <div class="people-info">
+                    <h3>Đoàn Thanh Loan</h3>
+                    <p>Học sinh lớp 9B</p>
+                    <p>
+                        Học sinh giỏi<br>
+                        Giải ba môn Địa lí cấp tỉnh<br>
+                        Trúng tuyển trường PT DTNT THPT số 1 Thái Nguyên
+                    </p>
+                </div>
+            </div>
+
+            <div class="person-card">
+                <img src="anhnen/hs2.png" alt="Đào Thị Kim Oanh">
+                <div class="people-info">
+                    <h3>Đào Thị Kim Oanh</h3>
+                    <p>Học sinh lớp 9A</p>
+                    <p>
+                        Học sinh xuất sắc<br>
+                        Giải ba NCKH cấp tỉnh<br>
+                        Trúng tuyển trường THPT Bình Yên
+                    </p>
+                </div>
+            </div>
+
+            <div class="person-card">
+                <img src="anhnen/hs3.png" alt="Nguyễn Thị Chúc">
+                <div class="people-info">
+                    <h3>Nguyễn Thị Chúc</h3>
+                    <p>Học sinh lớp 9B</p>
+                    <p>
+                        Học sinh giỏi<br>
+                        Giải Ba NCKH cấp tỉnh<br>
+                        Trúng tuyển trường THPT Bình Yên
+                    </p>
+                </div>
+            </div>
+
+            <!-- GIÁO VIÊN -->
+            <div class="person-card">
+                <img src="anhnen/gv1.jpg" alt="Thầy Nguyễn Văn A">
+                <div class="people-info">
+                    <h3>Thầy Nguyễn Văn A</h3>
+                    <p>Giáo viên phụ trách</p>
+                    <p>Chủ nhiệm CLB HSG<br>Môn Toán</p>
+                </div>
+            </div>
+
+            <div class="person-card">
+                <img src="anhnen/gv2.jpg" alt="Cô Trần Thị B">
+                <div class="people-info">
+                    <h3>Cô Trần Thị B</h3>
+                    <p>Giáo viên phụ trách</p>
+                    <p>Phụ trách Olympic Tiếng Anh<br>Môn Tiếng Anh</p>
+                </div>
+            </div>
+
+            <div class="person-card">
+                <img src="anhnen/gv3.jpg" alt="Thầy Lê Văn C">
+                <div class="people-info">
+                    <h3>Thầy Lê Văn C</h3>
+                    <p>Giáo viên phụ trách</p>
+                    <p>Phụ trách Olympic KHTN<br>Môn KHTN</p>
+                </div>
+            </div>
+
+        </div>
+
+        <button class="carousel-btn next" onclick="movePeople(1)">
+            ❯
+        </button>
+
+    </div>
+
+    <div class="carousel-dots" id="peopleDots"></div>
+
+</section>
+<footer class="footer">
+
+    <div class="footer-content">
+
+        <h3>🏆 Phú Đình Edu-Ôn tập trực tuyến</h3>
+
+        <p>Hệ thống Edu thông minh - Trường THCS Phú Đình (Dự án dự thi KHKT năm 2026)</p>      
+        <p>Địa chỉ: Xóm Trung Tâm (Trụ sở chính) và Xóm Điềm Mặc (Phân hiệu), xã Phú Đình, tỉnh Thái Nguyên, Việt Nam</p>
+
+        <p>
+            👨‍💻 Phụ trách hướng dẫn Thiết kế & Phát triển:
+            <strong>Bàng Tiến Hào, SĐT: 0983523791, Email: sanjichichi2016@gmail.com</strong>
+        </p>
+
+        <p>
+            Nhóm thực hiện:
+            <strong>Trương Anh Thư - Ma Thị Như Quỳnh, Lớp 9A4, Trường THCS Phú Đình</strong>
+        </p>
+
+        <p>
+            © 2026 Bản quyền thuộc Trường THCS Phú Đình
+        </p>
+
+        <p class="version">
+            Phiên bản <strong>Version 1.1</strong>
+        </p>
+
+    </div>
+
+</footer>
+<script>
+
+function vaoHeThong(){
+
+    let kyThi =
+    document.getElementById("kyThi").value;
+
+    if(kyThi === "Chọn kỳ thi"){
+
+        alert(
+        "Vui lòng chọn kỳ thi!"
+        );
+
+        return;
+    }
+
+    localStorage.setItem(
+        "kyThi",
+        kyThi
+    );
+
+    window.location.href =
+    "trangcanhan.html";
+}
+
+/*
+ * ============================================================
+ * THỐNG KÊ + TOP 10 TRANG CHỦ
+ * ============================================================
+ * Tất cả kết quả lấy từ 1 Sheet KETQUA.
+ *
+ * Dùng maKyThi để không trộn học sinh giữa các kỳ thi.
+ *
+ * Khi chưa chọn kỳ thi cụ thể trên trang chủ, TOP 10 được
+ * tính theo kết quả tốt nhất của mỗi học sinh trong toàn bộ
+ * hệ thống.
+ *
+ * Nếu muốn Top 10 của một kỳ thi cụ thể, có thể đặt
+ * INDEX_MA_KY_THI = "MA_KY_THI".
+ */
+const KETQUA_CSV_URL =
+    localStorage.getItem("KETQUA_CSV_URL") ||
+    "https://docs.google.com/spreadsheets/d/e/2PACX-1vRULO6RaaXqNERaYMuLx9cpHLp3hxqL3i2PHuccrdbSvFaQgpsrPvRk-fhgzlOxamLUYCe1sLQMQvPL/pub?output=csv";
+
+
+function parseCSV(text) {
+
+    const rows = [];
+    let row = [];
+    let cell = "";
+    let inQuotes = false;
+
+    for (let i = 0; i < text.length; i++) {
+
+        const char = text[i];
+        const next = text[i + 1];
+
+        if (char === '"' && inQuotes && next === '"') {
+            cell += '"';
+            i++;
+            continue;
+        }
+
+        if (char === '"') {
+            inQuotes = !inQuotes;
+            continue;
+        }
+
+        if (char === "," && !inQuotes) {
+            row.push(cell);
+            cell = "";
+            continue;
+        }
+
+        if (
+            (char === "\n" || char === "\r") &&
+            !inQuotes
+        ) {
+            if (char === "\r" && next === "\n") i++;
+
+            row.push(cell);
+            cell = "";
+
+            if (row.length > 1 || row[0] !== "") {
+                rows.push(row);
+            }
+
+            row = [];
+            continue;
+        }
+
+        cell += char;
+    }
+
+    row.push(cell);
+
+    if (row.length > 1 || row[0] !== "") {
+        rows.push(row);
+    }
+
+    return rows;
+}
+
+function parseTG(tg) {
+
+    if (!tg) return 999999;
+
+    const p = String(tg).trim().split(":");
+
+    if (p.length === 3) {
+        return Number(p[0]) * 3600 +
+               Number(p[1]) * 60 +
+               Number(p[2]);
+    }
+
+    if (p.length === 2) {
+        return Number(p[0]) * 60 +
+               Number(p[1]);
+    }
+
+    return 999999;
+}
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+
+}
+
+function convertKETQUA(rows) {
+
+    if (!rows.length) return [];
+
+    const header = rows[0].map(h =>
+        String(h || "")
+            .trim()
+            .replace(/^\uFEFF/, "")
+    );
+
+    const index = {};
+    header.forEach((name, i) => {
+        index[name] = i;
+    });
+
+    const get = (row, name) => {
+
+        const i = index[name];
+
+        return i === undefined
+            ? ""
+            : String(row[i] ?? "").trim();
+
+    };
+
+    return rows.slice(1)
+        .map(row => ({
+
+            maKyThi: get(row, "maKyThi"),
+            maHS: get(row, "maHS"),
+            hoTen: get(row, "hoTen"),
+            lop: get(row, "lop"),
+            tenKyThi: get(row, "tenKyThi"),
+            khoi: get(row, "khoi"),
+            mon: get(row, "mon"),
+            diem: Number(get(row, "diem") || 0),
+            roiTab: Number(get(row, "roiTab") || 0),
+            thoiGian: get(row, "thoiGian"),
+            namHoc: get(row, "namHoc"),
+            dotThi: get(row, "dotThi")
+
+        }))
+        .filter(x => x.maHS);
+
+}
+
+async function thongKe() {
+
+    const tongLuotThiEl =
+        document.getElementById("tongLuotThi");
+
+    const tongThiSinhEl =
+        document.getElementById("tongThiSinh");
+
+    if (!KETQUA_CSV_URL) {
+
+        tongLuotThiEl.innerText = "0";
+        tongThiSinhEl.innerText = "0";
+
+        document.getElementById("top10Body").innerHTML = `
+            <tr>
+                <td colspan="5">
+                    Chưa cấu hình URL Sheet KETQUA.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(KETQUA_CSV_URL);
+
+        if (!response.ok) {
+            throw new Error(
+                "HTTP " + response.status
+            );
+        }
+
+        const text =
+            await response.text();
+
+        const tatCa =
+            convertKETQUA(parseCSV(text));
+
+        const hocSinh =
+            new Set(
+                tatCa.map(x => x.maHS)
+            );
+
+        tongLuotThiEl.innerText =
+            tatCa.length;
+
+        tongThiSinhEl.innerText =
+            hocSinh.size;
+
+        taoTop10(tatCa);
+
+    }
+    catch (error) {
+
+        console.error(
+            "Lỗi tải KETQUA ở trang chủ:",
+            error
+        );
+
+        tongLuotThiEl.innerText = "0";
+        tongThiSinhEl.innerText = "0";
+
+        document.getElementById("top10Body").innerHTML = `
+            <tr>
+                <td colspan="5">
+                    Không thể tải bảng xếp hạng.
+                </td>
+            </tr>
+        `;
+
+    }
+
+}
+
+function fillTop10Select(select, values, allText) {
+
+    const current = select.value;
+
+    select.innerHTML =
+        `<option value="ALL">${allText}</option>`;
+
+    [...new Set(values)]
+        .filter(v => String(v).trim() !== "")
+        .sort((a, b) =>
+            String(a).localeCompare(String(b), "vi")
+        )
+        .forEach(value => {
+
+            const option =
+                document.createElement("option");
+
+            option.value = value;
+            option.textContent = value;
+
+            select.appendChild(option);
+
+        });
+
+    if (
+        [...select.options]
+            .some(o => o.value === current)
+    ) {
+        select.value = current;
+    }
+
+}
+
+
+function capNhatTop10KyThi() {
+
+    const namHoc =
+        document.getElementById("top10NamHoc").value;
+
+    const khoi =
+        document.getElementById("top10Khoi").value;
+
+    const data =
+        window.indexKetQua.filter(item => {
+
+            const okNam =
+                namHoc === "ALL" ||
+                item.namHoc === namHoc;
+
+            const okKhoi =
+                khoi === "ALL" ||
+                item.khoi === khoi;
+
+            return okNam && okKhoi;
+
+        });
+
+    const select =
+        document.getElementById("top10KyThi");
+
+    const current =
+        select.value;
+
+    select.innerHTML =
+        '<option value="ALL">Tất cả kỳ thi</option>';
+
+    const kyThiMap = new Map();
+
+    data.forEach(item => {
+
+        if (item.maKyThi) {
+
+            kyThiMap.set(
+                item.maKyThi,
+                item.tenKyThi || item.maKyThi
+            );
+
+        }
+
+    });
+
+    [...kyThiMap.entries()]
+        .sort((a, b) =>
+            String(a[1]).localeCompare(
+                String(b[1]),
+                "vi"
+            )
+        )
+        .forEach(([maKyThi, tenKyThi]) => {
+
+            const option =
+                document.createElement("option");
+
+            option.value = maKyThi;
+            option.textContent = tenKyThi;
+
+            select.appendChild(option);
+
+        });
+
+    if (
+        [...select.options]
+            .some(o => o.value === current)
+    ) {
+        select.value = current;
+    }
+
+}
+
+
+function taoTop10(tatCa) {
+
+    window.indexKetQua = tatCa;
+
+    const namHocSelect =
+        document.getElementById("top10NamHoc");
+
+    const kyThiSelect =
+        document.getElementById("top10KyThi");
+
+     fillTop10Select(
+        namHocSelect,
+        tatCa.map(x => x.namHoc),
+        "Tất cả năm học"
+    );
+
+    fillTop10Select(
+        document.getElementById("top10Khoi"),
+        tatCa.map(x => x.khoi),
+        "Tất cả khối"
+    );
+
+    capNhatTop10KyThi();
+    renderTop10();
+
+}
+
+
+function renderTop10() {
+
+    const tatCa =
+        window.indexKetQua || [];
+
+    const namHoc =
+        document.getElementById("top10NamHoc").value;
+
+    const maKyThi =
+        document.getElementById("top10KyThi").value;
+
+    const khoi =
+        document.getElementById("top10Khoi").value;
+
+    /*
+     * Lọc đúng theo:
+     * Năm học + Kỳ thi + Môn thi.
+     */
+    const data =
+        tatCa.filter(item => {
+
+            const okNam =
+                namHoc === "ALL" ||
+                item.namHoc === namHoc;
+
+            const okKy =
+                maKyThi === "ALL" ||
+                item.maKyThi === maKyThi;
+
+            const okKhoi =
+                khoi === "ALL" ||
+                item.khoi === khoi;
+
+            return okNam && okKy && okKhoi;
+
+        });
+
+    /*
+     * Nếu chọn kỳ thi cụ thể:
+     * mỗi học sinh chỉ lấy một kết quả tốt nhất
+     * trong đúng kỳ thi đó.
+     *
+     * Nếu không chọn kỳ thi:
+     * vẫn không cho một học sinh xuất hiện nhiều lần.
+     */
+    const bestByStudent = new Map();
+
+    data.forEach(hs => {
+
+        if (!hs.maHS) return;
+
+        const current =
+            bestByStudent.get(hs.maHS);
+
+        if (!current) {
+
+            bestByStudent.set(hs.maHS, hs);
+            return;
+
+        }
+
+        const better =
+            hs.diem > current.diem ||
+            (
+                hs.diem === current.diem &&
+                hs.roiTab < current.roiTab
+            ) ||
+            (
+                hs.diem === current.diem &&
+                hs.roiTab === current.roiTab &&
+                parseTG(hs.thoiGian) <
+                parseTG(current.thoiGian)
+            );
+
+        if (better) {
+            bestByStudent.set(hs.maHS, hs);
+        }
+
+    });
+
+    const top10 =
+        [...bestByStudent.values()]
+            .sort((a, b) => {
+
+                if (b.diem !== a.diem) {
+                    return b.diem - a.diem;
+                }
+
+                if (a.roiTab !== b.roiTab) {
+                    return a.roiTab - b.roiTab;
+                }
+
+                return parseTG(a.thoiGian) -
+                       parseTG(b.thoiGian);
+
+            })
+            .slice(0, 10);
+
+    const body =
+        document.getElementById("top10Body");
+
+    body.innerHTML = "";
+
+    if (!top10.length) {
+
+        body.innerHTML = `
+            <tr>
+                <td colspan="5">
+                    Chưa có dữ liệu phù hợp.
+                </td>
+            </tr>
+        `;
+
+        return;
+
+    }
+
+    top10.forEach((hs, index) => {
+
+        body.innerHTML += `
+            <tr>
+                <td>${index + 1}</td>
+                <td>${escapeHTML(hs.maHS)}</td>
+                <td>${escapeHTML(hs.hoTen)}</td>
+                <td>${escapeHTML(hs.lop)}</td>
+                <td><strong>${hs.diem}</strong></td>
+            </tr>
+        `;
+
+    });
+
+}
+
+
+/*
+ * Bộ lọc TOP 10
+ */
+document.getElementById("top10NamHoc")
+    .addEventListener("change", function() {
+
+        capNhatTop10KyThi();
+        renderTop10();
+
+    });
+
+document.getElementById("top10KyThi")
+    .addEventListener("change", function() {
+
+        renderTop10();
+
+    });
+
+document.getElementById("top10Khoi")
+    .addEventListener("change", function() {
+
+        renderTop10();
+
+    });
+
+
+thongKe();
+
+</script>
+<script>
+/* =========================================================
+   QUẢN LÝ ĐĂNG NHẬP CHUNG: HỌC SINH + GIÁO VIÊN
+   ========================================================= */
+document.addEventListener("DOMContentLoaded", function(){
+
+    const loginBtn = document.getElementById("loginBtn");
+    const userMenu = document.getElementById("userMenu");
+    const userButton = document.getElementById("userButton");
+    const dropdown = document.getElementById("dropdown");
+    const tenDangNhap = document.getElementById("tenDangNhap");
+    const chonDangNhap = document.getElementById("chonDangNhap");
+    const mobileAccount = document.getElementById("mobileStudentAccount");
+    const mobileButton = document.getElementById("mobileStudentButton");
+    const mobileName = document.getElementById("mobileStudentName");
+    const mobileDropdown = document.getElementById("mobileStudentDropdown");
+
+    const dangNhapHS = localStorage.getItem("dangNhap") === "true";
+    const dangNhapGV = localStorage.getItem("dangNhapGV") === "true";
+    const loaiTaiKhoan = localStorage.getItem("loaiTaiKhoan");
+
+    let daDangNhap = false;
+    let laGV = false;
+    let tenHienThi = "";
+
+    // Đọc tên từ các khóa mà login.js thực tế đang lưu.
+    // Có thêm phương án dự phòng nếu trạng thái đăng nhập bị thiếu nhưng hồ sơ HS còn lưu.
+    let hoSoHS = {};
+    ["currentUser", "hocSinh", "studentInfo", "olympicUser", "user"].some(function(key){
+        try {
+            const value = JSON.parse(localStorage.getItem(key) || "null");
+            if (value && typeof value === "object" && (value.hoTen || value.hoten || value.name || value.maHS || value.maThiSinh)) {
+                hoSoHS = value;
+                return true;
+            }
+        } catch (_) {}
+        return false;
+    });
+
+    const tenHS = localStorage.getItem("hoTen") ||
+        localStorage.getItem("tenThiSinh") ||
+        localStorage.getItem("hoTenDangNhap") ||
+        localStorage.getItem("tenHocSinh") ||
+        hoSoHS.hoTen || hoSoHS.hoten || hoSoHS.name || "";
+    const maHS = localStorage.getItem("maThiSinh") ||
+        localStorage.getItem("maHS") || hoSoHS.maHS || hoSoHS.maThiSinh || "";
+
+    // Ưu tiên phiên giáo viên hợp lệ.
+    if (dangNhapGV && loaiTaiKhoan === "giaoVien") {
+        daDangNhap = true;
+        laGV = true;
+        tenHienThi = localStorage.getItem("hoTenGV") || "Giáo viên";
+    } else if ((dangNhapHS && loaiTaiKhoan === "hocSinh") || (tenHS.trim() && maHS.trim())) {
+        daDangNhap = true;
+        laGV = false;
+        tenHienThi = tenHS || maHS || "Học sinh";
+    }
+
+    if (!daDangNhap) {
+        if (loginBtn) loginBtn.style.display = "none";
+        if (userMenu) userMenu.style.display = "none";
+        if (chonDangNhap) chonDangNhap.style.display = "flex";
+    } else {
+        if (loginBtn) loginBtn.style.display = "none";
+        if (userMenu) userMenu.style.display = "inline-block";
+        if (chonDangNhap) chonDangNhap.style.display = "none";
+        if (tenDangNhap) tenDangNhap.textContent = (laGV ? "👨‍🏫 " : "👤 ") + tenHienThi;
+
+        // Chỉ hiện tên tài khoản học sinh ở giao diện điện thoại.
+        if (mobileAccount && !laGV) {
+            mobileAccount.classList.add("is-visible");
+            mobileAccount.style.display = "block";
+        }
+        if (mobileName) mobileName.textContent = tenHienThi;
+
+        if (dropdown) {
+            if (laGV) {
+                dropdown.innerHTML = `
+                    <a href="trang-gv.html">🏫 Trang giáo viên</a>
+                    <a href="trang-gv.html">📊 Quản lý kết quả</a>
+                    <hr>
+                    <a href="#" id="logoutBtn">🚪 Đăng xuất</a>
+                `;
+            } else {
+                dropdown.innerHTML = `
+                    <a href="trangcanhan.html">👤 Trang cá nhân</a>
+                    <a href="chonkithi.html">📝 Kỳ thi của tôi</a>
+                    <a href="dau-truong.html">🏟️ Đấu trường</a>
+                    <a href="ketquathi.html">📊 Kết quả thi</a>
+                    <a href="xephang.html">🏆 Bảng xếp hạng</a>
+                    <hr>
+                    <a href="#" id="logoutBtn">🚪 Đăng xuất</a>
+                `;
+            }
+        }
+    }
+
+    if (userButton && dropdown) {
+        userButton.addEventListener("click", function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            dropdown.classList.toggle("show");
+        });
+
+        document.addEventListener("click", function(e){
+            if (!userButton.contains(e.target) && !dropdown.contains(e.target)) {
+                dropdown.classList.remove("show");
+            }
+        });
+    }
+
+    // Menu xổ xuống trên điện thoại
+    if (mobileButton && mobileDropdown) {
+        mobileButton.addEventListener("click", function(e){
+            e.preventDefault();
+            e.stopPropagation();
+            const isOpen = mobileDropdown.classList.toggle("show");
+            mobileButton.setAttribute("aria-expanded", String(isOpen));
+            const arrow = document.getElementById("mobileStudentArrow");
+            if (arrow) arrow.textContent = isOpen ? "▲" : "▼";
+        });
+        document.addEventListener("click", function(e){
+            if (!mobileAccount.contains(e.target)) {
+                mobileDropdown.classList.remove("show");
+                mobileButton.setAttribute("aria-expanded", "false");
+                const arrow = document.getElementById("mobileStudentArrow");
+                if (arrow) arrow.textContent = "▼";
+            }
+        });
+    }
+
+    // Đăng xuất: xóa các khóa phiên đăng nhập của cả HS/GV,
+    // đồng thời xóa các khóa hồ sơ có thể khiến trang chủ tự nhận nhầm là đã đăng nhập.
+    function xuLyDangXuat(e){
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        [
+            "dangNhap", "maThiSinh", "tenThiSinh", "hoTen", "ngaySinh",
+            "gioiTinh", "lopThiSinh", "truong", "quyen", "hocSinh",
+            "studentInfo", "olympicUser", "currentUser", "user",
+            "studentCode", "maHS", "MaHS", "hoTenDangNhap", "tenHocSinh",
+            "taiKhoanHS", "giaoVien", "dangNhapGV", "maGV", "hoTenGV",
+            "clbGV", "monGV", "quyenGV", "loaiTaiKhoan"
+        ].forEach(key => localStorage.removeItem(key));
+
+        if (dropdown) dropdown.classList.remove("show");
+        if (mobileDropdown) mobileDropdown.classList.remove("show");
+        if (mobileButton) mobileButton.setAttribute("aria-expanded", "false");
+
+        window.location.replace("index.html");
+    }
+
+    // Bắt sự kiện theo ủy quyền để nút vẫn hoạt động khi menu được tạo lại.
+    document.addEventListener("click", function(e) {
+        const target = e.target.closest("#logoutBtn, #mobileLogoutBtn");
+        if (target) xuLyDangXuat(e);
+    });
+});
+</script>
+</div>
+<script>
+/* =========================================================
+   CAROUSEL:
+   HỌC SINH TIÊU BIỂU + GIÁO VIÊN PHỤ TRÁCH
+   ========================================================= */
+
+let peopleIndex = 0;
+let peopleTimer = null;
+
+function updatePeopleCarousel() {
+
+    const cards = document.querySelectorAll(
+        "#peopleTrack .person-card"
+    );
+
+    const dots = document.getElementById("peopleDots");
+
+    if (!cards.length) return;
+
+    const total = cards.length;
+
+    cards.forEach((card, index) => {
+
+        card.classList.remove(
+            "active",
+            "left",
+            "right",
+            "far-left",
+            "far-right"
+        );
+
+        /*
+         * Khoảng cách từ card hiện tại
+         */
+        let diff = index - peopleIndex;
+
+        /*
+         * Xử lý quay vòng
+         */
+        if (diff > total / 2) {
+            diff -= total;
+        }
+
+        if (diff < -total / 2) {
+            diff += total;
+        }
+
+
+        /* Ảnh chính giữa */
+
+        if (diff === 0) {
+
+            card.classList.add("active");
+
+        }
+
+
+        /* Ảnh bên trái */
+
+        else if (diff === -1) {
+
+            card.classList.add("left");
+
+        }
+
+
+        /* Ảnh bên phải */
+
+        else if (diff === 1) {
+
+            card.classList.add("right");
+
+        }
+
+
+        /* Phía sau bên trái */
+
+        else if (diff === -2) {
+
+            card.classList.add("far-left");
+
+        }
+
+
+        /* Phía sau bên phải */
+
+        else if (diff === 2) {
+
+            card.classList.add("far-right");
+
+        }
+
+    });
+
+
+    /* =====================================================
+       TẠO DẤU CHẤM
+       ===================================================== */
+
+    if (dots) {
+
+        dots.innerHTML = "";
+
+        cards.forEach((card, index) => {
+
+            const dot = document.createElement("span");
+
+            if (index === peopleIndex) {
+                dot.classList.add("active");
+            }
+
+            dot.addEventListener("click", function () {
+
+                peopleIndex = index;
+
+                updatePeopleCarousel();
+
+                restartPeopleAuto();
+
+            });
+
+            dots.appendChild(dot);
+
+        });
+
+    }
+
+}
+
+
+/* =========================================================
+   CHUYỂN TRƯỚC / SAU
+   ========================================================= */
+
+function movePeople(direction) {
+
+    const cards = document.querySelectorAll(
+        "#peopleTrack .person-card"
+    );
+
+    if (!cards.length) return;
+
+    peopleIndex += direction;
+
+
+    /* Quay vòng */
+
+    if (peopleIndex < 0) {
+
+        peopleIndex = cards.length - 1;
+
+    }
+
+
+    if (peopleIndex >= cards.length) {
+
+        peopleIndex = 0;
+
+    }
+
+
+    updatePeopleCarousel();
+
+    restartPeopleAuto();
+
+}
+
+
+/* =========================================================
+   TỰ ĐỘNG QUAY
+   ========================================================= */
+
+function startPeopleAuto() {
+
+    stopPeopleAuto();
+
+    peopleTimer = setInterval(function () {
+
+        const cards = document.querySelectorAll(
+            "#peopleTrack .person-card"
+        );
+
+        if (!cards.length) return;
+
+        peopleIndex++;
+
+        if (peopleIndex >= cards.length) {
+            peopleIndex = 0;
+        }
+
+        updatePeopleCarousel();
+
+    }, 4500);
+
+}
+
+
+function stopPeopleAuto() {
+
+    if (peopleTimer) {
+
+        clearInterval(peopleTimer);
+
+        peopleTimer = null;
+
+    }
+
+}
+
+
+function restartPeopleAuto() {
+
+    startPeopleAuto();
+
+}
+
+
+/* =========================================================
+   CLICK VÀO ẢNH BÊN TRÁI / PHẢI
+   ========================================================= */
+
+function setupPeopleClick() {
+
+    const cards = document.querySelectorAll(
+        "#peopleTrack .person-card"
+    );
+
+    cards.forEach((card, index) => {
+
+        card.addEventListener("click", function () {
+
+            peopleIndex = index;
+
+            updatePeopleCarousel();
+
+            restartPeopleAuto();
+
+        });
+
+    });
+
+}
+
+
+/* =========================================================
+   VUỐT TRÊN ĐIỆN THOẠI
+   ========================================================= */
+
+function setupPeopleSwipe() {
+
+    const track = document.getElementById("peopleTrack");
+
+    if (!track) return;
+
+    let startX = 0;
+    let endX = 0;
+
+
+    track.addEventListener(
+        "touchstart",
+        function (e) {
+
+            startX = e.touches[0].clientX;
+
+        },
+        { passive: true }
+    );
+
+
+    track.addEventListener(
+        "touchend",
+        function (e) {
+
+            endX = e.changedTouches[0].clientX;
+
+            const distance = endX - startX;
+
+
+            /* Vuốt sang trái */
+
+            if (distance < -50) {
+
+                movePeople(1);
+
+            }
+
+
+            /* Vuốt sang phải */
+
+            else if (distance > 50) {
+
+                movePeople(-1);
+
+            }
+
+        },
+        { passive: true }
+    );
+
+}
+
+
+/* =========================================================
+   KHỞI ĐỘNG
+   ========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        updatePeopleCarousel();
+
+        setupPeopleClick();
+
+        setupPeopleSwipe();
+
+        startPeopleAuto();
+
+    }
+);
+
+</script>
+</body>
+</html>
