@@ -1014,6 +1014,24 @@ footer .footer-content,
     </span>
 
 </div>
+
+        <!-- LỚP ÔN TẬP / NHÓM HỌC TẬP -->
+        <div
+            class="dashboard-card card-student"
+            onclick="moChucNang('lop-on-tap')">
+
+            <div class="card-icon">👥</div>
+
+            <h3>Lớp ôn tập</h3>
+
+            <p>
+                Tạo nhóm ôn tập chính thức, quản lý học sinh,
+                duyệt yêu cầu tham gia và hỗ trợ học tập trong nhóm.
+            </p>
+
+            <span class="arrow">Quản lý lớp ôn tập →</span>
+
+        </div>
     </section>
 
 
@@ -2163,6 +2181,12 @@ function moChucNang(
 
     return;
 }
+
+    // LỚP ÔN TẬP - NHÓM HỌC TẬP V4.7
+    if (chucNang === "lop-on-tap") {
+        window.location.href = "lop-on-tap-gv.html";
+        return;
+    }
 }
 
 </script>
