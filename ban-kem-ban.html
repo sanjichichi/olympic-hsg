@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#5969f2">
+  <title>Bạn kèm bạn AI V4.8 | Olympic HSG Online</title>
+  <link rel="stylesheet" href="css/app.css">
+
+<style>
+/* EduTech Modern: làm mới giao diện Bạn kèm bạn AI */
+:root{
+ --bkb-primary:#4f46e5;--bkb-blue:#2563eb;--bkb-violet:#7c3aed;
+ --bkb-ink:#172554;--bkb-muted:#64748b;--bkb-line:#e2e8f0;
+ --bkb-surface:#fff;--bkb-soft:#f5f7ff;--bkb-radius:18px;
+}
+*{box-sizing:border-box}
+body{background:radial-gradient(ellipse at 5% 0%,#e9edff 0,transparent 35%),linear-gradient(135deg,#f8fbff,#f4f5ff)!important;color:var(--bkb-ink)}
+.app-shell{max-width:1500px;margin:0 auto;padding:20px!important}
+.app-header{background:linear-gradient(120deg,#4338ca,#2563eb 58%,#7c3aed)!important;color:#fff!important;border:0!important;border-radius:24px!important;padding:22px 26px!important;box-shadow:0 14px 35px rgba(79,70,229,.2)!important}
+.app-header h1,.app-header p,.app-header .user-pill{color:#fff!important}
+.brand-logo{border-radius:16px!important;background:rgba(255,255,255,.18)!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+.user-pill{background:rgba(255,255,255,.15)!important;border:1px solid rgba(255,255,255,.25)!important;border-radius:999px!important;padding:9px 14px!important}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;padding:10px!important;margin:18px 0!important;background:#fff!important;border:1px solid var(--bkb-line)!important;border-radius:16px!important;box-shadow:0 5px 18px rgba(30,64,175,.05)}
+.tab{border-radius:12px!important;padding:11px 16px!important;font-weight:700!important;transition:.18s ease}
+.tab.active{background:linear-gradient(120deg,#4f46e5,#6366f1)!important;color:#fff!important;box-shadow:0 5px 14px rgba(79,70,229,.2)}
+.tab:hover{transform:translateY(-1px)}
+.card,.sidebar,.chat-panel,.group-room,.stat-card,.progress-card{background:rgba(255,255,255,.96)!important;border:1px solid var(--bkb-line)!important;border-radius:var(--bkb-radius)!important;box-shadow:0 8px 25px rgba(30,64,175,.055)!important}
+.chat-layout{gap:16px!important;align-items:stretch}
+.sidebar{padding:18px!important}
+.chat-panel{padding:18px!important;overflow:hidden}
+.chat-title,.section-heading,.view-heading{border-bottom:1px solid #edf1f8;padding-bottom:12px;margin-bottom:14px}
+.chat-title h2,.section-heading h2,.view-heading h2{color:#1e3a8a!important;font-weight:800!important}
+.search-input,input,select,textarea{border:1px solid #dbe3f0!important;border-radius:12px!important;background:#fbfdff!important;padding:11px 13px!important;transition:border-color .2s,box-shadow .2s}
+input:focus,select:focus,textarea:focus{outline:none!important;border-color:#818cf8!important;box-shadow:0 0 0 3px rgba(99,102,241,.12)!important}
+.button{border-radius:12px!important;font-weight:700!important;transition:transform .15s,box-shadow .15s}
+.button-primary{background:linear-gradient(120deg,#4f46e5,#2563eb)!important;border:0!important;box-shadow:0 5px 12px rgba(79,70,229,.18)}
+.button-primary:hover{transform:translateY(-1px);box-shadow:0 8px 18px rgba(79,70,229,.25)}
+.button-quiet{background:#f1f5ff!important;color:#4338ca!important;border:1px solid #e0e7ff!important}
+.contact-list{gap:8px}
+.contact-list>*{border-radius:13px!important;transition:background .15s,border-color .15s}
+.messages{background:linear-gradient(180deg,#f8faff,#f4f6ff)!important;border:1px solid #e6eaf5!important;border-radius:16px!important;padding:16px!important}
+.message,.message-bubble,.chat-message{max-width:min(78%,620px);border-radius:16px!important;overflow-wrap:anywhere;box-shadow:0 3px 9px rgba(15,23,42,.04)}
+.message-mine,.own-message,.sent,.message.outgoing{background:linear-gradient(135deg,#4f46e5,#6366f1)!important;color:#fff!important;border-radius:16px 16px 5px 16px!important}
+.message-other,.received,.message.incoming{background:#fff!important;color:#1e293b!important;border:1px solid #e2e8f0!important;border-radius:16px 16px 16px 5px!important}
+.composer{gap:10px!important;padding-top:12px!important}
+.composer input{min-width:0;flex:1}
+.small-note,.muted{color:#64748b!important}
+.status-dot{box-shadow:0 0 0 4px #dcfce7}
+.subject-grid,.task-list,.stats-grid{gap:14px!important}
+.stat-card{padding:20px!important}
+.stat-card strong{color:#4f46e5!important;font-size:2rem!important}
+.progress-track{height:11px!important;border-radius:999px!important;background:#e8edff!important;overflow:hidden}
+.progress-track span{background:linear-gradient(90deg,#4f46e5,#06b6d4)!important;border-radius:999px}
+.meme-coming-soon{display:flex;align-items:center;gap:14px;margin:12px 0;padding:16px 18px;border:1px dashed #a5b4fc;border-radius:16px;background:linear-gradient(120deg,#f5f3ff,#eff6ff);color:#334155}
+.meme-coming-icon{display:grid;place-items:center;flex:0 0 52px;height:52px;border-radius:15px;background:linear-gradient(135deg,#e0e7ff,#ede9fe);font-size:27px}
+.meme-coming-copy strong{display:block;color:#4338ca;font-size:15px;margin-bottom:4px}
+.meme-coming-copy p{margin:0 0 7px;line-height:1.5;font-size:13px}
+.meme-coming-status{font-size:11px;font-weight:700;color:#6366f1}
+footer{color:#64748b!important;padding:22px;text-align:center}
+.toast{border-radius:12px!important}
+@media(max-width:900px){.app-shell{padding:10px!important}.app-header{padding:18px!important;border-radius:18px!important}.chat-layout{grid-template-columns:1fr!important}.sidebar{max-height:300px}.chat-panel{min-width:0}.message,.message-bubble,.chat-message{max-width:90%}}
+@media(max-width:560px){.app-header{gap:12px}.brand h1{font-size:1.25rem}.tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.tab{width:100%;padding:10px 7px!important;font-size:13px}.meme-coming-soon{align-items:flex-start;padding:12px}.meme-coming-icon{flex-basis:42px;height:42px;font-size:22px}.composer{display:flex}.composer button{white-space:nowrap}}
+</style>
+
+</head>
+<body>
+<div class="app-shell">
+  <div class="back-home">
+    <a href="index.html">⬅ Quay lại trang chủ</a>
+</div>
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-logo">📚</div>
+      <div><h1>Bạn kèm bạn AI</h1><p>Học cùng nhau · Tiến bộ mỗi ngày</p></div>
+    </div>
+    <div class="user-pill" id="accountBadge">👤 Đang kiểm tra tài khoản…</div>
+  </header>
+
+  <nav class="tabs" aria-label="Khu vực học tập">
+    <button class="tab active" data-view="chatView">💬 Trò chuyện</button>
+    <button class="tab" data-view="groupsView">👥 Nhóm học tập</button>
+    <button class="tab" data-view="tasksView">✅ Nhiệm vụ</button>
+    <button class="tab" data-view="progressView">📈 Tiến độ</button>
+    <button class="tab" data-view="helpView">🛡️ Hướng dẫn</button>
+  </nav>
+
+  <main>
+    <section class="view active" id="chatView">
+      <div class="chat-layout">
+        <aside class="sidebar">
+          <div class="section-heading"><h2>Bạn học</h2><span class="status-dot"></span></div>
+          <input id="contactSearch" class="search-input" placeholder="Tìm theo tên, mã, lớp…" autocomplete="off">
+          <div id="contactList" class="contact-list"><div class="empty-state">Đang tải danh sách…</div></div>
+          <p class="small-note">Danh sách lấy từ sheet USERS của backend chat hiện tại.</p>
+        </aside>
+        <section class="chat-panel">
+          <div class="chat-title">
+            <div><h2 id="chatName">Chọn một bạn học</h2><p id="chatStatus">Chưa chọn người nhận</p></div>
+            <button id="refreshChat" class="button button-quiet" type="button">↻ Tải lại</button>
+          </div>
+          <div id="directMessages" class="messages" aria-live="polite"><div class="empty-state">Chọn một bạn ở danh sách để bắt đầu trò chuyện.</div></div>
+          <form id="directComposer" class="composer">
+            <input id="directInput" maxlength="1000" placeholder="Nhập tin nhắn học tập…" autocomplete="off">
+            <button class="button button-primary" type="submit">Gửi</button>
+          </form>
+          <p class="small-note composer-note">Không gửi mật khẩu, số điện thoại riêng hoặc thông tin nhạy cảm.</p>
+        </section>
+      </div>
+    </section>
+
+    <section class="view" id="groupsView">
+      <div class="view-heading"><div><h2>Lớp ôn tập</h2><p>Nhóm chính thức do giáo viên tổ chức và nhóm tự học do học sinh lập.</p></div><button class="button button-quiet" id="refreshStudyGroups" type="button">↻ Tải danh sách</button></div>
+      <div class="card" style="margin-bottom:16px">
+        <h3>🔎 Tìm nhóm ôn tập</h3>
+        <div class="form-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px">
+          <input id="studyGroupSearch" class="search-input" placeholder="Tên nhóm, môn học…" autocomplete="off">
+          <select id="studyGroupSubject" class="search-input"><option value="">Tất cả môn học</option><option>Toán</option><option>Ngữ văn</option><option>Tiếng Anh</option><option>Khoa học tự nhiên</option><option>Lịch sử và Địa lí</option><option>Tin học</option><option>Khác</option></select>
+          <select id="studyGroupType" class="search-input"><option value="">Tất cả loại nhóm</option><option value="official">Nhóm chính thức</option><option value="self">Nhóm tự học</option></select>
+          <button class="button button-primary" id="searchStudyGroups" type="button">Tìm kiếm</button>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:16px">
+        <h3>＋ Tạo nhóm ôn tập</h3>
+        <p class="small-note">Học sinh tạo nhóm tự học tại đây. Nhóm chính thức do giáo viên tạo sẽ xuất hiện trong danh sách để bạn xin tham gia.</p>
+        <form id="createStudyGroupForm" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px">
+          <input id="newStudyGroupName" class="search-input" maxlength="100" placeholder="Tên nhóm (ít nhất 3 ký tự)" required>
+          <select id="newStudyGroupSubject" class="search-input" required><option value="">Chọn môn học</option><option>Toán</option><option>Ngữ văn</option><option>Tiếng Anh</option><option>Khoa học tự nhiên</option><option>Lịch sử và Địa lí</option><option>Tin học</option><option>Khác</option></select>
+          <input type="hidden" id="newStudyGroupType" value="self"><span class="small-note" style="align-self:center">Loại nhóm: Nhóm tự học</span>
+          <select id="newStudyGroupVisibility" class="search-input"><option value="open">Có thể tìm và xin tham gia</option><option value="private">Riêng tư – cần lời mời</option></select>
+          <select id="newStudyGroupGrade" class="search-input"><option value="">Tất cả khối</option><option value="6">Khối 6</option><option value="7">Khối 7</option><option value="8">Khối 8</option><option value="9">Khối 9</option></select>
+          <input id="newStudyGroupDescription" class="search-input" maxlength="500" placeholder="Mô tả mục tiêu nhóm (không bắt buộc)">
+          <button class="button button-primary" type="submit">Tạo nhóm</button>
+        </form>
+      </div>
+      <div class="view-heading"><div><h3>Danh sách nhóm</h3><p id="studyGroupsStatus" class="small-note">Đang tải danh sách…</p></div></div>
+      <div id="studyGroupsList" class="subject-grid"><div class="empty-state">Đang tải nhóm ôn tập…</div></div>
+      <div class="card" id="studyGroupRequestsPanel" hidden style="margin:16px 0"><h3>Yêu cầu tham gia đang chờ</h3><div id="studyGroupRequestsList"></div></div>
+      <section class="group-room card" id="groupRoom" hidden>
+        <div class="chat-title"><div><h2 id="groupRoomTitle">Phòng học nhóm</h2><p id="groupRoomStatus">Chưa kết nối</p></div><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="button button-quiet" id="refreshGroup" type="button">↻ Tải tin nhắn</button><button class="button button-quiet" id="leaveStudyGroup" type="button">Rời nhóm</button></div></div>
+        <div id="groupMessages" class="messages group-messages" aria-live="polite"></div>
+        
+<section class="meme-coming-soon" aria-label="Meme đang hoàn thiện">
+  <div class="meme-coming-icon">🎨</div>
+  <div class="meme-coming-copy">
+    <strong>Sticker &amp; Meme học tập</strong>
+    <p>Tính năng đang được xây dựng và hoàn thiện. Hiện tại bạn vẫn có thể trao đổi, gửi câu hỏi và chia sẻ cách giải trong nhóm.</p>
+    <span class="meme-coming-status">🚧 Sắp ra mắt · Ưu tiên môi trường học tập an toàn</span>
+    <div class="meme-toolbar" style="margin-top:9px">
+      <button type="button" id="toggleMemePicker" class="button button-quiet" disabled aria-disabled="true">😊 Meme đang hoàn thiện</button>
+    </div>
+  </div>
+</section>
+<div id="memePicker" class="meme-picker" hidden>
+  <div class="meme-picker-heading"><strong>Sticker / Meme</strong><button type="button" id="closeMemePicker" class="button button-quiet" disabled>Đóng</button></div>
+  <div id="memeList" class="meme-grid"><p>Tính năng đang được hoàn thiện.</p></div>
+</div>
+
+<form id="groupComposer" class="composer">
+  <input id="groupInput" maxlength="1000"
+         placeholder="Đặt câu hỏi hoặc chia sẻ cách làm..."
+         autocomplete="off">
+  <button class="button button-primary" type="submit">Gửi</button>
+</form>
+
+      </section>
+    </section>
+
+    <section class="view" id="tasksView">
+      <div class="view-heading"><div><h2>Nhiệm vụ học tập</h2><p>Đặt mục tiêu nhỏ, hoàn thành từng bước.</p></div><button id="addTask" class="button button-primary" type="button">＋ Thêm nhiệm vụ</button></div>
+      <div class="sync-note" id="taskSyncStatus">Đang tải nhiệm vụ…</div>
+      <div id="taskList" class="task-list"></div>
+    </section>
+
+    <section class="view" id="progressView">
+      <div class="view-heading"><div><h2>Tiến độ của tôi</h2><p>Thống kê nhiệm vụ của tài khoản hiện tại.</p></div></div>
+      <div class="stats-grid">
+        <article class="stat-card"><p>Nhiệm vụ</p><strong id="statTotal">0</strong><span>Tổng số</span></article>
+        <article class="stat-card"><p>Đã hoàn thành</p><strong id="statDone">0</strong><span>Được đánh dấu hoàn tất</span></article>
+        <article class="stat-card"><p>Tỷ lệ hoàn thành</p><strong id="statPercent">0%</strong><span>Theo danh sách nhiệm vụ</span></article>
+      </div>
+      <div class="card progress-card"><div class="progress-label"><strong>Tiến độ nhiệm vụ</strong><span id="progressText">0%</span></div><div class="progress-track"><span id="progressFill"></span></div><p id="progressMessage" class="muted">Thêm nhiệm vụ để bắt đầu theo dõi.</p></div>
+      <div class="card"><h3>Tiến độ nhiệm vụ nhóm / lớp ôn tập</h3><p class="muted">Điểm thưởng chỉ được tính sau khi giáo viên hoặc nhóm trưởng duyệt.</p><div id="groupProgressSummary" class="muted">Đang tải tiến độ nhóm…</div></div>
+      <div class="card"><h3>Phiên học hiện tại</h3><p id="profileSummary" class="muted">Đang đọc thông tin tài khoản…</p></div>
+    </section>
+
+    <section class="view" id="helpView">
+      <div class="view-heading"><div><h2>Hướng dẫn và an toàn</h2><p>Phiên bản V4.8 — Giao diện thử nghiệm; sticker/meme đang tạm ẩn để hoàn thiện và kiểm thử.</p></div></div>
+      <div class="card">
+        <h3>Nguyên tắc sử dụng</h3>
+        <ul class="help-list">
+          <li>Chỉ sử dụng tài khoản học sinh được cấp.</li>
+          <li>Không chia sẻ mật khẩu, địa chỉ nhà hoặc thông tin cá nhân riêng tư.</li>
+          <li>Trao đổi lịch sự; khi góp ý bài, nêu rõ điều đúng và bước cần sửa.</li>
+          <li>Đối chiếu lời giải và gợi ý AI với kiến thức đã học; không sao chép máy móc.</li>
+          <li>Nếu gặp nội dung không phù hợp, báo giáo viên hoặc quản trị viên.</li>
+        </ul>
+      </div>
+      <div class="card warning-card">
+        <h3>Trạng thái triển khai</h3>
+        <p>Giao diện V4.6 đã chuẩn bị. Chat riêng dùng API hiện có; nhóm học tập và nhiệm vụ dùng các API bổ sung được mô tả trong gói backend. Chưa coi là sẵn sàng cho triển khai rộng cho học sinh cho tới khi hoàn thiện xác thực phía máy chủ và kiểm tra quyền hội thoại.</p>
+      </div>
+    </section>
+  </main>
+  <footer>Olympic HSG Online · Bạn kèm bạn AI V4.8 · Bản thử nghiệm</footer>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="js/config.js"></script>
+<script src="js/online-sync.js"></script>
+<script src="js/app.js"></script>
+<script src="js/v48-enhancements.js"></script>
+
+<!-- Thanh chat thu gọn -->
+<div id="chatDock" class="chat-dock">
+  <button id="chatDockToggle" class="chat-dock-toggle"
+          type="button" aria-expanded="false">
+    <span class="chat-icon">💬</span>
+    <span class="chat-label">Tin nhắn</span>
+    <span id="chatUnreadBadge" class="chat-unread" hidden>0</span>
+    <span id="chatDockArrow">▲</span>
+  </button>
+
+  <div id="chatDockBody" class="chat-dock-body" hidden>
+    <div class="chat-dock-heading">
+      <strong>Bạn kèm bạn AI</strong>
+      <button id="chatDockClose" type="button"
+              aria-label="Thu gọn chat">−</button>
+    </div>
+    <div id="chatDockNotice">
+      Chọn một cuộc trò chuyện để tiếp tục.
+    </div>
+    <button id="openFullChat" type="button">
+      Mở khung chat đầy đủ
+    </button>
+  </div>
+</div>
+
+</body>
+</html>

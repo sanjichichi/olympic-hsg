@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phú Đình Edu - Giới thiệu & Thể lệ</title>
+
+  <link
+rel="stylesheet"
+href="css/style-old.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stysheet" href="css/thele.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+<style>
+/* ===== TRANG GỘP: GIỚI THIỆU TRƯỚC, THỂ LỆ SAU ===== */
+.intro-section { padding-bottom: 18px; }
+.rules-section { padding-top: 18px; }
+.intro-section .rule-box,
+.rules-section .rule-box { margin-bottom: 0; }
+
+.intro-section + .rules-section {
+  padding-top: 8px;
+}
+
+@media (max-width: 768px) {
+  .intro-section { padding-bottom: 10px; }
+  .rules-section { padding-top: 10px; }
+}
+</style>
+
+<style>
+/* ===== GALLERY ẢNH NHÀ TRƯỜNG: carousel ngang tự chạy ===== */
+.school-gallery-section{padding:34px 18px 46px;overflow:visible}
+.school-gallery-wrap{max-width:1200px;margin:0 auto;background:linear-gradient(135deg,#f0f7ff,#f7f4ff);border:1px solid #dce7fb;border-radius:24px;padding:28px 18px 24px;box-shadow:0 12px 35px rgba(48,76,140,.10)}
+.school-gallery-heading{text-align:center;margin-bottom:22px}
+.school-gallery-heading .eyebrow{display:inline-block;padding:6px 13px;border-radius:999px;background:#e4edff;color:#4457c7;font-size:12px;font-weight:800;letter-spacing:.08em}
+.school-gallery-heading h2{margin:10px 0 8px;color:#1e3263;font-size:clamp(23px,3vw,34px)}
+.school-gallery-heading p{margin:0;color:#64748b}
+.school-gallery-viewport{overflow:hidden;padding:24px 0 30px;position:relative}
+.school-gallery-track{display:flex;align-items:center;gap:18px;will-change:transform;transform:translateX(0);transition:transform .65s cubic-bezier(.22,.7,.2,1)}
+.school-gallery-card{flex:0 0 250px;height:190px;border-radius:18px;overflow:hidden;position:relative;border:3px solid rgba(255,255,255,.9);box-shadow:0 8px 22px rgba(30,55,100,.14);transform:scale(.86);opacity:.68;transition:transform .55s ease,opacity .55s ease,box-shadow .55s ease}
+.school-gallery-card.is-center {
+    transform: scale(2.0);
+    width: 650px !important;
+    max-width: none !important;
+    height: 300px !important;
+    opacity: 1;
+    z-index: 20;
+    box-shadow: 0 18px 36px rgba(61,82,170,.28);
+    border-color: #fff;
+}
+.school-gallery-card img{width:100%;height:100%;display:block;object-fit:cover}
+.school-gallery-card figcaption{position:absolute;left:0;right:0;bottom:0;padding:22px 12px 11px;background:linear-gradient(transparent,rgba(10,25,55,.82));color:#fff;font-size:14px;font-weight:700;text-align:center}
+.school-gallery-controls{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px}
+.school-gallery-btn{border:0;width:40px;height:40px;border-radius:50%;background:#fff;color:#4357c7;box-shadow:0 4px 12px rgba(30,55,100,.12);cursor:pointer;font-size:20px}
+.school-gallery-btn:hover{background:#5969f2;color:#fff}
+.school-gallery-dots{display:flex;gap:6px;align-items:center}
+.school-gallery-dot{width:7px;height:7px;border-radius:50%;background:#c5cee7}
+.school-gallery-dot.active{width:22px;border-radius:10px;background:#5969f2}
+.school-gallery-track {
+    overflow: visible !important;
+}
+.school-gallery {
+    overflow: visible !important;
+}
+@media(max-width:700px){.school-gallery-wrap{padding:22px 10px;border-radius:18px}.school-gallery-card{flex-basis:210px;height:155px}.school-gallery-card.is-center{transform:scale(1.08)}.school-gallery-viewport{padding:18px 0 24px}}
+@media(prefers-reduced-motion:reduce){.school-gallery-track,.school-gallery-card{transition:none!important}}
+/* Cho phép ảnh giữa tràn ra ngoài khung */
+.school-gallery-section,
+.school-gallery-wrap,
+.school-gallery-viewport {
+    overflow: visible !important;
+}
+
+/* Ảnh chính giữa */
+.school-gallery-card.is-center {
+    flex: 0 0 250px !important;
+    width: 200px !important;
+    height: 190px !important;
+
+    transform: scale(3.9, 2.8) !important;
+
+    opacity: 1;
+    z-index: 100;
+    position: relative;
+
+    box-shadow: 0 18px 36px rgba(61,82,170,.28);
+    border-color: #fff;
+}
+
+/* Đảm bảo ảnh không bị giới hạn */
+.school-gallery-card.is-center img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Tăng khoảng trống trên dưới */
+.school-gallery-viewport {
+    padding-top: 150px !important;
+    padding-bottom: 150px !important;
+}
+
+/* Ảnh giữa rộng hơn trên điện thoại nhưng không quá lớn */
+@media (max-width: 700px) {
+    .school-gallery-card.is-center {
+        transform: scale(1.4, 1.2) !important;
+    }
+
+    .school-gallery-viewport {
+        padding-top: 80px !important;
+        padding-bottom: 80px !important;
+    }
+}
+.school-gallery-card figcaption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    padding: 8px 10px;
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(10, 25, 55, 0.85)
+    );
+
+    color: #fff;
+    font-size: 12px;
+    line-height: 1.4;
+    font-weight: 600;
+    text-align: center;
+
+    max-height: 48px;
+    overflow: hidden;
+}
+</style>
+</head>
+<body>
+<header class="hero">
+
+    <img src="anhnen/banner-clb.png"
+         alt="Banner Câu lạc bộ Học sinh Khá Giỏi"
+         class="hero-banner">
+
+</header>
+<div class="page-bg">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</header>
+<nav class="menu">
+
+    <div class="menu-links">
+
+        <a href="index.html">Trang chủ</a>
+
+        <a href="gioithieu-thele.html">Giới thiệu</a>
+
+        <a href="chonkithi.html">Kỳ thi</a>
+
+        <a href="ban-kem-ban.html">Học cùng bạn</a>
+
+        <a href="clb.html">CLB năng khiếu</a>
+
+    </div>
+    <div class="menu-user">
+    <a href="index.html" class="login-btn">
+        ⬅ Quay lại trang chủ
+    </a>
+</div>
+
+</nav>
+
+<section class="rule-section intro-section">
+  <div class="rule-box">
+<h1>📖 GIỚI THIỆU</h1>
+
+        <p class="sub-title">
+            Trường THCS Phú Đình
+        </p>
+        <div class="warning-box">
+
+        <h2>Giới thiệu chung</h2>
+
+        <ul>
+
+            <li>Trường THCS Phú Đình – Đoàn kết, đổi mới, phát triển.</li>
+               <li>Thực hiện Quyết định số 603/QĐ-UBND ngày 15/8/2026 của UBND xã Phú Đình, Trường THCS Hoàng Ngân và Trường THCS Phú Đình được sáp nhập thành Trường THCS Phú Đình.</li>
+               <li>Sau sáp nhập, nhà trường có trường chính tại xóm Trung Tâm, xã Phú Đình và 01 phân hiệu tại xóm Điềm Mặc, là cơ sở Trường THCS Hoàng Ngân trước đây. Việc sáp nhập tạo điều kiện tăng cường nguồn lực, phát huy thế mạnh của hai đơn vị, xây dựng một môi trường giáo dục thống nhất, hiện đại và phù hợp với điều kiện thực tế của địa phương.</li>
+               <li>Năm học 2026–2027, Trường THCS Phú Đình có 746 học sinh · 21 lớp · 58 cán bộ, giáo viên, nhân viên và người lao động · Khối 6: 4 lớp · Khối 7: 5 lớp · Khối 8: 6 lớp · Khối 9: 6 lớp</li>
+               <li>Nhà trường thực hiện Chương trình Giáo dục phổ thông 2018, sử dụng bộ sách giáo khoa Kết nối tri thức với cuộc sống.
+
+Chương trình và phân phối chương trình các môn học được xây dựng thống nhất trong toàn trường. Việc tổ chức thời khóa biểu được điều chỉnh linh hoạt theo điều kiện thực tế của từng cơ sở.
+
+Buổi sáng: Tổ chức dạy học các môn học theo Chương trình GDPT 2018.
+Buổi chiều: Tổ chức ôn tập, bồi dưỡng học sinh, phát triển năng khiếu và các hoạt động giáo dục, trải nghiệm phù hợp.</li>
+               <li>Trong định hướng đổi mới và chuyển đổi số trong giáo dục, Trường THCS Phú Đình chú trọng tạo dựng những sân chơi học thuật bổ ích, giúp học sinh phát huy năng lực, sở trường và niềm say mê học tập.
+
+Hệ thống ôn luyện trực tuyến là một trong những hoạt động hướng tới mục tiêu đó.
+
+Hệ thống được xây dựng nhằm hỗ trợ:
+
+Tổ chức các cuộc thi và kỳ thi trực tuyến.
+Xây dựng ngân hàng câu hỏi theo từng môn học, khối lớp.
+Tạo cơ hội cho học sinh tự luyện tập và đánh giá năng lực.
+Theo dõi kết quả, thành tích và bảng xếp hạng.
+Khuyến khích tinh thần tự học, chủ động khám phá tri thức.
+Tăng cường ứng dụng công nghệ số trong hoạt động dạy học và bồi dưỡng học sinh.</li>
+               <li>Hệ thống ôn luyện trực tuyến không chỉ là nơi kiểm tra kiến thức mà còn là một sân chơi để học sinh thử sức, rèn luyện tư duy và khám phá khả năng của bản thân.
+
+Với tinh thần “Đoàn kết – Đổi mới – Sáng tạo – Phát triển”, Trường THCS Phú Đình hướng tới xây dựng môi trường giáo dục thân thiện, tích cực, từng bước đẩy mạnh chuyển đổi số và tạo thêm nhiều cơ hội để mỗi học sinh được học tập, trải nghiệm và phát triển.
+
+Trường THCS Phú Đình – Nơi kết nối tri thức, khơi dậy đam mê và chắp cánh ước mơ.</li
+            
+               </ul>    
+</div>
+            <strong>
+                BAN CHUYÊN MÔN<br>
+                TRƯỜNG THCS PHÚ ĐÌNH
+            </strong>
+
+        </div>
+  </div>
+</section>
+
+<section class="rule-section rules-section">
+  <div class="rule-box">
+<h1>📜 NỘI QUY, QUY ĐỊNH VÀ HƯỚNG DẪN</h1>
+
+        <p class="sub-title">
+            Trường THCS Phú Đình
+        </p>
+        <div class="warning-box">
+
+    <div class="warning-icon">
+        ⚠️
+    </div>
+
+    <div class="warning-content">
+
+        <h3>LƯU Ý QUAN TRỌNG</h3>
+
+        <p>
+
+            Học sinh cần đọc kỹ toàn bộ Thể lệ trước khi tham gia kỳ thi.
+            Việc nhấn nút <strong>"VÀO THI"</strong> được hiểu là học sinh đã đồng ý
+            thực hiện đầy đủ các quy định của Ban Tổ chức.
+            Mọi hành vi gian lận hoặc vi phạm quy chế đều có thể dẫn đến hủy kết quả dự thi.
+
+        </p>
+
+    </div>
+
+</div>
+        <hr>
+
+        <ul>
+
+            <li>Học sinh đang học tại Trường THCS Phú Đình.</li>
+
+            <li>Có tài khoản do Ban tổ chức cấp.</li>
+
+            <li>Tham gia đúng kỳ thi theo kế hoạch của nhà trường.</li>
+            <li>Học sinh tham gia các kỳ thi, cuộc thi và hoạt động luyện tập trên hệ thống cần sử dụng đúng tài khoản được cấp và thực hiện theo hướng dẫn của nhà trường hoặc Ban tổ chức. Mỗi học sinh chỉ sử dụng một tài khoản cá nhân, không chia sẻ thông tin đăng nhập cho người khác và chịu trách nhiệm đối với các hoạt động được thực hiện từ tài khoản của mình. Sau khi đăng nhập thành công, học sinh có thể truy cập các nội dung được phân quyền, lựa chọn kỳ thi hoặc phòng luyện tập phù hợp với khối lớp, môn học và năng lực của mình.</li>
+            <li>Hệ thống được thiết kế theo hướng cá nhân hóa và phân hóa học tập. Tùy theo kết quả làm bài, quá trình luyện tập và mức độ phù hợp với năng lực của từng học sinh, hệ thống có thể cung cấp các câu hỏi, bài luyện tập hoặc nội dung ở những mức độ khác nhau. Vì vậy, học sinh có thể nhận được bộ câu hỏi không hoàn toàn giống nhau về số lượng, mức độ hoặc nội dung, nhưng vẫn bảo đảm phù hợp với cấu trúc và mục tiêu của kỳ thi. Việc phân hóa nhằm giúp học sinh được luyện tập đúng năng lực, từng bước nâng cao kết quả và phát triển khả năng tự học.</li>
+            <li>Khi tham gia một kỳ thi chính thức, học sinh cần kiểm tra kỹ thông tin kỳ thi trước khi bắt đầu, chuẩn bị đầy đủ các dụng cụ được phép sử dụng và bảo đảm kết nối Internet ổn định. Trong quá trình làm bài, học sinh cần thực hiện bài thi trên đúng tài khoản, không mở nhiều cửa sổ hoặc phiên làm bài cùng lúc, không tự ý làm mới trang, không thoát khỏi bài thi khi chưa hoàn thành và không sử dụng các công cụ, tài liệu hoặc nguồn hỗ trợ mà Ban tổ chức không cho phép. Hệ thống có thể ghi nhận một số hoạt động trong quá trình làm bài, bao gồm việc chuyển sang tab hoặc ứng dụng khác. Khi hết thời gian quy định, bài làm sẽ được hệ thống tự động ghi nhận và nộp theo cơ chế của kỳ thi.</li>
+            <li>Đối với từng môn học, học sinh thực hiện theo quy định riêng được thông báo trước khi bắt đầu. Với môn Toán, học sinh có thể sử dụng giấy nháp và các dụng cụ học tập được Ban tổ chức cho phép như bút, thước, compa hoặc máy tính nếu kỳ thi quy định được sử dụng. Với môn Ngữ văn, học sinh có thể sử dụng giấy nháp nhưng không sử dụng tài liệu, nội dung sao chép từ Internet hoặc công cụ AI để hỗ trợ làm bài nếu không được cho phép. Với môn Tiếng Anh, học sinh thực hiện bài thi bằng năng lực của mình, không sử dụng Google Dịch, từ điển điện tử hoặc công cụ AI khi những công cụ này không nằm trong danh mục được phép. Đối với các kỳ thi tổng hợp hoặc các hình thức thi khác, học sinh thực hiện theo quy định cụ thể được công bố trong thông tin của kỳ thi.</li>
+            <li>Học sinh có thể chủ động nộp bài trước khi hết thời gian. Trong trường hợp hết thời gian làm bài, hệ thống sẽ tự động thực hiện việc nộp bài theo quy định. Sau khi bài thi được ghi nhận, kết quả có thể được hiển thị trên hệ thống tùy theo hình thức của từng kỳ thi. Đối với những học sinh đủ điều kiện nhận chứng nhận, giấy chứng nhận hoặc thông tin thành tích sẽ được cung cấp tại khu vực kết quả theo quy định của Ban tổ chức.</li>
+            <li>Trong trường hợp quên mật khẩu hoặc gặp vấn đề với tài khoản, học sinh không tự ý tạo tài khoản mới để thay thế mà cần liên hệ giáo viên chủ nhiệm, giáo viên phụ trách hoặc Ban tổ chức để được hỗ trợ. Những trường hợp sử dụng tài khoản của người khác, cố tình gian lận, sử dụng tài liệu hoặc công cụ hỗ trợ trái quy định, can thiệp vào hệ thống hoặc thực hiện các hành vi làm ảnh hưởng đến tính công bằng của kỳ thi có thể bị xem xét hủy kết quả và xử lý theo quy định của nhà trường hoặc Ban tổ chức.</li>
+            <li>Trước khi bắt đầu làm bài, học sinh nên kiểm tra kết nối Internet, chuẩn bị đầy đủ giấy nháp và các dụng cụ được phép sử dụng, đọc kỹ hướng dẫn và yêu cầu của kỳ thi. Trong quá trình làm bài cần tập trung, phân bổ thời gian hợp lý, kiểm tra lại bài trước khi nộp và chủ động hoàn thành bài thi trước thời điểm kết thúc để hạn chế những sự cố có thể xảy ra.</li>
+            <li>Việc đăng nhập và tham gia kỳ thi đồng nghĩa với việc học sinh đã đọc, hiểu và đồng ý thực hiện các quy định của hệ thống cũng như các yêu cầu riêng của từng kỳ thi. Ban tổ chức có quyền điều chỉnh hình thức tổ chức, nội dung phân hóa, thời gian, phương thức ghi nhận kết quả và các quy định liên quan nhằm bảo đảm phù hợp với mục tiêu giáo dục và điều kiện thực tế của từng hoạt động.</li>
+
+        </ul>
+
+</div>
+            <strong>
+                BAN CHUYÊN MÔN<br>
+                TRƯỜNG THCS PHÚ ĐÌNH
+            </strong>
+
+        </div>
+  </div>
+</section>
+
+<section class="school-gallery-section" aria-label="Hình ảnh hoạt động nhà trường">
+  <div class="school-gallery-wrap">
+    <div class="school-gallery-heading">
+      <span class="eyebrow">THƯ VIỆN ẢNH</span>
+      <h2>🏫 Hình ảnh nhà trường</h2>
+      <p>Những hoạt động, dấu ấn và khoảnh khắc đáng nhớ của thầy trò nhà trường.</p>
+    </div>
+    <div class="school-gallery-viewport" id="schoolGalleryViewport">
+      <div class="school-gallery-track" id="schoolGalleryTrack">
+        <figure class="school-gallery-card"><img src="anhnen/btl 3.jpg" alt="Hoạt động nhà trường 1" loading="lazy"><figcaption>Bộ Tư lệnh 86 và lãnh đạo xã trong lễ khánh thành phòng tin học</figcaption></figure>
+        <figure class="school-gallery-card"><img src="anhnen/btl 5.jpg" alt="Hoạt động nhà trường 2" loading="lazy"><figcaption>Lãnh đạo địa phương chúc mừng HN viên chức, người lao động</figcaption></figure>
+        <figure class="school-gallery-card is-center"><img src="anhnen/btl1.jpg" alt="Hoạt động nhà trường 3" loading="lazy"><figcaption>Thiếu tướng Vũ Hữu Hanh - Tư lệnh Bộ Tư lệnh 86 kiểm tra phòng tin học</figcaption></figure>
+        <figure class="school-gallery-card"><img src="anhnen/btl2.jpg" alt="Hoạt động nhà trường 4" loading="lazy"><figcaption>Các đc lãnh đạo xã, Bộ tư lệnh 86 cắt băng khánh thành</figcaption></figure>
+        <figure class="school-gallery-card"><img src="anhnen/btl4.jpg" alt="Hoạt động nhà trường 5" loading="lazy"><figcaption>Lãnh đạo Bộ Tư lệnh 86 và lãnh đạo địa phương trong lễ khánh thành</figcaption></figure>
+        <figure class="school-gallery-card"><img src="anhnen/btl6.jpg" alt="Hoạt động nhà trường 6" loading="lazy"><figcaption>BGH nhà trường chúc mừng Đại hội chi đoàn</figcaption></figure>
+         <figure class="school-gallery-card"><img src="anhnen/bongchuyen.jpg" alt="Hoạt động nhà trường 7" loading="lazy"><figcaption>Giải bóng chuyền hơi</figcaption></figure>
+                  <figure class="school-gallery-card"><img src="anhnen/bongchuyen.jpg" alt="Hoạt động nhà trường 8" loading="lazy"><figcaption>Giải bóng chuyền hơi</figcaption></figure>
+                  <figure class="school-gallery-card"><img src="anhnen/bongchuyen2.jpg" alt="Hoạt động nhà trường 9" loading="lazy"><figcaption>Giải bóng chuyền hơi</figcaption></figure>
+                  <figure class="school-gallery-card"><img src="anhnen/bongchuyen3.jpg" alt="Hoạt động nhà trường 10" loading="lazy"><figcaption>Giải bóng chuyền hơi</figcaption></figure>
+
+          <figure class="school-gallery-card"><img src="anhnen/20-10.jpg" alt="Hoạt động nhà trường 11" loading="lazy"><figcaption>Toạ đàm kỉ niệm ngày phụ nữ VN 20/10</figcaption></figure>
+           <figure class="school-gallery-card"><img src="anhnen/20-101.jpg" alt="Hoạt động nhà trường 12" loading="lazy"><figcaption>Toạ đàm kỉ niệm ngày phụ nữ VN 20/10</figcaption></figure>
+            <figure class="school-gallery-card"><img src="anhnen/shdc.jpg" alt="Hoạt động nhà trường 13" loading="lazy"><figcaption>Sinh hoạt dưới cờ theo chủ đề</figcaption></figure>
+             <figure class="school-gallery-card"><img src="anhnen/shdc1.jpg" alt="Hoạt động nhà trường 14" loading="lazy"><figcaption>Sinh hoạt dưới cờ theo chủ đề</figcaption></figure>
+    
+      </div>
+    </div>
+    <div class="school-gallery-controls">
+      <button class="school-gallery-btn" type="button" id="schoolGalleryPrev" aria-label="Ảnh trước">‹</button>
+      <div class="school-gallery-dots" id="schoolGalleryDots" aria-hidden="true"></div>
+      <button class="school-gallery-btn" type="button" id="schoolGalleryNext" aria-label="Ảnh tiếp theo">›</button>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+
+    <div class="footer-content">
+
+        <h3>🏆 Phú Đình Edu</h3>
+
+        <p>
+            © 2026 Bản quyền thuộc Trường THCS Phú Đình
+        </p>
+
+        <p class="version">
+            Phiên bản <strong>Version 1.1</strong>
+        </p>
+
+    </div>
+
+</footer>
+<script>
+const btn =
+document.getElementById(
+"taiKhoanBtn"
+);
+
+if(btn){
+
+    btn.innerHTML =
+    localStorage.getItem("hoTen")
+    + " ▼";
+
+    btn.addEventListener(
+    "click",
+    function(e){
+
+        e.preventDefault();
+
+        const menu =
+        document.getElementById(
+        "userDropdown"
+        );
+
+        menu.style.display =
+        menu.style.display ===
+        "block"
+        ? "none"
+        : "block";
+
+    });
+
+}
+function dangXuat(){
+
+    if(confirm(
+    "Bạn muốn đăng xuất?"
+    )){
+
+        localStorage.clear();
+
+        window.location.href =
+        "index.html";
+
+    }
+
+}
+</script>
+
+<script>
+(function(){
+  const track=document.getElementById('schoolGalleryTrack');
+  const viewport=document.getElementById('schoolGalleryViewport');
+  if(!track||!viewport)return;
+  let cards=[...track.children],timer=null,animating=false;
+  const dots=document.getElementById('schoolGalleryDots');
+  const makeDots=()=>{dots.innerHTML='';cards.forEach((_,i)=>{const d=document.createElement('span');d.className='school-gallery-dot'+(i===2?' active':'');dots.appendChild(d);});};
+  function baseOffset(){
+    const card=track.children[0]; if(!card)return 0;
+    const gap=parseFloat(getComputedStyle(track).gap)||18;
+    const w=card.getBoundingClientRect().width;
+    return viewport.clientWidth/2-(2*(w+gap)+w/2);
+  }
+  function updateCenter(){
+    cards=[...track.children];
+    cards.forEach((card,i)=>card.classList.toggle('is-center',i===2));
+    [...dots.children].forEach((d,i)=>d.classList.toggle('active',i===2));
+  }
+  function step(dir=1){
+    if(animating)return; animating=true;
+    const card=cards[0]; const gap=parseFloat(getComputedStyle(track).gap)||18;
+    const width=card.getBoundingClientRect().width+gap;
+    if(dir===1){
+      track.style.transition='transform .65s cubic-bezier(.22,.7,.2,1)';
+      track.style.transform='translateX('+(baseOffset()-width)+'px)';
+      track.addEventListener('transitionend',function done(){
+        track.removeEventListener('transitionend',done);
+        track.appendChild(track.firstElementChild);
+        track.style.transition='none';track.style.transform='translateX('+baseOffset()+'px)';
+        updateCenter();animating=false;
+      });
+    }else{
+      track.style.transition='none';track.insertBefore(track.lastElementChild,track.firstElementChild);
+      track.style.transform='translateX('+(baseOffset()-width)+'px)';
+      requestAnimationFrame(()=>requestAnimationFrame(()=>{
+        track.style.transition='transform .65s cubic-bezier(.22,.7,.2,1)';
+        track.style.transform='translateX('+baseOffset()+'px)';
+        track.addEventListener('transitionend',function done(){
+          track.removeEventListener('transitionend',done);updateCenter();animating=false;
+        });
+      }));
+    }
+  }
+  function start(){stop();timer=setInterval(()=>step(1),3500);}
+  function stop(){if(timer){clearInterval(timer);timer=null;}}
+  makeDots();updateCenter();track.style.transform='translateX('+baseOffset()+'px)';start();
+  document.getElementById('schoolGalleryNext')?.addEventListener('click',()=>{step(1);start();});
+  document.getElementById('schoolGalleryPrev')?.addEventListener('click',()=>{step(-1);start();});
+  viewport.addEventListener('mouseenter',stop);viewport.addEventListener('mouseleave',start);
+  viewport.addEventListener('touchstart',stop,{passive:true});viewport.addEventListener('touchend',start,{passive:true});
+  window.addEventListener('resize',()=>{track.style.transition='none';track.style.transform='translateX('+baseOffset()+'px)';});
+})();
+</script>
+
+</body>
+</html>
