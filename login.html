@@ -19,7 +19,7 @@ href="css/style-old.css">
     <div class="login-container">
         <img src="anhnen/logo.jpg" class="logo-login">
 
-    <h2>CLB HỌC SINH KHÁ GIỎI</h2>
+    <h2>PHÚ ĐÌNH EDU</h2>
 
     <p>Trường THCS Phú Đình</p>
 
@@ -28,14 +28,30 @@ href="css/style-old.css">
         <input
         type="text"
         id="mahs"
-        placeholder="Mã học sinh">
+        placeholder="Mã học sinh"
+        autocomplete="username">
 
-        <input
-        type="password"
-        id="matkhau"
-        placeholder="Mật khẩu">
+        <div class="password-wrapper">
+            <input
+            type="password"
+            id="matkhau"
+            placeholder="Mật khẩu"
+            autocomplete="current-password">
 
-        <button onclick="dangNhap()">
+            <button type="button"
+                    class="toggle-password"
+                    id="togglePassword"
+                    onclick="toggleMatKhau()"
+                    aria-label="Hiện mật khẩu"
+                    title="Hiện mật khẩu">
+                <svg id="eyeIcon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                </svg>
+            </button>
+        </div>
+
+        <button type="button" id="btnDangNhap" onclick="dangNhap()">
             ĐĂNG NHẬP
         </button>
 
@@ -55,10 +71,159 @@ href="css/style-old.css">
 
 </div>
 
+<style>
+/* Khung mật khẩu giữ nguyên kích thước và khoảng cách của ô nhập */
+.login-container .password-wrapper {
+    position: relative;
+    width: 100%;
+    margin: 10px 0;
+}
+
+/* Không để CSS nút đăng nhập áp dụng lên nút con mắt */
+.login-container .password-wrapper .toggle-password {
+    position: absolute !important;
+    right: 12px !important;
+    top: 50% !important;
+    left: auto !important;
+    transform: translateY(-50%) !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 5px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: #64748b !important;
+    cursor: pointer;
+    z-index: 2;
+    line-height: 1 !important;
+}
+
+.login-container .password-wrapper input {
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 46px !important;
+    margin: 0 !important;
+}
+
+.login-container .password-wrapper .toggle-password svg {
+    display: block;
+    width: 21px;
+    height: 21px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+}
+
+.login-container .password-wrapper .toggle-password:hover {
+    color: #2563eb !important;
+}
+/* Đồng bộ kích thước, khoảng cách và căn chỉnh các thành phần đăng nhập */
+.login-container {
+    box-sizing: border-box;
+    width: min(100%, 420px);
+    padding: 28px 24px;
+}
+
+.login-container #mahs,
+.login-container #matkhau {
+    display: block;
+    width: 100%;
+    min-height: 50px;
+    box-sizing: border-box;
+    margin: 12px 0;
+    padding: 12px 15px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+}
+
+.login-container #mahs:focus,
+.login-container #matkhau:focus {
+    border-color: #075bbb;
+    box-shadow: 0 0 0 3px rgba(5, 91, 187, 0.12);
+}
+
+.login-container #btnDangNhap {
+    display: block;
+    width: 100%;
+    min-height: 50px;
+    margin: 16px 0 10px;
+    border: 0;
+    border-radius: 10px;
+    background: #075bbb;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.login-container #btnDangNhap:hover {
+    background: #064a99;
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        width: calc(100% - 24px);
+        padding: 24px 18px;
+    }
+}
+</style>
+
 <script src="js/login.js"></script>
-<script>function quenMatKhau() {
+<script>
+function toggleMatKhau() {
+    const input = document.getElementById("matkhau");
+    const button = document.getElementById("togglePassword");
+    const eyeIcon = document.getElementById("eyeIcon");
+
+    const dangHien = input.type === "password";
+    input.type = dangHien ? "text" : "password";
+
+    if (dangHien) {
+        eyeIcon.innerHTML = `
+            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/>
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M3 3 21 21"/>
+        `;
+        button.setAttribute("aria-label", "Ẩn mật khẩu");
+        button.setAttribute("title", "Ẩn mật khẩu");
+    } else {
+        eyeIcon.innerHTML = `
+            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/>
+            <circle cx="12" cy="12" r="3"/>
+        `;
+        button.setAttribute("aria-label", "Hiện mật khẩu");
+        button.setAttribute("title", "Hiện mật khẩu");
+    }
+}
+
+function quenMatKhau() {
     alert("Bạn đã quên mật khẩu!!! Vui lòng liên hệ giáo viên chủ nhiệm hoặc Ban tổ chức cuộc thi để được cấp lại mật khẩu.");
 }
+
+// Nhấn Enter tại ô mã học sinh hoặc mật khẩu để đăng nhập
+(function () {
+    const maHocSinh = document.getElementById("mahs");
+    const matKhau = document.getElementById("matkhau");
+
+    [maHocSinh, matKhau].forEach(function (input) {
+        input.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                dangNhap();
+            }
+        });
+    });
+})();
 </script>
 </body>
 </html>
